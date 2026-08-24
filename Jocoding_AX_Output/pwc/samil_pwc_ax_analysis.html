@@ -1,0 +1,1265 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>삼일회계법인 AX 기업 분석</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css">
+  <style>
+    :root {
+      --surface: #f1fbff;
+      --surface-dim: #d1dce0;
+      --surface-lowest: #ffffff;
+      --surface-low: #eaf5fa;
+      --surface-container: #e4f0f4;
+      --surface-high: #dfeaef;
+      --surface-highest: #d9e4e9;
+      --on-surface: #131d21;
+      --on-variant: #434749;
+      --inverse: #283236;
+      --inverse-on: #e7f3f7;
+      --outline: #747879;
+      --outline-variant: #c3c7c8;
+      --primary: #181f21;
+      --on-primary: #ffffff;
+      --primary-container: #2d3436;
+      --secondary: #1d6296;
+      --secondary-container: #8cc6ff;
+      --tertiary: #00212b;
+      --tertiary-container: #003846;
+      --teal: #00758f;
+      --python-blue: #3776ab;
+      --gold: #ffd43b;
+      --emerald: #00b894;
+      --coral: #ff7675;
+      --shadow: 0 4px 12px rgba(45, 52, 70, 0.05);
+      --radius-sm: 2px;
+      --radius: 4px;
+      --radius-md: 6px;
+      --radius-lg: 8px;
+      --container: 1120px;
+      --gutter: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background: var(--surface);
+      color: var(--on-surface);
+      font-family: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", Inter, sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      letter-spacing: 0;
+    }
+
+    a {
+      color: var(--secondary);
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    .container {
+      width: min(100% - 48px, var(--container));
+      margin: 0 auto;
+    }
+
+    .hero {
+      border-bottom: 1px solid var(--outline-variant);
+      background: var(--surface-lowest);
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.88fr);
+      gap: 32px;
+      padding: 48px 0 32px;
+      align-items: stretch;
+    }
+
+    .eyebrow,
+    .tag,
+    .source-tag,
+    .mono {
+      font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+      letter-spacing: 0;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 12px;
+      color: var(--secondary);
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      margin-bottom: 16px;
+      font-size: 32px;
+      line-height: 40px;
+      font-weight: 750;
+    }
+
+    h2 {
+      margin-bottom: 12px;
+      font-size: 24px;
+      line-height: 32px;
+      font-weight: 720;
+    }
+
+    h3 {
+      margin-bottom: 8px;
+      font-size: 18px;
+      line-height: 26px;
+      font-weight: 700;
+    }
+
+    .lead {
+      margin-bottom: 20px;
+      color: var(--on-variant);
+      font-size: 18px;
+      line-height: 28px;
+      max-width: 760px;
+    }
+
+    .summary-box {
+      display: grid;
+      gap: 12px;
+      padding: 16px;
+      background: var(--primary);
+      color: var(--on-primary);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow);
+    }
+
+    .summary-box strong {
+      color: var(--secondary-container);
+    }
+
+    .quick-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .quick-nav a {
+      display: inline-flex;
+      min-height: 32px;
+      align-items: center;
+      padding: 6px 10px;
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--radius);
+      background: var(--surface-low);
+      color: var(--on-surface);
+      font-size: 13px;
+      font-weight: 650;
+    }
+
+    .logic-panel {
+      display: grid;
+      gap: 12px;
+      padding: 16px;
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--radius-lg);
+      background: var(--surface-low);
+      box-shadow: var(--shadow);
+    }
+
+    .panel-title {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 4px;
+      font-weight: 750;
+    }
+
+    .source-tag,
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 3px 7px;
+      border-radius: var(--radius);
+      background: var(--surface-container);
+      color: var(--on-variant);
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .tag.dark {
+      background: var(--primary-container);
+      color: var(--inverse-on);
+    }
+
+    .tag.blue {
+      background: rgba(55, 118, 171, 0.14);
+      color: var(--python-blue);
+    }
+
+    .tag.teal {
+      background: rgba(0, 117, 143, 0.13);
+      color: var(--teal);
+    }
+
+    .tag.green {
+      background: rgba(0, 184, 148, 0.14);
+      color: #006a55;
+    }
+
+    .tag.coral {
+      background: rgba(255, 118, 117, 0.16);
+      color: #9c2928;
+    }
+
+    .mini-stack {
+      display: grid;
+      gap: 8px;
+    }
+
+    .mini-row {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 12px;
+      align-items: center;
+      padding: 10px;
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--radius-md);
+      background: var(--surface-lowest);
+    }
+
+    .mini-row span:first-child {
+      color: var(--on-variant);
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .mini-row span:last-child {
+      font-weight: 700;
+    }
+
+    section.band {
+      padding: 48px 0;
+      border-bottom: 1px solid var(--outline-variant);
+    }
+
+    section.band:nth-of-type(even) {
+      background: var(--surface-low);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.72fr) minmax(260px, 0.28fr);
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 24px;
+    }
+
+    .section-head p {
+      margin-bottom: 0;
+      color: var(--on-variant);
+    }
+
+    .note {
+      padding: 12px 14px;
+      border-left: 4px solid var(--teal);
+      border-radius: var(--radius);
+      background: rgba(0, 117, 143, 0.08);
+      color: var(--on-variant);
+      font-size: 14px;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric {
+      min-height: 148px;
+      padding: 14px;
+      border: 1px solid var(--outline-variant);
+      border-top: 4px solid var(--secondary);
+      border-radius: var(--radius-lg);
+      background: var(--surface-lowest);
+      box-shadow: var(--shadow);
+    }
+
+    .metric strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 28px;
+      line-height: 34px;
+      color: var(--primary);
+    }
+
+    .metric p {
+      margin-bottom: 0;
+      color: var(--on-variant);
+      font-size: 14px;
+    }
+
+    .metric:nth-child(2) {
+      border-top-color: var(--teal);
+    }
+
+    .metric:nth-child(3) {
+      border-top-color: var(--emerald);
+    }
+
+    .metric:nth-child(4) {
+      border-top-color: var(--coral);
+    }
+
+    .metric:nth-child(5) {
+      border-top-color: var(--gold);
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 0.95fr) minmax(320px, 1.05fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card-grid.two {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .card {
+      padding: 16px;
+      border: 1px solid var(--outline-variant);
+      border-top: 4px solid var(--primary-container);
+      border-radius: var(--radius-lg);
+      background: var(--surface-lowest);
+      box-shadow: var(--shadow);
+    }
+
+    .card.blue {
+      border-top-color: var(--python-blue);
+    }
+
+    .card.teal {
+      border-top-color: var(--teal);
+    }
+
+    .card.green {
+      border-top-color: var(--emerald);
+    }
+
+    .card.coral {
+      border-top-color: var(--coral);
+    }
+
+    .card.gold {
+      border-top-color: var(--gold);
+    }
+
+    .card p,
+    .card li {
+      color: var(--on-variant);
+    }
+
+    ul.clean {
+      display: grid;
+      gap: 8px;
+      margin: 10px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    ul.clean li {
+      position: relative;
+      padding-left: 14px;
+    }
+
+    ul.clean li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.72em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--secondary);
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .flow-step {
+      min-height: 138px;
+      padding: 14px;
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--radius-lg);
+      background: var(--surface-lowest);
+    }
+
+    .flow-step .num {
+      display: inline-grid;
+      width: 28px;
+      height: 28px;
+      margin-bottom: 12px;
+      place-items: center;
+      border-radius: var(--radius);
+      background: var(--primary);
+      color: var(--on-primary);
+      font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .axis-list {
+      display: grid;
+      gap: 10px;
+    }
+
+    .axis-row {
+      display: grid;
+      grid-template-columns: 150px 1fr 44px;
+      gap: 10px;
+      align-items: center;
+      min-height: 34px;
+    }
+
+    .axis-row label {
+      color: var(--on-variant);
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .bar {
+      height: 12px;
+      border-radius: var(--radius);
+      background: var(--surface-highest);
+      overflow: hidden;
+    }
+
+    .bar span {
+      display: block;
+      height: 100%;
+      border-radius: var(--radius);
+      background: var(--secondary);
+    }
+
+    .bar.teal span {
+      background: var(--teal);
+    }
+
+    .bar.green span {
+      background: var(--emerald);
+    }
+
+    .bar.coral span {
+      background: var(--coral);
+    }
+
+    .bar.gold span {
+      background: var(--gold);
+    }
+
+    .matrix {
+      display: grid;
+      grid-template-columns: 160px repeat(4, 1fr);
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--surface-lowest);
+      box-shadow: var(--shadow);
+    }
+
+    .matrix > div {
+      min-height: 72px;
+      padding: 12px;
+      border-right: 1px solid var(--outline-variant);
+      border-bottom: 1px solid var(--outline-variant);
+      color: var(--on-variant);
+      font-size: 14px;
+    }
+
+    .matrix > div:nth-child(5n) {
+      border-right: 0;
+    }
+
+    .matrix .head {
+      min-height: 44px;
+      background: var(--primary);
+      color: var(--on-primary);
+      font-weight: 750;
+    }
+
+    .matrix .row-head {
+      background: var(--surface-container);
+      color: var(--on-surface);
+      font-weight: 750;
+    }
+
+    .roadmap {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+      counter-reset: roadmap;
+    }
+
+    .roadmap-item {
+      position: relative;
+      min-height: 198px;
+      padding: 16px;
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--radius-lg);
+      background: var(--surface-lowest);
+      box-shadow: var(--shadow);
+    }
+
+    .roadmap-item::before {
+      counter-increment: roadmap;
+      content: counter(roadmap);
+      display: inline-grid;
+      width: 30px;
+      height: 30px;
+      margin-bottom: 12px;
+      place-items: center;
+      border-radius: var(--radius);
+      background: var(--secondary-container);
+      color: var(--on-surface);
+      font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+      font-weight: 800;
+    }
+
+    .swot {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .swot .card {
+      min-height: 260px;
+    }
+
+    .problem-grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .problem {
+      display: grid;
+      grid-template-columns: 200px 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--surface-lowest);
+      box-shadow: var(--shadow);
+    }
+
+    .problem > div {
+      padding: 16px;
+      border-right: 1px solid var(--outline-variant);
+    }
+
+    .problem > div:last-child {
+      border-right: 0;
+    }
+
+    .problem .label {
+      background: var(--primary);
+      color: var(--on-primary);
+    }
+
+    .problem p {
+      margin-bottom: 0;
+      color: var(--on-variant);
+    }
+
+    .source-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .source-list a {
+      display: block;
+      padding: 12px;
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--radius-md);
+      background: var(--surface-lowest);
+      color: var(--on-surface);
+      font-size: 14px;
+      word-break: keep-all;
+    }
+
+    .footer {
+      padding: 24px 0 40px;
+      background: var(--inverse);
+      color: var(--inverse-on);
+    }
+
+    .footer p {
+      margin: 0;
+      color: var(--inverse-on);
+      font-size: 13px;
+    }
+
+    .print-note {
+      color: var(--on-variant);
+      font-size: 13px;
+    }
+
+    @media (max-width: 980px) {
+      .hero-inner,
+      .section-head,
+      .two-col,
+      .problem {
+        grid-template-columns: 1fr;
+      }
+
+      .metric-grid,
+      .card-grid,
+      .card-grid.two,
+      .flow,
+      .roadmap,
+      .swot,
+      .source-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .problem > div {
+        border-right: 0;
+        border-bottom: 1px solid var(--outline-variant);
+      }
+
+      .problem > div:last-child {
+        border-bottom: 0;
+      }
+
+      .matrix {
+        grid-template-columns: 140px repeat(4, minmax(160px, 1fr));
+        overflow-x: auto;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        width: min(100% - 32px, var(--container));
+      }
+
+      .hero-inner {
+        padding-top: 32px;
+      }
+
+      h1 {
+        font-size: 24px;
+        line-height: 32px;
+      }
+
+      h2 {
+        font-size: 20px;
+        line-height: 28px;
+      }
+
+      .lead {
+        font-size: 16px;
+        line-height: 24px;
+      }
+
+      .metric-grid,
+      .card-grid,
+      .card-grid.two,
+      .flow,
+      .roadmap,
+      .swot,
+      .source-list {
+        grid-template-columns: 1fr;
+      }
+
+      .mini-row,
+      .axis-row {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="container hero-inner">
+      <div>
+        <p class="eyebrow">AX Talent War Brief · Samil PwC</p>
+        <h1>삼일회계법인은 “신뢰 기반 전문서비스”를 “AI 기반 업무 혁신 플랫폼”으로 확장 중이다.</h1>
+        <p class="lead">
+          공개자료 기준 핵심은 명확하다. 삼일PwC는 감사·세무·딜·금융 전문성을 기반으로 AX Node, Tax Agent, KSOX AI, Easy View, Robotic Application 같은 업무형 AI 솔루션을 전면화하고 있다. 지원 관점에서는 “기업이 AI를 도입해도 성과로 연결하지 못하는 문제”를 재무·세무·공시·내부회계 업무에서 해결하는 인재로 포지셔닝하는 것이 좋다.
+        </p>
+        <div class="summary-box">
+          <div><strong>문제정의:</strong> 많은 기업이 AI와 디지털 기술을 도입하지만 ROI, 데이터 정합성, 통제, 현장 적용에서 막힌다.</div>
+          <div><strong>삼일PwC의 해법 방향:</strong> 회계·세무·재무 도메인 지식과 자체 AI 애플리케이션을 결합해 “전략 수립 → 데이터 정리 → 업무 자동화 → 검증/컴플라이언스 → 의사결정”까지 연결한다.</div>
+        </div>
+        <nav class="quick-nav" aria-label="문서 내 이동">
+          <a href="#snapshot">핵심 지표</a>
+          <a href="#business">사업 구조</a>
+          <a href="#ax">AX/AI 포트폴리오</a>
+          <a href="#direction">추진 방향</a>
+          <a href="#swot">강점·약점</a>
+          <a href="#problems">문제정의</a>
+          <a href="#sources">출처</a>
+        </nav>
+      </div>
+      <aside class="logic-panel" aria-label="분석 요약">
+        <div class="panel-title">
+          <span>분석 렌즈</span>
+          <span class="source-tag">2026-07-01 기준</span>
+        </div>
+        <div class="mini-stack">
+          <div class="mini-row">
+            <span>선택 기업</span>
+            <span>삼일회계법인 · Samil PwC</span>
+          </div>
+          <div class="mini-row">
+            <span>AX 축</span>
+            <span>Digital &amp; AI Transformation, AX Node, AI Solutions</span>
+          </div>
+          <div class="mini-row">
+            <span>핵심 고객</span>
+            <span>CFO, 세무, 공시, 내부회계, 경영관리 조직</span>
+          </div>
+          <div class="mini-row">
+            <span>지원 메시지</span>
+            <span>도메인 신뢰성과 AI 실행력을 함께 검증하는 사람</span>
+          </div>
+        </div>
+        <svg viewBox="0 0 420 220" role="img" aria-label="전문서비스에서 AX 플랫폼으로 확장되는 구조" width="100%" height="220">
+          <rect x="0" y="0" width="420" height="220" rx="8" fill="#ffffff" stroke="#c3c7c8"/>
+          <g font-family="Pretendard, sans-serif" font-size="13" font-weight="700" fill="#131d21">
+            <rect x="20" y="24" width="112" height="48" rx="4" fill="#eaf5fa" stroke="#747879"/>
+            <text x="42" y="54">Audit · Tax</text>
+            <rect x="154" y="24" width="112" height="48" rx="4" fill="#eaf5fa" stroke="#747879"/>
+            <text x="179" y="54">Deals · FS</text>
+            <rect x="288" y="24" width="112" height="48" rx="4" fill="#eaf5fa" stroke="#747879"/>
+            <text x="315" y="54">Advisory</text>
+            <path d="M76 82 L76 108 L210 108" stroke="#1d6296" stroke-width="2" fill="none"/>
+            <path d="M210 82 L210 108" stroke="#1d6296" stroke-width="2" fill="none"/>
+            <path d="M344 82 L344 108 L210 108" stroke="#1d6296" stroke-width="2" fill="none"/>
+            <rect x="86" y="108" width="248" height="54" rx="4" fill="#2d3436"/>
+            <text x="140" y="140" fill="#ffffff">AX Node · AI Solutions</text>
+            <path d="M210 162 L210 186" stroke="#00b894" stroke-width="3"/>
+            <rect x="92" y="184" width="236" height="24" rx="4" fill="#b5ebff"/>
+            <text x="132" y="201">ROI · Trust · Automation</text>
+          </g>
+        </svg>
+      </aside>
+    </div>
+  </header>
+
+  <main>
+    <section class="band" id="snapshot">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">01 · Snapshot</p>
+            <h2>숫자로 보는 현재 위치</h2>
+            <p>삼일PwC 자체 공개자료와 PwC 글로벌 자료를 합쳐 보면, 국내 최대 회계법인 역량과 글로벌 AI 투자 흐름이 결합되는 구조다.</p>
+          </div>
+          <p class="note">수치는 각 출처의 공개 시점 기준이다. 최신 공시나 채용 공고는 별도 확인이 필요하다.</p>
+        </div>
+        <div class="metric-grid">
+          <article class="metric">
+            <strong>4,300+</strong>
+            <p>삼일PwC 국내 전문가 규모. 회계·세무·재무·산업 전문성이 AX 실행의 신뢰 기반이다.</p>
+          </article>
+          <article class="metric">
+            <strong>136</strong>
+            <p>PwC 글로벌 네트워크 운영 국가 수. 해외법인, 글로벌 공시, 크로스보더 딜 자문과 연결된다.</p>
+          </article>
+          <article class="metric">
+            <strong>$56.9B</strong>
+            <p>PwC FY2025 글로벌 매출. 글로벌 네트워크는 AI·기술·컨설팅·세무 역량 확장에 투자 중이다.</p>
+          </article>
+          <article class="metric">
+            <strong>56%</strong>
+            <p>2026 Global CEO Survey에서 AI로 매출 증가나 비용 감소를 아직 보지 못한 CEO 비중.</p>
+          </article>
+          <article class="metric">
+            <strong>7배</strong>
+            <p>AI 노출도가 높은 신입 직무가 시니어급 역량을 요구할 가능성. AX 인재전쟁의 핵심 압박이다.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="business">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">02 · Business Map</p>
+            <h2>주요 사업은 전문서비스, 성장축은 AX 기반 솔루션화</h2>
+            <p>삼일PwC의 기본 사업 포트폴리오는 Assurance, Tax, Deals, FS, AX Node, 공공부문 컨설팅과 산업/플랫폼 센터로 구성된다.</p>
+          </div>
+          <p class="note">지원서에서는 “전통 회계법인”보다 “신뢰·규제·데이터가 중요한 기업 업무를 AI로 바꾸는 전문서비스 기업”으로 읽는 편이 강하다.</p>
+        </div>
+        <div class="card-grid">
+          <article class="card blue">
+            <span class="tag blue">ASSURANCE</span>
+            <h3>감사·회계 신뢰</h3>
+            <p>재무제표 감사, 회계자문, 공시, 내부통제, 지속가능성 보증 등 신뢰 자본을 만드는 본업.</p>
+            <ul class="clean">
+              <li>AI-first 감사, 데이터 기반 검증 확장 가능</li>
+              <li>공시·XBRL·KSOX 업무 자동화와 직접 연결</li>
+            </ul>
+          </article>
+          <article class="card teal">
+            <span class="tag teal">TAX</span>
+            <h3>세무·규정 지식</h3>
+            <p>세무조정, 세무자문, 국제조세, 조세불복 등 고빈도 질의와 최신 법령 추적이 중요한 영역.</p>
+            <ul class="clean">
+              <li>Tax Agent처럼 전문 데이터 기반 생성형 AI 적용 가능</li>
+              <li>인용 원문과 검증 절차가 차별화 포인트</li>
+            </ul>
+          </article>
+          <article class="card green">
+            <span class="tag green">DEALS · FS</span>
+            <h3>거래·금융·전략</h3>
+            <p>M&amp;A, 구조조정, 금융기관 자문, 해외진출, IPO 등 의사결정 품질이 성과를 좌우하는 영역.</p>
+            <ul class="clean">
+              <li>데이터룸, 실사, 가치평가, 리스크 탐지에 AI 적용 여지</li>
+              <li>산업별 AI use case와 결합하면 고부가 자문 가능</li>
+            </ul>
+          </article>
+          <article class="card gold">
+            <span class="tag">AX NODE</span>
+            <h3>디지털 전환 연결점</h3>
+            <p>데이터 기반 의사결정, AI 적용 조직구조, 디지털 환경, 업무 프로세스를 구축하는 자문과 솔루션 축.</p>
+            <ul class="clean">
+              <li>수작업·반복·병목 업무 식별 및 개선</li>
+              <li>Digital &amp; AI Solution, Data Analytics 제공</li>
+            </ul>
+          </article>
+          <article class="card blue">
+            <span class="tag blue">MANAGED SERVICES</span>
+            <h3>전문성의 서비스화</h3>
+            <p>회계·세무·Payroll, Data Analytics, 경영관리 업무를 기업 니즈에 맞게 제공하는 운영형 모델.</p>
+            <ul class="clean">
+              <li>중견·중소기업에 삼일의 디지털 인프라 공유</li>
+              <li>구독형/운영형 AI 서비스로 확장 가능</li>
+            </ul>
+          </article>
+          <article class="card teal">
+            <span class="tag teal">PLATFORMS</span>
+            <h3>산업·이슈별 센터</h3>
+            <p>지자체·대기업·대학 협력, Sustainability, 유니콘, 해외 비즈니스, 에너지 전환 등 전문 센터 운영.</p>
+            <ul class="clean">
+              <li>AI 적용 문제를 산업별로 좁히는 출발점</li>
+              <li>AX 인재는 산업 이해와 데이터 실행력을 연결해야 함</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="ax">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">03 · AX &amp; AI Portfolio</p>
+            <h2>삼일PwC의 AX는 “범용 챗봇”이 아니라 업무형 AI 애플리케이션 묶음이다</h2>
+            <p>공개된 서비스 설명을 보면 재무·세무·공시·내부회계·경영관리 영역을 중심으로 이미 여러 AI/자동화 솔루션을 제품화하고 있다.</p>
+          </div>
+          <p class="note">핵심 차별점은 회계법인의 전문 검토, 원문 근거, 통제·보안 요구사항, 업무 프로세스 설계가 함께 들어간다는 점이다.</p>
+        </div>
+
+        <div class="two-col">
+          <article class="card teal">
+            <span class="tag teal">Portfolio</span>
+            <h3>공개 AI 솔루션 묶음</h3>
+            <ul class="clean">
+              <li><strong>Tax Agent:</strong> 삼일PwC 세법 데이터와 자연어 검색 알고리즘 기반 생성형 AI. 최신 법령·예규·판례 업데이트, 추가질문, 웹 검색, 원문 인용 제공.</li>
+              <li><strong>KSOX AI:</strong> 내부회계 운영 전 주기에 Gen AI를 접목한 End-to-End 원스톱 솔루션. 통제 검증, 위험평가, 미비점 관리, LLM 문서 분석, 증빙 인식.</li>
+              <li><strong>Easy View:</strong> 웹·모바일 기반 경영관리 플랫폼. ERP·그룹웨어·외부 데이터를 연결하고 AI 에이전트와 연계해 의사결정을 지원.</li>
+              <li><strong>Robotic Application:</strong> 재무제표·주석 작성/검토, 공시 DSD 자동 생성, XBRL 공시 검증 등 반복 업무 자동화.</li>
+              <li><strong>Node Studio · Chat X:</strong> 현업이 AI Agent를 직접 만들거나 기업 보안 환경에서 Gen AI를 쓰도록 돕는 플랫폼 방향.</li>
+            </ul>
+          </article>
+          <article class="card blue">
+            <span class="tag blue">AX Operating Model</span>
+            <h3>업무 전환 흐름</h3>
+            <div class="flow">
+              <div class="flow-step">
+                <span class="num">1</span>
+                <h3>진단</h3>
+                <p>수작업, 반복, 병목, 오류 가능성이 큰 업무를 찾는다.</p>
+              </div>
+              <div class="flow-step">
+                <span class="num">2</span>
+                <h3>데이터화</h3>
+                <p>ERP, 그룹웨어, 문서, 외부 데이터를 신뢰 가능한 형태로 연결한다.</p>
+              </div>
+              <div class="flow-step">
+                <span class="num">3</span>
+                <h3>AI 적용</h3>
+                <p>RAG, LLM, 자동 검증, 대시보드, Agent를 업무 흐름에 붙인다.</p>
+              </div>
+              <div class="flow-step">
+                <span class="num">4</span>
+                <h3>검증</h3>
+                <p>원문 근거, 내부통제, 보안, KPI로 성과와 리스크를 확인한다.</p>
+              </div>
+            </div>
+          </article>
+        </div>
+
+        <div style="height:16px"></div>
+
+        <div class="matrix" role="table" aria-label="AX 솔루션 매핑">
+          <div class="head">영역</div>
+          <div class="head">대표 솔루션</div>
+          <div class="head">고객 문제</div>
+          <div class="head">AI 활용</div>
+          <div class="head">성과 지표</div>
+
+          <div class="row-head">세무</div>
+          <div>Tax Agent</div>
+          <div>최신 세법·예규·판례 검색과 해석 시간이 길다.</div>
+          <div>도메인 RAG, 자연어 검색, 추가질문, 웹 검색, 원문 인용.</div>
+          <div>질의 응답 시간, 근거 확인율, 검토 재작업 감소.</div>
+
+          <div class="row-head">내부회계</div>
+          <div>KSOX AI</div>
+          <div>통제 검증, 위험평가, 미비점 관리가 반복적이고 비용이 높다.</div>
+          <div>LLM 문서 분석, 자동 증빙 인식, Agentic 시스템.</div>
+          <div>운영 비용, 통제 검증 커버리지, 미비점 처리 리드타임.</div>
+
+          <div class="row-head">경영관리</div>
+          <div>Easy View · Management AI Copilot</div>
+          <div>데이터 취합과 보고서 작성이 느리고 정합성 검증이 어렵다.</div>
+          <div>BI 자동화, 대화형 리포팅, 내부·외부 데이터 대사.</div>
+          <div>월마감 기간, 데이터 불일치 탐지율, 의사결정 리드타임.</div>
+
+          <div class="row-head">공시</div>
+          <div>Robotic PA · Robotic XBRL</div>
+          <div>재무제표, 주석, DSD, XBRL 작성과 검토가 수작업 중심이다.</div>
+          <div>자동 합계 검증, 버전 비교, DSD 자동 생성, XBRL 대사.</div>
+          <div>검토 시간, 오류 건수, 제출 안정성, 자체 내재화 수준.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="direction">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">04 · Direction</p>
+            <h2>앞으로의 추진 방향: 파일럿이 아니라 측정 가능한 AX</h2>
+            <p>PwC 글로벌 자료는 AI ROI가 소수의 선도기업에 집중되고 있음을 보여준다. 삼일PwC의 기회는 고객의 AI를 “도입”에서 “성과와 통제”로 끌어내리는 데 있다.</p>
+          </div>
+          <p class="note">지원자 메시지: “AI를 잘 씁니다”보다 “도메인 문제를 KPI와 통제 기준으로 AI에 연결합니다”가 더 설득력 있다.</p>
+        </div>
+
+        <div class="roadmap">
+          <article class="roadmap-item">
+            <h3>도메인 Agent 고도화</h3>
+            <p>세무, 내부회계, 공시, 경영관리처럼 규정·근거·검증이 중요한 업무별 AI Agent를 확장한다.</p>
+            <span class="tag blue">Tax · KSOX · XBRL</span>
+          </article>
+          <article class="roadmap-item">
+            <h3>보안형 GenAI 플랫폼</h3>
+            <p>기업 내부문서, ERP, 그룹웨어, 규정을 안전하게 연결하는 Private/On-premise 옵션이 중요해진다.</p>
+            <span class="tag teal">Chat X · Node Studio</span>
+          </article>
+          <article class="roadmap-item">
+            <h3>AI ROI 관리 체계</h3>
+            <p>월별 “scale or stop” 방식으로 업무시간, 오류율, 비용, 매출 기여를 측정해야 한다.</p>
+            <span class="tag green">Measured AX</span>
+          </article>
+          <article class="roadmap-item">
+            <h3>신입 AX 인재 재설계</h3>
+            <p>AI가 반복 업무를 흡수할수록 신입도 판단력, 이해관계자 관리, 전략적 사고를 빠르게 요구받는다.</p>
+            <span class="tag coral">Seniorised Junior</span>
+          </article>
+        </div>
+
+        <div style="height:16px"></div>
+
+        <div class="card-grid two">
+          <article class="card green">
+            <span class="tag green">AI Jobs Barometer</span>
+            <h3>노동시장 신호</h3>
+            <div class="axis-list">
+              <div class="axis-row">
+                <label>스킬 변화 속도</label>
+                <div class="bar teal"><span style="width:72%"></span></div>
+                <strong>2배+</strong>
+              </div>
+              <div class="axis-row">
+                <label>전문화 직무 임금</label>
+                <div class="bar green"><span style="width:42%"></span></div>
+                <strong>+42%</strong>
+              </div>
+              <div class="axis-row">
+                <label>신입 시니어 역량</label>
+                <div class="bar coral"><span style="width:88%"></span></div>
+                <strong>7배</strong>
+              </div>
+              <div class="axis-row">
+                <label>시니어화 신입 성장</label>
+                <div class="bar gold"><span style="width:35%"></span></div>
+                <strong>+35%</strong>
+              </div>
+            </div>
+          </article>
+          <article class="card coral">
+            <span class="tag coral">CEO Survey</span>
+            <h3>고객사의 AI ROI 격차</h3>
+            <div class="axis-list">
+              <div class="axis-row">
+                <label>매출 증가 경험</label>
+                <div class="bar teal"><span style="width:30%"></span></div>
+                <strong>30%</strong>
+              </div>
+              <div class="axis-row">
+                <label>비용 감소 경험</label>
+                <div class="bar green"><span style="width:26%"></span></div>
+                <strong>26%</strong>
+              </div>
+              <div class="axis-row">
+                <label>둘 다 없음</label>
+                <div class="bar coral"><span style="width:56%"></span></div>
+                <strong>56%</strong>
+              </div>
+              <div class="axis-row">
+                <label>매출+비용 동시 성과</label>
+                <div class="bar gold"><span style="width:12%"></span></div>
+                <strong>12%</strong>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="swot">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">05 · Strengths &amp; Weaknesses</p>
+            <h2>강점은 “신뢰 가능한 도메인 지식”, 약점은 “성과 증명과 기술 인재 확보”</h2>
+            <p>아래는 공개자료에 근거한 사실과 그로부터 도출한 분석 관점을 분리해 정리한 SWOT이다.</p>
+          </div>
+          <p class="note">약점/위협은 공개자료 직접 진술이 아니라 전문서비스·AI 시장 구조에 따른 분석 관점이다.</p>
+        </div>
+
+        <div class="swot">
+          <article class="card green">
+            <span class="tag green">Strength</span>
+            <h3>강점</h3>
+            <ul class="clean">
+              <li>국내 4,300여 명 전문가와 PwC 글로벌 네트워크의 지식 공유.</li>
+              <li>감사·세무·공시·내부회계처럼 근거와 책임이 중요한 업무 도메인 보유.</li>
+              <li>Tax Agent, KSOX AI, Easy View, Robotic Application 등 자체 솔루션 포트폴리오 공개.</li>
+              <li>글로벌 PwC 차원의 AI 투자, AI 센터, agent OS, Microsoft AI agents 협력, Assurance for AI 흐름과 연결 가능.</li>
+            </ul>
+          </article>
+          <article class="card coral">
+            <span class="tag coral">Weakness</span>
+            <h3>약점</h3>
+            <ul class="clean">
+              <li>AI 솔루션별 공개 고객 사례와 정량 ROI가 아직 제한적으로 보인다.</li>
+              <li>회계법인 독립성·보안·책임 이슈 때문에 일부 자동화/운영 범위가 제한될 수 있다.</li>
+              <li>AI 플랫폼 경쟁에서는 빅테크, SaaS, SI, 스타트업 대비 엔지니어링 속도 경쟁을 해야 한다.</li>
+              <li>전문가 조직의 인력 구조를 AI-native 업무 방식으로 빠르게 바꾸는 내부 전환 과제가 있다.</li>
+            </ul>
+          </article>
+          <article class="card blue">
+            <span class="tag blue">Opportunity</span>
+            <h3>기회</h3>
+            <ul class="clean">
+              <li>AI ROI를 못 내는 기업이 많아, “성과 측정형 AX” 컨설팅 수요가 커진다.</li>
+              <li>XBRL, 내부회계, 세무, 지속가능성 공시 등 규제형 업무는 AI+검증 수요가 꾸준하다.</li>
+              <li>중견·중소기업은 자체 AI 인프라 구축 부담이 커 Managed Services형 AX에 적합하다.</li>
+              <li>해외법인 가시성, 다국어 문서, 글로벌 규정 대응은 PwC 네트워크와 잘 맞는다.</li>
+            </ul>
+          </article>
+          <article class="card gold">
+            <span class="tag">Threat</span>
+            <h3>위협</h3>
+            <ul class="clean">
+              <li>생성형 AI 도구의 범용화로 단순 리서치·문서화 업무의 가격 프리미엄이 낮아질 수 있다.</li>
+              <li>고객사가 자체 AI팀을 구축하면 외부 자문 수요 일부가 내재화될 수 있다.</li>
+              <li>AI 오류, 개인정보, 보안, 모델 거버넌스 실패는 신뢰 기반 브랜드에 직접 타격을 줄 수 있다.</li>
+              <li>AX 인재 수요가 빅테크·금융·컨설팅으로 몰려 채용 경쟁이 강해진다.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="problems">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">06 · Problem Definition</p>
+            <h2>AX인재전쟁 지원용 문제정의 후보</h2>
+            <p>삼일PwC에 지원할 때는 아래 문제 중 하나를 잡고, 공개근거와 해결 접근을 짧게 연결하면 좋다.</p>
+          </div>
+          <p class="note">가장 강한 축은 “재무·세무·공시 조직이 AI를 쓰고 싶지만 근거, 통제, ROI 때문에 현장 적용이 느리다”이다.</p>
+        </div>
+
+        <div class="problem-grid">
+          <article class="problem">
+            <div class="label">
+              <span class="tag dark">Problem A</span>
+              <h3>AI ROI 부재</h3>
+            </div>
+            <div>
+              <h3>공개 근거</h3>
+              <p>PwC CEO Survey에서 과반 CEO가 AI로 매출 증가나 비용 감소를 아직 보지 못했다. 삼일PwC도 “기술 도입 후 기대효과를 충분히 실현하지 못하는 경우”를 전환 문제로 제시한다.</p>
+            </div>
+            <div>
+              <h3>해결 방향</h3>
+              <p>업무별 KPI를 먼저 정의하고, AI use case를 월별 scale/stop 기준으로 관리한다. 재무·세무·공시 업무에서 시간 절감, 오류 감소, 검증 커버리지를 측정한다.</p>
+            </div>
+          </article>
+
+          <article class="problem">
+            <div class="label">
+              <span class="tag dark">Problem B</span>
+              <h3>근거 있는 AI 답변 부족</h3>
+            </div>
+            <div>
+              <h3>공개 근거</h3>
+              <p>Tax Agent는 최신 세법 자료, 추가질문, 웹 검색, AI 인용 원문 제공을 강조한다. 이는 전문 업무에서 “답변”보다 “출처와 검증”이 중요하다는 신호다.</p>
+            </div>
+            <div>
+              <h3>해결 방향</h3>
+              <p>RAG 답변마다 원문, 적용 범위, 가정, 확인 필요 사항을 분리 표시한다. AI 산출물을 전문가 검토 흐름과 연결해 감사 가능한 업무 로그를 남긴다.</p>
+            </div>
+          </article>
+
+          <article class="problem">
+            <div class="label">
+              <span class="tag dark">Problem C</span>
+              <h3>데이터 정합성·통제 부담</h3>
+            </div>
+            <div>
+              <h3>공개 근거</h3>
+              <p>Easy View는 내부·외부 데이터 검증, 데이터 불일치 식별, 미정산 유출 가능성 방지를 제시한다. KSOX AI는 내부회계 전 주기 통합 관리를 강조한다.</p>
+            </div>
+            <div>
+              <h3>해결 방향</h3>
+              <p>ERP·PG·은행·물류 데이터를 연결해 예외 탐지 규칙과 AI 분석을 결합한다. 통제별 증빙 자동 수집, 미비점 분류, 책임자 알림을 대시보드화한다.</p>
+            </div>
+          </article>
+
+          <article class="problem">
+            <div class="label">
+              <span class="tag dark">Problem D</span>
+              <h3>신입 AX 역량 압축</h3>
+            </div>
+            <div>
+              <h3>공개 근거</h3>
+              <p>2026 AI Jobs Barometer는 AI 노출도가 높은 신입 직무가 리더십, 전략적 사고 같은 시니어 역량을 요구할 가능성이 높아졌다고 본다.</p>
+            </div>
+            <div>
+              <h3>해결 방향</h3>
+              <p>신입 인재가 반복 작업만 수행하는 구조를 넘어, AI 도구로 초안·분석을 만들고 사람은 판단, 고객 맥락, 리스크 검토를 맡는 훈련 체계를 만든다.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">07 · Applicant Angle</p>
+            <h2>지원자 포지셔닝 문장</h2>
+            <p>최종 답변에서 바로 쓸 수 있도록 논리 구조만 잡았다. 문장은 사용자가 직접 다듬으면 된다.</p>
+          </div>
+          <p class="note">삼일PwC는 “AI를 잘 쓰는 사람”보다 “전문 업무를 AI로 바꾸되 신뢰와 통제를 잃지 않는 사람”을 설득해야 한다.</p>
+        </div>
+        <div class="card-grid two">
+          <article class="card blue">
+            <span class="tag blue">Core Pitch</span>
+            <h3>한 문장 방향</h3>
+            <p>“저는 재무·세무·공시 업무의 병목을 데이터와 AI로 분해하고, 원문 근거·통제·KPI를 함께 설계해 실제 성과로 연결하는 AX 인재로 기여하고 싶습니다.”</p>
+          </article>
+          <article class="card teal">
+            <span class="tag teal">Evidence Stack</span>
+            <h3>근거 묶음</h3>
+            <ul class="clean">
+              <li>삼일PwC는 AX Node를 통해 디지털 기술과 데이터를 연결하는 파트너를 지향한다.</li>
+              <li>AI Solutions는 Tax Agent, Node Studio, Chat X 등 업무형 애플리케이션으로 확장 중이다.</li>
+              <li>고객사는 AI ROI와 데이터 정합성, 통제 문제를 겪고 있다.</li>
+              <li>AX 인재는 기술 사용 능력과 도메인 판단력을 같이 갖춰야 한다.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="sources">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">08 · Sources</p>
+            <h2>사용한 공개자료</h2>
+            <p>공식 PwC/Samil PwC 자료 중심으로 작성했고, 약점과 위협은 공개자료를 바탕으로 한 분석 관점으로 구분했다.</p>
+          </div>
+          <p class="print-note">링크는 브라우저에서 열어 원문을 확인할 수 있다.</p>
+        </div>
+        <div class="source-list">
+          <a href="https://www.pwc.com/kr/ko/about-us.html" target="_blank" rel="noreferrer">삼일PwC 회사 소개</a>
+          <a href="https://www.pwc.com/kr/ko/about-us/our-leadership.html" target="_blank" rel="noreferrer">삼일PwC Our Leadership</a>
+          <a href="https://www.pwc.com/kr/ko/services/ax-node.html" target="_blank" rel="noreferrer">삼일PwC AX Node</a>
+          <a href="https://www.pwc.com/kr/ko/services/ax-node/digital-ai.html" target="_blank" rel="noreferrer">삼일PwC Digital &amp; AI Transformation</a>
+          <a href="https://www.pwc.com/kr/ko/services/ax-node/ai-solutions.html" target="_blank" rel="noreferrer">삼일PwC AI Solutions</a>
+          <a href="https://www.pwc.com/kr/ko/digital-solutions/tax-agent.html" target="_blank" rel="noreferrer">삼일PwC Tax Agent</a>
+          <a href="https://www.pwc.com/kr/ko/services/ax-node/ksox-ai.html" target="_blank" rel="noreferrer">삼일PwC KSOX AI</a>
+          <a href="https://www.pwc.com/kr/ko/services/ax-node/easy-view.html" target="_blank" rel="noreferrer">삼일PwC Easy View</a>
+          <a href="https://www.pwc.com/kr/ko/digital-solutions/robotic-application.html" target="_blank" rel="noreferrer">삼일PwC Robotic Application</a>
+          <a href="https://www.pwc.com/kr/ko/insights/global-trends/ai-jobs-barometer2026.html" target="_blank" rel="noreferrer">PwC 2026 AI Jobs Barometer</a>
+          <a href="https://www.pwc.com/gx/en/issues/c-suite-insights/ceo-survey.html" target="_blank" rel="noreferrer">PwC 29th Global CEO Survey</a>
+          <a href="https://www.pwc.com/gx/en/issues/technology/ai-performance.html" target="_blank" rel="noreferrer">PwC Decoding ROI from AI</a>
+          <a href="https://www.pwc.com/gx/en/about/global-annual-review.html" target="_blank" rel="noreferrer">PwC Global Annual Review 2025</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <p>Prepared for AX hackathon workspace. Public-source analysis, not an official Samil PwC document.</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,146 @@
+{
+  "schemaVersion": "design-composition-gate/v1",
+  "createdAt": "2026-08-03T13:39:54+00:00",
+  "medium": "product-ui",
+  "mode": "responsive-sweep",
+  "artifacts": [
+    {
+      "schemaVersion": "design-composition-gate/v1",
+      "artifact": "local-render://demo/CASE-B",
+      "createdAt": "2026-08-03T13:39:57+00:00",
+      "medium": "product-ui",
+      "mode": "responsive-sweep",
+      "passed": true,
+      "findings": [],
+      "measurements": {
+        "maxBodyMeasureCh": 70.4,
+        "widthsProbed": [
+          [
+            768,
+            1024
+          ],
+          [
+            1024,
+            800
+          ],
+          [
+            1280,
+            860
+          ],
+          [
+            1440,
+            900
+          ],
+          [
+            1680,
+            1050
+          ]
+        ],
+        "widthsFailing": []
+      },
+      "viewports": [
+        {
+          "medium": "product-ui",
+          "viewport": [
+            768,
+            1024
+          ],
+          "passed": true,
+          "findings": [],
+          "measurements": {
+            "inkRatio": 0.304,
+            "tintSteps": 11,
+            "shadowCount": 2,
+            "accentAreaRatio": 0.0,
+            "statusAreaRatio": 0.0,
+            "sectionCount": 4,
+            "eyebrowCount": 1,
+            "maxBodyMeasureCh": 70.4,
+            "documentWidth": 768
+          }
+        },
+        {
+          "medium": "product-ui",
+          "viewport": [
+            1024,
+            800
+          ],
+          "passed": true,
+          "findings": [],
+          "measurements": {
+            "inkRatio": 0.231,
+            "tintSteps": 11,
+            "shadowCount": 2,
+            "accentAreaRatio": 0.0,
+            "statusAreaRatio": 0.0,
+            "sectionCount": 4,
+            "eyebrowCount": 1,
+            "maxBodyMeasureCh": 70.4,
+            "documentWidth": 1024
+          }
+        },
+        {
+          "medium": "product-ui",
+          "viewport": [
+            1280,
+            860
+          ],
+          "passed": true,
+          "findings": [],
+          "measurements": {
+            "inkRatio": 0.392,
+            "tintSteps": 11,
+            "shadowCount": 5,
+            "accentAreaRatio": 0.0,
+            "statusAreaRatio": 0.0,
+            "sectionCount": 4,
+            "eyebrowCount": 1,
+            "maxBodyMeasureCh": 62.8,
+            "documentWidth": 1280
+          }
+        },
+        {
+          "medium": "product-ui",
+          "viewport": [
+            1440,
+            900
+          ],
+          "passed": true,
+          "findings": [],
+          "measurements": {
+            "inkRatio": 0.398,
+            "tintSteps": 11,
+            "shadowCount": 5,
+            "accentAreaRatio": 0.0,
+            "statusAreaRatio": 0.0,
+            "sectionCount": 4,
+            "eyebrowCount": 1,
+            "maxBodyMeasureCh": 70.4,
+            "documentWidth": 1440
+          }
+        },
+        {
+          "medium": "product-ui",
+          "viewport": [
+            1680,
+            1050
+          ],
+          "passed": true,
+          "findings": [],
+          "measurements": {
+            "inkRatio": 0.318,
+            "tintSteps": 11,
+            "shadowCount": 5,
+            "accentAreaRatio": 0.0,
+            "statusAreaRatio": 0.0,
+            "sectionCount": 4,
+            "eyebrowCount": 1,
+            "maxBodyMeasureCh": 70.4,
+            "documentWidth": 1680
+          }
+        }
+      ]
+    }
+  ],
+  "passed": true
+}

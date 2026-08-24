@@ -1,0 +1,247 @@
+{
+  "schema_version": "0.1.0",
+  "purpose": "development chunking strategy spike; not holdout performance",
+  "dataset_id": "insaon-synthetic-chunking-spike-v0.1",
+  "corpus_id": "insaon-synthetic-distractor-corpus",
+  "top_k": 5,
+  "query_count": 12,
+  "inputs": {
+    "corpus_path": "distractor-corpus.json",
+    "corpus_sha256": "1a95385dfd24a16a8565de8cd1f0e7ab7746297e5c9aec37e5b41d1d92ee8351",
+    "queries_path": "chunking-spike.json",
+    "queries_sha256": "c9d1dc1d17b1bb11bb52157ebe47405c523fef13d0501402ec420ad9f6f1139c",
+    "source_document_characters": 16472,
+    "retriever": "char-ngram-v1"
+  },
+  "candidates": {
+    "structure-v1": {
+      "chunk_count": 198,
+      "indexed_characters": 16076,
+      "mean_chunk_characters": 81.2,
+      "set_recall_at_5": {
+        "numerator": 11.5,
+        "denominator": 12,
+        "value": 0.9583
+      },
+      "retrieved_corpus_share_at_k": {
+        "numerator": 4572,
+        "denominator": 192912,
+        "value": 0.0237
+      },
+      "mrr_at_10": {
+        "numerator": 11.3333,
+        "denominator": 12,
+        "value": 0.9444
+      },
+      "slice_recall": {
+        "adjacent_confusable": {
+          "numerator": 1.0,
+          "denominator": 1,
+          "value": 1.0
+        },
+        "core_evidence": {
+          "numerator": 4.0,
+          "denominator": 4,
+          "value": 1.0
+        },
+        "multi_evidence": {
+          "numerator": 1.5,
+          "denominator": 2,
+          "value": 0.75
+        },
+        "proviso": {
+          "numerator": 3.0,
+          "denominator": 3,
+          "value": 1.0
+        },
+        "supplementary": {
+          "numerator": 2.0,
+          "denominator": 2,
+          "value": 1.0
+        }
+      },
+      "citation": {
+        "multi_provision_chunks": {
+          "numerator": 0,
+          "denominator": 198,
+          "value": 0.0
+        },
+        "ambiguous_retrievals": {
+          "numerator": 0,
+          "denominator": 60,
+          "value": 0.0
+        },
+        "gold_reachable_only_through_ambiguous_chunk": {
+          "numerator": 0,
+          "denominator": 12,
+          "value": 0.0
+        },
+        "chunks_covering_no_provision": 0
+      },
+      "structure_preserved": {
+        "article_path_recoverable": true,
+        "parent_and_relation_ids_traversable": true
+      },
+      "configuration": {
+        "split_on": "조·항·호·목"
+      }
+    },
+    "fixed-512": {
+      "chunk_count": 33,
+      "indexed_characters": 16453,
+      "mean_chunk_characters": 498.6,
+      "set_recall_at_5": {
+        "numerator": 11.75,
+        "denominator": 12,
+        "value": 0.9792
+      },
+      "retrieved_corpus_share_at_k": {
+        "numerator": 30692,
+        "denominator": 197436,
+        "value": 0.1555
+      },
+      "mrr_at_10": {
+        "numerator": 7.7333,
+        "denominator": 12,
+        "value": 0.6444
+      },
+      "slice_recall": {
+        "adjacent_confusable": {
+          "numerator": 0.75,
+          "denominator": 1,
+          "value": 0.75
+        },
+        "core_evidence": {
+          "numerator": 4.0,
+          "denominator": 4,
+          "value": 1.0
+        },
+        "multi_evidence": {
+          "numerator": 2.0,
+          "denominator": 2,
+          "value": 1.0
+        },
+        "proviso": {
+          "numerator": 3.0,
+          "denominator": 3,
+          "value": 1.0
+        },
+        "supplementary": {
+          "numerator": 2.0,
+          "denominator": 2,
+          "value": 1.0
+        }
+      },
+      "citation": {
+        "multi_provision_chunks": {
+          "numerator": 33,
+          "denominator": 33,
+          "value": 1.0
+        },
+        "ambiguous_retrievals": {
+          "numerator": 60,
+          "denominator": 60,
+          "value": 1.0
+        },
+        "gold_reachable_only_through_ambiguous_chunk": {
+          "numerator": 12,
+          "denominator": 12,
+          "value": 1.0
+        },
+        "chunks_covering_no_provision": 0
+      },
+      "structure_preserved": {
+        "article_path_recoverable": false,
+        "parent_and_relation_ids_traversable": false
+      },
+      "configuration": {
+        "size": 512,
+        "overlap": 0
+      }
+    },
+    "recursive-512-64": {
+      "chunk_count": 36,
+      "indexed_characters": 16861,
+      "mean_chunk_characters": 468.4,
+      "set_recall_at_5": {
+        "numerator": 12.0,
+        "denominator": 12,
+        "value": 1.0
+      },
+      "retrieved_corpus_share_at_k": {
+        "numerator": 29177,
+        "denominator": 202332,
+        "value": 0.1442
+      },
+      "mrr_at_10": {
+        "numerator": 6.65,
+        "denominator": 12,
+        "value": 0.5542
+      },
+      "slice_recall": {
+        "adjacent_confusable": {
+          "numerator": 1.0,
+          "denominator": 1,
+          "value": 1.0
+        },
+        "core_evidence": {
+          "numerator": 4.0,
+          "denominator": 4,
+          "value": 1.0
+        },
+        "multi_evidence": {
+          "numerator": 2.0,
+          "denominator": 2,
+          "value": 1.0
+        },
+        "proviso": {
+          "numerator": 3.0,
+          "denominator": 3,
+          "value": 1.0
+        },
+        "supplementary": {
+          "numerator": 2.0,
+          "denominator": 2,
+          "value": 1.0
+        }
+      },
+      "citation": {
+        "multi_provision_chunks": {
+          "numerator": 35,
+          "denominator": 36,
+          "value": 0.9722
+        },
+        "ambiguous_retrievals": {
+          "numerator": 60,
+          "denominator": 60,
+          "value": 1.0
+        },
+        "gold_reachable_only_through_ambiguous_chunk": {
+          "numerator": 12,
+          "denominator": 12,
+          "value": 1.0
+        },
+        "chunks_covering_no_provision": 0
+      },
+      "structure_preserved": {
+        "article_path_recoverable": false,
+        "parent_and_relation_ids_traversable": false
+      },
+      "configuration": {
+        "size": 512,
+        "overlap": 64,
+        "split_on": "문단 → 문장"
+      }
+    }
+  },
+  "selection_rule": "citation feasibility first, then Set Recall@5, then MRR@10; a chunk that cannot be cited as one article_path cannot satisfy the product contract",
+  "environment": {
+    "python": "3.14.6",
+    "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O"
+  },
+  "limitations": [
+    "Synthetic development corpus; no legal correctness claim.",
+    "Lexical retriever only; no temporal filter, fusion or reranking.",
+    "The source document is reconstructed from already-structured provisions, so it understates how badly fixed-length splitting behaves on real documents with tables, 별표 and multi-line 항·호."
+  ]
+}

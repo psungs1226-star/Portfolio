@@ -1,0 +1,27 @@
+{
+  "project": "인사ON",
+  "phase": "05-fixed-eval-release",
+  "steps": [
+    {
+      "step": 0,
+      "name": "ablation-evaluator",
+      "status": "completed",
+      "completed_at": "2026-07-29T15:57:25+09:00",
+      "summary": "동일 60건 합성 회귀셋·snapshot·top-k·3회 반복으로 B0/B1/H1/H2/H3를 실행하고 numerator·denominator·Wilson CI가 있는 결과와 비교표를 생성했다."
+    },
+    {
+      "step": 1,
+      "name": "fatal-regression",
+      "status": "completed",
+      "completed_at": "2026-07-29T15:57:25+09:00",
+      "summary": "현재 유형별 후보 필터가 적용된 동일 합성 회귀에서 H2의 결정적 예외 누락 치명적 오류 12건과 H3 0건을 확인했으며 pytest·Ruff·mypy·계약·공개 경계와 artifact hash release gate를 유지한다."
+    },
+    {
+      "step": 2,
+      "name": "portfolio-release",
+      "status": "completed",
+      "completed_at": "2026-07-29T15:57:25+09:00",
+      "summary": "결과 JSON에서 README와 10장 HTML 보고서를 동기화하고 PDF를 재생성·전 페이지 검수했으며 합성 회귀와 독립 법령 검증의 경계를 ADR-0005에 고정했다."
+    }
+  ]
+}

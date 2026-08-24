@@ -1,0 +1,114 @@
+{
+  "schema_version": "0.1.0",
+  "purpose": "Phase harness for the Meditherapy influencer seeding Codex plugin",
+  "phases": [
+    {
+      "phase_id": "phase_0_problem_evidence_lock",
+      "goal": "Lock the public, verifiable problem definition.",
+      "inputs": ["AX page", "Meditherapy interview", "career vision", "TikTok marketing job post", "sales target article"],
+      "gate": ["At least 3 public sources exist", "No unsupported sales causality claim", "Problem maps to ontology, causal hypothesis, and iteration loop"],
+      "outputs": ["agents.md facts", "README source basis", "README problem statement"]
+    },
+    {
+      "phase_id": "phase_1_product_ontology",
+      "goal": "Convert Meditherapy products into product-fit parameters.",
+      "inputs": ["meditherapy_product_parameters.json", "official or sales-page product data"],
+      "gate": ["Every MVP product has concern, content, risk, and KPI tags", "Gender is not the first-order recommendation criterion", "Risky products have hard cautions"],
+      "outputs": ["product ontology", "product risk flags", "product KPI map"]
+    },
+    {
+      "phase_id": "phase_2_influencer_collection",
+      "goal": "Collect 30 public influencer candidates and 300 content observations.",
+      "inputs": ["TikTok search terms", "public creator pages", "public content metadata"],
+      "gate": ["At least 24 candidates satisfy required fields", "Each segment reaches at least 80 percent of its target", "Each candidate has 10 sampled contents or a documented shortage reason", "Comment raw text is not stored"],
+      "outputs": ["influencer_candidates.jsonl", "content_observations.jsonl", "collection_notes.md"]
+    },
+    {
+      "phase_id": "phase_3_influencer_parameter_normalization",
+      "goal": "Normalize public observations into scoreable influencer profiles.",
+      "inputs": ["influencer_candidates.jsonl", "content_observations.jsonl", "influencer_mvp_parameters.json"],
+      "gate": ["Primary concerns are evidence-backed", "Unknown values are not invented", "Hard exclusions are preserved", "Every recommendation field is traceable to collected data"],
+      "outputs": ["influencer_profiles.jsonl", "normalization_report.json"]
+    },
+    {
+      "phase_id": "phase_4_product_influencer_matching",
+      "goal": "Score products and creators and produce causal seeding hypotheses.",
+      "inputs": ["product parameters", "influencer profiles", "MVP scoring weights"],
+      "gate": ["Hard exclusions are applied first", "Rationale separates self, audience, content, market, and risk", "no_seed is possible", "Control group can be selected"],
+      "outputs": ["seed_recommendations.json", "matching_trace.jsonl"]
+    },
+    {
+      "phase_id": "phase_5_seeding_execution",
+      "goal": "Convert recommendations into executable seeding briefs.",
+      "inputs": ["seed_recommendations.json", "product content guide", "risk checklist"],
+      "gate": ["Brief does not overclaim efficacy", "KPI matches hypothesis", "Required disclosures and avoid-claims are present"],
+      "outputs": ["seeding_briefs.json", "seeding_execution_plan.md"]
+    },
+    {
+      "phase_id": "phase_6_result_collection",
+      "goal": "Collect result data and separate public proxy KPIs from internal conversion KPIs.",
+      "inputs": ["post URLs", "public metrics", "intent themes", "internal click or sales data if available"],
+      "gate": ["Public and internal data sources are separated", "Sales success is not claimed without sales data", "Predefined KPIs are not changed after results"],
+      "outputs": ["experiment_results.json", "result_review.md"]
+    },
+    {
+      "phase_id": "phase_6a_new_product_db_ranking",
+      "goal": "Rank the existing influencer DB for one new product without running new public research.",
+      "inputs": ["new_product_example.json", "influencer_profiles.jsonl", "product ontology tags", "Phase 4 scoring weights"],
+      "gate": [
+        "New product required fields exist",
+        "Unmapped product tags remain needs_product_mapping or unknown",
+        "Hard exclusions are applied before ranking",
+        "needs_more_data candidates do not appear as high-confidence top recommendations",
+        "Score trace and natural-language rationale do not conflict"
+      ],
+      "outputs": ["new_product_rankings.json", "new_product_matching_trace.jsonl", "new_product_ranking_report.md", "phase6a_validation.json"]
+    },
+    {
+      "phase_id": "phase_6b_new_product_research_gap",
+      "goal": "Decide whether the existing DB is sufficient or whether limited additional research is needed.",
+      "inputs": ["new_product_rankings.json", "influencer_profiles.jsonl", "new product JSON", "data freshness policy"],
+      "gate": [
+        "Research need is explained with quantitative triggers",
+        "Suggested search queries map to new product tags",
+        "Existing DB ranking remains preserved",
+        "Research scope is limited to missing product segments"
+      ],
+      "outputs": ["new_product_research_gap.md", "new_product_research_plan.json", "phase6b_validation.json"]
+    },
+    {
+      "phase_id": "phase_6c_new_product_refresh_and_rerank",
+      "goal": "Run limited public research only when Phase 6B requires it, then merge new candidates and rerank.",
+      "inputs": ["new_product_research_plan.json", "public creator URLs", "public content metadata", "existing influencer DB"],
+      "gate": [
+        "New candidate source URLs are traceable",
+        "Raw comment text and sensitive personal data are not stored",
+        "Duplicate candidates are removed",
+        "Low-evidence new candidates remain needs_more_data",
+        "Refresh ranking changes are explained"
+      ],
+      "outputs": ["new_product_refreshed_candidates.jsonl", "new_product_refreshed_profiles.jsonl", "new_product_refreshed_rankings.json", "new_product_refresh_diff.md", "phase6c_validation.json"]
+    },
+    {
+      "phase_id": "phase_7_5_4_mini_reviewer",
+      "goal": "Independently review planning, code behavior, recommendation logic, and risk handling.",
+      "inputs": ["product parameters", "influencer profiles", "recommendations", "seeding briefs", "results"],
+      "gate": ["No gender-first recommendation", "No unsupported ROAS claim", "No ignored hard exclusion", "No high-confidence recommendation from insufficient data"],
+      "outputs": ["reviewer_report.json", "reviewer_findings.md"]
+    },
+    {
+      "phase_id": "phase_8_iteration_learning",
+      "goal": "Convert campaign outcomes into the next experiment rules.",
+      "inputs": ["experiment_results.json", "reviewer_report.json", "marketer retrospective"],
+      "gate": ["Rule changes are evidence-linked", "Single examples are not overgeneralized", "Next experiment question is explicit"],
+      "outputs": ["iteration_notes.md", "updated parameters", "next seeding experiment"]
+    },
+    {
+      "phase_id": "phase_9_submission_packaging",
+      "goal": "Package the submission with plugin files, README, data, and logs.",
+      "inputs": ["plugin.json", "SKILL.md", "README", "data", "logs"],
+      "gate": ["Required files exist", "README, data, and logs do not conflict", "No secrets in logs", "Implementation scope is not overstated"],
+      "outputs": ["submission.zip", "final review log"]
+    }
+  ]
+}

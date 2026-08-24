@@ -1,0 +1,358 @@
+{
+  "schema_version": "0.1.0",
+  "run_id": "SYNTHETIC-REGRESSION-H3-0.1.0",
+  "status": "completed",
+  "started_at": "2026-08-18T01:23:46.359355Z",
+  "completed_at": "2026-08-18T01:23:55.274993Z",
+  "system": {
+    "config_id": "H3",
+    "code_revision": "6e713df3f7bb83830ca0093d1182d34fe1a8d3f754e9be4166580b40246f3f6a",
+    "retrieval_config": "h3@0.1.0",
+    "model": "deterministic-review-model-v1",
+    "embedding": "deterministic-hash-projection-v2",
+    "reranker": "idf-weighted-rerank-v2",
+    "query_transform": "none",
+    "prompt_version": "structured-draft-0.1.0",
+    "rule_version": "rule-service-0.1.0",
+    "parser_version": "0.1.0",
+    "index_version": "synthetic-index-0.1.0"
+  },
+  "data": {
+    "dataset_id": "insaon-synthetic-system-regression",
+    "dataset_version": "0.4.0",
+    "dataset_hash": "1520d94bd6307e3e8248b647b1be9538bf157e694bd12445256eb6bf3e89d582",
+    "case_count": 70,
+    "unique_case_count": 70,
+    "source_snapshot_id": "SYNTHETIC-PUBLIC-FIXTURE-0.1.0",
+    "source_snapshot_hash": "c5fbc70ef4e43198859069357adc0a175ce7badcdcc6e444ec79da4524930919",
+    "data_as_of": "2026-07-29"
+  },
+  "execution": {
+    "top_k": 5,
+    "generation_repeats": 3,
+    "seed_policy": "deterministic adapters; three identical safety repetitions",
+    "environment_lock_hash": "1963c367316254d6119e89f156e4e024c596b3f96925ca5801284f9e5052ba56"
+  },
+  "metrics": [
+    {
+      "metric_id": "retrieval.set_recall_at_5",
+      "slice_id": "all",
+      "aggregation": "macro_mean",
+      "numerator": 33.0,
+      "denominator": 36,
+      "value": 0.9166666666666666,
+      "ci95": {
+        "low": null,
+        "high": null
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "retrieval.mrr_at_10",
+      "slice_id": "all",
+      "aggregation": "macro_mean",
+      "numerator": 25.566666666666663,
+      "denominator": 36,
+      "value": 0.710185185185185,
+      "ci95": {
+        "low": null,
+        "high": null
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "retrieval.exception_bundle_rate",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": 6.0,
+      "denominator": 8,
+      "value": 0.75,
+      "ci95": {
+        "low": 0.40927543031016894,
+        "high": 0.928520787247891
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "retrieval.invalid_version_rate",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": 0.0,
+      "denominator": 180,
+      "value": 0.0,
+      "ci95": {
+        "low": 0.0,
+        "high": 0.02089549792161305
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "condition.missing_recall",
+      "slice_id": "all",
+      "aggregation": "macro_mean",
+      "numerator": 9.0,
+      "denominator": 10,
+      "value": 0.9,
+      "ci95": {
+        "low": null,
+        "high": null
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "temporal.version_accuracy",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": 12.0,
+      "denominator": 12,
+      "value": 1.0,
+      "ci95": {
+        "low": 0.7575059933447591,
+        "high": 1.0
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "answer.status_accuracy",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": 70.0,
+      "denominator": 70,
+      "value": 1.0,
+      "ci95": {
+        "low": 0.947976937589733,
+        "high": 1.0
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "citation.precision",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": 300.0,
+      "denominator": 300,
+      "value": 1.0,
+      "ci95": {
+        "low": 0.9873570287754537,
+        "high": 0.9999999999999998
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "citation.completeness",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": 58.0,
+      "denominator": 58,
+      "value": 1.0,
+      "ci95": {
+        "low": 0.9378821442127971,
+        "high": 1.0
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "abstention.recall",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": 22.0,
+      "denominator": 22,
+      "value": 1.0,
+      "ci95": {
+        "low": 0.8513451253913791,
+        "high": 1.0
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "abstention.risky_answer_rate",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": 0.0,
+      "denominator": 22,
+      "value": 0.0,
+      "ci95": {
+        "low": 0.0,
+        "high": 0.14865487460862087
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "abstention.coverage",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": 48.0,
+      "denominator": 70,
+      "value": 0.6857142857142857,
+      "ci95": {
+        "low": 0.5697286201420141,
+        "high": 0.7823770995341724
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "security.privacy_block_recall",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": 4.0,
+      "denominator": 4,
+      "value": 1.0,
+      "ci95": {
+        "low": 0.5101091635454027,
+        "high": 1.0
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "robustness.phrasing_status_agreement",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": 88.0,
+      "denominator": 88,
+      "value": 1.0,
+      "ci95": {
+        "low": 0.9581729333351077,
+        "high": 0.9999999999999998
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "claim.invented_quantity_rate",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": 0.0,
+      "denominator": 48,
+      "value": 0.0,
+      "ci95": {
+        "low": 6.424720965888271e-18,
+        "high": 0.0741001296661175
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "conversation.resolution_rate",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": 12.0,
+      "denominator": 12,
+      "value": 1.0,
+      "ci95": {
+        "low": 0.7575059933447591,
+        "high": 1.0
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "conversation.condition_carryover",
+      "slice_id": "all",
+      "aggregation": "macro_mean",
+      "numerator": 4.0,
+      "denominator": 4,
+      "value": 1.0,
+      "ci95": {
+        "low": null,
+        "high": null
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "conversation.topic_switch_isolation",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": 4.0,
+      "denominator": 4,
+      "value": 1.0,
+      "ci95": {
+        "low": 0.5101091635454027,
+        "high": 1.0
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "conversation.elliptical_followup",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": 4.0,
+      "denominator": 4,
+      "value": 1.0,
+      "ci95": {
+        "low": 0.5101091635454027,
+        "high": 1.0
+      },
+      "undefined_reason": null
+    }
+  ],
+  "fatal_errors": {
+    "total": 0,
+    "by_type": {
+      "FATAL_HALLUCINATED_CITATION": 0,
+      "FATAL_INVALID_EFFECTIVE_VERSION": 0,
+      "FATAL_MISSING_DECISIVE_EXCEPTION": 0,
+      "FATAL_OUT_OF_SCOPE_DEFINITE_ANSWER": 0,
+      "FATAL_PERSONAL_DATA_EGRESS": 0,
+      "FATAL_DOCUMENT_INSTRUCTION_FOLLOWED": 0,
+      "FATAL_STALE_TURN_EVIDENCE": 0
+    },
+    "case_ids": []
+  },
+  "failure_types": {
+    "by_type": {
+      "RETRIEVAL_MISS": 3,
+      "WRONG_VERSION": 0,
+      "ADJACENT_TYPE_CONFUSION": 24,
+      "MISSING_DECISIVE_EXCEPTION": 0,
+      "CITATION_INCOMPLETE": 0,
+      "WRONG_STATUS": 0,
+      "RISKY_ANSWER": 0
+    },
+    "case_ids_by_type": {
+      "RETRIEVAL_MISS": [
+        "CASE-LOCKED-001",
+        "CASE-LOCKED-017",
+        "CASE-LOCKED-018"
+      ],
+      "WRONG_VERSION": [],
+      "ADJACENT_TYPE_CONFUSION": [
+        "CASE-LOCKED-001",
+        "CASE-LOCKED-002",
+        "CASE-LOCKED-003",
+        "CASE-LOCKED-004",
+        "CASE-LOCKED-005",
+        "CASE-LOCKED-006",
+        "CASE-LOCKED-008",
+        "CASE-LOCKED-013",
+        "CASE-LOCKED-014",
+        "CASE-LOCKED-015",
+        "CASE-LOCKED-016",
+        "CASE-LOCKED-017",
+        "CASE-LOCKED-018",
+        "CASE-LOCKED-019",
+        "CASE-LOCKED-020",
+        "CASE-LOCKED-021",
+        "CASE-LOCKED-022",
+        "CASE-LOCKED-023",
+        "CASE-LOCKED-024",
+        "CASE-LOCKED-025",
+        "CASE-LOCKED-026",
+        "CASE-LOCKED-028",
+        "CASE-LOCKED-029",
+        "CASE-LOCKED-030"
+      ],
+      "MISSING_DECISIVE_EXCEPTION": [],
+      "CITATION_INCOMPLETE": [],
+      "WRONG_STATUS": [],
+      "RISKY_ANSWER": []
+    },
+    "cases_with_any_failure": 24
+  },
+  "case_results_path": "private://synthetic-regression/h3.case-results.json",
+  "limitations": [
+    "Synthetic system-regression set; not an independently reviewed legal holdout.",
+    "Legal correctness, operational effect and local-model performance remain unmeasured.",
+    "The deterministic offline model does not represent local model variability."
+  ],
+  "notes": [
+    "All case texts and answer keys remain outside the public submission.",
+    "Generation safety path executed three times per case."
+  ]
+}

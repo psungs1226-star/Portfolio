@@ -1,0 +1,24 @@
+:root {
+  font-family: sans-serif;
+}
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  margin: 0;
+  /* 최소폭 고정(320px)은 분할 pane·초소형 WebView에서 가로 잘림을 만든다.
+     0으로 두고 콘텐츠가 폭에 맞춰 유연하게 줄어들게 한다(실기기 ≥320은 영향 없음). */
+  min-width: 0;
+  min-height: 100vh;
+}
+
+@media (min-width: 481px) {
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    background-color: #f5f5f5 !important;
+  }
+}

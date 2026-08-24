@@ -1,0 +1,34 @@
+{
+  "project": "인사ON",
+  "phase": "12-official-local-rag",
+  "steps": [
+    {
+      "step": 0,
+      "name": "historical-official-source-contract",
+      "status": "completed",
+      "completed_at": "2026-08-03T16:20:00+09:00",
+      "summary": "휴직·복직 심층 검토용 지방공무원법·임용령·인사운영지침의 2024년 유효 버전 3종을 exact allowlist에 추가하고 effective_to를 수집·파싱·품질감사 계약 전체에 연결했다."
+    },
+    {
+      "step": 1,
+      "name": "official-candidate-local-runtime",
+      "status": "completed",
+      "completed_at": "2026-08-03T16:35:00+09:00",
+      "summary": "local 제품 경로가 합성 조문으로 대체되지 않고 비제출 공식 candidate의 deep-review 조문만 사용하도록 고정했다. 후보 부재·stale registry는 기동 실패 또는 재수집으로 처리한다."
+    },
+    {
+      "step": 2,
+      "name": "grounded-model-safety-gate",
+      "status": "completed",
+      "completed_at": "2026-08-03T16:50:00+09:00",
+      "summary": "Qwen 생성·재랭킹과 BGE-M3 임베딩을 공식 과거 조문에 연결하고, 효력·source·인용 검증과 미승인 candidate의 REVIEW_REQUIRED 하향 gate를 검증했다. CASE-B는 공식 인용 10건·합성 인용 0건이다."
+    },
+    {
+      "step": 3,
+      "name": "public-evidence-and-interface-sync",
+      "status": "completed",
+      "completed_at": "2026-08-03T17:10:00+09:00",
+      "summary": "챗봇에 공식 출처명·원문 링크·효력기간·발췌를 표시하고 품질 탭, README, HTML 보고서, 평가 artifact와 Harness 문구를 같은 승인 대기 상태로 동기화했다."
+    }
+  ]
+}

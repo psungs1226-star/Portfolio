@@ -1,0 +1,19 @@
+{
+  "phases": [
+    { "dir": "0-foundation", "status": "completed" },
+    { "dir": "1-fortune", "status": "completed" },
+    { "dir": "2-weather", "status": "completed" },
+    { "dir": "3-records", "status": "completed" },
+    { "dir": "4-au-share", "status": "completed" },
+    { "dir": "5-build-submit", "status": "completed" },
+    { "dir": "6-diary-memo-saju", "status": "completed" },
+    { "dir": "7-fortune-depth", "status": "completed" },
+    { "dir": "8-fortune-expert", "status": "completed" },
+    { "dir": "9-polish-onboarding", "status": "completed" },
+    { "dir": "10-home-ux", "status": "completed" },
+    { "dir": "11-cute-records", "status": "completed" },
+    { "dir": "12-feedback-polish", "status": "completed" },
+    { "dir": "13-fortune-readability", "status": "completed" },
+    { "dir": "14-warmth-features", "status": "completed" }
+  ]
+}

@@ -1,0 +1,781 @@
+{
+  "schema_version": "0.1.0",
+  "phase_id": "phase_5_seeding_execution_briefs",
+  "generated_at": "2026-07-09T01:59:51.019208Z",
+  "source_recommendation_file": "data/seed_recommendations.json",
+  "policy": {
+    "claim_policy": "Use cosmetic, routine, appearance, and creator-tolerance language only. Avoid medical, lasting-outcome, and assured-outcome claims.",
+    "disclosure_policy": "Gifted, sponsored, affiliate, or coupon relationships must be disclosed before publication.",
+    "sales_policy": "Public engagement can support a sales-contribution hypothesis but cannot prove sales without internal click, coupon, cart, or order data.",
+    "comment_policy": "Do not store raw comments; store intent themes and counts only."
+  },
+  "summary": {
+    "seed_brief_count": 6,
+    "control_tracking_count": 3,
+    "seed_product_distribution": {
+      "pdrn_serum": 1,
+      "hyaluronic_first_serum": 2,
+      "vitamin_bubble_serum": 1,
+      "retinal_skin_booster_serum": 2
+    },
+    "manual_review_required_count": 6,
+    "collection_windows": [
+      "24h",
+      "72h",
+      "7d",
+      "14d"
+    ]
+  },
+  "seed_briefs": [
+    {
+      "brief_id": "phase5_seed_recommendation_cand_001_pdrn_serum",
+      "selection_role": "seed_recommendation",
+      "creator_handle": "@acneproneprincess",
+      "profile_url": "https://www.tiktok.com/@acneproneprincess",
+      "segment_id": "acne_trouble_barrier",
+      "seed_product": "pdrn_serum",
+      "seed_product_name": "PDRN 스킨부스터 세럼",
+      "why_this_creator": "@acneproneprincess has public evidence for acne_prone, barrier_damage, redness and already creates skincare_routine, so the brief tests a content-context fit instead of follower count alone.",
+      "why_this_product": {
+        "summary": "PDRN 스킨부스터 세럼 maps to observed product concern tags ['barrier_damage', 'post_extraction_care', 'redness', 'trouble_prone'] and content tags ['calming_routine', 'post_breakout_routine', 'trouble_care'].",
+        "product_family": "trouble_barrier_repair",
+        "measurement_kpis": [
+          "save_rate",
+          "sensitive_skin_question_count",
+          "routine_question_count",
+          "creator_self_reported_tolerance",
+          "comment_intent_quality"
+        ],
+        "score_trace": {
+          "influencer_self_fit": 33,
+          "audience_fit": 19,
+          "content_fit": 14.0,
+          "market_channel_fit": 10,
+          "risk_penalty": 1
+        }
+      },
+      "causal_hypothesis": "@acneproneprincess는 acne_prone, barrier_damage 맥락과 skincare_routine 콘텐츠 근거가 있어 pdrn_serum 시딩 시 저장, 사용법 질문, 구매 의도 댓글이 증가할 수 있다는 가설을 검증한다.",
+      "content_angle": "트러블 후 장벽 루틴을 7일 체감 기록으로 구성하되 의학적 결과 표현은 배제한다.",
+      "content_deliverables": {
+        "video_count": 1,
+        "format": "TikTok short-form video",
+        "mandatory_context": "트러블 후 장벽 루틴을 7일 체감 기록으로 구성하되 의학적 결과 표현은 배제한다.",
+        "no_required_positive_review": true,
+        "shot_list": [
+          "Current trouble/barrier routine context",
+          "Application texture and layering",
+          "7-day check-in framing without treatment claims",
+          "Prompt for sensitive-skin routine questions"
+        ]
+      },
+      "required_disclosures": [
+        "Disclose gifted product or sponsorship according to platform and local advertising rules.",
+        "Do not require positive sentiment; require honest usage experience and clear usage context.",
+        "Mark affiliate, coupon, or paid relationship clearly if used in the campaign.",
+        "Before outreach: Confirm audience country distribution before final market-fit scoring."
+      ],
+      "avoid_claims": [
+        "Do not use medical acne outcome, wound recovery, or regeneration language.",
+        "Use cosmetic language: comfort, routine fit, skin look, and creator tolerance.",
+        "Respect product risk flag: do_not_claim_medical_acne_treatment.",
+        "Respect product risk flag: avoid_use_on_wounds."
+      ],
+      "risk_review": {
+        "risk_penalty_reasons": [
+          "claim_compliance_risk"
+        ],
+        "product_risk_flags": [
+          "do_not_claim_medical_acne_treatment",
+          "avoid_use_on_wounds"
+        ],
+        "manual_review_required_before_outreach": true
+      },
+      "primary_kpi": "save_rate",
+      "secondary_kpi": [
+        "sensitive_skin_question_count",
+        "routine_question_count"
+      ],
+      "collection_window": [
+        "24h",
+        "72h",
+        "7d",
+        "14d"
+      ],
+      "result_collection": {
+        "experiment_unit_id": "seed_recommendation::cand_001::pdrn_serum",
+        "public_kpis": {
+          "24h": [
+            "posted",
+            "view_count",
+            "like_count",
+            "comment_count"
+          ],
+          "72h": [
+            "view_count",
+            "save_count_if_available",
+            "share_count_if_available",
+            "comment_intent_themes"
+          ],
+          "7d": [
+            "save_rate",
+            "sensitive_skin_question_count",
+            "routine_question_count"
+          ],
+          "14d": [
+            "repeat_content_signal",
+            "creator_self_reported_tolerance",
+            "risk_comment_count"
+          ]
+        },
+        "internal_kpis_optional": [
+          "tracked_link_clicks",
+          "coupon_usage",
+          "add_to_cart",
+          "orders",
+          "CPA",
+          "ROAS"
+        ],
+        "data_source_rule": "Keep public metrics and internal conversion metrics separate. Do not infer sales from public engagement alone.",
+        "comment_storage_rule": "Store only intent themes and counts, not raw comment text."
+      },
+      "next_iteration_rule": "If save_rate and comment-intent themes outperform the held-out control group after 14d, keep pdrn_serum for the same creator segment and test one adjacent content angle. If public intent is weak or risk comments increase, mark the result inconclusive or revise product-content fit before reseeding."
+    },
+    {
+      "brief_id": "phase5_seed_recommendation_cand_036_hyaluronic_first_serum",
+      "selection_role": "seed_recommendation",
+      "creator_handle": "@sunny.tsao",
+      "profile_url": "https://www.tiktok.com/@sunny.tsao",
+      "segment_id": "texture_pore_makeup_prep",
+      "seed_product": "hyaluronic_first_serum",
+      "seed_product_name": "히알루론산 스킨부스터 퍼스트 세럼",
+      "why_this_creator": "@sunny.tsao has public evidence for dryness, makeup_adherence_issue, dehydration and already creates makeup_prep, skincare_routine, grwm, so the brief tests a content-context fit instead of follower count alone.",
+      "why_this_product": {
+        "summary": "히알루론산 스킨부스터 퍼스트 세럼 maps to observed product concern tags ['dehydration', 'dryness', 'routine_entry', 'tightness_after_cleansing'] and content tags ['morning_routine', 'skin_prep', 'skincare_routine'].",
+        "product_family": "hydration_barrier_basic",
+        "measurement_kpis": [
+          "routine_save_rate",
+          "dryness_question_count",
+          "beginner_routine_question_count",
+          "makeup_prep_comment_count",
+          "creator_self_reported_tolerance"
+        ],
+        "score_trace": {
+          "influencer_self_fit": 30,
+          "audience_fit": 19,
+          "content_fit": 20,
+          "market_channel_fit": 10,
+          "risk_penalty": 4
+        }
+      },
+      "causal_hypothesis": "@sunny.tsao는 dryness, makeup_adherence_issue 맥락과 makeup_prep, skincare_routine 콘텐츠 근거가 있어 hyaluronic_first_serum 시딩 시 저장, 사용법 질문, 구매 의도 댓글이 증가할 수 있다는 가설을 검증한다.",
+      "content_angle": "필터 없는 첫 단계 수분 루틴 또는 GRWM 메이크업프렙 맥락에서 건조/밀림 질문을 관찰한다.",
+      "content_deliverables": {
+        "video_count": 1,
+        "format": "TikTok short-form video",
+        "mandatory_context": "필터 없는 첫 단계 수분 루틴 또는 GRWM 메이크업프렙 맥락에서 건조/밀림 질문을 관찰한다.",
+        "no_required_positive_review": true,
+        "shot_list": [
+          "Routine entry point",
+          "Texture and application",
+          "Makeup-prep or daily-use context",
+          "Comment prompt for routine questions"
+        ]
+      },
+      "required_disclosures": [
+        "Disclose gifted product or sponsorship according to platform and local advertising rules.",
+        "Do not require positive sentiment; require honest usage experience and clear usage context.",
+        "Mark affiliate, coupon, or paid relationship clearly if used in the campaign.",
+        "Before outreach: Confirm audience country distribution before final market-fit scoring."
+      ],
+      "avoid_claims": [
+        "Do not claim deep skin penetration or structural skin change without evidence.",
+        "Use cosmetic language: first-step hydration feel, makeup prep, and routine ease.",
+        "Respect product risk flag: avoid_overclaim_deep_skin_effect_without_evidence."
+      ],
+      "risk_review": {
+        "risk_penalty_reasons": [
+          "claim_compliance_risk",
+          "retinoid_conflict"
+        ],
+        "product_risk_flags": [
+          "avoid_overclaim_deep_skin_effect_without_evidence"
+        ],
+        "manual_review_required_before_outreach": true
+      },
+      "primary_kpi": "routine_save_rate",
+      "secondary_kpi": [
+        "dryness_question_count",
+        "beginner_routine_question_count"
+      ],
+      "collection_window": [
+        "24h",
+        "72h",
+        "7d",
+        "14d"
+      ],
+      "result_collection": {
+        "experiment_unit_id": "seed_recommendation::cand_036::hyaluronic_first_serum",
+        "public_kpis": {
+          "24h": [
+            "posted",
+            "view_count",
+            "like_count",
+            "comment_count"
+          ],
+          "72h": [
+            "view_count",
+            "save_count_if_available",
+            "share_count_if_available",
+            "comment_intent_themes"
+          ],
+          "7d": [
+            "routine_save_rate",
+            "dryness_question_count",
+            "beginner_routine_question_count"
+          ],
+          "14d": [
+            "repeat_content_signal",
+            "creator_self_reported_tolerance",
+            "risk_comment_count"
+          ]
+        },
+        "internal_kpis_optional": [
+          "tracked_link_clicks",
+          "coupon_usage",
+          "add_to_cart",
+          "orders",
+          "CPA",
+          "ROAS"
+        ],
+        "data_source_rule": "Keep public metrics and internal conversion metrics separate. Do not infer sales from public engagement alone.",
+        "comment_storage_rule": "Store only intent themes and counts, not raw comment text."
+      },
+      "next_iteration_rule": "If routine_save_rate and comment-intent themes outperform the held-out control group after 14d, keep hyaluronic_first_serum for the same creator segment and test one adjacent content angle. If public intent is weak or risk comments increase, mark the result inconclusive or revise product-content fit before reseeding."
+    },
+    {
+      "brief_id": "phase5_seed_recommendation_cand_032_hyaluronic_first_serum",
+      "selection_role": "seed_recommendation",
+      "creator_handle": "@leanne_page",
+      "profile_url": "https://www.tiktok.com/@leanne_page",
+      "segment_id": "acne_trouble_barrier",
+      "seed_product": "hyaluronic_first_serum",
+      "seed_product_name": "히알루론산 스킨부스터 퍼스트 세럼",
+      "why_this_creator": "@leanne_page has public evidence for dryness, makeup_adherence_issue and already creates skincare_routine, makeup_prep, so the brief tests a content-context fit instead of follower count alone.",
+      "why_this_product": {
+        "summary": "히알루론산 스킨부스터 퍼스트 세럼 maps to observed product concern tags ['dehydration', 'dryness', 'routine_entry', 'tightness_after_cleansing'] and content tags ['morning_routine', 'skin_prep', 'skincare_routine'].",
+        "product_family": "hydration_barrier_basic",
+        "measurement_kpis": [
+          "routine_save_rate",
+          "dryness_question_count",
+          "beginner_routine_question_count",
+          "makeup_prep_comment_count",
+          "creator_self_reported_tolerance"
+        ],
+        "score_trace": {
+          "influencer_self_fit": 28.0,
+          "audience_fit": 19,
+          "content_fit": 18,
+          "market_channel_fit": 10,
+          "risk_penalty": 1
+        }
+      },
+      "causal_hypothesis": "@leanne_page는 dryness, makeup_adherence_issue 맥락과 skincare_routine, makeup_prep 콘텐츠 근거가 있어 hyaluronic_first_serum 시딩 시 저장, 사용법 질문, 구매 의도 댓글이 증가할 수 있다는 가설을 검증한다.",
+      "content_angle": "필터 없는 첫 단계 수분 루틴 또는 GRWM 메이크업프렙 맥락에서 건조/밀림 질문을 관찰한다.",
+      "content_deliverables": {
+        "video_count": 1,
+        "format": "TikTok short-form video",
+        "mandatory_context": "필터 없는 첫 단계 수분 루틴 또는 GRWM 메이크업프렙 맥락에서 건조/밀림 질문을 관찰한다.",
+        "no_required_positive_review": true,
+        "shot_list": [
+          "Routine entry point",
+          "Texture and application",
+          "Makeup-prep or daily-use context",
+          "Comment prompt for routine questions"
+        ]
+      },
+      "required_disclosures": [
+        "Disclose gifted product or sponsorship according to platform and local advertising rules.",
+        "Do not require positive sentiment; require honest usage experience and clear usage context.",
+        "Mark affiliate, coupon, or paid relationship clearly if used in the campaign.",
+        "Before outreach: Confirm audience country distribution before final market-fit scoring."
+      ],
+      "avoid_claims": [
+        "Do not claim deep skin penetration or structural skin change without evidence.",
+        "Use cosmetic language: first-step hydration feel, makeup prep, and routine ease.",
+        "Respect product risk flag: avoid_overclaim_deep_skin_effect_without_evidence."
+      ],
+      "risk_review": {
+        "risk_penalty_reasons": [
+          "claim_compliance_risk"
+        ],
+        "product_risk_flags": [
+          "avoid_overclaim_deep_skin_effect_without_evidence"
+        ],
+        "manual_review_required_before_outreach": true
+      },
+      "primary_kpi": "routine_save_rate",
+      "secondary_kpi": [
+        "dryness_question_count",
+        "beginner_routine_question_count"
+      ],
+      "collection_window": [
+        "24h",
+        "72h",
+        "7d",
+        "14d"
+      ],
+      "result_collection": {
+        "experiment_unit_id": "seed_recommendation::cand_032::hyaluronic_first_serum",
+        "public_kpis": {
+          "24h": [
+            "posted",
+            "view_count",
+            "like_count",
+            "comment_count"
+          ],
+          "72h": [
+            "view_count",
+            "save_count_if_available",
+            "share_count_if_available",
+            "comment_intent_themes"
+          ],
+          "7d": [
+            "routine_save_rate",
+            "dryness_question_count",
+            "beginner_routine_question_count"
+          ],
+          "14d": [
+            "repeat_content_signal",
+            "creator_self_reported_tolerance",
+            "risk_comment_count"
+          ]
+        },
+        "internal_kpis_optional": [
+          "tracked_link_clicks",
+          "coupon_usage",
+          "add_to_cart",
+          "orders",
+          "CPA",
+          "ROAS"
+        ],
+        "data_source_rule": "Keep public metrics and internal conversion metrics separate. Do not infer sales from public engagement alone.",
+        "comment_storage_rule": "Store only intent themes and counts, not raw comment text."
+      },
+      "next_iteration_rule": "If routine_save_rate and comment-intent themes outperform the held-out control group after 14d, keep hyaluronic_first_serum for the same creator segment and test one adjacent content angle. If public intent is weak or risk comments increase, mark the result inconclusive or revise product-content fit before reseeding."
+    },
+    {
+      "brief_id": "phase5_seed_recommendation_cand_016_vitamin_bubble_serum",
+      "selection_role": "seed_recommendation",
+      "creator_handle": "@asiyeekarakus",
+      "profile_url": "https://www.tiktok.com/@asiyeekarakus",
+      "segment_id": "tone_spot_glow",
+      "seed_product": "vitamin_bubble_serum",
+      "seed_product_name": "비타민 스킨부스터 버블세럼",
+      "why_this_creator": "@asiyeekarakus has public evidence for dullness, pigmentation and already creates product_review, skincare_routine, so the brief tests a content-context fit instead of follower count alone.",
+      "why_this_product": {
+        "summary": "비타민 스킨부스터 버블세럼 maps to observed product concern tags ['dullness', 'glow', 'spot_appearance', 'uneven_tone'] and content tags ['ingredient_education', 'morning_routine'].",
+        "product_family": "tone_spot_brightening",
+        "measurement_kpis": [
+          "view_completion_rate",
+          "glow_tone_comment_count",
+          "texture_demo_engagement",
+          "save_rate",
+          "irritation_report_count"
+        ],
+        "score_trace": {
+          "influencer_self_fit": 24.0,
+          "audience_fit": 21,
+          "content_fit": 20,
+          "market_channel_fit": 6,
+          "risk_penalty": 1
+        }
+      },
+      "causal_hypothesis": "@asiyeekarakus는 dullness, pigmentation 맥락과 product_review, skincare_routine 콘텐츠 근거가 있어 vitamin_bubble_serum 시딩 시 저장, 사용법 질문, 구매 의도 댓글이 증가할 수 있다는 가설을 검증한다.",
+      "content_angle": "버블 제형 시연과 광채 루틴을 짧은 훅으로 만들고 시청완료율과 톤/광채 댓글을 본다.",
+      "content_deliverables": {
+        "video_count": 1,
+        "format": "TikTok short-form video",
+        "mandatory_context": "버블 제형 시연과 광채 루틴을 짧은 훅으로 만들고 시청완료율과 톤/광채 댓글을 본다.",
+        "no_required_positive_review": true,
+        "shot_list": [
+          "Close-up of bubble texture",
+          "Morning or glow routine placement",
+          "Creator skin-feel reaction",
+          "Comment prompt asking routine or texture questions"
+        ]
+      },
+      "required_disclosures": [
+        "Disclose gifted product or sponsorship according to platform and local advertising rules.",
+        "Do not require positive sentiment; require honest usage experience and clear usage context.",
+        "Mark affiliate, coupon, or paid relationship clearly if used in the campaign.",
+        "Before outreach: Confirm audience country distribution before final market-fit scoring."
+      ],
+      "avoid_claims": [
+        "Do not use whitening, spot-removal, or medical pigmentation language.",
+        "Use cosmetic language: glow appearance, dull-looking skin, and texture demo.",
+        "Respect product risk flag: avoid_whitening_medical_claims.",
+        "Respect product risk flag: irritation_possible."
+      ],
+      "risk_review": {
+        "risk_penalty_reasons": [
+          "claim_compliance_risk"
+        ],
+        "product_risk_flags": [
+          "avoid_whitening_medical_claims",
+          "irritation_possible"
+        ],
+        "manual_review_required_before_outreach": true
+      },
+      "primary_kpi": "view_completion_rate",
+      "secondary_kpi": [
+        "glow_tone_comment_count",
+        "texture_demo_engagement"
+      ],
+      "collection_window": [
+        "24h",
+        "72h",
+        "7d",
+        "14d"
+      ],
+      "result_collection": {
+        "experiment_unit_id": "seed_recommendation::cand_016::vitamin_bubble_serum",
+        "public_kpis": {
+          "24h": [
+            "posted",
+            "view_count",
+            "like_count",
+            "comment_count"
+          ],
+          "72h": [
+            "view_count",
+            "save_count_if_available",
+            "share_count_if_available",
+            "comment_intent_themes"
+          ],
+          "7d": [
+            "view_completion_rate",
+            "glow_tone_comment_count",
+            "texture_demo_engagement"
+          ],
+          "14d": [
+            "repeat_content_signal",
+            "creator_self_reported_tolerance",
+            "risk_comment_count"
+          ]
+        },
+        "internal_kpis_optional": [
+          "tracked_link_clicks",
+          "coupon_usage",
+          "add_to_cart",
+          "orders",
+          "CPA",
+          "ROAS"
+        ],
+        "data_source_rule": "Keep public metrics and internal conversion metrics separate. Do not infer sales from public engagement alone.",
+        "comment_storage_rule": "Store only intent themes and counts, not raw comment text."
+      },
+      "next_iteration_rule": "If view_completion_rate and comment-intent themes outperform the held-out control group after 14d, keep vitamin_bubble_serum for the same creator segment and test one adjacent content angle. If public intent is weak or risk comments increase, mark the result inconclusive or revise product-content fit before reseeding."
+    },
+    {
+      "brief_id": "phase5_seed_recommendation_cand_035_retinal_skin_booster_serum",
+      "selection_role": "seed_recommendation",
+      "creator_handle": "@cherryblossom216",
+      "profile_url": "https://www.tiktok.com/@cherryblossom216",
+      "segment_id": "acne_trouble_barrier",
+      "seed_product": "retinal_skin_booster_serum",
+      "seed_product_name": "레티날 스킨부스터 세럼",
+      "why_this_creator": "@cherryblossom216 has public evidence for makeup_adherence_issue, wrinkles and already creates makeup_prep, product_review, skincare_routine, so the brief tests a content-context fit instead of follower count alone.",
+      "why_this_product": {
+        "summary": "레티날 스킨부스터 세럼 maps to observed product concern tags ['early_aging', 'makeup_adherence', 'texture'] and content tags ['ingredient_education', 'makeup_before_after', 'night_routine'].",
+        "product_family": "texture_pore_retinal",
+        "measurement_kpis": [
+          "night_routine_save_rate",
+          "usage_question_count",
+          "sunscreen_question_count",
+          "irritation_report_count",
+          "makeup_adherence_comment_count"
+        ],
+        "score_trace": {
+          "influencer_self_fit": 21.0,
+          "audience_fit": 21,
+          "content_fit": 18,
+          "market_channel_fit": 9,
+          "risk_penalty": 1
+        }
+      },
+      "causal_hypothesis": "@cherryblossom216는 makeup_adherence_issue, wrinkles 맥락과 makeup_prep, product_review 콘텐츠 근거가 있어 retinal_skin_booster_serum 시딩 시 저장, 사용법 질문, 구매 의도 댓글이 증가할 수 있다는 가설을 검증한다.",
+      "content_angle": "야간 피부결 루틴과 다음날 메이크업 밀착 맥락으로 사용법 질문과 부작용 신고를 함께 본다.",
+      "content_deliverables": {
+        "video_count": 1,
+        "format": "TikTok short-form video",
+        "mandatory_context": "야간 피부결 루틴과 다음날 메이크업 밀착 맥락으로 사용법 질문과 부작용 신고를 함께 본다.",
+        "no_required_positive_review": true,
+        "shot_list": [
+          "Night routine setup",
+          "Patch-test or gradual-use note",
+          "Texture or makeup-prep follow-up without assured-outcome language",
+          "Sunscreen reminder in caption or voiceover"
+        ]
+      },
+      "required_disclosures": [
+        "Disclose gifted product or sponsorship according to platform and local advertising rules.",
+        "Do not require positive sentiment; require honest usage experience and clear usage context.",
+        "Mark affiliate, coupon, or paid relationship clearly if used in the campaign.",
+        "Before outreach: Confirm audience country distribution before final market-fit scoring."
+      ],
+      "avoid_claims": [
+        "Do not recommend for pregnancy/lactation, wounded skin, or active irritation signals.",
+        "Require night-use, gradual-use, sunscreen, and irritation-stop guidance.",
+        "Do not promise wrinkle removal, acne-mark removal, or assured texture change.",
+        "Respect product risk flag: retinoid_irritation.",
+        "Respect product risk flag: sun_sensitivity.",
+        "Respect product risk flag: avoid_pregnancy_lactation_recommendation_without_professional_advice."
+      ],
+      "risk_review": {
+        "risk_penalty_reasons": [
+          "claim_compliance_risk"
+        ],
+        "product_risk_flags": [
+          "retinoid_irritation",
+          "sun_sensitivity",
+          "avoid_pregnancy_lactation_recommendation_without_professional_advice"
+        ],
+        "manual_review_required_before_outreach": true
+      },
+      "primary_kpi": "night_routine_save_rate",
+      "secondary_kpi": [
+        "usage_question_count",
+        "sunscreen_question_count"
+      ],
+      "collection_window": [
+        "24h",
+        "72h",
+        "7d",
+        "14d"
+      ],
+      "result_collection": {
+        "experiment_unit_id": "seed_recommendation::cand_035::retinal_skin_booster_serum",
+        "public_kpis": {
+          "24h": [
+            "posted",
+            "view_count",
+            "like_count",
+            "comment_count"
+          ],
+          "72h": [
+            "view_count",
+            "save_count_if_available",
+            "share_count_if_available",
+            "comment_intent_themes"
+          ],
+          "7d": [
+            "night_routine_save_rate",
+            "usage_question_count",
+            "sunscreen_question_count"
+          ],
+          "14d": [
+            "repeat_content_signal",
+            "creator_self_reported_tolerance",
+            "risk_comment_count"
+          ]
+        },
+        "internal_kpis_optional": [
+          "tracked_link_clicks",
+          "coupon_usage",
+          "add_to_cart",
+          "orders",
+          "CPA",
+          "ROAS"
+        ],
+        "data_source_rule": "Keep public metrics and internal conversion metrics separate. Do not infer sales from public engagement alone.",
+        "comment_storage_rule": "Store only intent themes and counts, not raw comment text."
+      },
+      "next_iteration_rule": "If night_routine_save_rate and comment-intent themes outperform the held-out control group after 14d, keep retinal_skin_booster_serum for the same creator segment and test one adjacent content angle. If public intent is weak or risk comments increase, mark the result inconclusive or revise product-content fit before reseeding."
+    },
+    {
+      "brief_id": "phase5_seed_recommendation_cand_037_retinal_skin_booster_serum",
+      "selection_role": "seed_recommendation",
+      "creator_handle": "@ginamberx",
+      "profile_url": "https://www.tiktok.com/@ginamberx",
+      "segment_id": "anti_aging_home_esthetic",
+      "seed_product": "retinal_skin_booster_serum",
+      "seed_product_name": "레티날 스킨부스터 세럼",
+      "why_this_creator": "@ginamberx has public evidence for makeup_adherence_issue, texture, wrinkles and already creates makeup_prep, product_review, so the brief tests a content-context fit instead of follower count alone.",
+      "why_this_product": {
+        "summary": "레티날 스킨부스터 세럼 maps to observed product concern tags ['early_aging', 'makeup_adherence', 'roughness', 'texture'] and content tags ['ingredient_education', 'makeup_before_after'].",
+        "product_family": "texture_pore_retinal",
+        "measurement_kpis": [
+          "night_routine_save_rate",
+          "usage_question_count",
+          "sunscreen_question_count",
+          "irritation_report_count",
+          "makeup_adherence_comment_count"
+        ],
+        "score_trace": {
+          "influencer_self_fit": 30,
+          "audience_fit": 15,
+          "content_fit": 14.0,
+          "market_channel_fit": 10,
+          "risk_penalty": 4
+        }
+      },
+      "causal_hypothesis": "@ginamberx는 makeup_adherence_issue, texture 맥락과 makeup_prep, product_review 콘텐츠 근거가 있어 retinal_skin_booster_serum 시딩 시 저장, 사용법 질문, 구매 의도 댓글이 증가할 수 있다는 가설을 검증한다.",
+      "content_angle": "야간 피부결 루틴과 다음날 메이크업 밀착 맥락으로 사용법 질문과 부작용 신고를 함께 본다.",
+      "content_deliverables": {
+        "video_count": 1,
+        "format": "TikTok short-form video",
+        "mandatory_context": "야간 피부결 루틴과 다음날 메이크업 밀착 맥락으로 사용법 질문과 부작용 신고를 함께 본다.",
+        "no_required_positive_review": true,
+        "shot_list": [
+          "Night routine setup",
+          "Patch-test or gradual-use note",
+          "Texture or makeup-prep follow-up without assured-outcome language",
+          "Sunscreen reminder in caption or voiceover"
+        ]
+      },
+      "required_disclosures": [
+        "Disclose gifted product or sponsorship according to platform and local advertising rules.",
+        "Do not require positive sentiment; require honest usage experience and clear usage context.",
+        "Mark affiliate, coupon, or paid relationship clearly if used in the campaign.",
+        "Before outreach: Confirm audience country distribution before final market-fit scoring."
+      ],
+      "avoid_claims": [
+        "Do not recommend for pregnancy/lactation, wounded skin, or active irritation signals.",
+        "Require night-use, gradual-use, sunscreen, and irritation-stop guidance.",
+        "Do not promise wrinkle removal, acne-mark removal, or assured texture change.",
+        "Respect product risk flag: retinoid_irritation.",
+        "Respect product risk flag: sun_sensitivity.",
+        "Respect product risk flag: avoid_pregnancy_lactation_recommendation_without_professional_advice."
+      ],
+      "risk_review": {
+        "risk_penalty_reasons": [
+          "before_after_claim_review",
+          "claim_compliance_risk"
+        ],
+        "product_risk_flags": [
+          "retinoid_irritation",
+          "sun_sensitivity",
+          "avoid_pregnancy_lactation_recommendation_without_professional_advice"
+        ],
+        "manual_review_required_before_outreach": true
+      },
+      "primary_kpi": "night_routine_save_rate",
+      "secondary_kpi": [
+        "usage_question_count",
+        "sunscreen_question_count"
+      ],
+      "collection_window": [
+        "24h",
+        "72h",
+        "7d",
+        "14d"
+      ],
+      "result_collection": {
+        "experiment_unit_id": "seed_recommendation::cand_037::retinal_skin_booster_serum",
+        "public_kpis": {
+          "24h": [
+            "posted",
+            "view_count",
+            "like_count",
+            "comment_count"
+          ],
+          "72h": [
+            "view_count",
+            "save_count_if_available",
+            "share_count_if_available",
+            "comment_intent_themes"
+          ],
+          "7d": [
+            "night_routine_save_rate",
+            "usage_question_count",
+            "sunscreen_question_count"
+          ],
+          "14d": [
+            "repeat_content_signal",
+            "creator_self_reported_tolerance",
+            "risk_comment_count"
+          ]
+        },
+        "internal_kpis_optional": [
+          "tracked_link_clicks",
+          "coupon_usage",
+          "add_to_cart",
+          "orders",
+          "CPA",
+          "ROAS"
+        ],
+        "data_source_rule": "Keep public metrics and internal conversion metrics separate. Do not infer sales from public engagement alone.",
+        "comment_storage_rule": "Store only intent themes and counts, not raw comment text."
+      },
+      "next_iteration_rule": "If night_routine_save_rate and comment-intent themes outperform the held-out control group after 14d, keep retinal_skin_booster_serum for the same creator segment and test one adjacent content angle. If public intent is weak or risk comments increase, mark the result inconclusive or revise product-content fit before reseeding."
+    }
+  ],
+  "control_tracking_plan": [
+    {
+      "brief_id": "phase5_control_cand_034_hyaluronic_first_serum",
+      "selection_role": "control_group",
+      "creator_handle": "@milkydew",
+      "profile_url": "https://www.tiktok.com/@milkydew",
+      "segment_id": "acne_trouble_barrier",
+      "held_out_product": "hyaluronic_first_serum",
+      "control_reason": "Qualified public-data candidate held out to compare posting, save, and comment-intent lift against seeded creators.",
+      "tracking_window": [
+        "24h",
+        "72h",
+        "7d",
+        "14d"
+      ],
+      "tracked_public_kpis": [
+        "posting_rate",
+        "view_count",
+        "save_count_if_available",
+        "comment_intent_themes"
+      ],
+      "comparison_rule": "Compare public posting and intent quality against seeded creators by segment; do not infer sales without internal conversion data."
+    },
+    {
+      "brief_id": "phase5_control_cand_051_hyaluronic_first_serum",
+      "selection_role": "control_group",
+      "creator_handle": "@atx_genie199",
+      "profile_url": "https://www.tiktok.com/@atx_genie199",
+      "segment_id": "grwm_lifestyle_beauty",
+      "held_out_product": "hyaluronic_first_serum",
+      "control_reason": "Qualified public-data candidate held out to compare posting, save, and comment-intent lift against seeded creators.",
+      "tracking_window": [
+        "24h",
+        "72h",
+        "7d",
+        "14d"
+      ],
+      "tracked_public_kpis": [
+        "posting_rate",
+        "view_count",
+        "save_count_if_available",
+        "comment_intent_themes"
+      ],
+      "comparison_rule": "Compare public posting and intent quality against seeded creators by segment; do not infer sales without internal conversion data."
+    },
+    {
+      "brief_id": "phase5_control_cand_055_hyaluronic_first_serum",
+      "selection_role": "control_group",
+      "creator_handle": "@evangepetrakis",
+      "profile_url": "https://www.tiktok.com/@evangepetrakis",
+      "segment_id": "grwm_lifestyle_beauty",
+      "held_out_product": "hyaluronic_first_serum",
+      "control_reason": "Qualified public-data candidate held out to compare posting, save, and comment-intent lift against seeded creators.",
+      "tracking_window": [
+        "24h",
+        "72h",
+        "7d",
+        "14d"
+      ],
+      "tracked_public_kpis": [
+        "posting_rate",
+        "view_count",
+        "save_count_if_available",
+        "comment_intent_themes"
+      ],
+      "comparison_rule": "Compare public posting and intent quality against seeded creators by segment; do not infer sales without internal conversion data."
+    }
+  ]
+}

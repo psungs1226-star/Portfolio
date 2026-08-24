@@ -1,0 +1,41 @@
+{
+  "project": "인사ON",
+  "phase": "06-local-model-integration",
+  "steps": [
+    {
+      "step": 0,
+      "name": "local-runtime-contract",
+      "status": "completed",
+      "completed_at": "2026-07-29T19:38:03+09:00",
+      "summary": "Ollama loopback-only, API key 불필요, Qwen3 4B·BGE-M3 역할 분리와 artifact digest 계약을 ADR-0006에 고정했다."
+    },
+    {
+      "step": 1,
+      "name": "local-generation",
+      "status": "completed",
+      "completed_at": "2026-07-29T19:38:03+09:00",
+      "summary": "Qwen3 answer-v4 structured output에 검토 판단·권고 상태·근거 역할을 분리하고, citation allowlist와 실제 CASE-B generation smoke를 통과했다."
+    },
+    {
+      "step": 2,
+      "name": "local-embedding",
+      "status": "completed",
+      "completed_at": "2026-07-29T19:38:03+09:00",
+      "summary": "BGE-M3 1024차원 임베딩, batch·dimension·정규화 검사와 artifact/index manifest smoke를 통과했다."
+    },
+    {
+      "step": 3,
+      "name": "local-reranker",
+      "status": "completed",
+      "completed_at": "2026-07-29T19:38:03+09:00",
+      "summary": "Qwen3 재랭킹의 후보 집합 불변·score 방향·입력 상한과 실제 local smoke를 통과했다."
+    },
+    {
+      "step": 4,
+      "name": "local-rag-e2e",
+      "status": "completed",
+      "completed_at": "2026-07-29T19:38:03+09:00",
+      "summary": "CASE-B가 local embedding→reranker→generation→citation 검증을 통과했고, 가능 여부 질문은 근거가 부족하면 모델 권고로 REVIEW_REQUIRED까지 보수적으로 낮췄다. CASE-A/C/PII는 request-time 모델 호출 0을 유지했다."
+    }
+  ]
+}

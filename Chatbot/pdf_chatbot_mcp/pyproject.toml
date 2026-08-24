@@ -1,0 +1,26 @@
+[project]
+name = "pdf-chatbot"
+version = "0.1.0"
+description = "PDF 규정 문서 기반 질의응답 챗봇 + MCP 서버"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn[standard]>=0.30",
+    "jinja2>=3.1",
+    "pymupdf>=1.24",
+    "httpx>=0.27",
+    "mcp>=2.0",
+    "pydantic>=2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+]
+
+[project.scripts]
+pdf-chatbot = "run:main"
+pdf-chatbot-mcp = "mcp_server:main"
+
+[tool.setuptools]
+py-modules = ["app", "ingest", "mcp_server", "ollama", "run", "search"]

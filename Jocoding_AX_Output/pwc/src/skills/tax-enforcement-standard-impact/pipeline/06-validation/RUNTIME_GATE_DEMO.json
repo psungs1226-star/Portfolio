@@ -1,0 +1,49 @@
+{
+  "demo_case": {
+    "id": "demo-minganjaeganjeop",
+    "title": "민간재간접벤처투자조합 자산 관리·운용용역 면세 신설 (제40조①13)",
+    "amendment": "부가가치세법 시행령 제40조 제1항 제13호",
+    "hop": 1,
+    "tier": 1
+  },
+  "naive_pre_gate_verdict": "confirmed",
+  "gated_verdict": "review_worthy",
+  "gate_changed_outcome": true,
+  "gate_trace": [
+    {
+      "step": "1_evidence_gate",
+      "result": "pass",
+      "why": "근거 2개 확보: ['서면-2015-법령해석부가-0932 (질의, 2016-02-15)', '부가가치세법 시행령 제40조 제1항 제13호']"
+    },
+    {
+      "step": "2_hop_labeling",
+      "result": "block-confirm",
+      "why": "1홉(추론) → 적대검증 없이 confirmed 불가"
+    },
+    {
+      "step": "3_adversarial",
+      "result": "refute 1/1→review_worthy",
+      "why": "다수 반증 → flip 강등. 같은 조문군=True → 검토 큐 유지. (적대검증이 flip을 kill=게이트의 성공: 진짜 flip과 REVIEW_WORTHY를 구분)"
+    },
+    {
+      "step": "4_negative_control",
+      "result": "pass",
+      "why": "디코이(독립 IT 면세) 미표면화 → 정밀도 OK"
+    },
+    {
+      "step": "5_blindspot_report",
+      "result": "emit-note",
+      "why": "동의어 gap 발화(개정 어휘 '재간접' 직접검색 해석례 0건 → '벤처투자조합' 우회 도달). 직접어 코퍼스는 놓칠 수 있음 — 엔티티 동의어 사전 필요."
+    },
+    {
+      "step": "6_honest_verdict",
+      "result": "pass",
+      "why": "최종 verdict=review_worthy ∈ ['confirmed', 'exclude', 'hold', 'review_worthy'] · 단정 아님"
+    }
+  ],
+  "blindspot_notes": [
+    "동의어 gap 발화(개정 어휘 '재간접' 직접검색 해석례 0건 → '벤처투자조합' 우회 도달). 직접어 코퍼스는 놓칠 수 있음 — 엔티티 동의어 사전 필요."
+  ],
+  "expected_gated_verdict": "review_worthy",
+  "matches_canonical": true
+}

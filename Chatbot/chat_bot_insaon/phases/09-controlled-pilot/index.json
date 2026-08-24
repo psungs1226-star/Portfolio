@@ -1,0 +1,16 @@
+{
+  "project": "인사ON",
+  "phase": "09-controlled-pilot",
+  "steps": [
+    {
+      "step": 0,
+      "name": "deployment-contract",
+      "status": "blocked",
+      "blocked_at": "2026-07-29T20:13:50+09:00",
+      "blocked_reason": "단일 VM·Caddy·Ollama loopback hosting, secret·보존·rollback 계약과 production HTTP gate는 구현했다. Phase 08 legal release, 실제 VM/domain과 runtime secret injection이 없어 배포를 시작할 수 없다."
+    },
+    {"step": 1, "name": "synthetic-deployment", "status": "pending"},
+    {"step": 2, "name": "shadow-usability", "status": "pending", "pending_reason": "CASE-A/B/C·가명 참여자·완료/중단 분모·raw 원문 금지 protocol과 validator는 구현했으나 참여자 0명·완료 session 0건이다."},
+    {"step": 3, "name": "pilot-portfolio-release", "status": "pending"}
+  ]
+}

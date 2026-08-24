@@ -1,0 +1,261 @@
+{
+  "phase": "Phase 1",
+  "status": "completed",
+  "status_note": "Completion Gate 전 항목 verbatim 확보(전/후 조문, 상위법, 위임 조문, 외부참조, 시행일, 적용례, source action). 남은 것은 신구조문대비표 원문(선택)뿐.",
+  "completed_steps": [
+    "Step 1. Collect Law Inputs",
+    "Step 2. Parse Article Structure",
+    "Step 3. Compare Before and After",
+    "Step 4. Extract Legal Logic",
+    "Step 5. Classify Change Type"
+  ],
+  "correction_note": "Phase 1 input is an actual VAT Enforcement Decree amendment. Phase 0 interpretation cases are validation/supporting data, not Phase 1 law-change inputs.",
+  "source_package": {
+    "source_type": "law_amendment",
+    "tax_type": "VAT",
+    "law_name": "부가가치세법 시행령",
+    "article_path": "제41조",
+    "related_parent_law": "부가가치세법 제26조 제1항 제12호",
+    "amendment_topic": "토지임대부 분양주택 부수토지 임대용역의 부가가치세 면세",
+    "effective_date": "2024-07-01",
+    "application_rule": "2024-07-01 이후 용역을 공급하는 경우부터 적용",
+    "transition_rule": null,
+    "source_urls": [
+      "https://taxlaw.nts.go.kr/st/USESTA002M.do",
+      "https://www.law.go.kr/LSW/lsInfoP.do?lsiSeq=283641",
+      "https://www.law.go.kr/LSW//lsLawLinkInfo.do?chrClsCd=010202&lsId=001809&lsJoLnkSeq=900126958&print=print"
+    ]
+  },
+  "source_collection": {
+    "root_cause_fixed": "The correct order is statute initialization, history selection, then article-text action. Earlier runs skipped this order and closed Phase 1 from summaries.",
+    "taxlaw_actions_used": [
+      "ASISTA002MR01",
+      "ASISTA005PR01",
+      "ASISTA002MR03"
+    ],
+    "selected_history": {
+      "vat_act": {
+        "law_id": "100000000000001571",
+        "history_id": "100025797320240701",
+        "promulgation_no": "19931",
+        "effective_date": "2024-07-01"
+      },
+      "vat_enforcement_decree_text_before": {
+        "law_id": "100000000000003666",
+        "history_id": "100024823120240101",
+        "promulgation_no": "33271",
+        "effective_date": "2024-01-01",
+        "note": "대통령령 34270 이전 조문(진짜 텍스트 before). 토지임대부 규정 없음, 면적 기준 제1항 내포."
+      },
+      "vat_enforcement_decree_34270_in_force": {
+        "law_id": "100000000000003666",
+        "history_id": "100000000000260977",
+        "promulgation_no": "34270",
+        "effective_date": "2024-02-29",
+        "note": "34270 시행일 스냅샷. 제41조 텍스트는 이미 신 조문(토지임대부 포함)."
+      },
+      "vat_enforcement_decree_41_applied_from": {
+        "law_id": "100000000000003666",
+        "history_id": "100026097720240701",
+        "promulgation_no": "34270",
+        "effective_date": "2024-07-01",
+        "note": "제41조 개정규정 적용 개시일(부칙 제5조). 신 조문 텍스트 동일, 적용 시점만 구분."
+      }
+    },
+    "before_after_framing_correction": "텍스트 변경은 대통령령 34270에서 1회(2024-02-29 시행). 부칙 제5조는 제41조 개정규정의 '적용'을 2024-07-01 이후 공급분으로 지정. 따라서 진짜 텍스트 before는 33271(2024-01-01 스냅샷)이고, 260977(2024-02-29)과 100026097720240701(2024-07-01)은 동일 신 조문의 시행/적용 구분 행이다."
+  },
+  "raw_law_change_package": {
+    "parent_law_text": {
+      "article": "부가가치세법 제26조 제1항 제12호",
+      "text": "주택과 이에 부수되는 토지의 임대 용역으로서 대통령령으로 정하는 것"
+    },
+    "before_article_text": {
+      "article": "부가가치세법 시행령 제41조",
+      "effective_date": "~2024-02-28 (대통령령 34270 이전, 공포 33271 기준 스냅샷 2024-01-01)",
+      "summary": "주택과 이에 부수되는 토지의 임대는 상시주거용 주택과 이에 부수되는 토지 중 주택 연면적 또는 건물 정착면적 배수 기준을 넘지 않는 토지의 임대로 규정. 면적 기준은 제1항 안에 각 호로 내포, 제2항은 사업용건물 병설. 토지임대부 분양주택 관련 규정 없음.",
+      "verbatim_status": "collected",
+      "verbatim_source": {"source": "국세법령정보시스템", "action": "ASISTA002MR03", "ntstBscId": "100000000000003666", "ntstBrkdId": "100024823120240101", "snapshot_effective_date": "2024-01-01", "promulgation_no": "33271"},
+      "verbatim": "① 법 제26조제1항제12호에 따른 주택과 이에 부수되는 토지의 임대는 상시주거용(사업을 위한 주거용의 경우는 제외한다)으로 사용하는 건물(이하 “주택”이라 한다)과 이에 부수되는 토지로서 다음 각 호의 면적 중 넓은 면적을 초과하지 아니하는 토지의 임대로 하며, 이를 초과하는 부분은 토지의 임대로 본다. 1. 주택의 연면적(지하층의 면적, 지상층의 주차용으로 사용되는 면적 및 「주택건설기준 등에 관한 규정」 제2조제3호에 따른 주민공동시설의 면적은 제외한다) 2. 건물이 정착된 면적에 5배(「국토의 계획 및 이용에 관한 법률」 제6조에 따른 도시지역 밖의 토지의 경우에는 10배)를 곱하여 산정한 면적 ② 임대주택에 부가가치세가 과세되는 사업용 건물(이하 “사업용건물”이라 한다)이 함께 설치되어 있는 경우에는 주택과 이에 부수되는 토지의 임대의 범위는 다음 각 호에 따른다. 1. 주택 부분의 면적이 사업용 건물 부분의 면적보다 큰 경우에는 그 전부를 주택의 임대로 본다. 이 경우 그 주택에 부수되는 토지임대의 범위는 제1항과 같다. 2. 주택 부분의 면적이 사업용 건물 부분의 면적과 같거나 그보다 작은 때에는 주택 부분 외의 사업용 건물 부분은 주택의 임대로 보지 아니한다. 이 경우 그 주택에 부수되는 토지의 면적은 총토지면적에 주택 부분의 면적이 총건물면적에서 차지하는 비율을 곱하여 계산하며, 그 범위는 제1항과 같다."
+    },
+    "after_article_text": {
+      "article": "부가가치세법 시행령 제41조",
+      "effective_date": "2024-07-01",
+      "summary": "제41조 제1항을 각 호 구조로 바꾸고, 제1항 제2호에 주택법 제2조제9호에 따른 토지임대부 분양주택 중 국민주택규모 주택에 부수되는 토지의 임대 용역을 추가.",
+      "verbatim_status": "collected",
+      "verbatim_source": {"source": "국가법령정보센터", "lsiSeq": "283641", "joNo": "0041"},
+      "verbatim": "제41조(주택과 이에 부수되는 토지의 임대 용역으로서 면세하는 것의 범위) ① 법 제26조 제1항 제12호에 따른 주택과 이에 부수되는 토지의 임대 용역은 다음 각 호의 임대 용역으로 한다. <개정 2024. 2. 29.> 1. 상시주거용(사업을 위한 주거용의 경우는 제외한다)으로 사용하는 건물(이하 이 조에서 “주택”이라 한다)과 이에 부수되는 토지의 임대 용역 2. 「주택법」 제2조 제9호에 따른 토지임대부 분양주택(같은 조 제6호의 국민주택규모로 한정한다)에 부수되는 토지의 임대 용역 ② 제1항을 적용할 때 토지의 면적이 다음 각 호의 면적 중 넓은 면적을 초과하는 경우 그 초과하는 부분의 임대 용역은 부가가치세 면제 대상이 되는 임대 용역에서 제외한다. <신설 2024. 2. 29.> 1. 주택의 연면적(지하층의 면적, 지상층의 주차용으로 사용되는 면적 및 「주택건설기준 등에 관한 규정」 제2조제3호에 따른 주민공동시설의 면적은 제외한다) 2. 건물이 정착된 면적에 5배(「국토의 계획 및 이용에 관한 법률」 제6조에 따른 도시지역 밖의 토지의 경우에는 10배를 말한다)를 곱하여 산정한 면적 ③ 주택에 부가가치세가 과세되는 사업용 건물(이하 “사업용건물”이라 한다)이 함께 설치되어 있는 경우에는 주택과 이에 부수되는 토지의 임대의 범위는 다음 각 호에 따른다. <개정 2024. 2. 29.> 1. 주택 부분의 면적이 사업용 건물 부분의 면적보다 큰 경우에는 그 전부를 주택의 임대로 본다. 이 경우 그 주택에 부수되는 토지임대의 범위는 제1항과 같다. 2. 주택 부분의 면적이 사업용 건물 부분의 면적과 같거나 그보다 작은 때에는 주택 부분 외의 사업용 건물 부분은 주택의 임대로 보지 아니한다. 이 경우 그 주택에 부수되는 토지의 면적은 총토지면적에 주택 부분의 면적이 총건물면적에서 차지하는 비율을 곱하여 계산하며, 그 범위는 제1항과 같다.",
+      "promulgation_note": "각 호 개정·신설 태그는 모두 <2024. 2. 29.>(대통령령 34270 공포)이며, 제41조 개정규정은 부칙 제5조에 따라 2024-07-01 이후 공급분부터 적용된다. 그래서 국세법령정보시스템은 전(2024-02-29)/후(2024-07-01) history를 나눈다."
+    },
+    "application_rule_text": {
+      "article": "부가가치세법 시행령 부칙 제5조",
+      "text": "제41조의 개정규정은 2024년 7월 1일 이후 용역을 공급하는 경우부터 적용한다."
+    },
+    "external_reference_text": {
+      "articles": ["주택법 제2조 제9호", "주택법 제2조 제6호"],
+      "summary": "제9호: 토지임대부 분양주택은 토지 소유권은 사업시행자가, 건축물·복리시설 소유권은 분양받은 자가 가지는 주택. 제6호: 국민주택규모는 주거전용면적 1호/1세대당 85㎡(읍·면 100㎡) 이하.",
+      "verbatim_status": "collected",
+      "source_record": "src/skills/tax-enforcement-standard-impact/pipeline/01-law-normalization/EXTERNAL_REFERENCES.json"
+    },
+    "directly_linked_articles": [
+      "부가가치세법 제26조 제1항 제12호",
+      "부가가치세법 시행령 제41조 제1항 제1호",
+      "부가가치세법 시행령 제41조 제1항 제2호",
+      "부가가치세법 시행령 제41조 제2항",
+      "부가가치세법 시행령 제41조 제3항",
+      "주택법 제2조 제9호",
+      "주택법 제2조 제6호"
+    ],
+    "collection_flags": [
+      "after_decree_article_text_collected_verbatim",
+      "before_decree_article_text_collected_verbatim",
+      "parent_law_article_text_collected",
+      "application_rule_collected",
+      "external_reference_articles_collected_verbatim",
+      "before_after_effective_vs_applied_distinction_confirmed"
+    ]
+  },
+  "parsed_article_structure": {
+    "parse_status": "parsed",
+    "law_name": "부가가치세법 시행령",
+    "article_no": "제41조",
+    "article_title": "주택과 이에 부수되는 토지의 임대 용역으로서 면세하는 것의 범위",
+    "before_structure": [
+      {
+        "paragraph_no": "제1항",
+        "role": "주택과 부수토지 임대의 면세 범위 및 부수토지 면적 기준"
+      },
+      {
+        "paragraph_no": "제2항",
+        "role": "주택과 사업용 건물이 함께 설치된 경우의 임대 범위"
+      }
+    ],
+    "after_structure": [
+      {
+        "paragraph_no": "제1항 제1호",
+        "role": "상시주거용 주택과 이에 부수되는 토지의 임대 용역"
+      },
+      {
+        "paragraph_no": "제1항 제2호",
+        "role": "토지임대부 분양주택 중 국민주택규모 주택에 부수되는 토지의 임대 용역",
+        "status": "added"
+      },
+      {
+        "paragraph_no": "제2항",
+        "role": "제1항 적용 시 초과 토지 면적 제외 기준"
+      },
+      {
+        "paragraph_no": "제3항",
+        "role": "주택과 사업용 건물이 함께 설치된 경우의 임대 범위"
+      }
+    ],
+    "parent_law_article": "부가가치세법 제26조 제1항 제12호",
+    "external_reference_article": "주택법 제2조 제9호",
+    "effective_date": "2024-07-01",
+    "application_rule": "2024-07-01 이후 용역 공급분"
+  },
+  "change_deltas": {
+    "compare_status": "before_after_article_compared",
+    "removed_terms": [],
+    "added_terms": [
+      "주택법 제2조제9호에 따른 토지임대부 분양주택",
+      "같은 조 제6호의 국민주택규모",
+      "토지임대부 분양주택에 부수되는 토지의 임대 용역"
+    ],
+    "changed_numbers": [],
+    "changed_thresholds": [],
+    "changed_obligation_wording": [],
+    "changed_target": [
+      {
+        "from": "상시주거용 주택과 이에 부수되는 토지의 임대",
+        "to": "상시주거용 주택과 부수토지 임대 + 토지임대부 분양주택 중 국민주택규모 주택에 부수되는 토지의 임대",
+        "confidence": "article_text_based"
+      }
+    ],
+    "changed_effect": [
+      {
+        "from": "토지임대부 분양주택 부수토지 임대 용역이 시행령 제41조의 별도 면세 대상 유형으로 명시되어 있지 않음",
+        "to": "토지임대부 분양주택 부수토지 임대 용역이 면세 대상 유형으로 명시됨",
+        "confidence": "article_text_based"
+      }
+    ],
+    "timing_or_application_changes": [
+      {
+        "effective_from": "2024-07-01",
+        "scope": "이후 용역 공급분"
+      }
+    ]
+  },
+  "legal_logic": {
+    "target": [
+      "토지임대부 분양주택에 부수되는 토지의 임대 용역"
+    ],
+    "condition": [
+      "주택법 제2조 제9호에 따른 토지임대부 분양주택일 것",
+      "주택법 제2조 제6호의 국민주택규모로 한정될 것",
+      "부가가치세법 시행령 제41조 제2항의 부수토지 면적 기준을 초과하지 않을 것"
+    ],
+    "action": [
+      "토지 임대 용역 공급"
+    ],
+    "effect": [
+      "부가가치세 면세 대상에 포함"
+    ],
+    "exception": [
+      "제41조 제2항의 면적 기준을 초과하는 부분은 면세 대상에서 제외"
+    ],
+    "time_scope": [
+      "2024-07-01 이후 용역 공급분"
+    ]
+  },
+  "inferred_fields": [],
+  "open_items": [
+    "대통령령 34270 신구조문대비표 원문 별도 확보(선택). 현재 before/after verbatim 쌍으로 신구 대비는 재구성 가능."
+  ],
+  "change_classification": {
+    "primary_change_type": "Target change",
+    "secondary_change_types": [
+      "Effect impact",
+      "Timing change"
+    ],
+    "not_classified_as": [
+      "Amount or threshold change",
+      "Procedure change",
+      "Obligation change",
+      "Wording cleanup"
+    ],
+    "confidence": "high_before_after_and_external_reference_all_verbatim",
+    "review_flags": [
+      "Phase 2 must collect enforcement standards under VAT Act Article 26 and VAT Enforcement Decree Article 41",
+      "Follow cross-reference to Housing Act Article 2 Item 9 and Item 6",
+      "Check whether enforcement standards treat land lease fee, housing lease, and incidental land separately",
+      "Do not reuse BTL interpretation delta as the main law-change input"
+    ]
+  },
+  "ready_for_phase2": true,
+  "phase2_scope_hint": {
+    "issue": "면세/과세구분",
+    "priority_articles": [
+      "부가가치세법 제26조 제1항 제12호",
+      "부가가치세법 시행령 제41조 제1항 제1호",
+      "부가가치세법 시행령 제41조 제1항 제2호",
+      "부가가치세법 시행령 제41조 제2항",
+      "부가가치세법 시행령 제41조 제3항"
+    ],
+    "cross_reference_articles": [
+      "주택법 제2조 제9호",
+      "주택법 제2조 제6호"
+    ],
+    "keywords": [
+      "토지임대부 분양주택",
+      "국민주택규모",
+      "토지임대료",
+      "주택 임대",
+      "부수토지",
+      "면세",
+      "2024.7.1 이후 공급분"
+    ],
+    "supporting_validation_cases": [
+      "Phase 0 selected/held cases may be used only as validation or support, not as Phase 1 law-change inputs."
+    ]
+  }
+}

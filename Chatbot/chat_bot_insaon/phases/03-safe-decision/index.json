@@ -1,0 +1,27 @@
+{
+  "project": "인사ON",
+  "phase": "03-safe-decision",
+  "steps": [
+    {
+      "step": 0,
+      "name": "privacy-intent",
+      "status": "completed",
+      "completed_at": "2026-07-29T15:23:00+09:00",
+      "summary": "원문을 보존하지 않는 개인정보 category gate와 네 휴직 유형·복직·범위 밖 분류를 구현하고 차단 시 provider 미호출을 검증했다."
+    },
+    {
+      "step": 1,
+      "name": "condition-policy",
+      "status": "completed",
+      "completed_at": "2026-07-29T15:23:00+09:00",
+      "summary": "provenance·unknown·conflict 조건 추출과 버전형 필수조건, 안정된 재질문·보류 정책을 구현했다."
+    },
+    {
+      "step": 2,
+      "name": "deterministic-rules",
+      "status": "completed",
+      "completed_at": "2026-07-29T15:23:00+09:00",
+      "summary": "반개구간 기간 합산·윤년·겹침, 효력과 citation ID 검사를 결정적 rule service로 구현했다."
+    }
+  ]
+}

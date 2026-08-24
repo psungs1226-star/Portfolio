@@ -1,0 +1,367 @@
+schema_version = "0.2.0"
+
+# 넓은 공식 근거 검색용 source registry다. review_tier가 evidence_only인 자료는
+# 조건 스키마와 독립 평가가 끝나기 전까지 최종 판단에 사용하지 않는다.
+
+[[sources]]
+source_id = "LAW-LOCAL-OFFICIAL"
+source_name = "지방공무원법"
+source_type = "law"
+issuer = "법제처 국가법령정보센터"
+official_source_id = "lsId:001653"
+url = "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=286499&efYd=20260602&ancYnChk=0"
+allowed_host = "www.law.go.kr"
+content_types = ["text/html"]
+max_bytes = 2000000
+timeout_seconds = 20
+retries = 1
+auth_mode = "none"
+expected_marker = "지방공무원법"
+promulgation_date = "2026-06-02"
+effective_from = "2026-06-02"
+redistribution = "private_snapshot_public_metadata_only"
+collector_format = "html"
+topic_domains = ["appointment", "personnel_records", "performance_and_promotion", "service_and_leave", "discipline_and_appeal", "training", "retirement"]
+review_tier = "deep_review"
+
+[[sources]]
+source_id = "DECREE-LOCAL-APPOINTMENT-OFFICIAL"
+source_name = "지방공무원 임용령"
+source_type = "presidential_decree"
+issuer = "법제처 국가법령정보센터"
+official_source_id = "lsId:005050"
+url = "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=287515&efYd=20260630&ancYnChk=0"
+allowed_host = "www.law.go.kr"
+content_types = ["text/html"]
+max_bytes = 2000000
+timeout_seconds = 20
+retries = 1
+auth_mode = "none"
+expected_marker = "지방공무원 임용령"
+promulgation_date = "2026-06-30"
+effective_from = "2026-06-30"
+redistribution = "private_snapshot_public_metadata_only"
+collector_format = "html"
+topic_domains = ["appointment", "personnel_records", "performance_and_promotion", "service_and_leave", "training", "retirement"]
+review_tier = "deep_review"
+
+[[sources]]
+source_id = "RULE-LOCAL-HR-GUIDE-OFFICIAL"
+source_name = "지방공무원 인사제도 운영지침"
+source_type = "admin_rule"
+issuer = "행정안전부"
+official_source_id = "admRulSeq:2100000277056"
+url = "https://www.law.go.kr/LSW/admRulInfoR.do?admRulSeq=2100000277056"
+allowed_host = "www.law.go.kr"
+content_types = ["text/html"]
+max_bytes = 2000000
+timeout_seconds = 20
+retries = 1
+auth_mode = "none"
+expected_marker = "지방공무원 인사제도 운영지침"
+promulgation_date = "2026-04-07"
+effective_from = "2026-04-07"
+redistribution = "private_snapshot_public_metadata_only"
+collector_format = "html"
+topic_domains = ["appointment", "personnel_records", "performance_and_promotion", "service_and_leave", "discipline_and_appeal", "training", "retirement"]
+review_tier = "deep_review"
+
+# CASE-B(2024-01-01)에 실제 적용되는 연혁 원문이다. 종료일은 다음 버전의
+# 시행일을 기준으로 한 half-open interval [effective_from, effective_to)로 저장한다.
+[[sources]]
+source_id = "LAW-LOCAL-OFFICIAL-20221227"
+source_name = "지방공무원법"
+source_type = "law"
+issuer = "법제처 국가법령정보센터"
+official_source_id = "lsiSeq:246623"
+url = "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=246623&efYd=20221227&ancYnChk=0"
+allowed_host = "www.law.go.kr"
+content_types = ["text/html"]
+max_bytes = 2000000
+timeout_seconds = 20
+retries = 1
+auth_mode = "none"
+expected_marker = "지방공무원법"
+promulgation_date = "2022-12-27"
+effective_from = "2022-12-27"
+effective_to = "2024-09-20"
+redistribution = "private_snapshot_public_metadata_only"
+collector_format = "html"
+topic_domains = ["appointment", "personnel_records", "performance_and_promotion", "service_and_leave", "discipline_and_appeal", "training", "retirement"]
+review_tier = "deep_review"
+
+[[sources]]
+source_id = "DECREE-LOCAL-APPOINTMENT-OFFICIAL-20230613"
+source_name = "지방공무원 임용령"
+source_type = "presidential_decree"
+issuer = "법제처 국가법령정보센터"
+official_source_id = "lsiSeq:251545"
+url = "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=251545&efYd=20230613&ancYnChk=0"
+allowed_host = "www.law.go.kr"
+content_types = ["text/html"]
+max_bytes = 2000000
+timeout_seconds = 20
+retries = 1
+auth_mode = "none"
+expected_marker = "지방공무원 임용령"
+promulgation_date = "2023-06-13"
+effective_from = "2023-06-13"
+effective_to = "2024-06-27"
+redistribution = "private_snapshot_public_metadata_only"
+collector_format = "html"
+topic_domains = ["appointment", "personnel_records", "performance_and_promotion", "service_and_leave", "training", "retirement"]
+review_tier = "deep_review"
+
+[[sources]]
+source_id = "RULE-LOCAL-HR-GUIDE-OFFICIAL-20231228"
+source_name = "지방공무원 인사제도 운영지침"
+source_type = "admin_rule"
+issuer = "행정안전부"
+official_source_id = "admRulSeq:2100000234008"
+url = "https://www.law.go.kr/LSW/admRulInfoR.do?admRulSeq=2100000234008"
+allowed_host = "www.law.go.kr"
+content_types = ["text/html"]
+max_bytes = 2000000
+timeout_seconds = 20
+retries = 1
+auth_mode = "none"
+expected_marker = "지방공무원 인사제도 운영지침"
+promulgation_date = "2023-12-28"
+effective_from = "2023-12-28"
+effective_to = "2024-06-27"
+redistribution = "private_snapshot_public_metadata_only"
+collector_format = "html"
+topic_domains = ["appointment", "personnel_records", "performance_and_promotion", "service_and_leave", "discipline_and_appeal", "training", "retirement"]
+review_tier = "deep_review"
+
+[[sources]]
+source_id = "RULE-LOCAL-PERSONNEL-RECORDS-OFFICIAL"
+source_name = "지방공무원 인사기록·통계 및 인사사무 처리 규칙"
+source_type = "ministry_rule"
+issuer = "행정안전부"
+official_source_id = "lsiSeq:239195"
+url = "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=239195&efYd=20220113&ancYnChk=0"
+allowed_host = "www.law.go.kr"
+content_types = ["text/html"]
+max_bytes = 2000000
+timeout_seconds = 20
+retries = 1
+auth_mode = "none"
+expected_marker = "지방공무원 인사기록"
+promulgation_date = "2022-01-04"
+effective_from = "2022-01-13"
+redistribution = "private_snapshot_public_metadata_only"
+collector_format = "html"
+topic_domains = ["personnel_records"]
+review_tier = "evidence_only"
+
+[[sources]]
+source_id = "RULE-LOCAL-PERFORMANCE-OFFICIAL"
+source_name = "지방공무원 평정규칙"
+source_type = "ministry_rule"
+issuer = "행정안전부"
+official_source_id = "lsiSeq:287747"
+url = "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=287747&efYd=20260630&ancYnChk=0"
+allowed_host = "www.law.go.kr"
+content_types = ["text/html"]
+max_bytes = 2000000
+timeout_seconds = 20
+retries = 1
+auth_mode = "none"
+expected_marker = "지방공무원 평정규칙"
+promulgation_date = "2026-06-30"
+effective_from = "2026-06-30"
+redistribution = "private_snapshot_public_metadata_only"
+collector_format = "html"
+topic_domains = ["performance_and_promotion"]
+review_tier = "evidence_only"
+
+[[sources]]
+source_id = "DECREE-LOCAL-SERVICE-OFFICIAL"
+source_name = "지방공무원 복무규정"
+source_type = "presidential_decree"
+issuer = "법제처 국가법령정보센터"
+official_source_id = "lsiSeq:287219"
+url = "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=287219&efYd=20260623&ancYnChk=0"
+allowed_host = "www.law.go.kr"
+content_types = ["text/html"]
+max_bytes = 2000000
+timeout_seconds = 20
+retries = 1
+auth_mode = "none"
+expected_marker = "지방공무원 복무규정"
+promulgation_date = "2026-06-23"
+effective_from = "2026-06-23"
+redistribution = "private_snapshot_public_metadata_only"
+collector_format = "html"
+topic_domains = ["service_and_leave"]
+review_tier = "deep_review"
+
+[[sources]]
+source_id = "DECREE-LOCAL-PAY-OFFICIAL"
+source_name = "지방공무원 보수규정"
+source_type = "presidential_decree"
+issuer = "법제처 국가법령정보센터"
+official_source_id = "lsiSeq:288435"
+url = "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=288435&efYd=20260801&ancYnChk=0"
+allowed_host = "www.law.go.kr"
+content_types = ["text/html"]
+max_bytes = 2000000
+timeout_seconds = 20
+retries = 1
+auth_mode = "none"
+expected_marker = "지방공무원 보수규정"
+promulgation_date = "2026-07-30"
+effective_from = "2026-08-01"
+redistribution = "private_snapshot_public_metadata_only"
+collector_format = "html"
+topic_domains = ["pay_and_allowance"]
+review_tier = "evidence_only"
+
+[[sources]]
+source_id = "DECREE-LOCAL-PAY-20260701-OFFICIAL"
+source_name = "지방공무원 보수규정"
+source_type = "presidential_decree"
+issuer = "법제처 국가법령정보센터"
+official_source_id = "lsiSeq:287049"
+url = "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=287049&efYd=20260701&ancYnChk=0"
+allowed_host = "www.law.go.kr"
+content_types = ["text/html"]
+max_bytes = 2000000
+timeout_seconds = 20
+retries = 1
+auth_mode = "none"
+expected_marker = "지방공무원 보수규정"
+promulgation_date = "2026-06-23"
+effective_from = "2026-07-01"
+effective_to = "2026-08-01"
+redistribution = "private_snapshot_public_metadata_only"
+collector_format = "html"
+topic_domains = ["pay_and_allowance"]
+review_tier = "evidence_only"
+
+[[sources]]
+source_id = "DECREE-LOCAL-ALLOWANCE-OFFICIAL"
+source_name = "지방공무원 수당 등에 관한 규정"
+source_type = "presidential_decree"
+issuer = "법제처 국가법령정보센터"
+official_source_id = "lsiSeq:287339"
+url = "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=287339&efYd=20260701&ancYnChk=0"
+allowed_host = "www.law.go.kr"
+content_types = ["text/html"]
+max_bytes = 2000000
+timeout_seconds = 20
+retries = 1
+auth_mode = "none"
+expected_marker = "지방공무원 수당 등에 관한 규정"
+promulgation_date = "2026-06-23"
+effective_from = "2026-07-01"
+redistribution = "private_snapshot_public_metadata_only"
+collector_format = "html"
+topic_domains = ["pay_and_allowance"]
+review_tier = "evidence_only"
+
+[[sources]]
+source_id = "DECREE-LOCAL-DISCIPLINE-OFFICIAL"
+source_name = "지방공무원 징계 및 소청 규정"
+source_type = "presidential_decree"
+issuer = "법제처 국가법령정보센터"
+official_source_id = "lsiSeq:272557"
+url = "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=272557&efYd=20250701&ancYnChk=0"
+allowed_host = "www.law.go.kr"
+content_types = ["text/html"]
+max_bytes = 2000000
+timeout_seconds = 20
+retries = 1
+auth_mode = "none"
+expected_marker = "지방공무원 징계 및 소청 규정"
+promulgation_date = "2025-06-30"
+effective_from = "2025-07-01"
+redistribution = "private_snapshot_public_metadata_only"
+collector_format = "html"
+topic_domains = ["discipline_and_appeal"]
+review_tier = "evidence_only"
+
+[[sources]]
+source_id = "LAW-LOCAL-TRAINING-OFFICIAL"
+source_name = "지방공무원 교육훈련법"
+source_type = "law"
+issuer = "법제처 국가법령정보센터"
+official_source_id = "lsiSeq:236001"
+url = "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=236001&efYd=20220113&ancYnChk=0"
+allowed_host = "www.law.go.kr"
+content_types = ["text/html"]
+max_bytes = 2000000
+timeout_seconds = 20
+retries = 1
+auth_mode = "none"
+expected_marker = "지방공무원 교육훈련법"
+promulgation_date = "2021-10-08"
+effective_from = "2022-01-13"
+redistribution = "private_snapshot_public_metadata_only"
+collector_format = "html"
+topic_domains = ["training"]
+review_tier = "evidence_only"
+
+[[sources]]
+source_id = "DECREE-LOCAL-TRAINING-OFFICIAL"
+source_name = "지방공무원 교육훈련법 시행령"
+source_type = "presidential_decree"
+issuer = "법제처 국가법령정보센터"
+official_source_id = "lsiSeq:237291"
+url = "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=237291&efYd=20220113&ancYnChk=0"
+allowed_host = "www.law.go.kr"
+content_types = ["text/html"]
+max_bytes = 2000000
+timeout_seconds = 20
+retries = 1
+auth_mode = "none"
+expected_marker = "지방공무원 교육훈련법 시행령"
+promulgation_date = "2021-11-30"
+effective_from = "2022-01-13"
+redistribution = "private_snapshot_public_metadata_only"
+collector_format = "html"
+topic_domains = ["training"]
+review_tier = "evidence_only"
+
+[[sources]]
+source_id = "DECREE-LOCAL-RETIREMENT-ALLOWANCE-OFFICIAL"
+source_name = "지방공무원 명예퇴직수당 등 지급 규정"
+source_type = "presidential_decree"
+issuer = "법제처 국가법령정보센터"
+official_source_id = "lsiSeq:257543"
+url = "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=257543&efYd=20240102&ancYnChk=0"
+allowed_host = "www.law.go.kr"
+content_types = ["text/html"]
+max_bytes = 2000000
+timeout_seconds = 20
+retries = 1
+auth_mode = "none"
+expected_marker = "지방공무원 명예퇴직수당 등 지급 규정"
+promulgation_date = "2024-01-02"
+effective_from = "2024-01-02"
+redistribution = "private_snapshot_public_metadata_only"
+collector_format = "html"
+topic_domains = ["retirement"]
+review_tier = "evidence_only"
+
+[[sources]]
+source_id = "MANUAL-LOCAL-HR-OFFICIAL"
+source_name = "행정안전부 지방공무원 인사실무"
+source_type = "manual"
+issuer = "행정안전부"
+official_source_id = "data.go.kr:15038527"
+url = "https://www.data.go.kr/data/15038527/fileData.do"
+allowed_host = "www.data.go.kr"
+content_types = ["text/html"]
+max_bytes = 2000000
+timeout_seconds = 20
+retries = 1
+auth_mode = "none"
+expected_marker = "행정안전부_지방공무원 인사실무_20251111"
+promulgation_date = "2025-11-11"
+effective_from = "2025-11-11"
+redistribution = "metadata_page_unrestricted_pdf_review_required"
+collector_format = "html"
+topic_domains = ["appointment", "personnel_records", "performance_and_promotion", "service_and_leave", "pay_and_allowance", "discipline_and_appeal", "training", "retirement"]
+review_tier = "metadata_only"

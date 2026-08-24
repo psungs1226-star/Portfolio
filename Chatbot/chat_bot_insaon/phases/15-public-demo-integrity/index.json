@@ -1,0 +1,30 @@
+{
+  "project": "인사ON",
+  "phase": "15-public-demo-integrity",
+  "steps": [
+    {
+      "step": 0,
+      "name": "scope-fallthrough-deny",
+      "status": "completed",
+      "summary": "미분류 질문을 휴직 레인으로 흡수하던 fallthrough를 기본 거부로 바꿨다. 신호 없는 질문은 reason_code 'no_supported_topic_signal'과 함께 OUT_OF_SCOPE로 종료하고, classify()에 has_established_scope 인자를 추가해 세션 후속 turn은 기존 레인을 유지한다. review.py에 _has_established_scope()를 추가했고 test_classification.py 2건, test_out_of_scope_flow.py 1건을 추가해 255개 테스트가 통과한다."
+    },
+    {
+      "step": 1,
+      "name": "offline-demo-default",
+      "status": "completed",
+      "summary": "preview_dashboard.py 기본 프로필을 offline으로 바꾸고 argparse를 build_parser()로 분리했다. local 프로필은 ollama_loopback_is_reachable() 실패 시 합성 대체 없이 exit 3으로 안전 종료한다. README 실행 절차를 offline 우선으로 재구성하고 ANSWERABLE 확인 절차와 측정된 72초(embedding 290ms/reranker 33.4s/generation 38.8s)를 한계로 공개했다."
+    },
+    {
+      "step": 2,
+      "name": "artifact-publication-boundary",
+      "status": "completed",
+      "summary": "artifacts/ 화이트리스트 12건을 gitignore 예외로 되살리고 임시 git 저장소로 규칙을 검증했다. 검토 중 artifacts/release/manifest.json이 개발자 절대경로와 private/ 경로를 담고 있는 것을 발견해 release_check.py에 _publishable_command()를 추가해 정화 후 재생성했다. check_public_boundary.py에 PUBLISHED_DASHBOARD_ARTIFACTS 존재·경로누출 검사를, test_dashboard_context.py에 실제 루트에서 값이 채워지는지 확인하는 회귀를 추가했다."
+    },
+    {
+      "step": 3,
+      "name": "doc-claim-sync",
+      "status": "completed",
+      "summary": "step 총계를 실측(18 phase·67 step·47 완료·3 blocked·17 pending)으로 README·ROADMAP·IMPLEMENTATION_PLAN·phases/README에 동기화하고 ROADMAP 후속 경로 표에 phase 14~17을 추가했다. AGENTS.md와 README의 LLM 담당 서술을 실제 구현으로 정정했다(분류·조건추출은 결정적 로직, 질의 생성은 미구현). README의 SQLAlchemy·Alembic 항목에 현재 데모 경로가 이 계층을 거치지 않는다는 사실을 명시했다."
+    }
+  ]
+}

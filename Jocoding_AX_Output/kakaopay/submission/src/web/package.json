@@ -1,0 +1,25 @@
+{
+  "name": "kakaopay-risk-explainer-web",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "fetch:fixtures": "node scripts/fetch-yahoo-fixtures.mjs",
+    "test": "vitest run",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@vitejs/plugin-react": "^6.0.3",
+    "typescript": "^5.5.4",
+    "vite": "^8.1.3",
+    "vitest": "^4.0.15"
+  }
+}

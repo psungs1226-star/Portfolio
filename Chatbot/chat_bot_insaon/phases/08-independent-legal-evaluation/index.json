@@ -1,0 +1,16 @@
+{
+  "project": "인사ON",
+  "phase": "08-independent-legal-evaluation",
+  "steps": [
+    {
+      "step": 0,
+      "name": "annotation-workflow",
+      "status": "blocked",
+      "blocked_at": "2026-07-29T20:13:50+09:00",
+      "blocked_reason": "role 분리 annotation schema·validator·manifest 집계는 구현했지만 Phase 07의 사람 승인 snapshot과 versioned legal index가 없어 실제 정답 case를 작성할 고정 source/provision ID가 없다."
+    },
+    {"step": 1, "name": "locked-legal-set", "status": "pending"},
+    {"step": 2, "name": "local-model-ablation", "status": "pending"},
+    {"step": 3, "name": "legal-release-gate", "status": "pending"}
+  ]
+}

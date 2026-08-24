@@ -1,0 +1,60 @@
+{
+  "phase": "08-packaging / step 1 — scope lock & artifact reconciliation",
+  "status": "completed",
+  "scope_lock": {
+    "shipped_core": "Phase 0–7 pipeline: issue-selection → law-normalization → enforcement-standard-normalization → matching (hard filter/direct link/logic/keyword/semantic/evidence/score) → impact-classification → review-list → validation → scope-expansion (batch sweep + blind backtest). Validated at logic-gate + funnel + blind-backtest level.",
+    "differentiator_labeled": "Deep-judgment scaffold (①축, n=1) + 3-signal layers L1/L2/L3 (심판례 L2 pilot n=1) + judgment-layer pilot (제40조). Shipped as 'designed + piloted (n=1)', NOT as statistically validated capability.",
+    "not_shipped_roadmap": "Multi-axis deep-judgment statistical validation; L2 recall measurement; L3 판례 authority-verifier build; 생산일자 date-basis fix; entity synonym dictionary; 항·호-level amendment resolution."
+  },
+  "artifacts": [
+    {"file": "pipeline/00-issue-selection/OUTPUT.json", "status_label": "completed", "class": "canonical", "role": "MVP 쟁점 선정(면세/과세구분) 근거·점수", "backs_claim": "issue chosen by golden-set availability, not intuition"},
+    {"file": "pipeline/01-law-normalization/OUTPUT.json", "status_label": "completed", "class": "canonical", "role": "개정 정규화(조문·change_type·legal_logic)", "backs_claim": "law change → structured object"},
+    {"file": "pipeline/01-law-normalization/OUTPUT_STEPS_1_3.json", "status_label": "partial_hold", "class": "superseded", "role": "01 중간 스텝 산출(1~3)", "backs_claim": "superseded by 01/OUTPUT.json — 참고용, 신규 근거로 인용 금지"},
+    {"file": "pipeline/01-law-normalization/EXTERNAL_REFERENCES.json", "status_label": "no_status_field(phase=1)", "class": "canonical", "role": "외부참조(정의 위임 조문 등) 목록", "backs_claim": "≥1-hop external-reference reasoning input", "note": "이 파일엔 top-level status 필드 없음(phase만 존재) — 검수 정정, 상태 라벨 대체 표기."},
+    {"file": "pipeline/02-enforcement-standard-normalization/OUTPUT.json", "status_label": "completed", "class": "canonical", "role": "집행기준 정규화(번호·관련조문·본칙/예외/사례)", "backs_claim": "enforcement standards as primary document set"},
+    {"file": "pipeline/03-matching/OUTPUT.json", "status_label": "completed", "class": "canonical", "role": "매칭 결과(hard filter→score)", "backs_claim": "logic-over-keyword matching order"},
+    {"file": "pipeline/04-impact-classification/OUTPUT.json", "status_label": "completed", "class": "canonical", "role": "영향 유형·신뢰도 분류", "backs_claim": "impact type + confidence + hold"},
+    {"file": "pipeline/05-review-list-output/OUTPUT.json", "status_label": "completed", "class": "canonical", "role": "내부 검토리스트(섹션 분리)", "backs_claim": "review list; new-topic vs affected separated"},
+    {"file": "pipeline/06-validation/MINI_VALIDATION_SET.json", "status_label": "completed_in_use_scored_by_phase6", "class": "canonical", "role": "미니 검증셋(positive/negative/hold)", "backs_claim": "logic-gate sanity check basis"},
+    {"file": "pipeline/06-validation/OUTPUT.json", "status_label": "completed_with_scope_flags", "class": "canonical", "role": "검증 결과·실패분류(가/나)", "backs_claim": "logic errors vs coverage gaps separated"},
+    {"file": "pipeline/07-scope-expansion/AMENDMENT_EVENTS.json", "status_label": "completed_with_hold_flags", "class": "canonical", "role": "개정 이벤트 15건(신구 history id 포함)", "backs_claim": "batch amendment sweep input"},
+    {"file": "pipeline/07-scope-expansion/CANDIDATE_POOL.json", "status_label": "completed", "class": "canonical", "role": "집행기준 272건 전수 pool", "backs_claim": "full-pool matching, not sampled"},
+    {"file": "pipeline/07-scope-expansion/OUTPUT.json", "status_label": "completed_with_hold_flags", "class": "canonical", "role": "15개 개정 전수매칭 결과·trivial negative 방어", "backs_claim": "15/15 direct link; trivial negatives excluded"},
+    {"file": "pipeline/07-scope-expansion/REVISION_996_ANALYSIS.json", "status_label": "completed", "class": "canonical", "role": "세법해석정비 996 전수(개정주도 1.1%)", "backs_claim": "necessity of a dedicated amendment-impact layer (registry does not track it)"},
+    {"file": "pipeline/07-scope-expansion/BLIND_BACKTEST.json", "status_label": "completed_with_disclosed_deviations", "class": "canonical", "role": "사전등록 blind 백테스트(HIT@10=2/7)", "backs_claim": "layer capability measured, not asserted; fix levers identified"},
+    {"file": "pipeline/07-scope-expansion/JUDGMENT_LAYER_PILOT.json", "status_label": "pilot_completed_feasibility_positive", "class": "pilot", "role": "판정 레이어 파일럿(제40조 금융, funnel 923→197→소수)", "backs_claim": "judgment-layer feasibility (n=1 axis)"},
+    {"file": "pipeline/07-scope-expansion/JUDGMENT_SCAFFOLD_AXIS1.json", "status_label": "completed_with_source_check", "class": "canonical_flagship_n1", "role": "깊은판단 플래그십 ①축(신구조문 인용·적대검증 3렌즈·REVIEW_WORTHY)", "backs_claim": "deep-judgment reach+judgment+adversarial (n=1 demonstration, not statistical)"},
+    {"file": "pipeline/07-scope-expansion/SIMPANLYE_L2_PILOT.json", "status_label": "completed_with_source_check", "class": "pilot", "role": "L2 심판례 신호계층 파일럿(recipe·funnel·0 온포인트=STABLE)", "backs_claim": "L2 signal layer buildable + non-vacuous (n=1; L2 recall not yet measured)"},
+    {"file": "pipeline/08-packaging/ACCEPTANCE_DEMO.md", "status_label": "completed_with_source_check", "class": "canonical", "role": "S7 수용성 데모(신선 주제 end-to-end) + HTML 닫음 addendum", "backs_claim": "packaged skill produces honest output on a fresh topic without manual repair; topic→HTML chain closed"},
+    {"file": "pipeline/08-packaging/steps/05-html-finalize/HTML_SCHEMA.json", "status_label": "completed", "class": "canonical", "role": "action-brief HTML 필드 계약(2축 tier×verdict·hop·정렬·렌더규칙)", "backs_claim": "HTML is a deterministic render of pipeline output, not hand-authored"},
+    {"file": "pipeline/08-packaging/steps/05-html-finalize/MAPPING.md", "status_label": "completed", "class": "canonical", "role": "소스 아티팩트→브리프 필드 유도 규칙(tier/verdict/hop/keyword_diff)", "backs_claim": "every card axis traces to a canonical source field"},
+    {"file": "pipeline/08-packaging/steps/05-html-finalize/brief_template.json", "status_label": "completed", "class": "canonical", "role": "편집성 프레임(제목·실익·왜지금) — 데이터 아님", "backs_claim": "editorial frame separated from derived data"},
+    {"file": "pipeline/08-packaging/steps/05-html-finalize/build_brief.py", "status_label": "completed", "class": "canonical", "role": "변환기: canonical 아티팩트→brief_data.json→HTML(단일 진입점, 2회 실행 diff 동일)", "backs_claim": "topic-in→HTML-out is re-runnable; hand-edit drift corrected to canonical labels (마일리지→review_worthy, 유동화→hold)"},
+    {"file": "pipeline/08-packaging/steps/05-html-finalize/render_brief.py", "status_label": "completed", "class": "canonical", "role": "렌더러: brief_data.json→HTML(2축 매트릭스·우선순위 정렬)", "backs_claim": "same renderer serves baseline brief and acceptance demo"},
+    {"file": "pipeline/08-packaging/steps/05-html-finalize/brief_data.json", "status_label": "generated_do_not_hand_edit", "class": "generated", "role": "build_brief.py 산출 중간 데이터(매 실행 재생성)", "backs_claim": "regenerated each run — not a hand-maintained source"},
+    {"file": "pipeline/08-packaging/steps/05-html-finalize/demo_brief_data.json", "status_label": "completed_with_source_check", "class": "canonical", "role": "S7 데모 입력(신선 주제 VAT-DEC-40-33735 판단→스키마 매핑)", "backs_claim": "fresh-topic acceptance input; honest labels preserved (REVIEW_WORTHY, 동의어 gap 발화)"}
+  ],
+  "canonical_source_map": {
+    "core_pipeline_run": "Phase 0–6 OUTPUT.json chain",
+    "scope_expansion": "07/OUTPUT.json + AMENDMENT_EVENTS + CANDIDATE_POOL",
+    "necessity_evidence": "REVISION_996_ANALYSIS.json",
+    "capability_evidence": "BLIND_BACKTEST.json",
+    "deep_judgment_demo": "JUDGMENT_SCAFFOLD_AXIS1.json",
+    "signal_layers_demo": "SIMPANLYE_L2_PILOT.json + JUDGMENT_LAYER_PILOT.json",
+    "do_not_cite_as_new_evidence": ["01/OUTPUT_STEPS_1_3.json (superseded)"]
+  },
+  "verify": {
+    "one_status_label_each": true,
+    "duplicate_or_contradictory_canonical": "none — OUTPUT_STEPS_1_3 marked superseded; single canonical per role; brief_data.json은 generated(소스 아님) 명시",
+    "count": {"total": 26, "canonical": 21, "pilot": 2, "canonical_flagship_n1": 1, "superseded": 1, "generated": 1}
+  },
+  "plugin_validation_record": {
+    "validator": "~/.codex/skills/.system/plugin-creator/scripts/validate_plugin.py (external Codex plugin-creator tool, not in repo)",
+    "command": "python validate_plugin.py /Users/psh/JO_AX/pwc/src",
+    "result": "Plugin validation passed (exit 0)",
+    "plugin_version": "0.2.0",
+    "run_context": "Phase 8 step 06; pyyaml installed in a throwaway venv",
+    "note": "검수 정정: validator는 repo 내부에 없고 외부 도구 — 이 레코드가 실행/통과의 in-repo 증빙.",
+    "revalidation": "최종 검수(패키징 직전): S5 html-finalize 도구(build_brief/render_brief/스키마/데모) 추가 후 재실행 — Plugin validation passed (exit 0), plugin_version 0.2.0 불변."
+  }
+}

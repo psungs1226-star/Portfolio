@@ -1,0 +1,177 @@
+{
+  "schema_version": "0.1.0",
+  "profile": "offline",
+  "created_at": "2026-08-10T02:50:35.196844+00:00",
+  "release_status": "synthetic_regression_candidate",
+  "selected_config": "H3",
+  "selected_run_id": "SYNTHETIC-REGRESSION-H3-0.1.0",
+  "selected_fatal_errors": 0,
+  "legal_accuracy_status": "unmeasured",
+  "operational_effect_status": "unmeasured",
+  "local_model_status": "actual_local_smoke_passed",
+  "official_corpus_status": "candidate_pending_human_approval",
+  "official_corpus_automated_quality": "passed_12_of_12",
+  "official_corpus_release": "hold",
+  "checks": [
+    {
+      "command": [
+        "python",
+        "-m",
+        "insaon.evaluation.cli",
+        "run",
+        "--config",
+        "configs/eval/offline-all.toml"
+      ],
+      "returncode": 0,
+      "output_sha256": "a7bc94426555886a453be3576ab5943d2eb0908fa9759a34dbbcaa5518f9fb8c"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "insaon.evaluation.cli",
+        "compare",
+        "--results",
+        "evals/results",
+        "--output",
+        "evals/reports/comparison.md"
+      ],
+      "returncode": 0,
+      "output_sha256": "645c0fb7533c6dd9fad8260337d5fd351e7057aa00f89aa09c6bfb799ca91eea"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "insaon.evaluation.cli",
+        "failures",
+        "--results",
+        "evals/results",
+        "--private-case-results",
+        "<private-workspace>",
+        "--output",
+        "evals/reports/failure_analysis.md"
+      ],
+      "returncode": 0,
+      "output_sha256": "9a9eadfb09880b8791cfcfecdb20d03b7a8ce0f435c4f16a323e2ca0ee95cce3"
+    },
+    {
+      "command": [
+        "python",
+        "scripts/sync_public_results.py"
+      ],
+      "returncode": 0,
+      "output_sha256": "a8d2dffc0694f2baf0f4fa9e2ff71eb9e856eb45f152ea3c5fa64b4d3deeb43a"
+    },
+    {
+      "command": [
+        "python",
+        "scripts/validate_harness.py"
+      ],
+      "returncode": 0,
+      "output_sha256": "e171c02bde3d1daa9774744bac1df53f4ed6092e4da611de4ed3ce275a1d1b64"
+    },
+    {
+      "command": [
+        "python",
+        "scripts/validate_eval_contract.py",
+        "--results",
+        "evals/results"
+      ],
+      "returncode": 0,
+      "output_sha256": "e9dec19735bf978b5ff11be102d79e89ad0635cf972ea79b3b52e3dcc02a187d"
+    },
+    {
+      "command": [
+        "python",
+        "scripts/check_public_boundary.py"
+      ],
+      "returncode": 0,
+      "output_sha256": "7a88187fadf18fae79e62c7c3fa4f760d7f534f82ea82d2b1d4f6eb92a2e5a89"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "pytest",
+        "-q"
+      ],
+      "returncode": 0,
+      "output_sha256": "3bccd32635d12f9b94c7e0415faf060040c605c5b4846d10dcde2e12ae4200c1"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "ruff",
+        "check",
+        "src",
+        "tests",
+        "scripts"
+      ],
+      "returncode": 0,
+      "output_sha256": "82b3e6a6c090a57601d22943bd23fca9218d1031dbe5a7b754092f9a156b4f18"
+    },
+    {
+      "command": [
+        "python",
+        "-m",
+        "mypy",
+        "src"
+      ],
+      "returncode": 0,
+      "output_sha256": "0f5e2c0f274fe3238699ff97fc09737970ee01e440d6d8f78a8522bdc43ee59b"
+    }
+  ],
+  "artifact_hashes": {
+    "OPEN_DASHBOARD.command": "3bfad6a811ec0a1fa11f7a4a1f26307a3f9f3551f1cd5b733cf73484d5c46ae2",
+    "README.md": "de132b86b48a0402230bf19c573ce833d89ed1c8ca59fb14797a0b9eff054e19",
+    "artifacts/legal/candidate-diff-summary.json": "eee0ae9662ed0137ded04059abbd529741088f5bac7c4f1c208da93da49e14ab",
+    "artifacts/legal/candidate-review.json": "a57164774f5bbb6769bd9ecddfb0880bceca38c63aa910afc5fc2b1ea5244f47",
+    "artifacts/legal/human-review-readiness.json": "f204b8a4558de06217d53e541e08aeb004d73e485a05c91f59518ed6c88b01c8",
+    "artifacts/legal/quality-audit.json": "56b484847ed6f81b8b864048136c14f47f3958c42d6ea461d848b04ae795bab3",
+    "artifacts/legal/wide-candidate-summary.json": "f720f0358087e65b6034e772946a66c5e5d5fc24429cc833da88136e52e04d33",
+    "artifacts/legal/wide-human-review-readiness.json": "ef86dd2c44c6dade8cf3259db0b0537e15621ff4f66c1d013fab1c1a665a4c09",
+    "artifacts/legal/wide-quality-audit.json": "dbcd0c32b941f1b303818a75a8479744fd23df1c5f1d7464b47e208b8c9d6cf2",
+    "artifacts/legal/wide-source-probe.json": "1ac45a816a1d274d615b9f60ae72f07f4a153765542370889b4441248cc2933d",
+    "artifacts/provider/derived-allowance-smoke.json": "a183a97ca602f9497bb9de40e7a1957b79512e1d97398e3f50470bfdc560b9ff",
+    "artifacts/provider/local-smoke.json": "e1a0918948e2e729671b0437eefb6e9923265ccf577697bc8c79c117cb76124c",
+    "artifacts/research/shadow-study-readiness.json": "2ba0901f39abf37955aa14b015e54d801942d6615c15b02ee222db272a5b1f70",
+    "artifacts/sources/official-metadata-check.json": "81497a309df0cb981b66c2ddbb2d286ec113916f64fdfce2115d39eedbe1aec2",
+    "artifacts/spikes/lexical/manifest.json": "669a8aa59bcc04b0e5a249d44f9a17bb58106a41152f0b13ba16572a7050e3ad",
+    "configs/deployment/pilot.toml": "c95a8423e2a7d839080dd338f5c365b0d7c665193c3c7525f27d4b191a5a32fe",
+    "configs/sources/official-mvp.toml": "bc5172c2407c4225c9bb134b7e6b10a6619af5bfcf34e541710c434d8498c9b2",
+    "docs/DEMO_CHECKLIST.md": "8a3e861c04f82ba05f63ee9b83b7aad964856ef7d929205dd2ab14d0f9704bc7",
+    "docs/EVALUATION_PLAN.md": "9c2f2ff7994165a0069fbae1d562f67e70693cf823fe83065337bc3504f37fb2",
+    "docs/PILOT_RUNBOOK.md": "e28a09e86a0ad1d4e96eae93ea5277817d5c00cd9f2a5265ce9292d104aa682d",
+    "docs/TRACEABILITY.md": "4f079eda405ff41700a203ae46c9e3efb426251c6a01898e639991913aa3953c",
+    "docs/adr/0005-synthetic-regression-release-boundary.md": "5acae12d875606339ce89ae17a680f12560bcb61c83ef461bc3b28a7a5d56e19",
+    "docs/adr/0006-local-model-runtime.md": "f02a143d04f2ef41ab33fb1ead1610e75f5720d895f1d99821e2203fe5e6281b",
+    "docs/adr/0007-keyless-official-source-candidate.md": "f3c98c15c2d43d574ea35a3943148a1434d949c19b4640f6f4492c6c2cb2a2da",
+    "docs/adr/0008-controlled-pilot-hosting.md": "be35ac02149fbdacc1d4f398cb83201b6cec9c669b572fe4844dfd741182ff8d",
+    "docs/adr/0013-derived-allowance-deep-review.md": "24d445631dfd48169b6ebd6a879b619ecc4a5edc1ed514556466ae6497f8f176",
+    "evals/reports/comparison.md": "586fec7636dcbd7ca2e73eb6605f99812085c063f46f61871c1f122756ea2f6d",
+    "evals/reports/dashboard-quality-review.md": "b7e274114abedcb407d140da92d76a8ffe41b5f40bb62bcbd96cc58741ba24cf",
+    "evals/reports/derived-allowance-review.md": "83fa5769ca77a800ee6b35dd308ae1777323daa4afd55e26b648af7af3928462",
+    "evals/reports/failure_analysis.md": "54def19e494b6bfb39e08f1a111617710e164c08c2899847a7632fcd37895ea3",
+    "evals/reports/local-model-integration-review.md": "87b40725f52192d43cdecdef196441c8d21d1ffe10cb514b0455341322b0985e",
+    "evals/reports/official-corpus-quality.md": "e00ae95576b7b93b148f4257e5530f9b67f4791121ea1c2872d1bbce7788c37f",
+    "evals/reports/official-corpus-readiness.md": "d985289e514349dbb181fff21eef6555c2b0ebde878dd763f6a780d2826a1536",
+    "evals/results/b0_lexical.json": "71cbd8816153d09a4509ef8ae153fe9dd26ea419dee7e9e73d62c09c7c5baeed",
+    "evals/results/b1_vector.json": "e7fdf4371bf55df0c55fe8d5555ea06cb01a4e70118e5502d686d16997660ff0",
+    "evals/results/h1_hybrid.json": "cb0b72b85c27c39115a74da26f670edec24c902217a6dd2f90c4722bed669264",
+    "evals/results/h2_temporal_filter.json": "f9a6dd5f0ef2558d082199340e87d0c64414b831f790572c3eb39a777ed8c332",
+    "evals/results/h3_reranker_context.json": "0e4178f653a3e92fccc93176244c58571ca1810380c484c3327fb2699fedc747",
+    "evals/results/h4_query_transform.json": "5e57b0e93d39fbd3ab3969754b0b13e0cbde2066745dfe494eacb22e55718be6",
+    "evals/schemas/legal-annotation-record.schema.json": "d4f8aaab8621a783a4da210b9dcf4cd51a6ba9f8c3ba49ec09f168676214598f",
+    "report/planning-report.html": "9563e692631bf09f0749237a8aa5f5bf5e8ded89f2f099ce5c1d380e66ea2b8d",
+    "report/planning-report.pdf": "d8a155fe250058446b05d0f470a725b8ba48ff72caa2701504a769b9982ead33",
+    "report/portfolio-case-study.html": "292f0eed73d10d91172924ed0f440815fc201187d90842e2b07f0776230fba88"
+  },
+  "limitations": [
+    "Synthetic regression only; independent legal holdout remains unmeasured.",
+    "No deployment or real-user operational result is claimed.",
+    "Local model smoke traversed the pending official candidate; official legal content accuracy remains unmeasured.",
+    "Official source candidate passed automated structural checks, but human approval and legal index promotion are blocked."
+  ]
+}

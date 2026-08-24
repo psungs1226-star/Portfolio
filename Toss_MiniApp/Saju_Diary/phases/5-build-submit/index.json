@@ -1,0 +1,8 @@
+{
+  "project": "오늘아침 (todaymorning)",
+  "phase": "5-build-submit",
+  "steps": [
+    { "step": 0, "name": "widget-editor", "status": "completed", "summary": "위젯 편집 탭 + 홈 settings 구동. 순수 변환 모듈 features/widgets/widget-config.ts(moveUp/moveDown/toggle/setEnabled/setSize/normalizeWidgets + homeWidgets 셀렉터, 불변·결정론, 날씨·운세 large 금지 정책 강제). WidgetsScreen=Switch(on/off)+SegmentedControl(크기,허용크기만)+IconButton 위/아래 순서이동→saveSettings. TodayScreen을 homeWidgets(enabled+order) 단일 소스로 리팩터(하드코딩 제거), 확인/기록 섹션별 order 반영, 빈 홈 안내. build 0 에러(.ait 생성), test 353 passed(widget-config 신규 케이스 포함). 기존 무관 lint 에러 1건(share/index.test.ts)만 잔존." },
+    { "step": 1, "name": "polish-build", "status": "completed", "summary": "출시 준비 폴리시·검증 완료. lint 클린(share/index.test.ts 미사용 _path 제거→getTossShareLink mock이 path 인자 사용). 컴플라이언스(CRITICAL #4): 결제(IAP/subscription)·광고(AdMob) 활성 코드 0 확인, Tier='free'|'premium'는 미사용 타입만(토글 off). 개인정보 고지(PRD §12, CRITICAL #1): 온보딩 2개소에 더해 위젯(설정) 탭 하단에 로컬 전용·외부 전송 0 1줄 상시 노출 추가(palette.textTertiary, 12px). safe-area는 앱 셸 하단탭·온보딩 CTA·TDS Top으로 기존 충족 확인. data.go.kr 키는 VITE_DATA_GO_KR_KEY 환경변수 주입(하드코딩 0)·도메인 apis.data.go.kr 단일 출처 확인. docs/SUBMISSION.md 신규: 빌드 완료 항목 + 콘솔 등록(appName=evrytimes·아이콘·한줄카피·연령·고객센터)·배포 시 키 주입·외부 도메인 허용·만세력 외부 눈대조(PRD §14)·위치 권한 고지 체크리스트(사용자 수동 항목 명시). AC: build 0에러(evrytimes.ait 산출), test 353 passed(18 files), lint 무에러. 콘솔 업로드·실키·신청폼은 사용자 수동(빌드 블로커 아님, SUBMISSION.md에 정리)." }
+  ]
+}

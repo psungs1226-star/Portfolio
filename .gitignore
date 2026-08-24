@@ -1,0 +1,21 @@
+.DS_Store
+__MACOSX/
+*.zip
+portfolio-readme-images/
+
+.env
+.env.*
+!.env.example
+
+**/.venv/
+**/node_modules/
+**/__pycache__/
+**/*.pyc
+**/.pytest_cache/
+**/*.egg-info/
+**/dist/
+**/coverage/
+
+# Raw agent logs are retained locally when a submission requires them,
+# but are not part of the public portfolio surface.
+**/logs/

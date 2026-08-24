@@ -1,0 +1,10 @@
+dataset = "../../private/evals/test_mvp_locked.synthetic.jsonl"
+dataset_id = "insaon-synthetic-system-regression"
+dataset_version = "0.4.0"
+output_dir = "evals/results"
+private_case_results_dir = "../../private/evals/results"
+configs = ["B0", "B1", "H1", "H2", "H3", "H4"]
+top_k = 5
+generation_repeats = 3
+seed_policy = "deterministic adapters; three identical safety repetitions"
+data_as_of = "2026-07-29"

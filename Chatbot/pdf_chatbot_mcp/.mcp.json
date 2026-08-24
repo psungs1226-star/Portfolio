@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "pdf-chatbot": {
+      "type": "stdio",
+      "command": "${CLAUDE_PROJECT_DIR:-.}/.venv/bin/python",
+      "args": ["${CLAUDE_PROJECT_DIR:-.}/mcp_server.py"],
+      "env": {
+        "PDF_CHATBOT_DOCS": "${CLAUDE_PROJECT_DIR:-.}/documents"
+      }
+    }
+  }
+}

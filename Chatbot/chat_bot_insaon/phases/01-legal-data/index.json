@@ -1,0 +1,27 @@
+{
+  "project": "인사ON",
+  "phase": "01-legal-data",
+  "steps": [
+    {
+      "step": 0,
+      "name": "source-ingestion",
+      "status": "completed",
+      "completed_at": "2026-07-29T15:10:00+09:00",
+      "summary": "검증된 녹화 transport 원천 client, immutable snapshot registry와 SQLAlchemy/Alembic 저장 모델을 구현했다."
+    },
+    {
+      "step": 1,
+      "name": "semantic-parser",
+      "status": "completed",
+      "completed_at": "2026-07-29T15:10:00+09:00",
+      "summary": "명시적 semantic JSON을 조문 계층·단서·부칙·관계로 파싱하고 고아·중복·효력 오류를 quality issue로 반환한다."
+    },
+    {
+      "step": 2,
+      "name": "temporal-promotion",
+      "status": "completed",
+      "completed_at": "2026-07-29T15:10:00+09:00",
+      "summary": "valid_time 조회와 수동 승인·hash·quality·회귀 gate가 모두 통과해야 활성 index를 교체하는 transaction을 구현했다."
+    }
+  ]
+}

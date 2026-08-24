@@ -1,0 +1,66 @@
+.DS_Store
+.env
+.env.*
+!.env.example
+.venv/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+node_modules/
+.next/
+dist/
+build/
+coverage/
+.coverage
+*.log
+
+# Raw downloads and locally generated indexes are not portfolio artifacts.
+data/raw/
+data/processed/
+data/index/
+
+# Local run output is ignored, but the dashboard and README read a reviewed
+# allowlist of public artifacts. Without these the published dashboard silently
+# renders "0건 / unavailable". Add a file here only after reading it.
+artifacts/*
+!artifacts/legal/
+artifacts/legal/*
+!artifacts/legal/quality-audit.json
+!artifacts/legal/human-review-readiness.json
+!artifacts/legal/wide-quality-audit.json
+!artifacts/legal/wide-human-review-readiness.json
+!artifacts/legal/wide-candidate-summary.json
+!artifacts/legal/wide-source-probe.json
+!artifacts/release/
+artifacts/release/*
+!artifacts/release/manifest.json
+!artifacts/provider/
+artifacts/provider/*
+!artifacts/provider/local-smoke.json
+!artifacts/provider/local-model-check.json
+!artifacts/provider/quantity-grounding-probe.json
+!artifacts/provider/live-multiturn-probe.json
+!artifacts/spikes/
+artifacts/spikes/*
+!artifacts/spikes/lexical/
+artifacts/spikes/lexical/*
+!artifacts/spikes/lexical/manifest.json
+!artifacts/spikes/chunking/
+artifacts/spikes/chunking/*
+!artifacts/spikes/chunking/manifest.json
+!artifacts/spikes/query-transform/
+artifacts/spikes/query-transform/*
+!artifacts/spikes/query-transform/manifest.json
+!artifacts/sources/
+artifacts/sources/*
+!artifacts/sources/official-metadata-check.json
+!artifacts/design/
+artifacts/design/*
+!artifacts/design/composition-gate-official-local.json
+!artifacts/research/
+artifacts/research/*
+!artifacts/research/shadow-study-readiness.json
+
+# Evaluation answer keys and human-review notes remain private.
+evals/private/

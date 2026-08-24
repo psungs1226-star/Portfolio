@@ -1,0 +1,9 @@
+{
+  "project": "오늘아침 (todaymorning)",
+  "phase": "3-records",
+  "steps": [
+    { "step": 0, "name": "dday", "status": "completed", "summary": "DdayWidget(추가/수정/삭제·크기별 small 2열그리드/medium/large 강조) + 순수 dday-calc(daysUntil/ddayLabel, UTC자정 기준 정수일·타임존 안전)로 D-N/D-DAY/D+N 카운트다운. storage loadDdays/saveDdays 접근자만 사용, TodayScreen '확인' 섹션에 끼움. 입력=TDS TextField. dday-calc.test 18 케이스(오늘=D-DAY·어제=D+1·미래·윤년/월말/연말 경계) 통과. build 0에러, test 221 통과." },
+    { "step": 1, "name": "memo", "status": "completed", "summary": "MemoWidget(수시 한 줄 '던지기' 입력=TDS TextField.Clearable + '할 일로' 토글=TDS Checkbox.Circle, 그날(date) 메모만 표시, isTodo 항목 체크 시 취소선, 항목별 삭제). 상태 변형은 순수 memo-ops(addMemo 맨위 추가·trim·빈값 무시, toggleMemo는 isTodo만 반전, removeMemo id필터, memosForDate 날짜필터; id·date 주입·불변)로 분리. storage loadMemos/saveMemos 접근자만 사용(CRITICAL #1), 일기 기능(감정·날씨 헤더) 미포함(역할 분리). TodayScreen '기록' 섹션 메모 슬롯에 끼움. memo-ops.test 18 케이스(추가/토글/삭제/날짜필터 + 불변성) 통과. build 0에러, test 239 통과." },
+    { "step": 2, "name": "diary", "status": "completed", "summary": "DiaryScreen(하루 1개=date 키, 기분=TDS Rating 편집·본문=TDS TextArea, 이전/오늘/다음 날짜 네비로 과거 열람·미래 이동 차단, 수정/저장). 차별점=자동 헤더: 작성 시 그날 날씨(loadWeatherCache 첫 지역 캐시, viewDate 예보일 때만)·운세(settings.saju로 computeTodayFortune 메모리 계산, fortune 모듈 재사용) 요약을 스냅샷으로 박제·미리보기, 없으면 헤더 생략(네트워크 강제 X). 순수 diary-ops로 분리: buildWeatherSnapshot(WeatherBundle→{regionName,condition,temp,iconCode}|null), buildFortuneSnapshot(FortuneResult→{overall,luckyColor,luckyDirection,iljin,advice}|null) 둘 다 독립 객체 복사(원본 불변), upsertDiary(같은 date 제자리 덮어쓰기·하루1개 보장·새날 맨앞·text trim·null 스냅샷 필드 생략·불변), diaryForDate/removeDiary/sortDiariesDesc. storage loadDiaries/saveDiaries·loadSettings·loadWeatherCache 접근자만(CRITICAL #1, 일기=민감정보 외부전송 0). 별점 재구현 금지(TDS Rating). diary-ops.test 21 케이스(스냅샷 복사·null 폴백·하루1개 덮어쓰기·순서보존·trim·불변·조회·정렬) 통과. build 0에러, test 260 통과." }
+  ]
+}

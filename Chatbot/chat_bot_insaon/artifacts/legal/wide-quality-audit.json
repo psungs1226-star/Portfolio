@@ -1,0 +1,408 @@
+{
+  "schema_version": "0.1.0",
+  "profile": "official-corpus-automated-quality-audit",
+  "candidate_status": "pending_human_approval",
+  "source_manifest_hash": "1277614361e19bc9362cba100364ff901ce27ea78245a41a6f3e1bbb34b8aa78",
+  "parser_version": "official-html-v0.2.0",
+  "automated_structural_quality": "passed",
+  "check_summary": {
+    "passed": 12,
+    "total": 12,
+    "failed": 0
+  },
+  "quality_counts": {
+    "fatal": 0,
+    "warning": 0,
+    "deleted_article_tombstones": 72,
+    "provisions": 12640,
+    "supplementary": 5777
+  },
+  "checks": [
+    {
+      "check_id": "source_snapshot_integrity",
+      "passed": true,
+      "observed": [
+        {
+          "source_id": "LAW-LOCAL-OFFICIAL",
+          "snapshot_id": "SNAP-LAW-LOCAL-OFFICIAL-b610461b6e51",
+          "metadata_match": true,
+          "file_exists": true,
+          "hash_match": true,
+          "byte_count_match": true
+        },
+        {
+          "source_id": "DECREE-LOCAL-APPOINTMENT-OFFICIAL",
+          "snapshot_id": "SNAP-DECREE-LOCAL-APPOINTMENT-OFFICIAL-7b25189d3995",
+          "metadata_match": true,
+          "file_exists": true,
+          "hash_match": true,
+          "byte_count_match": true
+        },
+        {
+          "source_id": "RULE-LOCAL-HR-GUIDE-OFFICIAL",
+          "snapshot_id": "SNAP-RULE-LOCAL-HR-GUIDE-OFFICIAL-ac6f5373a804",
+          "metadata_match": true,
+          "file_exists": true,
+          "hash_match": true,
+          "byte_count_match": true
+        },
+        {
+          "source_id": "LAW-LOCAL-OFFICIAL-20221227",
+          "snapshot_id": "SNAP-LAW-LOCAL-OFFICIAL-20221227-be99a77dfede",
+          "metadata_match": true,
+          "file_exists": true,
+          "hash_match": true,
+          "byte_count_match": true
+        },
+        {
+          "source_id": "DECREE-LOCAL-APPOINTMENT-OFFICIAL-20230613",
+          "snapshot_id": "SNAP-DECREE-LOCAL-APPOINTMENT-OFFICIAL-20230613-edaf5736b61f",
+          "metadata_match": true,
+          "file_exists": true,
+          "hash_match": true,
+          "byte_count_match": true
+        },
+        {
+          "source_id": "RULE-LOCAL-HR-GUIDE-OFFICIAL-20231228",
+          "snapshot_id": "SNAP-RULE-LOCAL-HR-GUIDE-OFFICIAL-20231228-45a5c90fa143",
+          "metadata_match": true,
+          "file_exists": true,
+          "hash_match": true,
+          "byte_count_match": true
+        },
+        {
+          "source_id": "RULE-LOCAL-PERSONNEL-RECORDS-OFFICIAL",
+          "snapshot_id": "SNAP-RULE-LOCAL-PERSONNEL-RECORDS-OFFICIAL-c8a7c8a6efb5",
+          "metadata_match": true,
+          "file_exists": true,
+          "hash_match": true,
+          "byte_count_match": true
+        },
+        {
+          "source_id": "RULE-LOCAL-PERFORMANCE-OFFICIAL",
+          "snapshot_id": "SNAP-RULE-LOCAL-PERFORMANCE-OFFICIAL-44d84ab08f4f",
+          "metadata_match": true,
+          "file_exists": true,
+          "hash_match": true,
+          "byte_count_match": true
+        },
+        {
+          "source_id": "DECREE-LOCAL-SERVICE-OFFICIAL",
+          "snapshot_id": "SNAP-DECREE-LOCAL-SERVICE-OFFICIAL-7911eaf86786",
+          "metadata_match": true,
+          "file_exists": true,
+          "hash_match": true,
+          "byte_count_match": true
+        },
+        {
+          "source_id": "DECREE-LOCAL-PAY-OFFICIAL",
+          "snapshot_id": "SNAP-DECREE-LOCAL-PAY-OFFICIAL-badc782626e9",
+          "metadata_match": true,
+          "file_exists": true,
+          "hash_match": true,
+          "byte_count_match": true
+        },
+        {
+          "source_id": "DECREE-LOCAL-PAY-20260701-OFFICIAL",
+          "snapshot_id": "SNAP-DECREE-LOCAL-PAY-20260701-OFFICIAL-201d81a81456",
+          "metadata_match": true,
+          "file_exists": true,
+          "hash_match": true,
+          "byte_count_match": true
+        },
+        {
+          "source_id": "DECREE-LOCAL-ALLOWANCE-OFFICIAL",
+          "snapshot_id": "SNAP-DECREE-LOCAL-ALLOWANCE-OFFICIAL-a4e849fd80f4",
+          "metadata_match": true,
+          "file_exists": true,
+          "hash_match": true,
+          "byte_count_match": true
+        },
+        {
+          "source_id": "DECREE-LOCAL-DISCIPLINE-OFFICIAL",
+          "snapshot_id": "SNAP-DECREE-LOCAL-DISCIPLINE-OFFICIAL-53df80b5eb53",
+          "metadata_match": true,
+          "file_exists": true,
+          "hash_match": true,
+          "byte_count_match": true
+        },
+        {
+          "source_id": "LAW-LOCAL-TRAINING-OFFICIAL",
+          "snapshot_id": "SNAP-LAW-LOCAL-TRAINING-OFFICIAL-1bf15fffcd77",
+          "metadata_match": true,
+          "file_exists": true,
+          "hash_match": true,
+          "byte_count_match": true
+        },
+        {
+          "source_id": "DECREE-LOCAL-TRAINING-OFFICIAL",
+          "snapshot_id": "SNAP-DECREE-LOCAL-TRAINING-OFFICIAL-7abf1a80714b",
+          "metadata_match": true,
+          "file_exists": true,
+          "hash_match": true,
+          "byte_count_match": true
+        },
+        {
+          "source_id": "DECREE-LOCAL-RETIREMENT-ALLOWANCE-OFFICIAL",
+          "snapshot_id": "SNAP-DECREE-LOCAL-RETIREMENT-ALLOWANCE-OFFICIAL-f4bc56ad1d5e",
+          "metadata_match": true,
+          "file_exists": true,
+          "hash_match": true,
+          "byte_count_match": true
+        }
+      ]
+    },
+    {
+      "check_id": "selected_source_manifest_hash",
+      "passed": true,
+      "observed": "1277614361e19bc9362cba100364ff901ce27ea78245a41a6f3e1bbb34b8aa78"
+    },
+    {
+      "check_id": "deterministic_reparse_equivalence",
+      "passed": true,
+      "observed": {
+        "reparsed": 12640,
+        "candidate": 12640
+      }
+    },
+    {
+      "check_id": "parser_issue_reproducibility",
+      "passed": true,
+      "observed": {
+        "DELETED_ARTICLE_TOMBSTONE": 72
+      }
+    },
+    {
+      "check_id": "article_header_coverage",
+      "passed": true,
+      "observed": {
+        "active_unparsed": 0,
+        "fatal": 0,
+        "deleted_article_tombstones": 72
+      }
+    },
+    {
+      "check_id": "candidate_quality_count_contract",
+      "passed": true,
+      "observed": {
+        "reported": {
+          "fatal": 0,
+          "warning": 0,
+          "informational": 72,
+          "issue_counts": {
+            "DELETED_ARTICLE_TOMBSTONE": 72
+          }
+        },
+        "actual": {
+          "fatal": 0,
+          "warning": 0,
+          "informational": 72,
+          "issue_counts": {
+            "DELETED_ARTICLE_TOMBSTONE": 72
+          }
+        }
+      }
+    },
+    {
+      "check_id": "tree_integrity",
+      "passed": true,
+      "observed": {
+        "duplicates": 0,
+        "orphans": 0,
+        "empty_text": 0,
+        "invalid_validity": 0
+      }
+    },
+    {
+      "check_id": "relation_target_integrity",
+      "passed": true,
+      "observed": {
+        "unresolved_relations": 0
+      }
+    },
+    {
+      "check_id": "proviso_extraction_integrity",
+      "passed": true,
+      "observed": {
+        "provisos": 815,
+        "mismatches": 0
+      }
+    },
+    {
+      "check_id": "key_leave_slice_presence",
+      "passed": true,
+      "observed": [
+        {
+          "source_id": "LAW-LOCAL-OFFICIAL",
+          "article_path": "제63조 제1항 제1호",
+          "markers": [
+            "장기요양"
+          ],
+          "requires_proviso": false,
+          "passed": true
+        },
+        {
+          "source_id": "LAW-LOCAL-OFFICIAL",
+          "article_path": "제63조 제2항 제4호",
+          "markers": [
+            "자녀"
+          ],
+          "requires_proviso": false,
+          "passed": true
+        },
+        {
+          "source_id": "LAW-LOCAL-OFFICIAL",
+          "article_path": "제63조 제2항 제5호",
+          "markers": [
+            "돌보기"
+          ],
+          "requires_proviso": false,
+          "passed": true
+        },
+        {
+          "source_id": "LAW-LOCAL-OFFICIAL",
+          "article_path": "제63조 제2항 제7호",
+          "markers": [
+            "자기개발"
+          ],
+          "requires_proviso": false,
+          "passed": true
+        },
+        {
+          "source_id": "LAW-LOCAL-OFFICIAL",
+          "article_path": "제64조 제1호",
+          "markers": [
+            "1년 이내"
+          ],
+          "requires_proviso": true,
+          "passed": true
+        },
+        {
+          "source_id": "LAW-LOCAL-OFFICIAL",
+          "article_path": "제64조 제8호",
+          "markers": [
+            "3년 이내"
+          ],
+          "requires_proviso": false,
+          "passed": true
+        },
+        {
+          "source_id": "LAW-LOCAL-OFFICIAL",
+          "article_path": "제64조 제9호",
+          "markers": [
+            "총 3년"
+          ],
+          "requires_proviso": false,
+          "passed": true
+        },
+        {
+          "source_id": "LAW-LOCAL-OFFICIAL",
+          "article_path": "제64조 제10호",
+          "markers": [
+            "1년 이내"
+          ],
+          "requires_proviso": false,
+          "passed": true
+        },
+        {
+          "source_id": "DECREE-LOCAL-APPOINTMENT-OFFICIAL",
+          "article_path": "제2조 제2호",
+          "markers": [
+            "복직"
+          ],
+          "requires_proviso": false,
+          "passed": true
+        },
+        {
+          "source_id": "DECREE-LOCAL-APPOINTMENT-OFFICIAL",
+          "article_path": "제27조의3 제5항 제1호",
+          "markers": [
+            "질병휴직"
+          ],
+          "requires_proviso": false,
+          "passed": true
+        },
+        {
+          "source_id": "DECREE-LOCAL-APPOINTMENT-OFFICIAL",
+          "article_path": "제27조의3 제5항 제2호",
+          "markers": [
+            "육아휴직"
+          ],
+          "requires_proviso": false,
+          "passed": true
+        },
+        {
+          "source_id": "DECREE-LOCAL-APPOINTMENT-OFFICIAL",
+          "article_path": "제31조의6 제2항 제1호 다목",
+          "markers": [
+            "육아휴직"
+          ],
+          "requires_proviso": true,
+          "passed": true
+        },
+        {
+          "source_id": "RULE-LOCAL-HR-GUIDE-OFFICIAL",
+          "article_path": "제70조 제1항",
+          "markers": [
+            "질병휴직"
+          ],
+          "requires_proviso": false,
+          "passed": true
+        },
+        {
+          "source_id": "RULE-LOCAL-HR-GUIDE-OFFICIAL",
+          "article_path": "제76조 제1항",
+          "markers": [
+            "육아휴직"
+          ],
+          "requires_proviso": false,
+          "passed": true
+        },
+        {
+          "source_id": "RULE-LOCAL-HR-GUIDE-OFFICIAL",
+          "article_path": "제77조 제1항",
+          "markers": [
+            "돌봄대상자"
+          ],
+          "requires_proviso": false,
+          "passed": true
+        },
+        {
+          "source_id": "RULE-LOCAL-HR-GUIDE-OFFICIAL",
+          "article_path": "제78조 제1항 제1호",
+          "markers": [
+            "자기개발"
+          ],
+          "requires_proviso": false,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "check_id": "required_topic_coverage",
+      "passed": true,
+      "observed": {
+        "medical_leave": 191,
+        "parental_leave": 194,
+        "family_care_leave": 29,
+        "self_development_leave": 31
+      }
+    },
+    {
+      "check_id": "candidate_count_contract",
+      "passed": true,
+      "observed": {
+        "provisions": 12640,
+        "supplementary": 5777
+      }
+    }
+  ],
+  "legal_content_accuracy": "unmeasured",
+  "human_approval": "pending",
+  "release_status": "hold",
+  "limitations": [
+    "Automated checks establish file, parser and structural consistency only.",
+    "They do not establish legal interpretation, completeness or current-law guarantees.",
+    "Independent human source comparison is required before index promotion."
+  ]
+}

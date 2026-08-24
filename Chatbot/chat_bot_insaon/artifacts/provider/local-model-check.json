@@ -1,0 +1,105 @@
+{
+  "schema_version": "0.1.0",
+  "purpose": "one live run of the locked regression set through the real local model stack; not a holdout result and not a substitute for the published offline ablation",
+  "created_at": "2026-08-09T05:49:25.789147+00:00",
+  "runtime": {
+    "runtime_profile": "local",
+    "generation": "qwen3:4b-instruct",
+    "embedding": "bge-m3:latest",
+    "reranker": "qwen3:4b-instruct",
+    "base_url": "http://127.0.0.1:11434/api",
+    "api_key_required": false,
+    "corpus": "insaon-synthetic-distractor-corpus",
+    "generation_repeats": 1
+  },
+  "data": {
+    "dataset_id": "insaon-synthetic-system-regression",
+    "dataset_version": "0.3.0",
+    "dataset_hash": "1095932479755e36aaad226ffd3a03180708eb27a338d0c403c25cc8fd120c19",
+    "case_count": 58
+  },
+  "comparison": {
+    "live_status_matches_expected": {
+      "numerator": 57,
+      "denominator": 58,
+      "value": 0.9828
+    },
+    "deterministic_status_matches_expected": {
+      "numerator": 58,
+      "denominator": 58,
+      "value": 1.0
+    },
+    "required_evidence_cited": {
+      "numerator": 28,
+      "denominator": 36,
+      "value": 0.7778
+    },
+    "required_exception_cited": {
+      "numerator": 6,
+      "denominator": 8,
+      "value": 0.75
+    }
+  },
+  "safety": {
+    "hallucinated_citations": {
+      "numerator": 0,
+      "denominator": 58,
+      "value": 0.0
+    },
+    "invalid_effective_version_citations": {
+      "numerator": 0,
+      "denominator": 58,
+      "value": 0.0
+    },
+    "wrong_subject_citations": {
+      "numerator": 0,
+      "denominator": 58,
+      "value": 0.0
+    },
+    "forbidden_version_citations": {
+      "numerator": 0,
+      "denominator": 58,
+      "value": 0.0
+    },
+    "invented_quantity_blocked": {
+      "numerator": 0,
+      "denominator": 35,
+      "value": 0.0
+    },
+    "runtime_errors": {
+      "numerator": 0,
+      "denominator": 58,
+      "value": 0.0
+    }
+  },
+  "latency_seconds": {
+    "p50": 62.88,
+    "p90": 80.2,
+    "max": 94.73,
+    "total_minutes": 41.3
+  },
+  "model_invoked": {
+    "numerator": 35,
+    "denominator": 58,
+    "value": 0.6034
+  },
+  "live_status_distribution": {
+    "ANSWERABLE": 35,
+    "INSUFFICIENT_EVIDENCE": 13,
+    "REVIEW_REQUIRED": 10
+  },
+  "cases_where_live_differs_from_deterministic": [
+    "CASE-LOCKED-030"
+  ],
+  "environment": {
+    "python": "3.14.6",
+    "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O"
+  },
+  "limitations": [
+    "One repetition per case. Generation temperature and reranking are not deterministic, so a rerun will not reproduce this exactly.",
+    "Synthetic corpus and machine-generated questions; no legal correctness claim.",
+    "Fifty-eight cases is too few for a confidence interval to be informative.",
+    "No question in this set asks for a duration, a count or a rate, so invented_quantity_blocked cannot move here; that path is measured by the separate quantity-grounding probe.",
+    "The offline ablation remains the published comparison because it is reproducible without a model."
+  ]
+}

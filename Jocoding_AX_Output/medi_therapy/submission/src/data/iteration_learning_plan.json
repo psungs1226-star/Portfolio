@@ -1,0 +1,286 @@
+{
+  "schema_version": "0.1.0",
+  "phase_id": "phase_8_iteration_learning",
+  "generated_at": "2026-07-09T01:59:51.188054Z",
+  "input_files": [
+    "data/experiment_results.json",
+    "data/seeding_briefs.json",
+    "logs/reviewer_report.json",
+    "data/new_product_research_plan.json"
+  ],
+  "learning_status": "pending_observed_results",
+  "source_result_summary": {
+    "seed_result_count": 6,
+    "control_result_count": 3,
+    "public_observation_windows": [
+      "24h",
+      "72h",
+      "7d",
+      "14d"
+    ],
+    "seed_product_distribution": {
+      "pdrn_serum": 1,
+      "hyaluronic_first_serum": 2,
+      "vitamin_bubble_serum": 1,
+      "retinal_skin_booster_serum": 2
+    },
+    "outcome_status_distribution": {
+      "inconclusive_until_posted": 6
+    },
+    "internal_data_connected": false,
+    "sales_claim_count": 0
+  },
+  "reviewer_status": "fail",
+  "result_status_distribution": {
+    "inconclusive_until_posted": 6
+  },
+  "product_segment_matrix": {
+    "pdrn_serum": {
+      "acne_trouble_barrier": 1
+    },
+    "hyaluronic_first_serum": {
+      "texture_pore_makeup_prep": 1,
+      "acne_trouble_barrier": 1
+    },
+    "vitamin_bubble_serum": {
+      "tone_spot_glow": 1
+    },
+    "retinal_skin_booster_serum": {
+      "acne_trouble_barrier": 1,
+      "anti_aging_home_esthetic": 1
+    }
+  },
+  "segment_brief_distribution": {
+    "acne_trouble_barrier": 3,
+    "texture_pore_makeup_prep": 1,
+    "tone_spot_glow": 1,
+    "anti_aging_home_esthetic": 1
+  },
+  "actual_rule_updates": [],
+  "hypothesis_only_updates": [
+    {
+      "update_id": "hypothesis_only::seed_recommendation::cand_001::pdrn_serum",
+      "status": "hypothesis_only",
+      "reason": "게시 URL과 14일 공개/내부 KPI가 아직 없어 기본 룰에 반영하지 않는다.",
+      "creator_handle": "@acneproneprincess",
+      "segment_id": "acne_trouble_barrier",
+      "product_id": "pdrn_serum",
+      "candidate_learning": {
+        "content_angle_to_test": "트러블 후 장벽 루틴을 7일 체감 기록으로 구성하되 의학적 결과 표현은 배제한다.",
+        "primary_kpi": "save_rate",
+        "secondary_kpi": [
+          "sensitive_skin_question_count",
+          "routine_question_count"
+        ],
+        "next_iteration_rule": "If save_rate and comment-intent themes outperform the held-out control group after 14d, keep pdrn_serum for the same creator segment and test one adjacent content angle. If public intent is weak or risk comments increase, mark the result inconclusive or revise product-content fit before reseeding."
+      },
+      "current_outcome_status": "inconclusive_until_posted",
+      "required_before_rule_update": [
+        "posted_url_present",
+        "24h_public_metrics_present",
+        "72h_comment_intent_themes_present",
+        "7d_or_14d_primary_kpi_present",
+        "control_group_comparison_present"
+      ]
+    },
+    {
+      "update_id": "hypothesis_only::seed_recommendation::cand_036::hyaluronic_first_serum",
+      "status": "hypothesis_only",
+      "reason": "게시 URL과 14일 공개/내부 KPI가 아직 없어 기본 룰에 반영하지 않는다.",
+      "creator_handle": "@sunny.tsao",
+      "segment_id": "texture_pore_makeup_prep",
+      "product_id": "hyaluronic_first_serum",
+      "candidate_learning": {
+        "content_angle_to_test": "필터 없는 첫 단계 수분 루틴 또는 GRWM 메이크업프렙 맥락에서 건조/밀림 질문을 관찰한다.",
+        "primary_kpi": "routine_save_rate",
+        "secondary_kpi": [
+          "dryness_question_count",
+          "beginner_routine_question_count"
+        ],
+        "next_iteration_rule": "If routine_save_rate and comment-intent themes outperform the held-out control group after 14d, keep hyaluronic_first_serum for the same creator segment and test one adjacent content angle. If public intent is weak or risk comments increase, mark the result inconclusive or revise product-content fit before reseeding."
+      },
+      "current_outcome_status": "inconclusive_until_posted",
+      "required_before_rule_update": [
+        "posted_url_present",
+        "24h_public_metrics_present",
+        "72h_comment_intent_themes_present",
+        "7d_or_14d_primary_kpi_present",
+        "control_group_comparison_present"
+      ]
+    },
+    {
+      "update_id": "hypothesis_only::seed_recommendation::cand_032::hyaluronic_first_serum",
+      "status": "hypothesis_only",
+      "reason": "게시 URL과 14일 공개/내부 KPI가 아직 없어 기본 룰에 반영하지 않는다.",
+      "creator_handle": "@leanne_page",
+      "segment_id": "acne_trouble_barrier",
+      "product_id": "hyaluronic_first_serum",
+      "candidate_learning": {
+        "content_angle_to_test": "필터 없는 첫 단계 수분 루틴 또는 GRWM 메이크업프렙 맥락에서 건조/밀림 질문을 관찰한다.",
+        "primary_kpi": "routine_save_rate",
+        "secondary_kpi": [
+          "dryness_question_count",
+          "beginner_routine_question_count"
+        ],
+        "next_iteration_rule": "If routine_save_rate and comment-intent themes outperform the held-out control group after 14d, keep hyaluronic_first_serum for the same creator segment and test one adjacent content angle. If public intent is weak or risk comments increase, mark the result inconclusive or revise product-content fit before reseeding."
+      },
+      "current_outcome_status": "inconclusive_until_posted",
+      "required_before_rule_update": [
+        "posted_url_present",
+        "24h_public_metrics_present",
+        "72h_comment_intent_themes_present",
+        "7d_or_14d_primary_kpi_present",
+        "control_group_comparison_present"
+      ]
+    },
+    {
+      "update_id": "hypothesis_only::seed_recommendation::cand_016::vitamin_bubble_serum",
+      "status": "hypothesis_only",
+      "reason": "게시 URL과 14일 공개/내부 KPI가 아직 없어 기본 룰에 반영하지 않는다.",
+      "creator_handle": "@asiyeekarakus",
+      "segment_id": "tone_spot_glow",
+      "product_id": "vitamin_bubble_serum",
+      "candidate_learning": {
+        "content_angle_to_test": "버블 제형 시연과 광채 루틴을 짧은 훅으로 만들고 시청완료율과 톤/광채 댓글을 본다.",
+        "primary_kpi": "view_completion_rate",
+        "secondary_kpi": [
+          "glow_tone_comment_count",
+          "texture_demo_engagement"
+        ],
+        "next_iteration_rule": "If view_completion_rate and comment-intent themes outperform the held-out control group after 14d, keep vitamin_bubble_serum for the same creator segment and test one adjacent content angle. If public intent is weak or risk comments increase, mark the result inconclusive or revise product-content fit before reseeding."
+      },
+      "current_outcome_status": "inconclusive_until_posted",
+      "required_before_rule_update": [
+        "posted_url_present",
+        "24h_public_metrics_present",
+        "72h_comment_intent_themes_present",
+        "7d_or_14d_primary_kpi_present",
+        "control_group_comparison_present"
+      ]
+    },
+    {
+      "update_id": "hypothesis_only::seed_recommendation::cand_035::retinal_skin_booster_serum",
+      "status": "hypothesis_only",
+      "reason": "게시 URL과 14일 공개/내부 KPI가 아직 없어 기본 룰에 반영하지 않는다.",
+      "creator_handle": "@cherryblossom216",
+      "segment_id": "acne_trouble_barrier",
+      "product_id": "retinal_skin_booster_serum",
+      "candidate_learning": {
+        "content_angle_to_test": "야간 피부결 루틴과 다음날 메이크업 밀착 맥락으로 사용법 질문과 부작용 신고를 함께 본다.",
+        "primary_kpi": "night_routine_save_rate",
+        "secondary_kpi": [
+          "usage_question_count",
+          "sunscreen_question_count"
+        ],
+        "next_iteration_rule": "If night_routine_save_rate and comment-intent themes outperform the held-out control group after 14d, keep retinal_skin_booster_serum for the same creator segment and test one adjacent content angle. If public intent is weak or risk comments increase, mark the result inconclusive or revise product-content fit before reseeding."
+      },
+      "current_outcome_status": "inconclusive_until_posted",
+      "required_before_rule_update": [
+        "posted_url_present",
+        "24h_public_metrics_present",
+        "72h_comment_intent_themes_present",
+        "7d_or_14d_primary_kpi_present",
+        "control_group_comparison_present"
+      ]
+    },
+    {
+      "update_id": "hypothesis_only::seed_recommendation::cand_037::retinal_skin_booster_serum",
+      "status": "hypothesis_only",
+      "reason": "게시 URL과 14일 공개/내부 KPI가 아직 없어 기본 룰에 반영하지 않는다.",
+      "creator_handle": "@ginamberx",
+      "segment_id": "anti_aging_home_esthetic",
+      "product_id": "retinal_skin_booster_serum",
+      "candidate_learning": {
+        "content_angle_to_test": "야간 피부결 루틴과 다음날 메이크업 밀착 맥락으로 사용법 질문과 부작용 신고를 함께 본다.",
+        "primary_kpi": "night_routine_save_rate",
+        "secondary_kpi": [
+          "usage_question_count",
+          "sunscreen_question_count"
+        ],
+        "next_iteration_rule": "If night_routine_save_rate and comment-intent themes outperform the held-out control group after 14d, keep retinal_skin_booster_serum for the same creator segment and test one adjacent content angle. If public intent is weak or risk comments increase, mark the result inconclusive or revise product-content fit before reseeding."
+      },
+      "current_outcome_status": "inconclusive_until_posted",
+      "required_before_rule_update": [
+        "posted_url_present",
+        "24h_public_metrics_present",
+        "72h_comment_intent_themes_present",
+        "7d_or_14d_primary_kpi_present",
+        "control_group_comparison_present"
+      ]
+    }
+  ],
+  "proposed_schema_updates": [
+    {
+      "target": "influencer_profiles.jsonl",
+      "field": "last_researched_at",
+      "status": "proposal_only",
+      "reason": "Phase 6B에서 freshness unknown 비율이 1.0으로 확인되어 다음 수집 루프의 필수 후보 필드로 제안한다.",
+      "do_not_backfill_without_source": true
+    },
+    {
+      "target": "content_observations.jsonl",
+      "field": "observed_at",
+      "status": "proposal_only",
+      "reason": "최근성 판단을 위해 콘텐츠 관찰 시각과 콘텐츠 게시 시각을 분리할 필요가 있다.",
+      "do_not_backfill_without_source": true
+    }
+  ],
+  "next_experiment_questions": [
+    {
+      "question_id": "exp_q_001",
+      "question": "PDRN/판테놀 장벽 제품은 트러블·장벽 후보와 GRWM 후보 중 어느 세그먼트에서 저장률과 민감 피부 질문이 더 강하게 발생하는가?",
+      "why_now": "Phase 6A 신제품 랭킹에서 트러블·장벽과 GRWM/라이프스타일이 핵심 세그먼트로 잡혔다.",
+      "minimum_data_required": [
+        "posted_url",
+        "save_rate_7d",
+        "sensitive_skin_question_count_7d",
+        "control_segment_baseline"
+      ],
+      "decision_rule": "두 세그먼트 모두 3명 이상 관찰되기 전에는 가중치를 변경하지 않는다."
+    },
+    {
+      "question_id": "exp_q_002",
+      "question": "저자극/수분 제품은 제품 리뷰형 콘텐츠보다 GRWM 메이크업프렙 콘텐츠에서 구매 의도 질문이 더 많이 생기는가?",
+      "why_now": "현재 시딩 브리프 제품 분포는 {'pdrn_serum': 1, 'hyaluronic_first_serum': 2, 'vitamin_bubble_serum': 1, 'retinal_skin_booster_serum': 2}이고, 수분 제품은 GRWM/메이크업프렙 맥락으로 반복 등장한다.",
+      "minimum_data_required": [
+        "comment_intent_themes_72h",
+        "routine_question_count_7d",
+        "where_to_buy_question_count_7d"
+      ],
+      "decision_rule": "공개 댓글 의도와 내부 클릭 중 하나라도 없으면 sales-fit 룰을 변경하지 않는다."
+    },
+    {
+      "question_id": "exp_q_003",
+      "question": "레티날 제품은 피부결/메이크업프렙 후보에게 유지하되, 민감/장벽 리스크 후보에는 보류하는 현재 hard-risk 정책이 충분한가?",
+      "why_now": "레티날 브리프는 리스크 가드레일이 강하고, Phase 7 reviewer가 hard exclusion 선적용을 통과시켰다.",
+      "minimum_data_required": [
+        "risk_comment_count_14d",
+        "creator_self_reported_tolerance_14d",
+        "manual_claim_review"
+      ],
+      "decision_rule": "리스크 댓글이 증가하면 레티날 제품은 review_required 기준을 강화하고, 성공 지표만으로 완화하지 않는다."
+    },
+    {
+      "question_id": "exp_q_004",
+      "question": "기존 DB만으로 충분하다고 판단된 신제품에서도 freshness 필드가 없으면 다음 수집 루프에서 `last_researched_at`을 필수화해야 하는가?",
+      "why_now": "Phase 6B 판단은 existing_db_sufficient이지만 freshness unknown 비율이 1.0이다.",
+      "minimum_data_required": [
+        "last_researched_at",
+        "recent_relevant_content_count",
+        "evidence_url_count"
+      ],
+      "decision_rule": "다음 후보 수집부터 freshness 필드는 스키마 제안으로 올리되, 기존 점수에는 소급 반영하지 않는다."
+    }
+  ],
+  "guardrails": [
+    "게시 전에는 제품/세그먼트 가중치를 변경하지 않는다.",
+    "공개 참여 지표만으로 매출, ROAS, 주문 증가를 주장하지 않는다.",
+    "단일 후보 성공 또는 실패로 전체 세그먼트 룰을 바꾸지 않는다.",
+    "실패 또는 inconclusive 사례도 후보 DB에서 삭제하지 않고 원인 태그로 보존한다."
+  ],
+  "marketer_review_required": [
+    "hypothesis_only 업데이트 중 실제 다음 실험에 사용할 항목 선택",
+    "freshness 필드 추가를 다음 수집 스키마에 반영할지 결정",
+    "Phase 6C를 실행하지 않고 기존 DB 랭킹을 유지할지 최종 확인"
+  ]
+}

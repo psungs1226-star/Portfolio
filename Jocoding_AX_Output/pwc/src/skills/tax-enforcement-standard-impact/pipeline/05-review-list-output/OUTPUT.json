@@ -1,0 +1,70 @@
+{
+  "phase": "Phase 5",
+  "status": "completed",
+  "status_note": "내부 검토 리스트. 안전 표현(likely review candidate / possible impact / hold for professional review)만 사용. 단정 표현 없음. 네 섹션 분리.",
+  "change_ref": {
+    "law_change": "부가가치세법 시행령 제41조 제1항 제2호 신설 (토지임대부 분양주택 부수토지 임대용역 면세)",
+    "parent_law": "부가가치세법 제26조 제1항 제12호",
+    "effective_date": "2024-07-01 적용",
+    "enforcement_standard_book": "부가가치세 집행기준 2024 판본 (2024-09 세법 기준, 격년 발간)"
+  },
+  "section_1_likely_affected_enforcement_standards": [
+    {
+      "rank": 1,
+      "standard_no": "26-41-1",
+      "title": "주택임대용역의 면세 범위",
+      "related_changed_article": "부가가치세법 시행령 제41조 제1항 제2호 / 법 제26조 제1항 제12호",
+      "main_impact_type": "Target impact",
+      "confidence": "high",
+      "affected_legal_logic": {
+        "target": ["토지임대부 분양주택 부수토지 임대용역(면세 대상 신설)"],
+        "condition": ["국민주택규모 한정", "제41조 제2항 면적 기준 이내"],
+        "effect": ["면세 범위 확대"],
+        "time_scope": ["2024-07-01 이후 공급분"]
+      },
+      "evidence_summary": "집행기준 26-41-1 본문(2024-09 기준 발간)이 상시주거용 주택·부수토지·겸용건물·전대만 규정, 토지임대부 미반영. 개정 적용(2024-07-01) 이후 발간임에도 누락 → likely review candidate.",
+      "supporting_interpretation_case": "없음(제41조 토지임대부 직결 해석정비 사례는 Phase 0 목록에 부재). Phase 6 mini-set P1/P2/P3가 ground truth.",
+      "review_question": "토지임대부 분양주택(국민주택규모) 부수토지 임대용역 면세를 26-41-1 면세 범위에 반영하고, 제41조 제2항 면적기준 적용을 명시할 필요가 있는지 전문가 검토 요망.",
+      "status": "review"
+    }
+  ],
+  "section_2_supporting_interpretation_cases": [
+    {
+      "note": "제41조 토지임대부와 직접 대응하는 세법해석정비 before/after 사례는 Phase 0 수집분에 없음. 인접 면세/과세구분 사례(BTL·오피스텔 면세전용 등)는 Phase 6 검증셋의 negative/hold로만 사용."
+    }
+  ],
+  "section_3_new_review_topics": [
+    {
+      "topic": "토지임대부 분양주택 부수토지 임대용역 면세 (신설 대상)",
+      "why": "제41조 제1항 제2호 신설. 현행 집행기준에 대응 문단 없음 → 26-41-1 개정 또는 신규 서술 후보.",
+      "confidence": "high (개정 조문 근거 확실, 집행기준 대응 부재 확인)",
+      "review_question": "국민주택규모 한정·면적기준 적용을 포함한 토지임대부 부수토지 면세 서술을 집행기준에 신설/보완할지 전문가 검토 요망.",
+      "status": "review"
+    }
+  ],
+  "section_4_held_or_excluded": [
+    {
+      "standard_no": "26-0-2",
+      "title": "부가가치세 면제 대상",
+      "main_impact_type": "Low relevance",
+      "confidence": "low",
+      "reason": "면제 대상 상위 열거. 주택임대는 이미 26-41로 포함되어 상위 열거 수정 필요성 낮음.",
+      "status": "hold"
+    },
+    {
+      "standard_no": "29-65-1/2",
+      "title": "부동산임대용역 공급가액 계산 / 전세금 등 세부담",
+      "main_impact_type": "Low relevance",
+      "confidence": "low",
+      "reason": "부동산임대 키워드만 겹치고 과세표준(제29조) 축. 면세 범위 개정과 무관 → precision 제외.",
+      "status": "exclude"
+    }
+  ],
+  "output_rules_applied": {
+    "safety_phrases_only": true,
+    "no_definitive_change_claims": true,
+    "new_topics_separated_from_affected_standards": true,
+    "enforcement_standard_vs_interpretation_marked": true
+  },
+  "phase6_ready": true
+}

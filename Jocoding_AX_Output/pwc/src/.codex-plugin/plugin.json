@@ -1,0 +1,32 @@
+{
+  "name": "ax-problem-evidence-plugin",
+  "version": "0.2.0",
+  "description": "Augments a tax agent to proactively detect how a Korean VAT law amendment may destabilize existing enforcement standards and past rulings, producing an honestly-labeled internal review list.",
+  "author": {
+    "name": "AX Hackathon Participant"
+  },
+  "skills": "./skills/",
+  "keywords": [
+    "ax-hackathon",
+    "codex",
+    "evidence",
+    "business-problem",
+    "tax",
+    "vat",
+    "enforcement-standards"
+  ],
+  "interface": {
+    "displayName": "AX Problem Evidence Plugin",
+    "shortDescription": "Proactive VAT amendment-impact detection: augments a tax agent to flag enforcement standards and past rulings a law change may destabilize.",
+    "longDescription": "Augments a tax agent for proactive impact detection: given a Korean VAT law/decree amendment, it prioritizes official enforcement standards and produces an honestly status-labeled review list (confirmed / REVIEW_WORTHY / hold_확인필요 / exclude); it never asserts a flip. The core rule-type sweep is validated (logic gate + funnel + blind backtest); a deep-judgment layer (applies the amendment's new 요건 to past 예규 fact patterns with 요건 원문 인용, counter-arguments, calibrated confidence, mandatory adversarial verification) and adjudication signal layers (L1 개정 / L2 심판례 / L3 판례) are designed and piloted (n=1), not yet statistically validated. Includes a company-problem-evidence skill that separates facts, assumptions, and missing information.",
+    "developerName": "AX Hackathon Participant",
+    "category": "Productivity",
+    "capabilities": [
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Use this plugin for my AX hackathon company problem and tax enforcement standard impact workflow."
+    ],
+    "brandColor": "#2563EB"
+  }
+}

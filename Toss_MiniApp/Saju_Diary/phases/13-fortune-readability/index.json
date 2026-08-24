@@ -1,0 +1,9 @@
+{
+  "project": "Evry Times (evrytimes)",
+  "phase": "13-fortune-readability",
+  "steps": [
+    { "step": 0, "name": "fortune-hierarchy-color-timebox", "status": "completed", "summary": "운세 상세(FortuneScreen) 가독성 개편. #1 위계 정상화: SectionHeading(15·800·textPrimary) 도입 — 큰 범주(총운/내 사주/시간대별/세부운…)가 하위 값보다 크고 진하게(기존엔 '내 사주' 라벨이 12·tertiary로 더 작고 연했음). #2 시간대(아침/낮/저녁/밤)를 박스(SegmentBox)로 + 실제 시간 범위(오전 5–11시/낮 11–17시/저녁 17–23시/밤 23–5시, 사정 왕지 기준) + 오행칩 표기. #3 본문 색 강조: Highlighted 헬퍼로 오행 색(木초록·火빨강·土갈색·金금색·水파랑, 한자/괄호한글 안전 매칭) + 핵심 용어(신강/신약/중화/희신/득령/실령/일간) 굵게+밑줄. 상세를 단일 카드→여러 박스 카드(총운+내사주/시간대별/오늘 조심/세부운/행운·일진·조언)로 분리(#4 박스 구성). 시간대별/총운 별점 size 상향. 만세력/문구 재계산 0(표시 전용). build/test/lint 통과." },
+    { "step": 1, "name": "home-boxes-streak-settings-tab", "status": "completed", "summary": "#4·#5 홈/탭 정리. 홈(TodayScreen): '확인'/'기록' 섹션 라벨 제거 → 박스 카드만 settings 순서대로(checkWidgets/recordWidgets 분리 폐기, widgets.map). 상단 streak '🔥 연속 N일' → '🔥 출석 N일차'(올 때마다 표시·이모지 aria-hidden 분리). 하단 탭 '위젯' → '설정'(키 widgets 유지, BottomTabBar 라벨·WidgetsScreen Top 타이틀·빈홈 안내 문구 갱신). App.smoke 홈 앵커를 제거된 '확인'에서 '🔮 오늘의 운세'(탭 라벨 '오늘'과 중복 회피)로, 탭 클릭 라벨을 '설정'으로 교체. build/test(577)/lint 통과." },
+    { "step": 2, "name": "tarot-draw-feel", "status": "completed", "summary": "타로를 '뽑는 느낌'으로(추가 피드백). 단일 뒷면 카드 탭→공개에서 부채꼴(TarotFan, TAROT_FAN=5장 inline transform translateX/rotate·아치)로 펼쳐 한 장 고르기 → 고른 뒤 TarotRevealed가 rotateY(-90→0)+opacity 전환으로 뒤집히듯 공개(useEffect setTimeout 20ms 트리거, 애니메이션 라이브러리 0·CRITICAL #5). 어느 장을 골라도 그날 결정론 카드(result.tarot, 재추첨 없음)로 공개. 이미지 에셋은 추후(현재 🔮 뒷면 placeholder·외부 수집 0). aria: 카드 'N번째 타로 카드 뽑기' 버튼, 공개 후 role=group '오늘의 타로 카드'. 섹션 헤딩 '오늘의 타로'(SectionHeading 톤 통일). 스모크(widgets/App) 타로 단언을 부채꼴 고르기·공개로 갱신. build/test(577)/lint 통과." }
+  ]
+}

@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tax Agent 파이프라인 워크트리</title>
+  <style>
+    :root {
+      --bg: #f7f7f4;
+      --ink: #18211d;
+      --muted: #626b67;
+      --line: #d9ded8;
+      --panel: #ffffff;
+      --green: #1d6f50;
+      --blue: #285d8f;
+      --gold: #8a671e;
+      --red: #a3433b;
+      --green-soft: #e8f2ec;
+      --blue-soft: #e9f0f7;
+      --gold-soft: #f5efdf;
+      --red-soft: #f7e9e7;
+      --shadow: 0 14px 34px rgba(24, 33, 29, 0.08);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.58;
+    }
+
+    header {
+      background: #102018;
+      color: white;
+      padding: 48px 24px 34px;
+    }
+
+    .wrap {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      margin: 0 0 12px;
+      color: #9bd1b7;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 960px;
+      font-size: clamp(32px, 4.8vw, 58px);
+      line-height: 1.08;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      margin: 18px 0 0;
+      max-width: 900px;
+      color: #dce6e0;
+      font-size: 18px;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: rgba(247, 247, 244, 0.94);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+    }
+
+    nav .wrap {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding: 10px 24px;
+    }
+
+    nav a {
+      color: var(--ink);
+      text-decoration: none;
+      white-space: nowrap;
+      font-weight: 800;
+      font-size: 14px;
+      padding: 8px 10px;
+      border-radius: 6px;
+    }
+
+    nav a:hover { background: var(--green-soft); }
+
+    main { padding: 32px 24px 72px; }
+
+    section {
+      max-width: 1200px;
+      margin: 0 auto 34px;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 28px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    h4 {
+      margin: 0 0 8px;
+      font-size: 16px;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0 0 12px;
+      color: var(--muted);
+    }
+
+    .panel,
+    .card,
+    .phase {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .panel { padding: 24px; }
+    .card { padding: 18px; }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+    .badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 5px 10px;
+      border-radius: 6px;
+      background: var(--green-soft);
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 800;
+    }
+
+    .badge.blue { background: var(--blue-soft); color: var(--blue); }
+    .badge.gold { background: var(--gold-soft); color: var(--gold); }
+    .badge.red { background: var(--red-soft); color: var(--red); }
+
+    .worktree {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .node {
+      min-height: 126px;
+      padding: 14px;
+      border: 1px solid var(--line);
+      border-top: 5px solid var(--green);
+      border-radius: 8px;
+      background: white;
+    }
+
+    .node:nth-child(2) { border-top-color: var(--blue); }
+    .node:nth-child(3) { border-top-color: var(--gold); }
+    .node:nth-child(4) { border-top-color: var(--red); }
+    .node:nth-child(5) { border-top-color: var(--green); }
+    .node:nth-child(6) { border-top-color: var(--blue); }
+
+    .node strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .node span {
+      display: block;
+      font-weight: 850;
+      line-height: 1.35;
+    }
+
+    .step-block {
+      border-left: 5px solid var(--green);
+      background: white;
+      border-radius: 0 8px 8px 0;
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+      overflow: hidden;
+    }
+
+    .step-head {
+      padding: 22px 24px;
+      border-bottom: 1px solid var(--line);
+      background: #fbfcfb;
+    }
+
+    .step-body {
+      padding: 20px 24px 24px;
+    }
+
+    .phase-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .phase {
+      padding: 18px;
+      box-shadow: none;
+    }
+
+    .phase .num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 28px;
+      height: 28px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      background: var(--green-soft);
+      color: var(--green);
+      font-size: 13px;
+      font-weight: 900;
+    }
+
+    ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    li + li { margin-top: 5px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    th, td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #edf3ef;
+      color: #23342c;
+      font-size: 14px;
+    }
+
+    tr:last-child td { border-bottom: 0; }
+
+    .code {
+      padding: 16px;
+      overflow-x: auto;
+      border-radius: 8px;
+      background: #13221a;
+      color: #e6eee9;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .decision {
+      border-left: 5px solid var(--gold);
+      background: var(--gold-soft);
+      padding: 18px 20px;
+      border-radius: 0 8px 8px 0;
+    }
+
+    @media (max-width: 1040px) {
+      .worktree { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .cols-2, .cols-3, .phase-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 640px) {
+      header { padding: 38px 18px 30px; }
+      main { padding: 24px 18px 56px; }
+      .worktree { grid-template-columns: 1fr; }
+      .panel, .step-head, .step-body { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <p class="eyebrow">Tax Agent Extension · Phase Execution Plan</p>
+      <h1>부가가치세 개정 영향 탐지 파이프라인 워크트리</h1>
+      <p class="lead">각 스킬을 Step으로 두고, 수집 범위 확정부터 파싱, 분류, 매칭, 내부용 변경 예상 검토리스트 생성, 검증까지 Phase 단위로 진행할 수 있게 정리한 실행계획입니다.</p>
+      <div class="badges">
+        <span class="badge">법령 먼저 정규화</span>
+        <span class="badge blue">기준문서 사전 태깅</span>
+        <span class="badge gold">대상·요건·효과 매칭</span>
+        <span class="badge red">내부 검토리스트</span>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="wrap">
+      <a href="#overview">전체</a>
+      <a href="#step0">Step 0</a>
+      <a href="#step1">Step 1</a>
+      <a href="#step2">Step 2</a>
+      <a href="#step3">Step 3</a>
+      <a href="#step4">Step 4</a>
+      <a href="#step5">Step 5</a>
+      <a href="#step6">Step 6</a>
+      <a href="#decisions">결정사항</a>
+      <a href="#review">재검토</a>
+    </div>
+  </nav>
+
+  <main>
+    <section id="overview" class="panel">
+      <h2>전체 워크트리</h2>
+      <p>실행 시에는 법령 변경을 먼저 구조화하고, 사전 정규화된 집행기준과 우선 매칭합니다. 해석례는 세법해석정비 정답셋과 보조 판단 사례로만 사용합니다.</p>
+      <div class="worktree">
+        <div class="node"><strong>Step 0</strong><span>정답셋 기반 쟁점 선정</span></div>
+        <div class="node"><strong>Step 1</strong><span>법령 변경 정규화</span></div>
+        <div class="node"><strong>Step 2</strong><span>기준문서 사전 정규화</span></div>
+        <div class="node"><strong>Step 3</strong><span>법령-문서 매칭</span></div>
+        <div class="node"><strong>Step 4</strong><span>영향 가능성 분류</span></div>
+        <div class="node"><strong>Step 5</strong><span>결과물 생성</span></div>
+        <div class="node"><strong>Step 6</strong><span>검증 루프</span></div>
+      </div>
+    </section>
+
+    <section id="step0" class="step-block">
+      <div class="step-head">
+        <h2>Step 0. 정답셋 기반 첫 쟁점 선정</h2>
+        <p>첫 쟁점은 사전 선호로 고르지 않고, 세법해석정비 데이터에서 정답셋을 가장 많이 만들 수 있는 부가가치세 쟁점으로 선택합니다.</p>
+      </div>
+      <div class="step-body">
+        <div class="phase-grid">
+          <div class="phase"><span class="num">1</span><h3>세법해석정비 데이터 수집</h3><p>정비 전/후 문서번호, 정비 요지, 관련 법령, 정비 사유, 공개일을 수집합니다.</p></div>
+          <div class="phase"><span class="num">2</span><h3>부가가치세 필터링</h3><p>세목과 관련 법령을 함께 확인해 부가가치세 사례만 남깁니다.</p></div>
+          <div class="phase"><span class="num">3</span><h3>쟁점 태그 분류</h3><p>주 쟁점 1개와 보조 쟁점 N개로 나누고 태그 과다 부여를 막습니다.</p></div>
+          <div class="phase"><span class="num">4</span><h3>정비 사례 수 집계</h3><p>total_count보다 usable_count, law_linked_count, non_trivial_count를 우선합니다.</p></div>
+          <div class="phase"><span class="num">5</span><h3>정답셋 품질 점수</h3><p>전후 비교 가능성, 관련 조문 명확성, 단순 문구정비 제외 여부를 점수화합니다.</p></div>
+          <div class="phase"><span class="num">6</span><h3>첫 MVP 쟁점 확정</h3><p>issue_score가 가장 높고 반례 문서를 만들 수 있는 쟁점으로 Step 1~6 범위를 고정합니다.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid cols-2">
+      <div class="panel">
+        <h2>수집 범위 원칙</h2>
+        <ul>
+          <li>부가가치세법은 개정 조문과 직접 관련 조문만 수집합니다.</li>
+          <li>시행령은 구체 요건 확인용으로 함께 수집합니다.</li>
+          <li>시행규칙은 서식·절차 변경이 있을 때만 포함합니다.</li>
+          <li>조세특례제한법은 직접 연결되는 특례가 있을 때만 포함합니다.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h2>매칭 기준 원칙</h2>
+        <ul>
+          <li>단순 키워드보다 대상, 요건, 효과, 시점을 우선합니다.</li>
+          <li>조문 직접 일치는 강한 신호로 봅니다.</li>
+          <li>키워드만 일치하는 문서는 낮은 신뢰도로 둡니다.</li>
+          <li>근거가 없으면 영향 후보에서 제외하거나 보류합니다.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="step1" class="step-block">
+      <div class="step-head">
+        <h2>Step 1. 법령 변경 정규화</h2>
+        <p>부가가치세 개정 자료를 대상, 요건, 행위, 효과, 예외, 시점으로 구조화합니다.</p>
+      </div>
+      <div class="step-body">
+        <div class="phase-grid">
+          <div class="phase"><span class="num">1</span><h3>수집 범위 확정</h3><p>부가가치세법, 직접 연결 시행령, 필요 시 시행규칙과 조세특례제한법 일부만 선택합니다.</p></div>
+          <div class="phase"><span class="num">2</span><h3>원천 데이터 수집</h3><p>법령 본문, 신구조문대비표, 개정 이유, 시행일, 부칙을 API 필드로 저장합니다.</p></div>
+          <div class="phase"><span class="num">3</span><h3>조문 구조 파싱</h3><p>조, 항, 호, 목, 단서, 괄호 문구, 적용례, 경과조치를 계층 구조로 분리합니다.</p></div>
+          <div class="phase"><span class="num">4</span><h3>변경 전후 비교</h3><p>삭제·추가 문구, 숫자 변경, 의무 표현 변경, 대상 범위 변경을 추출합니다.</p></div>
+          <div class="phase"><span class="num">5</span><h3>법적 논리 단위 추출</h3><p>대상, 요건, 행위, 효과, 예외, 시점으로 정규화합니다.</p></div>
+          <div class="phase"><span class="num">6</span><h3>변경 유형 분류</h3><p>대상 변경, 요건 변경, 금액 기준 변경, 절차 변경, 의무 변경 등으로 분류합니다.</p></div>
+          <div class="phase"><span class="num">7</span><h3>정규화 결과 검수</h3><p>필수 필드와 시행일, 적용례, 변경 전후 문구, 검토 flag 누락 여부를 확인합니다.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="step2" class="step-block">
+      <div class="step-head">
+        <h2>Step 2. 기준문서 사전 정규화</h2>
+        <p>집행기준을 법령 변경과 비교 가능한 형태로 미리 정리합니다. 해석례는 정답셋과 보조 판단용으로만 제한 수집합니다.</p>
+      </div>
+      <div class="step-body">
+        <table>
+          <thead>
+            <tr><th>문서군</th><th>MVP 수집량</th><th>파싱 단위</th><th>핵심 필드</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>부가가치세 집행기준</td><td>확정 쟁점 관련 기준</td><td>기준번호 또는 문단</td><td>기준번호, 관련 조문, 본문, 예시</td></tr>
+            <tr><td>세법해석정비 전후 해석례</td><td>정답셋 후보</td><td>정비 전/후 비교 단위</td><td>문서번호, 정비 전후 요지, 관련 법령</td></tr>
+            <tr><td>기타 해석례</td><td>부족 시 제한 수집</td><td>질의 1개 + 회신 1개</td><td>문서번호, 생산일자, 회신, 관련 법령</td></tr>
+            <tr><td>내부지침/기재부/기본통칙</td><td>1차 제외</td><td>해당 없음</td><td>API 확보와 범위 통제 어려움</td></tr>
+          </tbody>
+        </table>
+        <div class="phase-grid" style="margin-top: 14px;">
+          <div class="phase"><span class="num">1</span><h3>문서군 범위 확정</h3><p>Step 0에서 확정된 첫 MVP 쟁점 1개와 반례 생성을 위한 유사 쟁점으로 제한합니다.</p></div>
+          <div class="phase"><span class="num">2</span><h3>집행기준 수집</h3><p>Step 0 확정 쟁점과 관련 조문 기준으로 집행기준 범위를 고정합니다.</p></div>
+          <div class="phase"><span class="num">3</span><h3>집행기준 구조 파싱</h3><p>기준번호, 원칙, 예외, 예시, 주의사항을 분리합니다.</p></div>
+          <div class="phase"><span class="num">4</span><h3>해석례 보조 수집</h3><p>세법해석정비 전후 사례를 우선 수집하고, 부족할 때만 같은 쟁점의 해석례를 제한적으로 추가합니다.</p></div>
+          <div class="phase"><span class="num">5</span><h3>문서 구조 파싱</h3><p>제목, 본문, 관련 조문, 대상, 요건, 효과, 예외, 시점으로 분리합니다.</p></div>
+          <div class="phase"><span class="num">6</span><h3>태그 부여</h3><p>세목, 문서유형, 납세자, 거래, 쟁점, 조문 태그를 붙입니다.</p></div>
+          <div class="phase"><span class="num">7</span><h3>검색 인덱스 생성</h3><p>조문번호, 문서번호, 제목, 태그, 벡터 인덱스를 구성합니다.</p></div>
+          <div class="phase"><span class="num">8</span><h3>품질 검수</h3><p>필수 메타데이터, 원문 출처, 비밀정보 제거, 태그 누락을 확인합니다.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="step3" class="step-block">
+      <div class="step-head">
+        <h2>Step 3. 법령 변경과 기준문서 매칭</h2>
+        <p>정규화된 법령 변경과 기준문서를 조문, 키워드, 법적 논리 단위, 시간 조건으로 연결합니다.</p>
+      </div>
+      <div class="step-body">
+        <div class="phase-grid">
+          <div class="phase"><span class="num">1</span><h3>조문 직접 매칭</h3><p>변경 조문과 문서의 관련 조문이 일치하는지 확인합니다. 시행령 변경은 위임 법률 조문으로 확장합니다.</p></div>
+          <div class="phase"><span class="num">2</span><h3>키워드 매칭</h3><p>핵심 용어와 동의어를 비교하되 범용 키워드 단독 일치는 낮게 봅니다.</p></div>
+          <div class="phase"><span class="num">3</span><h3>대상·요건·효과 매칭</h3><p>간이과세자, 공급대가, 발급 의무처럼 법적 논리 단위가 겹치는지 봅니다.</p></div>
+          <div class="phase"><span class="num">4</span><h3>의미 검색 매칭</h3><p>조문번호가 없는 문서를 보완하기 위해 벡터 검색을 사용합니다.</p></div>
+          <div class="phase"><span class="num">5</span><h3>시간 조건 필터링</h3><p>문서 생산일과 시행일을 비교해 기존 해석 영향 후보인지 구분합니다.</p></div>
+          <div class="phase"><span class="num">6</span><h3>후보 점수화</h3><p>조문 일치, 대상, 요건, 효과, 키워드, 의미 검색, 시간 조건으로 점수화합니다.</p></div>
+          <div class="phase"><span class="num">7</span><h3>중복 후보 병합</h3><p>같은 집행기준 번호와 개정일, 같은 해석례 문서번호를 기준으로 병합하고 모든 근거를 보존합니다.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="step4" class="step-block">
+      <div class="step-head">
+        <h2>Step 4. 영향 가능성 분류</h2>
+        <p>후보가 왜 영향을 받을 수 있는지 설명 가능한 유형과 신뢰도로 나눕니다.</p>
+      </div>
+      <div class="step-body">
+        <div class="grid cols-3">
+          <div class="card"><h3>영향 유형</h3><p>직접 영향, 요건 영향, 대상 영향, 절차 영향, 금액 기준 영향, 예외 영향, 해석 충돌 가능성</p></div>
+          <div class="card"><h3>신뢰도</h3><p>조문 직접 일치, 논리 단위 일치, 원문 근거, 시행일 관계, LLM 추정 의존도를 합산합니다.</p></div>
+          <div class="card"><h3>제거 기준</h3><p>세목 불일치, 납세자 불일치, 거래 유형 불일치, 단순 단어 유사성만 있는 후보는 제외합니다.</p></div>
+        </div>
+        <div class="badges">
+          <span class="badge">근거 있음</span>
+          <span class="badge blue">추정</span>
+          <span class="badge gold">확인 필요</span>
+          <span class="badge red">제외</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="step5" class="step-block">
+      <div class="step-head">
+        <h2>Step 5. 결과물 생성</h2>
+      <p>영향 후보를 내부 검토자가 바로 볼 수 있는 변경 예상 목록으로 변환합니다. Agent 가드레일과 영업자료는 선택 활용안입니다.</p>
+      </div>
+      <div class="step-body">
+        <div class="phase-grid">
+          <div class="phase"><span class="num">1</span><h3>내부 검토 리스트</h3><p>우선순위, 영향 유형, 신뢰도, 관련 문서, 확인 필요사항을 정리합니다.</p></div>
+          <div class="phase"><span class="num">2</span><h3>문서 변경 예상 목록</h3><p>변경 예상 집행기준, 보조 검토 해석례, 보류 문서를 분리합니다.</p></div>
+          <div class="phase"><span class="num">3</span><h3>신규 검토 논리주제</h3><p>기존 해석례는 없지만 새 대상, 요건, 예외, 시점 문제가 생긴 쟁점을 분리합니다.</p></div>
+          <div class="phase"><span class="num">4</span><h3>선택 활용안 분리</h3><p>Agent 가드레일, 고객군 요약, 영업자료 초안은 기본 산출물과 분리합니다.</p></div>
+          <div class="phase"><span class="num">5</span><h3>최종 리포트 검수</h3><p>근거 누락, 단정 표현, 문서/논리주제 혼합, 선택 활용안 혼입을 제거합니다.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="step6" class="step-block">
+      <div class="step-head">
+        <h2>Step 6. 검증 루프</h2>
+        <p>과거 부가가치세 개정 사례로 영향 후보 탐지 품질을 검증하고 개선합니다.</p>
+      </div>
+      <div class="step-body">
+        <div class="phase-grid">
+          <div class="phase"><span class="num">1</span><h3>개정 사례 선정</h3><p>영세사업자 관련성이 있고 개정 전후 문구와 관련 문서가 있는 사례를 고릅니다.</p></div>
+          <div class="phase"><span class="num">2</span><h3>정답셋 구축</h3><p>영향 문서, 비영향 유사 문서, 애매한 문서, 판단 사유를 저장합니다.</p></div>
+          <div class="phase"><span class="num">3</span><h3>자동 실행</h3><p>Step 1~5를 실행하고 영향 후보 리스트를 저장합니다.</p></div>
+          <div class="phase"><span class="num">4</span><h3>정답셋 비교</h3><p>Recall, Precision, Evidence Rate, Safety Rate, Review Usefulness를 봅니다.</p></div>
+          <div class="phase"><span class="num">5</span><h3>실패 원인 분류</h3><p>조문 파싱 실패, 동의어 부족, 요건 추출 실패, 키워드 오탐 등을 분류합니다.</p></div>
+          <div class="phase"><span class="num">6</span><h3>룰 개선</h3><p>태그 사전, 조문 연결표, 점수 가중치, 제거 기준, 프롬프트를 수정합니다.</p></div>
+          <div class="phase"><span class="num">7</span><h3>재실행 기록</h3><p>후보 개수, 정답 포함 여부, 오탐 개수, 개선 전후 차이를 기록합니다.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="schema" class="grid cols-2">
+      <div class="panel">
+        <h2>법령 변경 출력 스키마</h2>
+        <pre class="code">{
+  "change_id": "VAT-LAW-CHANGE-001",
+  "article_path": "제XX조 제X항",
+  "change_type": "요건변경",
+  "effective_date": "YYYY-MM-DD",
+  "legal_logic": {
+    "target": ["간이과세자"],
+    "condition": ["공급대가 기준"],
+    "action": ["세금계산서 발급"],
+    "effect": ["발급 의무 변경"],
+    "exception": [],
+    "time_scope": ["시행일 이후"]
+  }
+}</pre>
+      </div>
+      <div class="panel">
+        <h2>기준문서 출력 스키마</h2>
+        <pre class="code">{
+  "doc_id": "VAT-INTERP-001",
+  "doc_type": "집행기준",
+  "article_refs": ["부가가치세법 제XX조"],
+  "issue_tags": ["매입세액공제"],
+  "taxpayer_tags": ["개인사업자"],
+  "logic_units": {
+    "target": ["개인사업자"],
+    "condition": ["세금계산서 수취"],
+    "effect": ["공제 가능 여부"]
+  }
+}</pre>
+      </div>
+    </section>
+
+    <section id="decisions" class="panel">
+      <h2>페이즈 진행 전 결정사항</h2>
+      <div class="decision">
+        <ul>
+          <li>세법해석정비 데이터에서 가장 정답셋이 많은 첫 데모 쟁점 결정</li>
+          <li>API에서 받을 수 있는 법령 필드와 해석례 필드 확인</li>
+          <li>집행기준 데이터를 어떤 형식으로 받을지 결정</li>
+          <li>세법해석정비 전후 해석례 API에서 받을 수 있는 필드 확인</li>
+          <li>정답셋으로 쓸 과거 부가가치세 개정 사례 선정</li>
+          <li>최종 산출물은 내부 검토용 리포트로 고정하고, Tax Agent 가드레일은 선택 활용안으로 둘지 결정</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="review" class="panel">
+      <h2>재검토 결과</h2>
+      <p>큰 구조는 유지하되, MVP에서는 범위를 더 줄이고 매칭 로직을 하드 필터 중심으로 보강합니다.</p>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>축소할 항목</h3>
+          <ul>
+            <li>내부 실무지침은 1차 MVP에서 제외</li>
+            <li>기재부 해석·기본통칙은 1차 MVP에서 제외</li>
+            <li>벡터 검색은 조문/논리 매칭 실패 시 보조로만 사용</li>
+            <li>영업·홍보 소재는 선택 출력으로 축소</li>
+            <li>정답셋은 최소 1개 사례부터 시작</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>확정 MVP 범위</h3>
+          <ul>
+            <li>부가가치세 1개 세목</li>
+            <li>세법해석정비 데이터에서 issue_score가 가장 높은 부가가치세 쟁점 1개</li>
+            <li>부가가치세법 조문과 직접 연결 시행령</li>
+            <li>집행기준 관련 기준/문단 우선, 해석례는 정답셋·보조 판단용</li>
+            <li>전문가 검토 리스트를 기본 산출물로 고정</li>
+          </ul>
+        </div>
+      </div>
+      <div class="panel" style="margin-top: 16px; box-shadow: none;">
+        <h3>보강된 매칭 순서</h3>
+        <pre class="code">Hard Filter
+  -> Direct Link
+  -> Logic Match
+  -> Keyword Match
+  -> Semantic Match
+  -> Evidence Check
+  -> Score</pre>
+        <p>세목, 문서유형, 납세자 유형, 거래 유형, 시간 조건이 맞지 않으면 후보에서 제외하거나 보류합니다. 키워드는 보조 신호이며, 대상과 요건이 동시에 맞지 않으면 높은 신뢰도를 줄 수 없습니다.</p>
+      </div>
+      <table style="margin-top: 16px;">
+        <thead>
+          <tr><th>구간</th><th>주요 실패</th><th>검수 로직</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>Step 1</td><td>시행령 누락, 신구문구 누락, 단순 문구 정비 과대평가</td><td>위임 조문 확인, 변경 전후 필드 필수화, 시행일/적용례 누락 시 통과 불가</td></tr>
+          <tr><td>Step 2</td><td>집행기준 범위 확대, 해석례 과다 수집, 태그 과다 부여</td><td>Step 0 확정 쟁점으로 집행기준을 제한하고 해석례는 정답셋·보조 판단용으로만 사용</td></tr>
+          <tr><td>Step 3</td><td>범용 키워드 오탐, 의미검색 오탐, 근거 없는 고점수</td><td>하드 필터 적용, 대상+요건 동시 일치 확인, Evidence Check 통과 전 보류</td></tr>
+          <tr><td>Step 4</td><td>영향 유형 과다 부여, LLM 설명 의존, 세무 결론처럼 보이는 문구</td><td>주 영향 1개로 제한, 원문 근거 없는 설명 제외, 검토 필요 표현만 허용</td></tr>
+          <tr><td>Step 5</td><td>출력이 과도하게 길어짐, 영업 문구가 자문처럼 보임</td><td>Top 10 또는 55점 이상만 출력, 외부문구는 점검 필요 수준으로 제한</td></tr>
+          <tr><td>Step 6</td><td>정답셋 임의성, 반례 부재, 정성평가만 남음</td><td>판단 사유 기록, negative 문서 포함, Recall/Precision/Evidence Rate 수치화</td></tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</body>
+</html>

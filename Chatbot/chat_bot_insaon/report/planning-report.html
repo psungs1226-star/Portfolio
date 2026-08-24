@@ -1,0 +1,1475 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>인사ON 사업기획·기술구현 보고서</title>
+  <style>
+    @font-face {
+      font-family: "LINE Seed Sans KR";
+      font-style: normal;
+      font-weight: 350 649;
+      font-display: swap;
+      src: url("../src/insaon/web/static/fonts/LINESeedKR-Rg.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "LINE Seed Sans KR";
+      font-style: normal;
+      font-weight: 650 900;
+      font-display: swap;
+      src: url("../src/insaon/web/static/fonts/LINESeedKR-Bd.woff2") format("woff2");
+    }
+    :root {
+      --ink: #202522;
+      --muted: #69716c;
+      --teal: #184f3a;
+      --teal-2: #2b6b52;
+      --mint: #dce9df;
+      --mint-soft: #edf4ef;
+      --paper: #fbfaf5;
+      --line: #d6d2c8;
+      --line-dark: #a6a399;
+      --amber: #765219;
+      --amber-soft: #f2e6bd;
+      --red: #9d4434;
+      --red-soft: #f4dfd8;
+      --blue: #315f85;
+      --blue-soft: #e7eef4;
+      --gray-soft: #eef1ef;
+      --scale: 1;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: #e7e3d9;
+      color: var(--ink);
+      font-family: "LINE Seed Sans KR", "Apple SD Gothic Neo", system-ui, sans-serif;
+      font-synthesis: none;
+      -webkit-font-smoothing: antialiased;
+      hyphens: none;
+      line-break: strict;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+
+    a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    p, h1, h2, h3, h4 { margin-top: 0; }
+
+    .deck {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+      padding: 28px 0 96px;
+    }
+
+    .slide-shell {
+      position: relative;
+      width: calc(1600px * var(--scale));
+      height: calc(900px * var(--scale));
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0 auto auto 0;
+      width: 1600px;
+      height: 900px;
+      overflow: hidden;
+      transform: scale(var(--scale));
+      transform-origin: top left;
+      background: var(--paper);
+    }
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto;
+      height: 8px;
+      background: var(--teal);
+    }
+
+    .inner {
+      position: absolute;
+      inset: 58px 104px 62px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .phase-rail {
+      display: flex;
+      align-items: center;
+      height: 24px;
+      margin-bottom: 25px;
+      color: #8b9996;
+      font-size: 13px;
+      font-weight: 760;
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+
+    .phase-rail span {
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+    }
+
+    .phase-rail span:not(:last-child)::after {
+      content: "";
+      width: 35px;
+      height: 1px;
+      margin: 0 11px;
+      background: #cbd5d2;
+    }
+
+    .phase-rail .active { color: var(--teal); }
+
+    .cue {
+      margin: 0 0 9px;
+      color: var(--teal);
+      font-size: 16px;
+      font-weight: 820;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      font-size: 72px;
+      line-height: 1.08;
+      letter-spacing: -.055em;
+      font-weight: 860;
+    }
+
+    h2 {
+      max-width: 1250px;
+      margin-bottom: 12px;
+      font-size: 49px;
+      line-height: 1.14;
+      letter-spacing: -.045em;
+      font-weight: 850;
+    }
+
+    h3 {
+      margin-bottom: 10px;
+      font-size: 24px;
+      line-height: 1.28;
+      letter-spacing: -.025em;
+      font-weight: 820;
+    }
+
+    h4 {
+      margin-bottom: 7px;
+      font-size: 17px;
+      line-height: 1.3;
+      font-weight: 800;
+    }
+
+    .lead {
+      max-width: 1210px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 21px;
+      line-height: 1.5;
+      letter-spacing: -.015em;
+    }
+
+    .header { flex: 0 0 auto; min-height: 142px; }
+    .body { flex: 1 1 auto; min-height: 0; padding-top: 27px; }
+    .em { color: var(--teal); }
+    .danger { color: var(--red); }
+    .muted { color: var(--muted); }
+
+    .footer {
+      position: absolute;
+      left: 104px;
+      right: 104px;
+      bottom: 25px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #6c7d78;
+      font-size: 12px;
+      letter-spacing: .015em;
+      z-index: 5;
+    }
+
+    .footer strong { color: var(--teal); font-weight: 780; }
+    .footer .sources { max-width: 1160px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    .planning-flag {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      margin-top: 18px;
+      color: #586a65;
+      font-size: 15px;
+      font-weight: 720;
+    }
+
+    .planning-flag::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      background: var(--amber);
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 27px;
+      padding: 4px 9px;
+      border: 1px solid var(--line-dark);
+      border-radius: 999px;
+      color: var(--teal);
+      background: transparent;
+      font-size: 12px;
+      line-height: 1;
+      font-weight: 800;
+      letter-spacing: .045em;
+    }
+
+    .tag.amber { border-color: #c9a169; color: #89540e; background: var(--amber-soft); }
+    .tag.red { border-color: #d3aaa6; color: var(--red); background: var(--red-soft); }
+    .tag.fill { border-color: var(--teal); color: white; background: var(--teal); }
+
+    .number {
+      color: var(--teal);
+      font-size: 14px;
+      font-weight: 830;
+      letter-spacing: .08em;
+    }
+
+    .arrow {
+      color: var(--teal);
+      font-size: 31px;
+      line-height: 1;
+      font-weight: 400;
+    }
+
+    /* Cover */
+    .cover-grid {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 70px;
+      align-items: center;
+      height: 100%;
+    }
+
+    .cover-copy { padding-top: 12px; }
+
+    .cover-kicker {
+      margin-bottom: 24px;
+      color: var(--teal);
+      font-size: 17px;
+      font-weight: 840;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .cover-sub {
+      max-width: 690px;
+      color: var(--muted);
+      font-size: 24px;
+      line-height: 1.48;
+      letter-spacing: -.02em;
+    }
+
+    .inquiry-map {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 70px 1.15fr;
+      grid-template-rows: repeat(4, 1fr);
+      gap: 12px 0;
+      align-items: center;
+      min-height: 480px;
+    }
+
+    .inquiry {
+      padding: 17px 18px;
+      border-left: 5px solid var(--teal-2);
+      background: var(--mint-soft);
+      font-size: 17px;
+      line-height: 1.36;
+      font-weight: 730;
+    }
+
+    .inquiry small {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 830;
+      letter-spacing: .06em;
+    }
+
+    .connector {
+      height: 1px;
+      background: var(--line-dark);
+      position: relative;
+    }
+
+    .connector::after {
+      content: "";
+      position: absolute;
+      right: -1px;
+      top: -4px;
+      border-width: 4px 0 4px 7px;
+      border-style: solid;
+      border-color: transparent transparent transparent var(--line-dark);
+    }
+
+    .review-core {
+      grid-column: 3;
+      grid-row: 1 / 5;
+      align-self: stretch;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 38px;
+      color: white;
+      background: var(--teal);
+    }
+
+    .review-core .label {
+      margin-bottom: 20px;
+      color: #bcded9;
+      font-size: 13px;
+      font-weight: 820;
+      letter-spacing: .12em;
+    }
+
+    .review-core strong {
+      display: block;
+      margin-bottom: 24px;
+      font-size: 31px;
+      line-height: 1.25;
+      letter-spacing: -.03em;
+    }
+
+    .review-core ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .review-core li {
+      padding: 10px 0;
+      border-top: 1px solid rgba(255,255,255,.25);
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    /* Persona */
+    .persona-layout {
+      display: grid;
+      grid-template-columns: .72fr 1.28fr;
+      gap: 42px;
+      height: 100%;
+    }
+
+    .persona-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 29px;
+      border-top: 7px solid var(--teal);
+      background: var(--mint-soft);
+    }
+
+    .persona-panel .role {
+      margin: 22px 0 10px;
+      font-size: 34px;
+      line-height: 1.24;
+      letter-spacing: -.035em;
+      font-weight: 850;
+    }
+
+    .persona-panel .context {
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.52;
+    }
+
+    .persona-panel .caution {
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      color: #76531e;
+      font-size: 14px;
+      line-height: 1.5;
+      font-weight: 700;
+    }
+
+    .work-chain {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      align-items: stretch;
+      height: 100%;
+    }
+
+    .work-step {
+      position: relative;
+      padding: 26px 23px;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+      background: white;
+    }
+
+    .work-step:last-child {
+      border-right: 1px solid var(--line);
+      background: var(--teal);
+      color: white;
+    }
+
+    .work-step:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      z-index: 2;
+      top: 58px;
+      right: -9px;
+      width: 16px;
+      height: 16px;
+      border-top: 1px solid var(--line-dark);
+      border-right: 1px solid var(--line-dark);
+      background: white;
+      transform: rotate(45deg);
+    }
+
+    .work-step .number { margin-bottom: 40px; }
+    .work-step:last-child .number { color: #bcded9; }
+
+    .work-step h3 {
+      min-height: 62px;
+      font-size: 22px;
+    }
+
+    .work-step p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.52;
+    }
+
+    .work-step:last-child p { color: #d9e9e6; }
+
+    .responsibility {
+      margin-top: 20px;
+      padding: 14px 16px;
+      border-left: 4px solid var(--amber);
+      background: var(--amber-soft);
+      color: #674916;
+      font-size: 14px;
+      line-height: 1.45;
+      font-weight: 730;
+    }
+
+    /* SCQA */
+    .scqa-layout {
+      display: grid;
+      grid-template-columns: 1.27fr .73fr;
+      gap: 38px;
+      height: 100%;
+    }
+
+    .scqa-stack {
+      display: grid;
+      grid-template-rows: repeat(4, 1fr);
+      border-top: 1px solid var(--line);
+    }
+
+    .scqa-row {
+      display: grid;
+      grid-template-columns: 75px 200px 1fr;
+      align-items: center;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .scqa-letter {
+      color: var(--teal);
+      font-size: 37px;
+      font-weight: 850;
+    }
+
+    .scqa-name {
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 820;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .scqa-text {
+      font-size: 18px;
+      line-height: 1.45;
+      font-weight: 710;
+    }
+
+    .question-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 34px;
+      color: white;
+      background: var(--teal);
+    }
+
+    .question-panel .quote {
+      margin: 20px 0 28px;
+      font-size: 31px;
+      line-height: 1.37;
+      letter-spacing: -.03em;
+      font-weight: 830;
+    }
+
+    .question-panel .variables {
+      padding-top: 19px;
+      border-top: 1px solid rgba(255,255,255,.28);
+      color: #d9e9e6;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* Why chatbot */
+    .mapping {
+      display: grid;
+      grid-template-columns: 1fr 75px 1fr;
+      grid-template-rows: repeat(4, 1fr);
+      gap: 10px 0;
+      align-items: stretch;
+      height: 100%;
+    }
+
+    .problem, .capability {
+      display: flex;
+      align-items: center;
+      padding: 15px 21px;
+      border: 1px solid var(--line);
+      font-size: 17px;
+      line-height: 1.4;
+      font-weight: 730;
+      background: white;
+    }
+
+    .problem {
+      border-left: 5px solid var(--red);
+      color: #5d302c;
+      background: var(--red-soft);
+    }
+
+    .capability {
+      border-left: 5px solid var(--teal);
+      background: var(--mint-soft);
+    }
+
+    .mapping-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--teal);
+      font-size: 29px;
+    }
+
+    .why-line {
+      grid-column: 1 / 4;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 20px;
+      align-items: center;
+      margin-top: 8px;
+      padding: 15px 19px;
+      color: white;
+      background: var(--teal);
+      font-size: 16px;
+      line-height: 1.38;
+      font-weight: 740;
+    }
+
+    .why-line .vs { color: #bcded9; font-size: 12px; letter-spacing: .1em; }
+
+    /* Scope */
+    .scope-layout {
+      display: grid;
+      grid-template-rows: 1fr 118px;
+      gap: 24px;
+      height: 100%;
+    }
+
+    .scope-tiers {
+      display: grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 25px;
+    }
+
+    .tier {
+      padding: 25px;
+      border-top: 7px solid var(--teal);
+      background: white;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+
+    .tier.expansion { border-top-color: var(--amber); background: #fffdf8; }
+
+    .tier-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 19px;
+    }
+
+    .tier-head .title {
+      font-size: 26px;
+      line-height: 1.2;
+      font-weight: 840;
+    }
+
+    .tier-head .desc {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .type-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .type-item {
+      min-height: 154px;
+      padding: 19px;
+      background: var(--mint-soft);
+    }
+
+    .expansion .type-item { background: var(--amber-soft); }
+
+    .type-item strong {
+      display: block;
+      margin-bottom: 9px;
+      font-size: 22px;
+    }
+
+    .type-item p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.48;
+    }
+
+    .common-engine {
+      display: grid;
+      grid-template-columns: 150px repeat(4, 1fr);
+      align-items: center;
+      border: 1px solid var(--teal);
+      background: var(--teal);
+      color: white;
+    }
+
+    .common-engine .engine-label {
+      padding: 0 22px;
+      color: #bcded9;
+      font-size: 13px;
+      line-height: 1.35;
+      font-weight: 820;
+      letter-spacing: .07em;
+    }
+
+    .engine-step {
+      position: relative;
+      padding: 0 20px;
+      border-left: 1px solid rgba(255,255,255,.25);
+      font-size: 15px;
+      line-height: 1.38;
+      font-weight: 740;
+    }
+
+    .engine-step:not(:last-child)::after {
+      content: "›";
+      position: absolute;
+      right: -8px;
+      top: 50%;
+      color: #bcded9;
+      font-size: 23px;
+      transform: translateY(-50%);
+    }
+
+    /* RAG architecture */
+    .pipeline {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 9px;
+      align-items: stretch;
+      margin-bottom: 22px;
+    }
+
+    .pipe-step {
+      position: relative;
+      min-height: 138px;
+      padding: 17px 14px;
+      border-top: 5px solid var(--teal);
+      background: var(--mint-soft);
+    }
+
+    .pipe-step:not(:last-child)::after {
+      content: "›";
+      position: absolute;
+      z-index: 2;
+      top: 53px;
+      right: -10px;
+      color: var(--teal);
+      font-size: 25px;
+      font-weight: 500;
+    }
+
+    .pipe-step .number { margin-bottom: 19px; font-size: 12px; }
+    .pipe-step strong { display: block; margin-bottom: 7px; font-size: 16px; line-height: 1.28; }
+    .pipe-step p { margin: 0; color: var(--muted); font-size: 12px; line-height: 1.42; }
+    .pipe-step.final { color: white; background: var(--teal); }
+    .pipe-step.final .number, .pipe-step.final p { color: #d5e7e3; }
+
+    .role-split {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .role-box {
+      padding: 20px 23px;
+      border-left: 5px solid var(--blue);
+      background: var(--blue-soft);
+    }
+
+    .role-box.rule { border-left-color: var(--amber); background: var(--amber-soft); }
+    .role-box h3 { margin-bottom: 9px; font-size: 20px; }
+    .role-box p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.48; }
+
+    .arch-note {
+      margin-top: 17px;
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 690;
+    }
+
+    /* Models */
+    .model-table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+      font-size: 14px;
+    }
+
+    .model-table th {
+      padding: 11px 14px;
+      color: white;
+      background: var(--teal);
+      text-align: left;
+      font-size: 12px;
+      letter-spacing: .05em;
+    }
+
+    .model-table td {
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+      line-height: 1.38;
+    }
+
+    .model-table td:first-child {
+      width: 12%;
+      color: var(--teal);
+      font-weight: 830;
+    }
+
+    .model-table td:nth-child(2) { width: 34%; font-weight: 730; }
+    .model-table td:nth-child(3) { width: 34%; color: var(--muted); }
+    .model-table td:nth-child(4) { width: 20%; color: var(--muted); }
+
+    .selection-gate {
+      display: grid;
+      grid-template-columns: 160px 1fr 1fr 1fr;
+      align-items: center;
+      margin-top: 18px;
+      border: 1px solid var(--line-dark);
+    }
+
+    .selection-gate .gate-title {
+      align-self: stretch;
+      display: flex;
+      align-items: center;
+      padding: 18px;
+      color: white;
+      background: var(--teal);
+      font-size: 14px;
+      font-weight: 820;
+    }
+
+    .gate {
+      padding: 14px 17px;
+      border-left: 1px solid var(--line);
+      font-size: 14px;
+      line-height: 1.42;
+      font-weight: 720;
+    }
+
+    .gate strong { display: block; margin-bottom: 4px; color: var(--teal); font-size: 12px; letter-spacing: .06em; }
+
+    /* Validation */
+    .validation-layout {
+      display: grid;
+      grid-template-columns: 1fr 74px 1fr;
+      gap: 0;
+      align-items: stretch;
+      height: 100%;
+    }
+
+    .track {
+      padding: 25px;
+      border-top: 7px solid var(--teal);
+      background: white;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+
+    .track.business { border-top-color: var(--amber); }
+    .track-title { display: flex; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+    .track-title strong { font-size: 24px; }
+
+    .track-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .track-list li {
+      display: grid;
+      grid-template-columns: 105px 1fr;
+      gap: 15px;
+      padding: 13px 0;
+      border-top: 1px solid var(--line);
+      font-size: 14px;
+      line-height: 1.43;
+    }
+
+    .track-list li strong { color: var(--teal); }
+    .business .track-list li strong { color: #88550e; }
+
+    .merge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--teal);
+      font-size: 29px;
+    }
+
+    .decision-bar {
+      position: absolute;
+      left: 104px;
+      right: 104px;
+      bottom: 69px;
+      display: grid;
+      grid-template-columns: 150px 1fr 1fr 1fr;
+      align-items: stretch;
+      border: 1px solid var(--line-dark);
+      background: white;
+    }
+
+    .decision-bar .label {
+      display: flex;
+      align-items: center;
+      padding: 16px;
+      color: white;
+      background: var(--teal);
+      font-size: 13px;
+      font-weight: 820;
+    }
+
+    .decision-bar .decision {
+      padding: 13px 17px;
+      border-left: 1px solid var(--line);
+      font-size: 13px;
+      line-height: 1.42;
+    }
+
+    .decision strong { color: var(--teal); }
+    .decision.stop strong { color: var(--red); }
+
+    /* Outcomes */
+    .outcome-chain {
+      display: grid;
+      grid-template-columns: 1fr 45px 1fr 45px 1fr 45px 1fr;
+      align-items: stretch;
+      min-height: 265px;
+    }
+
+    .outcome-box {
+      padding: 22px;
+      border-top: 6px solid var(--teal);
+      background: var(--mint-soft);
+    }
+
+    .outcome-box.hypothesis { border-top-color: var(--amber); background: var(--amber-soft); }
+    .outcome-box h3 { min-height: 58px; font-size: 21px; }
+    .outcome-box ul { margin: 0; padding-left: 18px; color: var(--muted); font-size: 14px; line-height: 1.55; }
+    .outcome-arrow { display: flex; align-items: center; justify-content: center; color: var(--teal); font-size: 26px; }
+
+    .status-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+      margin-top: 22px;
+    }
+
+    .status-item {
+      padding: 15px 18px;
+      border-left: 5px solid var(--teal);
+      background: white;
+      font-size: 14px;
+      line-height: 1.42;
+    }
+
+    .status-item.hypothesis { border-left-color: var(--amber); }
+    .status-item.unmeasured { border-left-color: var(--line-dark); }
+    .status-item strong { display: block; margin-bottom: 4px; font-size: 12px; letter-spacing: .06em; }
+
+    /* Roadmap */
+    .roadmap-layout {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 34px;
+      height: 470px;
+    }
+
+    .weeks {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .week {
+      padding: 24px;
+      border-top: 7px solid var(--teal);
+      background: white;
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+
+    .week h3 { margin: 11px 0 16px; font-size: 25px; }
+    .week ul { margin: 0; padding: 0; list-style: none; }
+    .week li { padding: 10px 0; border-top: 1px solid var(--line); color: var(--muted); font-size: 14px; line-height: 1.4; }
+
+    .deliverable-panel {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 22px 28px;
+      color: white;
+      background: var(--teal);
+    }
+
+    .deliverable-panel .label { color: #bcded9; font-size: 13px; font-weight: 820; letter-spacing: .1em; }
+    .deliverable-panel h3 { margin-top: 13px; font-size: 28px; line-height: 1.22; }
+    .deliverable-panel ul { margin: 0; padding: 0; list-style: none; }
+    .deliverable-panel li { padding: 8px 0; border-top: 1px solid rgba(255,255,255,.24); font-size: 14px; font-weight: 680; }
+    .stop-note { margin-top: 12px; padding: 11px 15px; color: #50302c; background: var(--red-soft); font-size: 12px; line-height: 1.4; font-weight: 720; }
+
+    .closing-line {
+      position: absolute;
+      z-index: 8;
+      left: 104px;
+      right: 104px;
+      bottom: 67px;
+      padding-top: 13px;
+      border-top: 1px solid var(--line-dark);
+      background: var(--paper);
+      color: var(--teal);
+      font-size: 16px;
+      line-height: 1.4;
+      font-weight: 820;
+    }
+
+    .nav {
+      position: fixed;
+      z-index: 30;
+      right: 22px;
+      bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px;
+      background: rgba(20,39,36,.88);
+    }
+
+    .nav button {
+      width: 38px;
+      height: 34px;
+      border: 0;
+      color: white;
+      background: transparent;
+      cursor: pointer;
+      font-size: 18px;
+    }
+
+    .nav-status {
+      min-width: 64px;
+      color: white;
+      text-align: center;
+      font-size: 13px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    @media (max-width: 900px) {
+      .deck { gap: 16px; padding-top: 12px; }
+      .nav { right: 10px; bottom: 10px; }
+    }
+
+    @page { size: 16in 9in; margin: 0; }
+    @media print {
+      body { background: white; }
+      .deck { display: block; padding: 0; }
+      .slide-shell { width: 16in !important; height: 9in !important; break-after: page; page-break-after: always; }
+      .slide { width: 1600px; height: 900px; transform: scale(.96) !important; }
+      .nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="deck">
+    <!-- 01 COVER -->
+    <section class="slide-shell" id="slide-1">
+      <article class="slide">
+        <div class="inner">
+          <div class="cover-grid">
+            <div class="cover-copy">
+              <div class="cover-kicker">Business &amp; technical plan · 인사ON</div>
+              <h1>인사과 규정검토의<br><span class="em">대화형 전환</span></h1>
+              <p class="cover-sub">지방공무원 휴직·복직 문의에서 필요한 조건을 확인하고, 질문 기준일에 맞는 근거를 제시하는 인사담당자 검토 지원 프로토타입</p>
+              <div class="planning-flag">Harness 33 완료 · 3 blocked · 공식 corpus 자동 품질감사 12/12 · Ollama 로컬 실행</div>
+            </div>
+            <div class="inquiry-map" aria-label="네 가지 휴직 질문이 하나의 검토 지원 흐름으로 모이는 구조">
+              <div class="inquiry"><small>육아휴직</small>“이미 사용했는데 더 쓸 수 있나요?”</div><div class="connector"></div>
+              <div class="inquiry"><small>질병휴직</small>“복직 시점은 언제로 봐야 하나요?”</div><div class="connector"></div>
+              <div class="inquiry"><small>가족돌봄휴직</small>“어떤 가족까지 대상이 되나요?”</div><div class="connector"></div>
+              <div class="inquiry"><small>자기개발휴직</small>“경력 산입 근거는 무엇인가요?”</div><div class="connector"></div>
+              <div class="review-core">
+                <div class="label">인사ON · REVIEW SUPPORT</div>
+                <strong>질문을 바로 답하지 않고<br>검토 가능한 형태로 바꾼다</strong>
+                <ul>
+                  <li>유형·필수조건 확인</li>
+                  <li>기준일·적용대상에 맞는 검색</li>
+                  <li>조문·단서·부칙 근거 제시</li>
+                  <li>근거 부족 시 답변 보류</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><strong>인사ON 사업기획 · 01 / 10</strong></div>
+      </article>
+    </section>
+
+    <!-- 02 PERSONA -->
+    <section class="slide-shell" id="slide-2">
+      <article class="slide">
+        <div class="inner">
+          <div class="phase-rail"><span class="active">Persona</span><span>Problem</span><span>Solution</span><span>Technology</span><span>Validation</span><span>Outcome</span></div>
+          <header class="header">
+            <p class="cue">Primary persona</p>
+            <h2>1차 페르소나 <span class="em">| 지방자치단체 인사담당자</span></h2>
+            <p class="lead">이름과 사진을 꾸민 가상 인물이 아니라, 실제 검증할 업무·책임·산출물을 기준으로 한 역할 페르소나다.</p>
+          </header>
+          <div class="body persona-layout">
+            <aside class="persona-panel">
+              <div>
+                <span class="tag amber">가설 기반 역할 페르소나</span>
+                <div class="role">신규 또는 순환보직<br>인사담당자</div>
+                <p class="context">휴직·복직 문의를 접수하고, 사실관계와 적용 규정을 확인한 뒤 검토 의견을 작성한다.</p>
+              </div>
+              <div class="caution">아직 인터뷰로 검증된 페르소나가 아니다. 업무 관찰·인터뷰를 통해 빈도, 병목, 실제 검토 순서를 확인해야 한다.</div>
+            </aside>
+            <div>
+              <div class="work-chain">
+                <section class="work-step">
+                  <div class="number">INPUT</div>
+                  <h3>불완전한<br>업무 질문</h3>
+                  <p>“휴직을 연장할 수 있나요?”처럼 유형·대상·기준일이 빠진 문의를 받는다.</p>
+                </section>
+                <section class="work-step">
+                  <div class="number">TASK 01</div>
+                  <h3>사실관계<br>확인</h3>
+                  <p>휴직 유형, 기존 사용기간, 사유, 관계, 예정일과 기준일을 확인한다.</p>
+                </section>
+                <section class="work-step">
+                  <div class="number">TASK 02</div>
+                  <h3>규정·시점<br>검토</h3>
+                  <p>법령, 시행령, 지침의 본문·단서·부칙과 질문 시점의 효력을 함께 본다.</p>
+                </section>
+                <section class="work-step">
+                  <div class="number">OUTPUT</div>
+                  <h3>근거 있는<br>검토 의견</h3>
+                  <p>판단에 쓴 근거, 추가 확인사항, 보류 사유를 남기고 최종 검토한다.</p>
+                </section>
+              </div>
+              <div class="responsibility">시스템은 검토자료를 준비한다. 최종 인사처분과 기관 내부 규정 확인의 책임은 인사담당자에게 남는다.</div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span><strong>페르소나 정의</strong> · 가설은 검증 대상으로 표시 · 02 / 10</span></div>
+      </article>
+    </section>
+
+    <!-- 03 SCQA -->
+    <section class="slide-shell" id="slide-3">
+      <article class="slide">
+        <div class="inner">
+          <div class="phase-rail"><span>Persona</span><span class="active">Problem</span><span>Solution</span><span>Technology</span><span>Validation</span><span>Outcome</span></div>
+          <header class="header">
+            <p class="cue">SCQA problem definition</p>
+            <h2>핵심 문제 <span class="em">| 적용 근거의 선택</span></h2>
+            <p class="lead">같은 ‘휴직’ 질문도 유형, 사람, 기간, 기준일과 예외조건에 따라 확인해야 할 근거가 달라진다.</p>
+          </header>
+          <div class="body scqa-layout">
+            <div class="scqa-stack">
+              <div class="scqa-row"><div class="scqa-letter">S</div><div class="scqa-name">Situation</div><div class="scqa-text">인사과는 육아·질병·가족돌봄·자기개발 휴직과 복직 문의를 반복적으로 검토한다.</div></div>
+              <div class="scqa-row"><div class="scqa-letter">C</div><div class="scqa-name">Complication</div><div class="scqa-text">근거가 여러 규정에 분산되고, 본문·단서·부칙과 시행일이 서로 다른 판단조건을 만든다.</div></div>
+              <div class="scqa-row"><div class="scqa-letter">Q</div><div class="scqa-name">Question</div><div class="scqa-text">최종 결정을 자동화하지 않으면서도, 누락 조건과 기준일을 반영한 근거 검토를 어떻게 지원할 것인가?</div></div>
+              <div class="scqa-row"><div class="scqa-letter">A</div><div class="scqa-name">Answer</div><div class="scqa-text">유형 분류·재질문·시점형 RAG·인용 검증·답변 보류를 하나의 대화 흐름으로 묶는다.</div></div>
+            </div>
+            <aside class="question-panel">
+              <span class="tag fill">대표 업무 질문</span>
+              <div class="quote">“휴직을 연장하거나<br>다른 유형으로<br>신청할 수 있나요?”</div>
+              <div class="variables">필요 변수 · 현재 휴직 유형 · 변경 희망 유형 · 기존 사용기간 · 신청 사유 · 대상 관계 · 기준일 · 기관 규정</div>
+            </aside>
+          </div>
+        </div>
+        <div class="footer"><span><strong>문제정의</strong> · 검색 문제 → 조건·시점·예외를 포함한 적용 문제 · 03 / 10</span></div>
+      </article>
+    </section>
+
+    <!-- 04 WHY CHATBOT -->
+    <section class="slide-shell" id="slide-4">
+      <article class="slide">
+        <div class="inner">
+          <div class="phase-rail"><span>Persona</span><span class="active">Problem</span><span class="active">Solution</span><span>Technology</span><span>Validation</span><span>Outcome</span></div>
+          <header class="header">
+            <p class="cue">Why conversational workflow</p>
+            <h2>챗봇 도입 근거 <span class="em">| 불완전한 업무질문</span></h2>
+            <p class="lead">단순 검색창은 사용자가 무엇을 빠뜨렸는지 알려주지 못한다. 대화형 구조는 답변 전에 판단조건을 채우는 장치다.</p>
+          </header>
+          <div class="body mapping">
+            <div class="problem">휴직 유형·대상·기간 등 필수조건이 빠진 질문</div><div class="mapping-arrow">→</div><div class="capability"><strong>조건 확인 대화</strong>&nbsp; 누락 필드를 찾아 한 번에 필요한 질문을 되묻는다.</div>
+            <div class="problem">현행 규정과 과거 규정, 공포일과 시행일의 혼동</div><div class="mapping-arrow">→</div><div class="capability"><strong>기준일 검색</strong>&nbsp; 질문 날짜와 적용대상으로 유효한 버전을 먼저 거른다.</div>
+            <div class="problem">본문·단서·부칙·지침에 분산된 판단 근거</div><div class="mapping-arrow">→</div><div class="capability"><strong>근거 연결</strong>&nbsp; 결론 문장마다 사용한 조문과 예외 근거를 함께 제시한다.</div>
+            <div class="problem">기관 규정 미수집, 모호한 사실관계와 해석 충돌</div><div class="mapping-arrow">→</div><div class="capability"><strong>안전한 보류</strong>&nbsp; 미확인 사항과 검토 필요 사유를 표시하고 사람에게 넘긴다.</div>
+            <div class="why-line"><span>검색형 도구: 사용자가 올바른 검색어와 규정을 이미 알아야 함</span><span class="vs">WHY CHATBOT</span><span>대화형 도구: 시스템이 조건을 확인해 검토 가능한 질문으로 전환</span></div>
+          </div>
+        </div>
+        <div class="footer"><span><strong>해결논리</strong> · 챗봇은 답변 UI가 아니라 조건 수집 인터페이스 · 04 / 10</span></div>
+      </article>
+    </section>
+
+    <!-- 05 SCOPE -->
+    <section class="slide-shell" id="slide-5">
+      <article class="slide">
+        <div class="inner">
+          <div class="phase-rail"><span>Persona</span><span>Problem</span><span class="active">Solution</span><span>Technology</span><span>Validation</span><span>Outcome</span></div>
+          <header class="header">
+            <p class="cue">MVP scope</p>
+            <h2>4개 휴직 유형의 <span class="em">공통 판단 엔진</span></h2>
+            <p class="lead">범위는 넓히되 검증 깊이는 구분한다. 두 유형은 끝까지 구현하고, 두 유형은 같은 구조로 확장 가능성을 시험한다.</p>
+          </header>
+          <div class="body scope-layout">
+            <div class="scope-tiers">
+              <section class="tier">
+                <div class="tier-head"><div><div class="title">심층 구현</div><div class="desc">조건 스키마·시점 검색·실패사례까지 완성</div></div><span class="tag fill">CORE</span></div>
+                <div class="type-grid">
+                  <div class="type-item"><strong>육아휴직·복직</strong><p>대상 자녀, 동일 자녀 여부, 기존 사용기간, 배우자 사용, 복직 예정일과 경력 산입 근거</p></div>
+                  <div class="type-item"><strong>질병휴직·복직</strong><p>휴직 근거, 기간·연장, 복직 가능 시점, 추가 심사 또는 기관 확인이 필요한 조건</p></div>
+                </div>
+              </section>
+              <section class="tier expansion">
+                <div class="tier-head"><div><div class="title">확장 구현·평가</div><div class="desc">유형별 조건 차이와 공통 엔진 재사용성 확인</div></div><span class="tag amber">EXPAND</span></div>
+                <div class="type-grid">
+                  <div class="type-item"><strong>가족돌봄휴직</strong><p>돌봄 대상 관계, 사유, 기간과 추가 확인조건</p></div>
+                  <div class="type-item"><strong>자기개발휴직</strong><p>신청 목적, 기간, 복직과 경력 관련 근거</p></div>
+                </div>
+              </section>
+            </div>
+            <div class="common-engine">
+              <div class="engine-label">COMMON<br>ENGINE</div>
+              <div class="engine-step">① 휴직 유형 분류</div>
+              <div class="engine-step">② 유형별 조건 스키마</div>
+              <div class="engine-step">③ 기준일·대상별 근거 검색</div>
+              <div class="engine-step">④ 구조화 답변 또는 보류</div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span><strong>범위 원칙</strong> · 넓이는 4개 유형, 깊이는 2개 심층 + 2개 확장 · 05 / 10</span></div>
+      </article>
+    </section>
+
+    <!-- 06 RAG -->
+    <section class="slide-shell" id="slide-6">
+      <article class="slide">
+        <div class="inner">
+          <div class="phase-rail"><span>Persona</span><span>Problem</span><span>Solution</span><span class="active">Technology</span><span>Validation</span><span>Outcome</span></div>
+          <header class="header">
+            <p class="cue">Technical design</p>
+            <h2><span class="em">시점·인용 검증형</span> 하이브리드 RAG</h2>
+            <p class="lead">“비슷한 문장”만 찾지 않는다. 정확한 법률용어, 의미 유사성, 질문 기준일과 인용 가능성을 순서대로 통제한다.</p>
+          </header>
+          <div class="body">
+            <div class="pipeline">
+              <div class="pipe-step"><div class="number">01</div><strong>공식 원문</strong><p>법령·행정규칙·실무자료와 버전 메타데이터</p></div>
+              <div class="pipe-step"><div class="number">02</div><strong>계층 파싱</strong><p>조→항→호→목, 단서·부칙·별표 연결</p></div>
+              <div class="pipe-step"><div class="number">03</div><strong>Lexical + Vector</strong><p>한국어 법령 spike 후 lexical 구현 선택</p></div>
+              <div class="pipe-step"><div class="number">04</div><strong>시점 필터</strong><p>기준일·효력기간·적용대상 필터링</p></div>
+              <div class="pipe-step"><div class="number">05</div><strong>Rerank</strong><p>후보 조문의 질의 적합도 재정렬</p></div>
+              <div class="pipe-step"><div class="number">06</div><strong>Context</strong><p>부모 조문·예외·관련 규정 확장</p></div>
+              <div class="pipe-step"><div class="number">07</div><strong>LLM 판단</strong><p>검토 판단·권고 상태·근거 역할 구조화</p></div>
+              <div class="pipe-step final"><div class="number">08</div><strong>인용 검증</strong><p>source ID·인용 존재·스키마 확인 후 사람 검토</p></div>
+            </div>
+            <div class="role-split">
+              <div class="role-box"><h3>LLM의 역할</h3><p>질문에 직접 답하는 검토 판단 · 적용 근거·예외·확인사항 분리 · 근거 확인·추가 검토·근거 부족 상태 권고</p></div>
+              <div class="role-box rule"><h3>결정적 로직의 역할</h3><p>필수 필드·날짜·효력·인용 검증 · 출력 스키마 검사 · 모델 권고가 더 보수적일 때만 최종 상태에 반영</p></div>
+            </div>
+            <div class="arch-note">Python·FastAPI 모듈러 모놀리스와 SQLite 메타데이터 저장소를 사용한다. Qwen은 Ollama loopback에서 근거 설명을 만들고, 날짜·기간·정근수당 비율은 결정적 코드가 계산한다. 모델은 결정적 gate보다 낙관적으로 상태를 올리지 못하며 최종 자격 판단은 <strong>REVIEW_REQUIRED</strong>로 전환한다.</div>
+          </div>
+        </div>
+        <div class="footer"><span class="sources"><strong>설계 근거</strong> · <a href="../docs/ARCHITECTURE.md">ARCHITECTURE</a> · <a href="../docs/DATA_SPEC.md">DATA_SPEC</a> · <a href="../docs/adr/0004-retrieval-spike-before-lock.md">ADR-0004</a> · 06 / 10</span></div>
+      </article>
+    </section>
+
+    <!-- 07 MODELS -->
+    <section class="slide-shell" id="slide-7">
+      <article class="slide">
+        <div class="inner">
+          <div class="phase-rail"><span>Persona</span><span>Problem</span><span>Solution</span><span class="active">Technology</span><span>Validation</span><span>Outcome</span></div>
+          <header class="header">
+            <p class="cue">Retrieval selection evidence</p>
+            <h2>문자 2-gram 선택과 <span class="em">미측정 경계</span></h2>
+            <p class="lead">lexical은 동일 합성 개발 spike로 선택했다. Qwen3·BGE-M3 로컬 RAG는 실제 smoke를 통과했으며, 법령 품질과 반복 latency는 다음 gate에서 측정한다.</p>
+          </header>
+          <div class="body">
+            <table class="model-table" aria-label="역할별 후보 모델과 검증 가설">
+              <thead><tr><th>역할</th><th>후보</th><th>검증 가설</th><th>핵심 비교지표</th></tr></thead>
+              <tbody>
+<!-- GENERATED:LEXICAL-SPIKE:START -->
+                <tr>
+                  <td>Lexical spike</td>
+                  <td>SQLite FTS5<br>문자 2-gram</td>
+                  <td>동일 합성 개발 corpus·query·top-k=5에서 FTS5 Set Recall@5 0.375, MRR@10 0.500; 문자 2-gram 1.000, 1.000</td>
+                  <td><strong>char_ngram</strong><br>합성 spike 선택</td>
+                </tr>
+<!-- GENERATED:LEXICAL-SPIKE:END -->
+                <tr><td>합성 H3</td><td>결정적 hash embedding<br>token-overlap reranker</td><td>오프라인 회귀의 H3 경로를 재현하기 위한 adapter이며 실제 모델 품질을 대신하지 않음</td><td>시스템 회귀<br>안전 gate</td></tr>
+                <tr><td>로컬 모델 RAG</td><td>Qwen3 4B Instruct<br>BGE-M3 · 1024D</td><td>Ollama loopback에서 2024 공식 candidate의 embedding→rerank→generation→citation 검증 CASE-B smoke 통과</td><td><strong>공식 인용 10/10</strong><br>승인·법령 품질 · P95 미측정</td></tr>
+              </tbody>
+            </table>
+            <div class="selection-gate">
+              <div class="gate-title">선정 순서</div>
+              <div class="gate"><strong>GATE 01 · SAFETY</strong>허위 인용·무효 버전·결론 반전 예외 누락 0건</div>
+              <div class="gate"><strong>GATE 02 · QUALITY</strong>근거 검색률, 인용 정확도·완전성, 보류 정확도</div>
+              <div class="gate"><strong>GATE 03 · OPERATION</strong>P95 응답시간과 질문당 비용을 별도 비교</div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span class="sources"><strong>선택 근거</strong> · <a href="../artifacts/spikes/lexical/manifest.json">lexical manifest</a> · <a href="../artifacts/provider/local-smoke.json">local smoke</a> · <a href="../docs/adr/0006-local-model-runtime.md">ADR-0006</a> · 07 / 10</span></div>
+      </article>
+    </section>
+
+    <!-- 08 VALIDATION -->
+    <section class="slide-shell" id="slide-8">
+      <article class="slide">
+        <div class="inner">
+          <div class="phase-rail"><span>Persona</span><span>Problem</span><span>Solution</span><span>Technology</span><span class="active">Validation</span><span>Outcome</span></div>
+          <header class="header">
+            <p class="cue">Two-track validation</p>
+            <h2><span class="em">기술·실무</span> 이원 검증체계</h2>
+            <p class="lead">고정 계약으로 합성 시스템 회귀와 실제 로컬 모델 연결을 검증했다. 이를 법률 정확도나 업무 성과로 확대 해석하지 않는다.</p>
+          </header>
+          <div class="body validation-layout">
+            <section class="track">
+              <div class="track-title"><strong>기술 검증</strong><span class="tag fill">ACTUAL · SYNTHETIC 60</span></div>
+              <ul class="track-list">
+<!-- GENERATED:SYNTHETIC-RESULTS:START -->
+                <li><strong>데이터</strong><span>insaon-synthetic-system-regression@0.4.0 · 70건 · 2026-07-29 · CASE-A · CASE-B · CASE-C 연계</span></li>
+                <li><strong>H3 품질</strong><span>Set Recall@5 33/36 (0.917) · 상태 70/70 (1.000)</span></li>
+                <li><strong>H3 안전</strong><span>인용 완전성 58/58 (1.000) · 위험 답변 0/22 (0.000) · 치명적 오류 0건</span></li>
+                <li><strong>Ablation</strong><span>H2 8건 → H3 0건 (결정적 예외 누락 포함 치명적 오류)</span></li>
+                <li><strong>경계</strong><span>합성 시스템 회귀이며 독립 법령 holdout·법률 정확도·실무 효과·반복 성능은 미측정</span></li>
+<!-- GENERATED:SYNTHETIC-RESULTS:END -->
+              </ul>
+            </section>
+            <div class="merge">+</div>
+            <section class="track business">
+              <div class="track-title"><strong>실무 검증</strong><span class="tag amber">SHADOW TASK</span></div>
+              <ul class="track-list">
+                <li><strong>방식</strong><span>동일 사례를 수작업 검토와 챗봇 보조 검토로 수행</span></li>
+                <li><strong>행동</strong><span>근거 발견시간, 과업 완수, 수정·재검토 발생과 보류 사유 이해</span></li>
+                <li><strong>사용성</strong><span>추가 질문의 적절성, 근거 이동성, 표현의 과단정 여부</span></li>
+                <li><strong>한계</strong><span>소수 실무자 평가는 사용성 근거이며 법률적 정답의 증명이 아님</span></li>
+              </ul>
+            </section>
+          </div>
+          <div class="decision-bar">
+            <div class="label">의사결정</div>
+            <div class="decision"><strong>CANDIDATE</strong><br>H3 합성 회귀 치명적 오류 0건 · 구현 release gate 통과</div>
+            <div class="decision"><strong>HOLD</strong><br>독립 법령 holdout·실무 사용성·운영비용은 미측정</div>
+            <div class="decision stop"><strong>STOP / 축소</strong><br>허위 인용, 무효 규정 또는 개인정보 통제 실패</div>
+          </div>
+        </div>
+        <div class="footer"><span class="sources"><strong>평가 증거</strong> · <a href="../evals/results/h3_reranker_context.json">H3 JSON</a> · <a href="../evals/reports/comparison.md">B0~H3 비교</a> · <a href="../docs/adr/0005-synthetic-regression-release-boundary.md">ADR-0005</a> · 08 / 10</span></div>
+      </article>
+    </section>
+
+    <!-- 09 OUTCOME -->
+    <section class="slide-shell" id="slide-9">
+      <article class="slide">
+        <div class="inner">
+          <div class="phase-rail"><span>Persona</span><span>Problem</span><span>Solution</span><span>Technology</span><span>Validation</span><span class="active">Outcome</span></div>
+          <header class="header">
+            <p class="cue">Expected outcome logic</p>
+            <h2>목표 성과 <span class="em">| 검토 품질의 가시화</span></h2>
+            <p class="lead">어떤 입력이 어떤 시스템 산출물을 만들고, 그것이 실제 검토 행동을 어떻게 바꾸는지 단계별로 측정한다.</p>
+          </header>
+          <div class="body">
+            <div class="outcome-chain">
+              <section class="outcome-box"><span class="tag">INPUT</span><h3>불완전한<br>휴직·복직 질문</h3><ul><li>유형·조건 누락</li><li>기준일 혼재</li><li>근거 분산</li></ul></section>
+              <div class="outcome-arrow">→</div>
+              <section class="outcome-box"><span class="tag">SERVICE OUTPUT</span><h3>구조화된<br>검토 패키지</h3><ul><li>추가 확인사항</li><li>근거·예외·시행일</li><li>답변 또는 보류 사유</li></ul></section>
+              <div class="outcome-arrow">→</div>
+              <section class="outcome-box"><span class="tag">OBSERVABLE</span><h3>관찰 가능한<br>검토 행동</h3><ul><li>근거 발견시간</li><li>과업 완수 여부</li><li>수정·재검토 발생</li></ul></section>
+              <div class="outcome-arrow">→</div>
+              <section class="outcome-box hypothesis"><span class="tag amber">PILOT HYPOTHESIS</span><h3>업무 품질<br>개선 가능성</h3><ul><li>검토 누락 감소</li><li>설명의 일관성</li><li>신규 담당자 지원</li></ul></section>
+            </div>
+            <div class="status-strip">
+              <div class="status-item"><strong>목표 성과</strong>근거와 불확실성이 보이는 답변, 안전한 재질문·보류</div>
+              <div class="status-item hypothesis"><strong>파일럿 가설</strong>근거 탐색시간과 재검토 부담이 줄어들 수 있음</div>
+              <div class="status-item unmeasured"><strong>현재 미측정</strong>업무시간 절감률, 처분 정확도 향상, 사용자 만족도</div>
+            </div>
+          </div>
+        </div>
+        <div class="footer"><span><strong>성과 원칙</strong> · 시스템 출력 → 행동 지표 → 업무 성과의 순서로 검증 · 09 / 10</span></div>
+      </article>
+    </section>
+
+    <!-- 10 ROADMAP -->
+    <section class="slide-shell" id="slide-10">
+      <article class="slide">
+        <div class="inner">
+          <div class="phase-rail"><span>Persona</span><span>Problem</span><span>Solution</span><span>Technology</span><span>Validation</span><span class="active">Outcome</span></div>
+          <header class="header">
+            <p class="cue">Execution roadmap</p>
+            <h2>구현 진행 <span class="em">| 15 phases · 54 steps</span></h2>
+            <p class="lead">평가 계약을 먼저 고정하고 데이터 → 검색 spike → 안전 판단 → 제품 → 고정 평가 순으로 실행한다.</p>
+          </header>
+          <div class="body roadmap-layout">
+            <div class="weeks">
+              <section class="week">
+                <span class="tag fill">WEEK 01 · PHASE 00–02</span>
+                <h3>기반·데이터·검색</h3>
+                <ul>
+                  <li>00 Foundation+Eval · FastAPI scaffold, schema·validator</li>
+                  <li>01 Legal Data · 원문·계층 파싱·bitemporal 승인</li>
+                  <li>02 Retrieval Spike · lexical 선택, B0/B1/H1 → H2/H3</li>
+                </ul>
+              </section>
+              <section class="week">
+                <span class="tag fill">WEEK 02 · PHASE 03–05</span>
+                <h3>안전·제품·고정 평가</h3>
+                <ul>
+                  <li>03 Safe Decision · 개인정보·조건·재질문·결정 규칙</li>
+                  <li>04 Answer Product · orchestrator·인용 검증·API/UI</li>
+                  <li>05 Fixed Eval+Release · B0~H3·치명적 gate·공개 후보</li>
+                </ul>
+              </section>
+            </div>
+            <aside>
+              <div class="deliverable-panel">
+                <div>
+                  <div class="label">CURRENT STATUS</div>
+                  <h3>Phase 14 공통 조건 정책 완료<br>Phase 07 사람 승인 대기</h3>
+                </div>
+                <ul>
+                  <li>44 / 54 steps 완료 · 3 blocked · 7 pending</li>
+                  <li>Qwen3 생성·재랭킹 + BGE-M3 임베딩</li>
+                  <li>공식 source 17종 · 본문 16종 · 12,640 provision</li>
+                  <li>부칙 5,777 · 자동 구조 감사 12/12 · fatal 0</li>
+                  <li>2024 CASE-B 공식 인용 10건 · 합성 인용 0건</li>
+                  <li>미승인 candidate · REVIEW_REQUIRED 안전 전환</li>
+                  <li>공통 정책 · 필수 사실/승인 가정/명시 예외 분리 · PAY-01 최초 적용</li>
+                  <li>B Case Workbench · LINE Seed · 반응형 rollout</li>
+                  <li>다중 turn 챗봇 대시보드 + 승인·평가·pilot gate 구현</li>
+                  <li>Phase 07 심층 candidate 4,106 provision · 부칙 1,510 · warning 0</li>
+                  <li>승인자 0명 · release hold</li>
+                  <li>법률 holdout·실무 효과·배포는 미측정</li>
+                </ul>
+              </div>
+              <div class="stop-note">치명적 오류가 남으면 공개 범위를 육아·질병휴직으로 축소하고, 가족돌봄·자기개발휴직은 후속 검증 항목으로 돌린다.</div>
+            </aside>
+          </div>
+          <div class="closing-line">결론 · 자동화 가능한 후속 gate까지 구현했다. 이제 필요한 것은 독립 검토자의 원문 대조·승인 hash, 사람 정답셋과 실제 배포 증거다.</div>
+        </div>
+        <div class="footer"><span class="sources"><strong>검증 증거</strong> · <a href="../artifacts/release/manifest.json">release manifest</a> · <a href="../evals/reports/official-corpus-quality.md">자동 품질감사</a> · <a href="../artifacts/legal/human-review-readiness.json">사람 검토 준비</a> · 10 / 10</span></div>
+      </article>
+    </section>
+  </main>
+
+  <div class="nav" aria-label="슬라이드 이동">
+    <button type="button" id="prev" aria-label="이전 슬라이드">←</button>
+    <div class="nav-status"><span id="current">1</span> / 10</div>
+    <button type="button" id="next" aria-label="다음 슬라이드">→</button>
+  </div>
+
+  <script>
+    const shells = [...document.querySelectorAll(".slide-shell")];
+    const current = document.getElementById("current");
+
+    function setScale() {
+      const available = Math.min(window.innerWidth - 24, 1600);
+      const scale = Math.max(.2, available / 1600);
+      document.documentElement.style.setProperty("--scale", scale);
+    }
+
+    function activeIndex() {
+      const middle = window.scrollY + window.innerHeight * .45;
+      let best = 0;
+      let distance = Infinity;
+      shells.forEach((shell, index) => {
+        const center = shell.offsetTop + shell.offsetHeight / 2;
+        const delta = Math.abs(center - middle);
+        if (delta < distance) { distance = delta; best = index; }
+      });
+      return best;
+    }
+
+    function updateStatus() { current.textContent = String(activeIndex() + 1); }
+    function go(delta) {
+      const target = Math.min(shells.length - 1, Math.max(0, activeIndex() + delta));
+      shells[target].scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    document.getElementById("prev").addEventListener("click", () => go(-1));
+    document.getElementById("next").addEventListener("click", () => go(1));
+    window.addEventListener("resize", setScale);
+    window.addEventListener("scroll", updateStatus, { passive: true });
+    window.addEventListener("keydown", (event) => {
+      if (["ArrowRight", "PageDown", " "].includes(event.key)) { event.preventDefault(); go(1); }
+      if (["ArrowLeft", "PageUp"].includes(event.key)) { event.preventDefault(); go(-1); }
+      if (event.key === "Home") shells[0].scrollIntoView({ behavior: "smooth" });
+      if (event.key === "End") shells[shells.length - 1].scrollIntoView({ behavior: "smooth" });
+    });
+    setScale();
+    updateStatus();
+  </script>
+</body>
+</html>

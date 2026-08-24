@@ -1,0 +1,29 @@
+{
+  "purpose": "데모 1건 내용검증(코드·구조가 아닌 실제 인용 예규 실재/요지 대조) 시도 기록 — 정직한 상태 보고.",
+  "demo_case": {
+    "id": "demo-minganjaeganjeop",
+    "amendment": "부가가치세법 시행령 제40조 제1항 제13호 (2023-10-19 면세 신설)",
+    "cited_ruling": "서면-2015-법령해석부가-0932",
+    "claimed_gist": "창업투자회사 정보시스템의 독립 대여·매각은 과세('독립성' 근거)"
+  },
+  "attempt": {
+    "target": "NTS 국세법령정보시스템 해석례 검색 (actionId=ASIPDI002PR01)",
+    "endpoint_reachable": true,
+    "session": "ok",
+    "http_status": "200",
+    "doc_no_confirmed": false,
+    "blocker": "정확한 검색 paramData 스키마 미확정 → 문서번호 반환 확인 실패",
+    "note": "읽기 전용 검색만 시도. 비밀값 미노출."
+  },
+  "verdict": "inconclusive_schema_unconfirmed",
+  "consistency_with_scaffold_limits": "JUDGMENT_SCAFFOLD_AXIS1.honest_limits('예규 전문·근거조문 문자열 인용 pending', detail full-text 액션 unconfirmed)와 일치.",
+  "source_checked_so_far": [
+    "개정 전/후 diff 실측 (ASISTA002MR03 before/after)",
+    "예규 요지 실측 (ASIPDI002PR01 GIST_CNTN)"
+  ],
+  "still_pending": [
+    "예규 질의/회신 전문 대조",
+    "근거조문 문자열 인용 확인",
+    "세법 결론의 법적 정오 (설계상 세무 전문가 몫 — AI는 flip 단정 안 함)"
+  ]
+}

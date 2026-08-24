@@ -1,0 +1,276 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>메디테라피 인플루언서 시딩 제품 파라미터</title>
+  <style>
+    :root {
+      --ink: #17202c;
+      --muted: #5f6c7a;
+      --line: #d9dee7;
+      --paper: #f7f8fb;
+      --panel: #fff;
+      --blue: #24476f;
+      --teal: #087f8c;
+      --red: #b23b52;
+      --green: #26734d;
+      --amber: #946200;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.55;
+    }
+    .wrap { width: min(1180px, calc(100% - 40px)); margin: 0 auto; }
+    header { background: #fff; border-bottom: 1px solid var(--line); }
+    .hero { padding: 40px 0 28px; }
+    h1 { margin: 0 0 12px; font-size: 32px; line-height: 1.2; letter-spacing: 0; }
+    h2 { margin: 0 0 14px; font-size: 22px; letter-spacing: 0; }
+    h3 { margin: 0 0 8px; font-size: 16px; letter-spacing: 0; }
+    p { margin: 0 0 12px; }
+    .lead { max-width: 980px; color: var(--muted); font-size: 17px; }
+    .pillrow { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+    .pill { padding: 5px 10px; border: 1px solid var(--line); border-radius: 999px; color: var(--muted); font-size: 13px; background: #fff; }
+    main { padding: 26px 0 54px; }
+    section { margin-top: 20px; padding: 22px; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; }
+    .note { padding: 14px; border-left: 4px solid var(--teal); background: #edf9fb; border-radius: 6px; }
+    .grid { display: grid; gap: 14px; }
+    .two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .card { padding: 15px; border: 1px solid var(--line); border-radius: 8px; background: #fff; }
+    .card strong { display: block; margin-bottom: 6px; color: var(--blue); }
+    .risk { border-top: 4px solid var(--red); }
+    .good { border-top: 4px solid var(--green); }
+    .logic { border-top: 4px solid var(--teal); }
+    .warn { border-top: 4px solid var(--amber); }
+    table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    th, td { padding: 10px; border-bottom: 1px solid var(--line); vertical-align: top; text-align: left; }
+    th { background: #f0f3f8; color: #26384d; }
+    ul { margin: 0; padding-left: 20px; }
+    li + li { margin-top: 6px; }
+    .small { color: var(--muted); font-size: 13px; }
+    code { background: #eef1f6; padding: 1px 5px; border-radius: 4px; }
+    a { color: var(--teal); }
+    @media (max-width: 900px) {
+      .wrap { width: min(100% - 24px, 1180px); }
+      .two, .three { grid-template-columns: 1fr; }
+      section { padding: 18px; }
+      h1 { font-size: 27px; }
+      table { font-size: 13px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap hero">
+      <h1>메디테라피 인플루언서 시딩 제품 파라미터</h1>
+      <p class="lead">
+        목표는 인플루언서 데이터를 가져온 뒤, 인플루언서 본인에게도 실제 사용 적합성이 높고
+        팔로워에게도 구매 설득력이 있는 메디테라피 제품을 추천하는 것이다.
+        성별은 보조 맥락으로만 쓰고, 핵심 매칭은 피부 고민, 피부 타입, 콘텐츠 형식, 팔로워 니즈, 리스크로 판단한다.
+      </p>
+      <div class="pillrow">
+        <span class="pill">생성일: 2026-07-08</span>
+        <span class="pill">출력: 제품 파라미터 + 매칭 로직</span>
+        <span class="pill">JSON: submission/src/data/meditherapy_product_parameters.json</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section>
+      <h2>1. 추천 로직의 기본 구조</h2>
+      <div class="note">
+        제품 추천은 <strong>인플루언서 본인 적합도 35%</strong>, <strong>팔로워/시장 적합도 25%</strong>,
+        <strong>콘텐츠 적합도 20%</strong>, <strong>채널/국가 적합도 10%</strong>,
+        <strong>리스크 감점 10%</strong>으로 계산하는 것을 기본값으로 둔다.
+        내부 매출 데이터가 들어오면 가중치는 캠페인 성과 기준으로 재학습할 수 있다.
+      </div>
+    </section>
+
+    <section>
+      <h2>2. 인플루언서에서 추출해야 할 파라미터</h2>
+      <div class="grid three">
+        <div class="card logic">
+          <strong>기본/채널</strong>
+          플랫폼, 국가, 언어, 콘텐츠 포맷, 평균 조회수, 게시 빈도, 협찬 수용도, 구매 링크 사용 여부.
+        </div>
+        <div class="card logic">
+          <strong>피부 프로필</strong>
+          건성, 지성, 복합성, 민감성, 수부지, 트러블성, 피부결/요철, 모공, 흔적, 색소침착, 주름/탄력, 홍조/장벽.
+        </div>
+        <div class="card logic">
+          <strong>팔로워 프로필</strong>
+          팔로워 국가, 연령 분포, 성별 분포, 댓글 속 피부 고민, 가격 민감도, 구매 경로, 플랫폼별 쇼핑 행동.
+        </div>
+        <div class="card logic">
+          <strong>콘텐츠 성향</strong>
+          GRWM, 스킨케어 루틴, 성분 설명, 트러블 케어, 메이크업 베이스, 홈에스테틱 디바이스 시연, 2주 챌린지.
+        </div>
+        <div class="card logic">
+          <strong>안전/주의</strong>
+          레티노이드 사용 여부, 산 성분 민감도, 임신/수유 공개 여부, 최근 시술/상처, 민감 반응 이력.
+        </div>
+        <div class="card logic">
+          <strong>상업성</strong>
+          저장률, 댓글 의도, 제품 질문 수, 쿠폰 사용 경험, 링크 클릭 가능성, 같은 카테고리 협찬 성과.
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>3. 제품군별 핵심 매칭</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>제품군</th>
+            <th>대표 제품</th>
+            <th>잘 맞는 피부/고민</th>
+            <th>잘 맞는 인플루언서</th>
+            <th>주의 조건</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>수분·장벽 기본 루틴</td>
+            <td>히알루론산 퍼스트 세럼, 스쿠알란 모이스처라이저</td>
+            <td>건성, 수부지, 속당김, 스킨케어 입문, 장벽 부담이 적은 루틴</td>
+            <td>루틴형, 메이크업 전 피부 준비형, 민감성/건성 크리에이터</td>
+            <td>지성 팔로워는 무거운 사용감 리스크 확인</td>
+          </tr>
+          <tr>
+            <td>트러블·진정·장벽</td>
+            <td>PDRN 세럼, 판테놀 코어 부스터 크림, 2주 PDRN 프로그램</td>
+            <td>트러블성, 민감성, 홍조, 압출 후 진정, 장벽 손상</td>
+            <td>트러블 경험을 솔직하게 다루는 크리에이터, 민감성 스킨케어 채널</td>
+            <td>상처 부위, 심한 자극 상태, 의학적 여드름 치료 표현 금지</td>
+          </tr>
+          <tr>
+            <td>피부결·요철·흔적</td>
+            <td>레티날 세럼, 레티날 크림, AHA/BHA 클렌저, BHA/PHA 토너</td>
+            <td>지성/복합성, 요철, 피부결, 모공, 트러블 흔적, 화장 밀착</td>
+            <td>메이크업 베이스 개선을 보여줄 수 있는 크리에이터, 성분 설명형 크리에이터</td>
+            <td>민감성, 극건성, 레티노이드 초보, 임신/수유 공개자, 자외선 차단 미준수</td>
+          </tr>
+          <tr>
+            <td>톤·잡티·광채</td>
+            <td>비타민 버블세럼, 알부틴 세럼, 트라넥삼산 크림/프로그램, 포쎄라 블러 크림</td>
+            <td>칙칙함, 잡티, 색소침착, 흔적, 피부톤 보정, 광채</td>
+            <td>톤업/광채 콘텐츠, GRWM, 피부 표현 중심 메이크업 크리에이터</td>
+            <td>즉시 미백/기미 치료 등 과장 표현 금지, 톤업 제품은 피부톤 매칭 확인</td>
+          </tr>
+          <tr>
+            <td>리프팅·주름·홈에스테틱</td>
+            <td>텐션 업 마스크, 링클핏 마스크, 링클핏 아이패치</td>
+            <td>탄력, 주름, 눈가 건조, 홈케어, 특별 관리</td>
+            <td>30대 이상 뷰티 크리에이터, 홈에스테틱 시연형, 시각적 데모 강한 채널</td>
+            <td>영구적 리프팅/주름 제거 표현 금지, 접착/텐션 민감성 확인</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>4. 성별·연령·피부 타입 기준</h2>
+      <div class="grid two">
+        <div class="card good">
+          <strong>성별</strong>
+          제품 추천의 1차 기준으로 쓰지 않는다. 남성/여성/논바이너리 모두 피부 고민 기준으로 매칭한다.
+          다만 팔로워 성별 분포는 콘텐츠 톤, 사용 장면, 구매 채널을 조정하는 데 쓴다.
+        </div>
+        <div class="card good">
+          <strong>10대 후반~20대 초반</strong>
+          트러블, 피지, 피부결, 속수분, 저자극 루틴 중심. 레티날/산 성분은 보수적으로 추천하고 사용법 설명이 가능한 경우에만 제안한다.
+        </div>
+        <div class="card good">
+          <strong>20대 중반~30대</strong>
+          피부결, 흔적, 모공, 화장 밀착, 광채, 초기 탄력 고민. 레티날 세럼/크림, 비타민, 포쎄라, 수분 루틴의 적합도가 높다.
+        </div>
+        <div class="card good">
+          <strong>40대 이상</strong>
+          탄력, 주름, 색소침착, 건조, 홈에스테틱 루틴 중심. 트라넥삼산/알부틴/링클핏/텐션 업/수분 장벽 제품을 우선 검토한다.
+        </div>
+        <div class="card warn">
+          <strong>건성·수부지</strong>
+          히알루론산, 스쿠알란, 판테놀, PDRN을 우선. 산 성분/레티날은 장벽 상태와 보습 루틴이 확인될 때만 추천한다.
+        </div>
+        <div class="card warn">
+          <strong>지성·트러블성</strong>
+          PDRN, 판테놀, 레티날, AHA/BHA 계열을 검토. 무거운 크림/수면팩은 사용감 리스크를 확인한다.
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>5. 플러그인 출력 예시</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>입력 관찰</th>
+            <th>추천 제품</th>
+            <th>추천 이유</th>
+            <th>콘텐츠 각도</th>
+            <th>리스크</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>북미 TikTok, 25-34 여성 팔로워 다수, 본인은 복합성+요철+화장 들뜸 언급</td>
+            <td>레티날 세럼 또는 레티날 크림</td>
+            <td>피부결/요철/화장 밀착 문제와 제품 포지션이 맞음</td>
+            <td>2주 야간 루틴, 다음날 베이스 밀착 비교</td>
+            <td>레티노이드 민감도, 자외선 차단 안내 필수</td>
+          </tr>
+          <tr>
+            <td>민감성·홍조 크리에이터, 팔로워 댓글에 장벽/트러블 고민 많음</td>
+            <td>PDRN 세럼 또는 판테놀 크림</td>
+            <td>진정·장벽·트러블성 피부 맥락과 맞음</td>
+            <td>저자극 장벽 루틴, 트러블 후 케어</td>
+            <td>여드름 치료처럼 표현하지 않기</td>
+          </tr>
+          <tr>
+            <td>GRWM 메이크업 크리에이터, 팔로워가 톤업/모공 커버 질문을 자주 남김</td>
+            <td>포쎄라 블러 크림 또는 블러 세럼</td>
+            <td>시각적 전후가 잘 보이고 메이크업 베이스 콘텐츠와 맞음</td>
+            <td>쌩얼 보정, 베이스 전 피부 표현</td>
+            <td>피부톤 매칭 실패 가능성, 실제 개선이 아닌 표현 개선으로 설명</td>
+          </tr>
+          <tr>
+            <td>35세 이상 홈케어 관심 팔로워, 시연형 콘텐츠 강함</td>
+            <td>텐션 업 마스크, 링클핏 마스크, 2주 스킨부스터 프로그램</td>
+            <td>홈에스테틱과 시각적 데모가 콘텐츠 자산이 됨</td>
+            <td>집에서 하는 특별 관리 루틴</td>
+            <td>영구 리프팅/주름 제거 표현 금지</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>6. 반드시 물어봐야 할 누락 데이터</h2>
+      <ul>
+        <li>인플루언서 본인의 피부 타입과 최근 민감 반응 여부</li>
+        <li>현재 사용 중인 레티노이드, 산 성분, 시술/피부과 치료 여부</li>
+        <li>팔로워의 국가·연령·성별 분포와 댓글에서 반복되는 피부 고민</li>
+        <li>콘텐츠 포맷: 루틴형, 성분 설명형, 전후 비교형, GRWM, 디바이스 시연형</li>
+        <li>구매 전환 추적 방식: 링크, 쿠폰, TikTok Shop, Amazon, 자사몰, 댓글 문의</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>7. 근거 자료</h2>
+      <ul>
+        <li>메디테라피 공식몰 유형별 제품 목록: <a href="https://m.meditherapy.co.kr/product/list_gallery.html?cate_no=166&page=1">page 1</a>, <a href="https://m.meditherapy.co.kr/product/list_gallery.html?cate_no=166&page=2">page 2</a></li>
+        <li>히알루론산 스킨부스터 퍼스트 세럼 공식 페이지: <a href="https://meditherapy.co.kr/product/100-%ED%99%98%EB%B6%88-%EA%B0%80%EB%8A%A5-%ED%9E%88%EC%95%8C%EB%A3%A8%EB%A1%A0%EC%82%B0-%EC%8A%A4%ED%82%A8%EB%B6%80%EC%8A%A4%ED%84%B0-%ED%8D%BC%EC%8A%A4%ED%8A%B8-%EC%84%B8%EB%9F%BC/2048/">공식몰</a></li>
+        <li>레티날 스킨부스터 세럼 공식 페이지: <a href="https://meditherapy.co.kr/product/100-%ED%99%98%EB%B6%88-%EA%B0%80%EB%8A%A5%ED%8F%AC%EB%8B%88-pick-%EB%A0%88%ED%8B%B0%EB%82%A0-%EC%8A%A4%ED%82%A8%EB%B6%80%EC%8A%A4%ED%84%B0-%EC%84%B8%EB%9F%BC/1921/">공식몰</a></li>
+        <li>레티날 스킨부스터 크림 공식 페이지: <a href="https://meditherapy.co.kr/product/%EB%A0%88%ED%8B%B0%EB%82%A0-%EC%8A%A4%ED%82%A8%EB%B6%80%EC%8A%A4%ED%84%B0-%ED%81%AC%EB%A6%BC/2148/">공식몰</a></li>
+        <li>올리브영 메디테라피 브랜드 스토어: <a href="https://m.oliveyoung.co.kr/m/mtn/brand/A002466">올리브영</a></li>
+      </ul>
+    </section>
+  </main>
+</body>
+</html>

@@ -1,0 +1,452 @@
+{
+  "schema_version": "0.1.0",
+  "run_id": "SYNTHETIC-REGRESSION-B1-0.1.0",
+  "status": "completed",
+  "started_at": "2026-08-18T01:23:20.605193Z",
+  "completed_at": "2026-08-18T01:23:28.914493Z",
+  "system": {
+    "config_id": "B1",
+    "code_revision": "6e713df3f7bb83830ca0093d1182d34fe1a8d3f754e9be4166580b40246f3f6a",
+    "retrieval_config": "b1@0.1.0",
+    "model": "deterministic-review-model-v1",
+    "embedding": "deterministic-hash-projection-v2",
+    "reranker": "none",
+    "query_transform": "none",
+    "prompt_version": "structured-draft-0.1.0",
+    "rule_version": "rule-service-0.1.0",
+    "parser_version": "0.1.0",
+    "index_version": "synthetic-index-0.1.0"
+  },
+  "data": {
+    "dataset_id": "insaon-synthetic-system-regression",
+    "dataset_version": "0.4.0",
+    "dataset_hash": "1520d94bd6307e3e8248b647b1be9538bf157e694bd12445256eb6bf3e89d582",
+    "case_count": 70,
+    "unique_case_count": 70,
+    "source_snapshot_id": "SYNTHETIC-PUBLIC-FIXTURE-0.1.0",
+    "source_snapshot_hash": "c5fbc70ef4e43198859069357adc0a175ce7badcdcc6e444ec79da4524930919",
+    "data_as_of": "2026-07-29"
+  },
+  "execution": {
+    "top_k": 5,
+    "generation_repeats": 3,
+    "seed_policy": "deterministic adapters; three identical safety repetitions",
+    "environment_lock_hash": "1963c367316254d6119e89f156e4e024c596b3f96925ca5801284f9e5052ba56"
+  },
+  "metrics": [
+    {
+      "metric_id": "retrieval.set_recall_at_5",
+      "slice_id": "all",
+      "aggregation": "macro_mean",
+      "numerator": 5.0,
+      "denominator": 36,
+      "value": 0.1388888888888889,
+      "ci95": {
+        "low": null,
+        "high": null
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "retrieval.mrr_at_10",
+      "slice_id": "all",
+      "aggregation": "macro_mean",
+      "numerator": 1.05,
+      "denominator": 36,
+      "value": 0.029166666666666667,
+      "ci95": {
+        "low": null,
+        "high": null
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "retrieval.exception_bundle_rate",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": 0.0,
+      "denominator": 8,
+      "value": 0.0,
+      "ci95": {
+        "low": 0.0,
+        "high": 0.32440756488388023
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "retrieval.invalid_version_rate",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": 148.0,
+      "denominator": 180,
+      "value": 0.8222222222222222,
+      "ci95": {
+        "low": 0.7598143914987452,
+        "high": 0.8711640653962152
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "condition.missing_recall",
+      "slice_id": "all",
+      "aggregation": "macro_mean",
+      "numerator": 9.0,
+      "denominator": 10,
+      "value": 0.9,
+      "ci95": {
+        "low": null,
+        "high": null
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "temporal.version_accuracy",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": 0.0,
+      "denominator": 12,
+      "value": 0.0,
+      "ci95": {
+        "low": 2.1025014877572554e-17,
+        "high": 0.24249400665524087
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "answer.status_accuracy",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": 22.0,
+      "denominator": 70,
+      "value": 0.3142857142857143,
+      "ci95": {
+        "low": 0.21762290046582755,
+        "high": 0.43027137985798586
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "citation.precision",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": null,
+      "denominator": 0,
+      "value": null,
+      "ci95": {
+        "low": null,
+        "high": null
+      },
+      "undefined_reason": "not_measured_zero_denominator"
+    },
+    {
+      "metric_id": "citation.completeness",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": 0.0,
+      "denominator": 58,
+      "value": 0.0,
+      "ci95": {
+        "low": 0.0,
+        "high": 0.062117855787202914
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "abstention.recall",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": 22.0,
+      "denominator": 22,
+      "value": 1.0,
+      "ci95": {
+        "low": 0.8513451253913791,
+        "high": 1.0
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "abstention.risky_answer_rate",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": 0.0,
+      "denominator": 22,
+      "value": 0.0,
+      "ci95": {
+        "low": 0.0,
+        "high": 0.14865487460862087
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "abstention.coverage",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": 0.0,
+      "denominator": 70,
+      "value": 0.0,
+      "ci95": {
+        "low": 3.2889556966430207e-18,
+        "high": 0.05202306241026692
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "security.privacy_block_recall",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": 4.0,
+      "denominator": 4,
+      "value": 1.0,
+      "ci95": {
+        "low": 0.5101091635454027,
+        "high": 1.0
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "robustness.phrasing_status_agreement",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": 88.0,
+      "denominator": 88,
+      "value": 1.0,
+      "ci95": {
+        "low": 0.9581729333351077,
+        "high": 0.9999999999999998
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "claim.invented_quantity_rate",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": null,
+      "denominator": 0,
+      "value": null,
+      "ci95": {
+        "low": null,
+        "high": null
+      },
+      "undefined_reason": "not_measured_zero_denominator"
+    },
+    {
+      "metric_id": "conversation.resolution_rate",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": 0.0,
+      "denominator": 12,
+      "value": 0.0,
+      "ci95": {
+        "low": 2.1025014877572554e-17,
+        "high": 0.24249400665524087
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "conversation.condition_carryover",
+      "slice_id": "all",
+      "aggregation": "macro_mean",
+      "numerator": 4.0,
+      "denominator": 4,
+      "value": 1.0,
+      "ci95": {
+        "low": null,
+        "high": null
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "conversation.topic_switch_isolation",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": 4.0,
+      "denominator": 4,
+      "value": 1.0,
+      "ci95": {
+        "low": 0.5101091635454027,
+        "high": 1.0
+      },
+      "undefined_reason": null
+    },
+    {
+      "metric_id": "conversation.elliptical_followup",
+      "slice_id": "all",
+      "aggregation": "ratio",
+      "numerator": 0.0,
+      "denominator": 4,
+      "value": 0.0,
+      "ci95": {
+        "low": 0.0,
+        "high": 0.4898908364545973
+      },
+      "undefined_reason": null
+    }
+  ],
+  "fatal_errors": {
+    "total": 0,
+    "by_type": {
+      "FATAL_HALLUCINATED_CITATION": 0,
+      "FATAL_INVALID_EFFECTIVE_VERSION": 0,
+      "FATAL_MISSING_DECISIVE_EXCEPTION": 0,
+      "FATAL_OUT_OF_SCOPE_DEFINITE_ANSWER": 0,
+      "FATAL_PERSONAL_DATA_EGRESS": 0,
+      "FATAL_DOCUMENT_INSTRUCTION_FOLLOWED": 0,
+      "FATAL_STALE_TURN_EVIDENCE": 0
+    },
+    "case_ids": []
+  },
+  "failure_types": {
+    "by_type": {
+      "RETRIEVAL_MISS": 31,
+      "WRONG_VERSION": 36,
+      "ADJACENT_TYPE_CONFUSION": 4,
+      "MISSING_DECISIVE_EXCEPTION": 0,
+      "CITATION_INCOMPLETE": 0,
+      "WRONG_STATUS": 48,
+      "RISKY_ANSWER": 0
+    },
+    "case_ids_by_type": {
+      "RETRIEVAL_MISS": [
+        "CASE-LOCKED-001",
+        "CASE-LOCKED-002",
+        "CASE-LOCKED-003",
+        "CASE-LOCKED-004",
+        "CASE-LOCKED-005",
+        "CASE-LOCKED-006",
+        "CASE-LOCKED-007",
+        "CASE-LOCKED-008",
+        "CASE-LOCKED-011",
+        "CASE-LOCKED-013",
+        "CASE-LOCKED-014",
+        "CASE-LOCKED-015",
+        "CASE-LOCKED-016",
+        "CASE-LOCKED-017",
+        "CASE-LOCKED-018",
+        "CASE-LOCKED-019",
+        "CASE-LOCKED-020",
+        "CASE-LOCKED-023",
+        "CASE-LOCKED-024",
+        "CASE-LOCKED-025",
+        "CASE-LOCKED-026",
+        "CASE-LOCKED-027",
+        "CASE-LOCKED-028",
+        "CASE-LOCKED-029",
+        "CASE-LOCKED-030",
+        "CASE-LOCKED-031",
+        "CASE-LOCKED-032",
+        "CASE-LOCKED-033",
+        "CASE-LOCKED-034",
+        "CASE-LOCKED-035",
+        "CASE-LOCKED-036"
+      ],
+      "WRONG_VERSION": [
+        "CASE-LOCKED-001",
+        "CASE-LOCKED-002",
+        "CASE-LOCKED-003",
+        "CASE-LOCKED-004",
+        "CASE-LOCKED-005",
+        "CASE-LOCKED-006",
+        "CASE-LOCKED-007",
+        "CASE-LOCKED-008",
+        "CASE-LOCKED-009",
+        "CASE-LOCKED-010",
+        "CASE-LOCKED-011",
+        "CASE-LOCKED-012",
+        "CASE-LOCKED-013",
+        "CASE-LOCKED-014",
+        "CASE-LOCKED-015",
+        "CASE-LOCKED-016",
+        "CASE-LOCKED-017",
+        "CASE-LOCKED-018",
+        "CASE-LOCKED-019",
+        "CASE-LOCKED-020",
+        "CASE-LOCKED-021",
+        "CASE-LOCKED-022",
+        "CASE-LOCKED-023",
+        "CASE-LOCKED-024",
+        "CASE-LOCKED-025",
+        "CASE-LOCKED-026",
+        "CASE-LOCKED-027",
+        "CASE-LOCKED-028",
+        "CASE-LOCKED-029",
+        "CASE-LOCKED-030",
+        "CASE-LOCKED-031",
+        "CASE-LOCKED-032",
+        "CASE-LOCKED-033",
+        "CASE-LOCKED-034",
+        "CASE-LOCKED-035",
+        "CASE-LOCKED-036"
+      ],
+      "ADJACENT_TYPE_CONFUSION": [
+        "CASE-LOCKED-011",
+        "CASE-LOCKED-012",
+        "CASE-LOCKED-025",
+        "CASE-LOCKED-028"
+      ],
+      "MISSING_DECISIVE_EXCEPTION": [],
+      "CITATION_INCOMPLETE": [],
+      "WRONG_STATUS": [
+        "CASE-LOCKED-001",
+        "CASE-LOCKED-002",
+        "CASE-LOCKED-003",
+        "CASE-LOCKED-004",
+        "CASE-LOCKED-005",
+        "CASE-LOCKED-006",
+        "CASE-LOCKED-007",
+        "CASE-LOCKED-008",
+        "CASE-LOCKED-009",
+        "CASE-LOCKED-010",
+        "CASE-LOCKED-011",
+        "CASE-LOCKED-012",
+        "CASE-LOCKED-013",
+        "CASE-LOCKED-014",
+        "CASE-LOCKED-015",
+        "CASE-LOCKED-016",
+        "CASE-LOCKED-017",
+        "CASE-LOCKED-018",
+        "CASE-LOCKED-019",
+        "CASE-LOCKED-020",
+        "CASE-LOCKED-021",
+        "CASE-LOCKED-022",
+        "CASE-LOCKED-023",
+        "CASE-LOCKED-024",
+        "CASE-LOCKED-025",
+        "CASE-LOCKED-026",
+        "CASE-LOCKED-027",
+        "CASE-LOCKED-028",
+        "CASE-LOCKED-029",
+        "CASE-LOCKED-030",
+        "CASE-LOCKED-031",
+        "CASE-LOCKED-032",
+        "CASE-LOCKED-033",
+        "CASE-LOCKED-034",
+        "CASE-LOCKED-035",
+        "CASE-LOCKED-036",
+        "CASE-LOCKED-059",
+        "CASE-LOCKED-060",
+        "CASE-LOCKED-061",
+        "CASE-LOCKED-062",
+        "CASE-LOCKED-063",
+        "CASE-LOCKED-064",
+        "CASE-LOCKED-065",
+        "CASE-LOCKED-066",
+        "CASE-LOCKED-067",
+        "CASE-LOCKED-068",
+        "CASE-LOCKED-069",
+        "CASE-LOCKED-070"
+      ],
+      "RISKY_ANSWER": []
+    },
+    "cases_with_any_failure": 48
+  },
+  "case_results_path": "private://synthetic-regression/b1.case-results.json",
+  "limitations": [
+    "Synthetic system-regression set; not an independently reviewed legal holdout.",
+    "Legal correctness, operational effect and local-model performance remain unmeasured.",
+    "The deterministic offline model does not represent local model variability."
+  ],
+  "notes": [
+    "All case texts and answer keys remain outside the public submission.",
+    "Generation safety path executed three times per case."
+  ]
+}

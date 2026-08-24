@@ -1,0 +1,81 @@
+{
+  "schema_version": "0.1.0",
+  "purpose": "development lexical implementation spike; not holdout performance",
+  "dataset_id": "insaon-synthetic-retrieval-spike-v0.1",
+  "top_k": 5,
+  "candidates": {
+    "sqlite_fts5": {
+      "set_recall_at_5": 0.375,
+      "mrr_at_10": 0.5,
+      "slice_recall": {
+        "article_number": 0.0,
+        "legal_term": 1.0,
+        "proviso": 0.0,
+        "spacing": 0.5
+      },
+      "rankings": {
+        "Q-COMPOUND": [
+          "SYNTHETIC-EVIDENCE-B-001"
+        ],
+        "Q-ARTICLE": [],
+        "Q-PROVISO": [],
+        "Q-TERM": [
+          "SYNTH-FAMILY-001"
+        ]
+      },
+      "index_time_ms": 0.335
+    },
+    "char_ngram": {
+      "set_recall_at_5": 1.0,
+      "mrr_at_10": 1.0,
+      "slice_recall": {
+        "article_number": 1.0,
+        "legal_term": 1.0,
+        "proviso": 1.0,
+        "spacing": 1.0
+      },
+      "rankings": {
+        "Q-COMPOUND": [
+          "SYNTHETIC-EVIDENCE-B-001",
+          "SYNTHETIC-EXCEPTION-B-001",
+          "SYNTH-DEVELOP-001",
+          "SYNTH-FAMILY-001",
+          "SYNTH-PARENTAL-001"
+        ],
+        "Q-ARTICLE": [
+          "SYNTH-ARTICLE-NO-001",
+          "SYNTH-DEVELOP-001",
+          "SYNTH-FAMILY-001",
+          "SYNTH-NOISE-001",
+          "SYNTH-NOISE-002"
+        ],
+        "Q-PROVISO": [
+          "SYNTH-PROVISO-001",
+          "SYNTH-ARTICLE-NO-001",
+          "SYNTH-DEVELOP-001",
+          "SYNTH-FAMILY-001",
+          "SYNTH-NOISE-001"
+        ],
+        "Q-TERM": [
+          "SYNTH-FAMILY-001",
+          "SYNTHETIC-EXCEPTION-B-001",
+          "SYNTH-DEVELOP-001",
+          "SYNTH-PARENTAL-001",
+          "SYNTHETIC-EVIDENCE-B-001"
+        ]
+      },
+      "index_time_ms": 0.113
+    }
+  },
+  "selected": "char_ngram",
+  "selection_rule": "Set Recall@5, then MRR@10, then stable implementation id",
+  "environment": {
+    "python": "3.14.6",
+    "sqlite": "3.53.4",
+    "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O"
+  },
+  "limitations": [
+    "Synthetic development corpus; no legal correctness claim.",
+    "Index timing is local-machine diagnostic only."
+  ]
+}

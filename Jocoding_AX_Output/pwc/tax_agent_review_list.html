@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>부가가치세 면세 집행기준 — 개정 미반영 선제 검토 리스트</title>
+<style>
+  :root{
+    --navy:#1a2b4a; --navy2:#243a5e; --orange:#eb6f00; --orange-l:#ff9d3f;
+    --ink:#20242b; --muted:#6b7482; --line:#e3e7ee; --bg:#f5f7fa;
+    --green:#1e9e6a; --amber:#d99100; --red:#c8492e; --gray:#8a94a3;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:"Apple SD Gothic Neo","Malgun Gothic","Segoe UI",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.62;font-size:15px;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 22px 60px;}
+  header{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;
+    padding:34px 22px 30px;margin-bottom:24px;border-bottom:4px solid var(--orange);}
+  header .inner{max-width:1120px;margin:0 auto;}
+  header .tag{display:inline-block;background:var(--orange);color:#fff;font-size:12px;
+    font-weight:700;letter-spacing:.5px;padding:4px 10px;border-radius:3px;margin-bottom:12px;}
+  header h1{margin:0 0 8px;font-size:25px;font-weight:800;}
+  header p{margin:0;color:#c7d2e4;font-size:14px;max-width:880px;}
+  h2{font-size:19px;margin:32px 0 6px;padding-left:12px;border-left:5px solid var(--orange);}
+  .sub{color:var(--muted);font-size:13px;margin:0 0 14px 12px;}
+  .kpi{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:8px;}
+  .kpi .box{flex:1;min-width:150px;background:#fff;border:1px solid var(--line);
+    border-radius:10px;padding:16px;text-align:center;}
+  .kpi .num{font-size:28px;font-weight:800;color:var(--navy);}
+  .kpi .num.warn{color:var(--orange);}
+  .kpi .lab{font-size:12.5px;color:var(--muted);margin-top:2px;}
+  .callout{background:linear-gradient(135deg,#fbe9e2,#fdf1ec);border:1px solid #e8a48f;
+    border-left:5px solid var(--red);border-radius:10px;padding:16px 20px;margin:14px 0 22px;}
+  .callout h3{color:var(--red);font-size:15px;margin:0 0 6px;}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);margin:8px 0 18px 2px;}
+  .legend span{display:inline-flex;align-items:center;gap:5px;}
+  .dot{width:10px;height:10px;border-radius:3px;display:inline-block;}
+  .basis{background:#eef3fb;border:1px dashed #b9c8e0;border-radius:6px;padding:1px 7px;font-weight:700;color:var(--navy2);}
+  .note{font-size:12px;color:var(--muted);}
+  /* candidate card */
+  .cc{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:14px;
+     box-shadow:0 1px 2px rgba(20,30,50,.04);}
+  .cc.miss{border-left:5px solid var(--red);}
+  .cc.struct{border-left:5px solid var(--orange);}
+  .cc-head{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:2px;}
+  .cc-no{font-size:17px;font-weight:800;color:var(--navy);}
+  .cc-title{font-size:14px;color:var(--ink);font-weight:600;}
+  .badge{display:inline-block;font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:20px;}
+  .b-miss{background:#fbe6e0;color:var(--red);}
+  .b-struct{background:#fff1e0;color:var(--orange);}
+  .b-check{background:#eef1f5;color:var(--gray);}
+  .b-refl{background:#e2f5ec;color:var(--green);}
+  .conf{font-size:11px;font-weight:700;margin-left:auto;}
+  .trigger{font-size:12.5px;color:var(--navy2);background:#f4f7fb;border-radius:6px;padding:6px 10px;margin:8px 0 10px;}
+  .cc-sum{font-size:13px;color:#374151;margin:0 0 10px;}
+  .cc-sum b{color:var(--navy);}
+  .ba{display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch;}
+  @media(max-width:760px){.ba{grid-template-columns:1fr;}}
+  .ba-box{border:1px solid var(--line);border-radius:8px;padding:9px 12px;font-size:12.5px;}
+  .ba-box.before{background:#f7f8fa;}
+  .ba-box.after{background:#fff8f0;border-color:var(--orange-l);}
+  .ba-box h5{margin:0 0 4px;font-size:11px;letter-spacing:.3px;text-transform:none;}
+  .ba-box.before h5{color:var(--gray);}
+  .ba-box.after h5{color:var(--orange);}
+  .ba-arrow{align-self:center;font-size:20px;color:var(--orange);font-weight:800;}
+  .cc-q{font-size:12.5px;color:#4b5563;margin-top:10px;padding-top:9px;border-top:1px dashed var(--line);}
+  .cc-q b{color:var(--navy2);}
+  table{width:100%;border-collapse:collapse;font-size:13px;background:#fff;border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+  th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top;}
+  th{background:#f0f3f8;color:var(--navy);font-weight:700;font-size:12px;}
+  tr:last-child td{border-bottom:none;}
+  .no{font-weight:800;color:var(--navy);white-space:nowrap;}
+  .foot{color:var(--muted);font-size:12px;margin-top:26px;border-top:1px solid var(--line);padding-top:16px;}
+  .foot b{color:var(--ink);}
+</style>
+</head>
+<body>
+<header>
+  <div class="inner">
+    <span class="tag">Tax Enforcement Standard Impact · 내부 검토용 산출물</span>
+    <h1>부가가치세 면세 집행기준 — 개정 미반영 선제 검토 리스트</h1>
+    <p>법령 개정은 시행됐으나 국세청 현행 「부가가치세 집행기준(2024 판본, 2024-09 세법 기준·격년 발간)」에 아직 반영되지 않아 <b>해석·집행기준이 바뀔 여지가 있는</b> 후보. 각 항목에 현재 집행기준 요약과 개정 반영 시 <b>전→후 예상 방향</b>을 함께 제시한다. 확정이 아니라 전문가 검토 대상이다.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="kpi">
+    <div class="box"><div class="num">15</div><div class="lab">추적한 면세 개정 이벤트<br>(2023.1~2026.7 시행)</div></div>
+    <div class="box"><div class="num warn">7</div><div class="lab">현행 판본 미반영 후보<br>(확정 1 + 구조적 6)</div></div>
+    <div class="box"><div class="num">7</div><div class="lab">반영여부 확인 필요<br>(1건은 반영 확인)</div></div>
+    <div class="box"><div class="num">2</div><div class="lab">오탐 방어(제외)<br>자구정비 개정</div></div>
+  </div>
+  <div class="legend">
+    <span><i class="dot" style="background:var(--red)"></i> 확정 누락(본문 검증)</span>
+    <span><i class="dot" style="background:var(--orange)"></i> 구조적 미반영(시행일 &gt; 발간기준)</span>
+    <span><i class="dot" style="background:var(--gray)"></i> 반영여부 확인 필요</span>
+  </div>
+
+  <div class="callout">
+    <h3>판별 기준 — 왜 "미반영"이라 볼 수 있나</h3>
+    <p style="margin:0" class="note">현행 집행기준 판본은 <span class="basis">2024년 9월 세법 기준</span>·<b>격년 발간</b>이다. 시행일이 발간 기준일 <b>이전</b>인데 본문에 없으면 <b>명백한 누락</b>, <b>이후</b>면 다음 판본(2026 예상) 전까지 <b>구조적으로 반영 불가</b>. "전→후 예상"의 <b>전</b>은 현행 집행기준 원문, <b>후</b>는 개정 취지로 본 검토 방향(공식 개정문이 아님).</p>
+  </div>
+
+  <!-- Tier 1 -->
+  <h2>1. 확정 누락 <span class="badge b-miss">본문 검증 완료</span></h2>
+  <p class="sub">시행일이 발간 기준일 이전인데도 현행 집행기준 본문에 없음 — 원문 대조로 확인.</p>
+
+  <div class="cc miss">
+    <div class="cc-head"><span class="cc-no">26-41-1</span><span class="cc-title">주택임대용역의 면세 범위</span>
+      <span class="badge b-miss">Target</span><span class="conf" style="color:var(--green)">신뢰도 HIGH</span></div>
+    <div class="trigger">유발 개정 · 시행령 제41조 제1항 제2호 신설 (2024-07-01 적용) — 토지임대부 분양주택(국민주택규모) 부수토지 임대용역 면세</div>
+    <p class="cc-sum"><b>현재 집행기준:</b> 면세되는 주택임대를 ①상시주거용 주택+부수토지(면적기준 이내) ②주택·사업용 겸용건물 면적 계산 ③2인 이상 임차인 판정 ④상시주거용 실제사용 기준 ⑤전대 시 각각 면세로 규정. 토지임대부 관련 서술은 없음.</p>
+    <div class="ba">
+      <div class="ba-box before"><h5>전 (현행 집행기준)</h5>‘토지임대부 분양주택’ 문구 없음. 면세 부수토지는 상시주거용 주택 기준 면적으로만 한정.</div>
+      <div class="ba-arrow">→</div>
+      <div class="ba-box after"><h5>후 (개정 반영 시 예상)</h5>토지임대부 분양주택(국민주택규모 한정) 부수토지 임대용역을 면세 대상에 추가하고, 제41조 제2항 면적기준이 이에도 적용됨을 명시할 여지.</div>
+    </div>
+    <div class="cc-q"><b>검토 질문:</b> 토지임대부 부수토지 임대용역 면세와 면적기준 적용을 26-41-1에 반영해야 하는가?</div>
+  </div>
+
+  <!-- Tier 2 -->
+  <h2>2. 구조적 미반영 <span class="badge b-struct">현행 판본 반영 불가</span></h2>
+  <p class="sub">시행일이 발간 기준일(2024-09) 이후 → 현행 판본이 담을 수 없는 개정. 선제 검토 1순위.</p>
+
+  <div class="cc struct">
+    <div class="cc-head"><span class="cc-no">26-0-2</span><span class="cc-title">부가가치세 면제 대상</span>
+      <span class="badge b-struct">Target 확대</span><span class="conf" style="color:var(--green)">HIGH</span></div>
+    <div class="trigger">유발 개정 · 법 제26조 제1항 (2025-01-01 적용) — 면세 ‘혈액’에 치료·예방·진단용 동물 혈액 포함</div>
+    <p class="cc-sum"><b>현재 집행기준:</b> 면세 대상을 기초생활필수품·국민후생·문화·부가가치생산요소·공익목적 등으로 열거. ‘국민후생’ 항목에 <b>의료보건용역, 혈액</b>이 포함됨.</p>
+    <div class="ba">
+      <div class="ba-box before"><h5>전 (현행)</h5>면세 대상 ‘혈액’ (사람 혈액 중심 서술).</div>
+      <div class="ba-arrow">→</div>
+      <div class="ba-box after"><h5>후 (예상)</h5>‘혈액’에 치료·예방·진단 목적으로 조제한 <b>동물의 혈액</b>이 포함되도록 면제 대상 서술 확대 여지.</div>
+    </div>
+    <div class="cc-q"><b>검토 질문:</b> 면제 대상 서술에 동물 혈액 확대를 반영할지 검토. <span class="note">(법 개정이라 위임 시행령 조문 연결은 별도 확인)</span></div>
+  </div>
+
+  <div class="cc struct">
+    <div class="cc-head"><span class="cc-no">26-42-1 / 26-42-2</span><span class="cc-title">인적용역 등의 면세 범위</span>
+      <span class="badge b-struct">Target 신설</span><span class="conf" style="color:var(--green)">HIGH</span></div>
+    <div class="trigger">유발 개정 · 시행령 제42조 (2025-01-01 적용) — 근로자공급 용역 및 단순 인력공급용역(근로자파견 제외) 면세 신설</div>
+    <p class="cc-sum"><b>현재 집행기준:</b> 물적시설 없이 독립 자격으로 제공하는 문화·예술·학술 등 인적용역, 국선변호·후견·직업소개·가사서비스 등을 면세로 규정. ‘고용’ 정의에 고용 외 노무 제공 포함은 <b>이미 반영</b>됨.</p>
+    <div class="ba">
+      <div class="ba-box before"><h5>전 (현행)</h5>근로자공급·단순 인력공급용역 면세 명시 없음.</div>
+      <div class="ba-arrow">→</div>
+      <div class="ba-box after"><h5>후 (예상)</h5>근로자공급 용역 및 단순 인력공급용역(근로자파견 제외)을 면세 인적용역으로 추가할 여지.</div>
+    </div>
+    <div class="cc-q"><b>검토 질문:</b> 근로자공급·단순 인력공급용역 면세 신설분을 인적용역 집행기준에 반영할지 검토.</div>
+  </div>
+
+  <div class="cc struct">
+    <div class="cc-head"><span class="cc-no">26-40-1 / 26-40-2</span><span class="cc-title">금융·보험용역의 면세 범위</span>
+      <span class="badge b-struct">Target 신설</span><span class="conf" style="color:var(--green)">HIGH</span></div>
+    <div class="trigger">유발 개정 · 시행령 제40조 (2025-02-28 기술보증기금 / 2026-02-27 새마을금고자산관리회사) — 금융 면세 대상 추가</div>
+    <p class="cc-sum"><b>현재 집행기준:</b> 면세 금융·보험용역으로 은행업·집합투자업·신탁업·신용보증기금업·보증업·보험업·여신전문금융업 등을 열거.</p>
+    <div class="ba">
+      <div class="ba-box before"><h5>전 (현행)</h5>기술보증기금 보증업무·새마을금고자산관리회사 관련 용역이 열거에 없음.</div>
+      <div class="ba-arrow">→</div>
+      <div class="ba-box after"><h5>후 (예상)</h5>기술보증기금이 수행하는 보증업무, 새마을금고자산관리회사 관련 용역을 면세 열거에 추가할 여지.</div>
+    </div>
+    <div class="cc-q"><b>검토 질문:</b> 두 신설 금융용역을 금융·보험 집행기준 면세 범위에 반영할지 검토.</div>
+  </div>
+
+  <div class="cc struct">
+    <div class="cc-head"><span class="cc-no">26-35-1/2/3</span><span class="cc-title">의료보건용역의 면세 범위</span>
+      <span class="badge b-struct">근거 갱신</span><span class="conf" style="color:var(--amber)">HIGH / MED</span></div>
+    <div class="trigger">유발 개정 · 시행령 제35조 (2025-06-21 적용) — 의료보건용역 근거에 ‘간호법’ 반영(간호법 시행)</div>
+    <p class="cc-sum"><b>현재 집행기준:</b> 의료법 등에 따른 의사·한의사·<b>간호사</b>·물리치료사 등이 제공하는 용역과 약사 조제용역을 면세로 규정(미용목적 성형 등은 과세).</p>
+    <div class="ba">
+      <div class="ba-box before"><h5>전 (현행)</h5>근거 법령에 간호법 미반영(간호사 자체는 이미 면세 대상).</div>
+      <div class="ba-arrow">→</div>
+      <div class="ba-box after"><h5>후 (예상)</h5>간호법 시행에 맞춰 간호 관련 용역의 근거 법령·범위 서술을 갱신할 여지.</div>
+    </div>
+    <div class="cc-q"><b>검토 질문:</b> 간호법 반영에 따른 의료보건용역 면세 근거 갱신 필요 여부 검토.</div>
+  </div>
+
+  <div class="cc struct">
+    <div class="cc-head"><span class="cc-no">26-45-1</span><span class="cc-title">공익단체 등이 공급하는 재화·용역의 면세 범위</span>
+      <span class="badge b-struct">근거 갱신</span><span class="conf" style="color:var(--amber)">MED</span></div>
+    <div class="trigger">유발 개정 · 시행령 제45조 (2026-02-27 적용) — ‘경내지’ → ‘전통사찰보존지’ 개정(전통사찰보존법 반영)</div>
+    <p class="cc-sum"><b>현재 집행기준:</b> 종교·자선·학술 등 공익단체의 실비·무상 공급 재화·용역 면세. 종교단체의 <b>‘경내지’ 및 경내지 내 건물·공작물 임대용역</b> 면세를 명시.</p>
+    <div class="ba">
+      <div class="ba-box before"><h5>전 (현행)</h5>‘경내지’ 용어로 서술.</div>
+      <div class="ba-arrow">→</div>
+      <div class="ba-box after"><h5>후 (예상)</h5>‘경내지’를 ‘전통사찰보존지’로, 근거를 전통사찰보존법 체계로 갱신할 여지.</div>
+    </div>
+    <div class="cc-q"><b>검토 질문:</b> 전통사찰보존지 용어·근거 개정을 공익단체 면세 집행기준에 반영할지 검토.</div>
+  </div>
+
+  <!-- Tier 3 -->
+  <h2>3. 반영여부 확인 필요 <span class="badge b-check">본문 대조 hold</span></h2>
+  <p class="sub">시행일이 발간 기준일 이전 → 이미 반영됐을 수 있음. 본문 대조로 하나(고용 정의)는 반영 확인, 나머지는 미확정(hold).</p>
+  <table>
+    <thead><tr><th>집행기준</th><th>유발 개정 (조문 · 시행일)</th><th>상태</th></tr></thead>
+    <tbody>
+      <tr><td class="no">26-42-1</td><td>시행령 제42조 — 인적용역 ‘고용’ 정의에 고용 외 노무 제공 포함 · 2024-02-29</td><td><span class="badge b-refl">반영 확인</span></td></tr>
+      <tr><td class="no">26-35-1/2/3</td><td>시행령 제35조 — 의료보건용역 범위 재편(정신건강증진사업 등 → 일반화) · 2024-02-29</td><td><span class="badge b-check">확인 필요</span></td></tr>
+      <tr><td class="no">26-35-1/2/3</td><td>시행령 제35조 — ‘예방’ → ‘예방 및 치료’ 확대 · 2023-10-01</td><td><span class="badge b-check">확인 필요</span></td></tr>
+      <tr><td class="no">26-36-1</td><td>시행령 제36조 — 어린이집(위탁운영자 제공분 포함) 면세 요건 · 2024-02-29</td><td><span class="badge b-check">확인 필요</span></td></tr>
+      <tr><td class="no">26-37-1</td><td>시행령 제37조 — 여객운송 면세 제외에 ‘시외고급고속버스’ 추가(과세 전환) · 2024-02-29</td><td><span class="badge b-check">확인 필요</span></td></tr>
+      <tr><td class="no">26-40-1/2</td><td>시행령 제40조 — 주택저당채권유동화회사 관련 면세 삭제 · 2023-05-16</td><td><span class="badge b-check">확인 필요</span></td></tr>
+      <tr><td class="no">26-40-1/2</td><td>시행령 제40조 — 민간재간접벤처투자조합 자산 관리·운용 용역 면세 신설 · 2023-10-19</td><td><span class="badge b-check">확인 필요</span></td></tr>
+      <tr><td class="no">26-45-1</td><td>시행령 제45조 — 문화재보호법 → 문화유산법 체계 개편 · 2024-05-17</td><td><span class="badge b-check">확인 필요</span></td></tr>
+    </tbody>
+  </table>
+
+  <!-- excluded -->
+  <h2>4. 제외 (오탐 방어 확인)</h2>
+  <p class="sub">번호만 보면 매칭되나 규칙으로 걸러낸 것 — precision이 작동함을 보여줌.</p>
+  <table>
+    <thead><tr><th>대상</th><th>제외 사유</th></tr></thead>
+    <tbody>
+      <tr><td class="no">자구정비 2건<br><span class="note">공포 35811 · 35947</span></td><td>가운뎃점 문자 치환, 부처명 표기 치환 — 면세 조문 다수(각 15개 집행기준)에 번호상 매칭되나 <b>실질 변경 없어 전건 제외</b>.</td></tr>
+      <tr><td class="no">26-0-3 / 26-0-4 / 26-0-5</td><td>혈액 법 개정이 법 제26조로 매칭돼 함께 잡혔으나(미가공식료품·수돗물·연탄) 주제 무관 → 과대매칭 제외. 법 개정 항·호 해상도 한계로 logic narrowing 필요.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="foot">
+    <p><b>산출 경로:</b> 세법 개정 연혁 열거(15건) → 집행기준 272건 전수 pool 대상 Direct Link 매칭 → 발간기준일 대비 미반영 판별 → 후보 집행기준 본문(PDF.js) 대조로 현재 내용 요약·전/후 방향 작성.</p>
+    <p><b>한계(정직 표기):</b> ① ‘현재 집행기준’ 요약은 현행 판본 원문 기반이나, ‘후(예상)’는 개정 취지로 본 <u>검토 방향이며 공식 개정문·확정 해석이 아니다</u>. ② 미반영을 원문으로 확정한 것은 26-41-1; 2구역은 시행일 논리(구조적)로 미반영이 확실하되 반영될 문단·문구는 검토 대상. ③ 법 개정(혈액)은 위임 시행령 조문 해상도가 낮아 과대매칭 여지. ④ 검토 후보 목록이며 유불리·최종 적용은 전문가 검토를 요한다.</p>
+  </div>
+
+</div>
+</body>
+</html>

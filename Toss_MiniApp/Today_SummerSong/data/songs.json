@@ -1,0 +1,1236 @@
+[
+  {
+    "id": "S001",
+    "title": "How Sweet",
+    "artist": "NewJeans",
+    "year": 2024,
+    "mood": "상큼발랄",
+    "moments": [
+      "바다",
+      "드라이브"
+    ],
+    "group": "여돌",
+    "videoId": "Q3K0TOvTOno"
+  },
+  {
+    "id": "S002",
+    "title": "Cake",
+    "artist": "있지",
+    "year": 2023,
+    "mood": "상큼발랄",
+    "moments": [
+      "바다"
+    ],
+    "group": "여돌",
+    "videoId": "0bIRwBpBcZQ"
+  },
+  {
+    "id": "S003",
+    "title": "Cupid",
+    "artist": "피프티 피프티",
+    "year": 2023,
+    "mood": "상큼발랄",
+    "moments": [
+      "바다"
+    ],
+    "group": "여돌",
+    "videoId": "Qc7_zRjH808"
+  },
+  {
+    "id": "S004",
+    "title": "Kitsch",
+    "artist": "IVE",
+    "year": 2023,
+    "mood": "상큼발랄",
+    "moments": [
+      "바다"
+    ],
+    "group": "여돌",
+    "videoId": "pG6iaOMV46I"
+  },
+  {
+    "id": "S005",
+    "title": "Queencard (퀸카)",
+    "artist": "여자아이들",
+    "year": 2023,
+    "mood": "상큼발랄",
+    "moments": [
+      "바다"
+    ],
+    "group": "여돌",
+    "videoId": "7HDeem-JaSY"
+  },
+  {
+    "id": "S006",
+    "title": "Teddy Bear",
+    "artist": "STAYC",
+    "year": 2023,
+    "mood": "상큼발랄",
+    "moments": [
+      "바다",
+      "드라이브"
+    ],
+    "group": "여돌",
+    "videoId": "SxHmoifp0oQ"
+  },
+  {
+    "id": "S007",
+    "title": "We Fresh",
+    "artist": "케플러",
+    "year": 2023,
+    "mood": "상큼발랄",
+    "moments": [
+      "바다"
+    ],
+    "group": "여돌",
+    "videoId": "zkvIzKwzYNc"
+  },
+  {
+    "id": "S008",
+    "title": "Birthday",
+    "artist": "레드벨벳",
+    "year": 2022,
+    "mood": "상큼발랄",
+    "moments": [
+      "바다"
+    ],
+    "group": "여돌",
+    "videoId": "Ut1OzEVUiM4"
+  },
+  {
+    "id": "S010",
+    "title": "Giddy",
+    "artist": "케플러",
+    "year": 2022,
+    "mood": "상큼발랄",
+    "moments": [
+      "바다",
+      "드라이브"
+    ],
+    "group": "여돌",
+    "videoId": "w9ueRzymcU0"
+  },
+  {
+    "id": "S011",
+    "title": "Sneakers",
+    "artist": "있지",
+    "year": 2022,
+    "mood": "상큼발랄",
+    "moments": [
+      "바다",
+      "드라이브"
+    ],
+    "group": "여돌",
+    "videoId": "Hbb5GPxXF1w"
+  },
+  {
+    "id": "S012",
+    "title": "Up!",
+    "artist": "케플러",
+    "year": 2022,
+    "mood": "상큼발랄",
+    "moments": [
+      "바다"
+    ],
+    "group": "여돌",
+    "videoId": "hr-325mclek"
+  },
+  {
+    "id": "S013",
+    "title": "ASAP",
+    "artist": "STAYC",
+    "year": 2021,
+    "mood": "상큼발랄",
+    "moments": [
+      "바다"
+    ],
+    "group": "여돌",
+    "videoId": "NsY-9MCOIAQ"
+  },
+  {
+    "id": "S015",
+    "title": "Talk & Talk",
+    "artist": "프로미스나인",
+    "year": 2021,
+    "mood": "상큼발랄",
+    "moments": [
+      "바다"
+    ],
+    "group": "여돌",
+    "videoId": "BjmmvBMXbSU"
+  },
+  {
+    "id": "S016",
+    "title": "WE GO",
+    "artist": "프로미스나인",
+    "year": 2021,
+    "mood": "상큼발랄",
+    "moments": [
+      "바다",
+      "드라이브"
+    ],
+    "group": "여돌",
+    "videoId": "HM6UpQZvbhY"
+  },
+  {
+    "id": "S017",
+    "title": "BUTTERFLY",
+    "artist": "우주소녀",
+    "year": 2020,
+    "mood": "상큼발랄",
+    "moments": [
+      "바다"
+    ],
+    "group": "여돌",
+    "videoId": "ftyLwZ68LnU"
+  },
+  {
+    "id": "S018",
+    "title": "Feel Good (Secret Code)",
+    "artist": "프로미스나인",
+    "year": 2020,
+    "mood": "상큼발랄",
+    "moments": [
+      "바다"
+    ],
+    "group": "여돌",
+    "videoId": "jLmJhjCzOTw"
+  },
+  {
+    "id": "S019",
+    "title": "Ice Cream",
+    "artist": "블랙핑크",
+    "year": 2020,
+    "mood": "상큼발랄",
+    "moments": [
+      "바다"
+    ],
+    "group": "여돌",
+    "videoId": "vRXZj0DzXIA"
+  },
+  {
+    "id": "S020",
+    "title": "So Bad",
+    "artist": "STAYC",
+    "year": 2020,
+    "mood": "상큼발랄",
+    "moments": [
+      "바다"
+    ],
+    "group": "여돌",
+    "videoId": "gMe1c4UegBY"
+  },
+  {
+    "id": "S022",
+    "title": "%% (응응)",
+    "artist": "에이핑크",
+    "year": 2019,
+    "mood": "상큼발랄",
+    "moments": [
+      "바다"
+    ],
+    "group": "여돌",
+    "videoId": "v5daqkRvJDE"
+  },
+  {
+    "id": "S023",
+    "title": "DALLA DALLA (달라달라)",
+    "artist": "있지",
+    "year": 2019,
+    "mood": "상큼발랄",
+    "moments": [
+      "바다"
+    ],
+    "group": "여돌",
+    "videoId": "pNfTK39k55U"
+  },
+  {
+    "id": "S024",
+    "title": "짐살라빔 (Zimzalabim)",
+    "artist": "레드벨벳",
+    "year": 2019,
+    "mood": "상큼발랄",
+    "moments": [
+      "바다"
+    ],
+    "group": "여돌",
+    "videoId": "YBnGBb1wg98"
+  },
+  {
+    "id": "S025",
+    "title": "Hi High",
+    "artist": "이달의 소녀",
+    "year": 2018,
+    "mood": "상큼발랄",
+    "moments": [
+      "바다"
+    ],
+    "group": "여돌",
+    "videoId": "23R1aiS95Ak"
+  },
+  {
+    "id": "S026",
+    "title": "Power Up",
+    "artist": "레드벨벳",
+    "year": 2018,
+    "mood": "상큼발랄",
+    "moments": [
+      "바다",
+      "드라이브"
+    ],
+    "group": "여돌",
+    "videoId": "aiHSVQy9xN8"
+  },
+  {
+    "id": "S027",
+    "title": "Yes I Am",
+    "artist": "마마무",
+    "year": 2018,
+    "mood": "상큼발랄",
+    "moments": [
+      "바다"
+    ],
+    "group": "여돌",
+    "videoId": "hTMlLDAclTI"
+  },
+  {
+    "id": "S028",
+    "title": "뿜뿜 (BBoom BBoom)",
+    "artist": "모모랜드",
+    "year": 2018,
+    "mood": "상큼발랄",
+    "moments": [
+      "바다",
+      "드라이브"
+    ],
+    "group": "여돌",
+    "videoId": "JQGRg8XBnB4"
+  },
+  {
+    "id": "S049",
+    "title": "CRAZY",
+    "artist": "르세라핌",
+    "year": 2024,
+    "mood": "청량시원",
+    "moments": [
+      "바다"
+    ],
+    "group": "여돌",
+    "videoId": "n6B5gQXlB-0"
+  },
+  {
+    "id": "S050",
+    "title": "HEYA",
+    "artist": "IVE",
+    "year": 2024,
+    "mood": "청량시원",
+    "moments": [
+      "바다",
+      "드라이브"
+    ],
+    "group": "여돌",
+    "videoId": "07EzMbVH3QE"
+  },
+  {
+    "id": "S051",
+    "title": "Super Lady",
+    "artist": "여자아이들",
+    "year": 2024,
+    "mood": "청량시원",
+    "moments": [
+      "바다",
+      "드라이브"
+    ],
+    "group": "여돌",
+    "videoId": "6f3RzjXPQwA"
+  },
+  {
+    "id": "S052",
+    "title": "Supernatural",
+    "artist": "NewJeans",
+    "year": 2024,
+    "mood": "청량시원",
+    "moments": [
+      "드라이브"
+    ],
+    "group": "여돌",
+    "videoId": "ZncbtRo7RXs"
+  },
+  {
+    "id": "S053",
+    "title": "Supernova",
+    "artist": "aespa",
+    "year": 2024,
+    "mood": "청량시원",
+    "moments": [
+      "바다",
+      "드라이브"
+    ],
+    "group": "여돌",
+    "videoId": "phuiiNCxRMg"
+  },
+  {
+    "id": "S054",
+    "title": "Whiplash",
+    "artist": "aespa",
+    "year": 2024,
+    "mood": "청량시원",
+    "moments": [
+      "바다"
+    ],
+    "group": "여돌",
+    "videoId": "jWQx2f-CErU"
+  },
+  {
+    "id": "S055",
+    "title": "클락션 (Klaxon)",
+    "artist": "여자아이들",
+    "year": 2024,
+    "mood": "청량시원",
+    "moments": [
+      "드라이브"
+    ],
+    "group": "여돌",
+    "videoId": "rTKqSmX9XhQ"
+  },
+  {
+    "id": "S056",
+    "title": "Baddie",
+    "artist": "IVE",
+    "year": 2023,
+    "mood": "청량시원",
+    "moments": [
+      "드라이브"
+    ],
+    "group": "여돌",
+    "videoId": "Da4P2uT4mVc"
+  },
+  {
+    "id": "S057",
+    "title": "Beautiful Monster",
+    "artist": "STAYC",
+    "year": 2023,
+    "mood": "청량시원",
+    "moments": [
+      "바다"
+    ],
+    "group": "여돌",
+    "videoId": "juQvizeZJFM"
+  },
+  {
+    "id": "S058",
+    "title": "Bubble",
+    "artist": "STAYC",
+    "year": 2023,
+    "mood": "청량시원",
+    "moments": [
+      "바다",
+      "드라이브"
+    ],
+    "group": "여돌",
+    "videoId": "3-ptVHZZdBg"
+  },
+  {
+    "id": "S059",
+    "title": "Drama",
+    "artist": "aespa",
+    "year": 2023,
+    "mood": "청량시원",
+    "moments": [
+      "드라이브"
+    ],
+    "group": "여돌",
+    "videoId": "D8VEhcPeSlc"
+  },
+  {
+    "id": "S060",
+    "title": "ETA",
+    "artist": "NewJeans",
+    "year": 2023,
+    "mood": "청량시원",
+    "moments": [
+      "바다"
+    ],
+    "group": "여돌",
+    "videoId": "jOTfBlKSQYY"
+  },
+  {
+    "id": "S061",
+    "title": "Get Up",
+    "artist": "NewJeans",
+    "year": 2023,
+    "mood": "청량시원",
+    "moments": [
+      "드라이브"
+    ],
+    "group": "여돌",
+    "videoId": "nJDMAjwxthM"
+  },
+  {
+    "id": "S062",
+    "title": "I AM",
+    "artist": "IVE",
+    "year": 2023,
+    "mood": "청량시원",
+    "moments": [
+      "바다"
+    ],
+    "group": "여돌",
+    "videoId": "6ZUIwj3FgUY"
+  },
+  {
+    "id": "S063",
+    "title": "Spicy",
+    "artist": "aespa",
+    "year": 2023,
+    "mood": "청량시원",
+    "moments": [
+      "드라이브"
+    ],
+    "group": "여돌",
+    "videoId": "Os_heh8vPfs"
+  },
+  {
+    "id": "S064",
+    "title": "Stay This Way",
+    "artist": "프로미스나인",
+    "year": 2023,
+    "mood": "청량시원",
+    "moments": [
+      "바다"
+    ],
+    "group": "여돌",
+    "videoId": "JC6budcACNE"
+  },
+  {
+    "id": "S065",
+    "title": "UNFORGIVEN",
+    "artist": "르세라핌",
+    "year": 2023,
+    "mood": "청량시원",
+    "moments": [
+      "드라이브"
+    ],
+    "group": "여돌",
+    "videoId": "UBURTj20HXI"
+  },
+  {
+    "id": "S066",
+    "title": "여름이 들려 (Summer Comes)",
+    "artist": "오마이걸",
+    "year": 2023,
+    "mood": "청량시원",
+    "moments": [
+      "드라이브"
+    ],
+    "group": "여돌",
+    "videoId": "9iOj8RLAeDA"
+  },
+  {
+    "id": "S067",
+    "title": "ANTIFRAGILE",
+    "artist": "르세라핌",
+    "year": 2022,
+    "mood": "청량시원",
+    "moments": [
+      "바다",
+      "드라이브"
+    ],
+    "group": "여돌",
+    "videoId": "pyf8cbqyfPs"
+  },
+  {
+    "id": "S075",
+    "title": "Alcohol-Free",
+    "artist": "트와이스",
+    "year": 2021,
+    "mood": "청량시원",
+    "moments": [
+      "바다"
+    ],
+    "group": "여돌",
+    "videoId": "XA2YEHn-A8Q"
+  },
+  {
+    "id": "S080",
+    "title": "치맛바람 (Chi Mat Ba Ram)",
+    "artist": "브레이브걸스",
+    "year": 2021,
+    "mood": "청량시원",
+    "moments": [
+      "드라이브"
+    ],
+    "group": "여돌",
+    "videoId": "e70PkoJhQYM"
+  },
+  {
+    "id": "S113",
+    "title": "Bubble Gum",
+    "artist": "NewJeans",
+    "year": 2024,
+    "mood": "설렘두근",
+    "moments": [
+      "밤바다"
+    ],
+    "group": "여돌",
+    "videoId": "ft70sAYrFyY"
+  },
+  {
+    "id": "S114",
+    "title": "Off The Record",
+    "artist": "IVE",
+    "year": 2023,
+    "mood": "설렘두근",
+    "moments": [
+      "밤바다"
+    ],
+    "group": "여돌",
+    "videoId": "_ApV7Lm87cg"
+  },
+  {
+    "id": "S115",
+    "title": "Perfect Night",
+    "artist": "르세라핌",
+    "year": 2023,
+    "mood": "설렘두근",
+    "moments": [
+      "밤바다"
+    ],
+    "group": "여돌",
+    "videoId": "hLvWy2b857I"
+  },
+  {
+    "id": "S116",
+    "title": "Super Shy",
+    "artist": "NewJeans",
+    "year": 2023,
+    "mood": "설렘두근",
+    "moments": [
+      "밤바다"
+    ],
+    "group": "여돌",
+    "videoId": "ArmDp-zijuc"
+  },
+  {
+    "id": "S117",
+    "title": "Attention",
+    "artist": "NewJeans",
+    "year": 2022,
+    "mood": "설렘두근",
+    "moments": [
+      "밤바다",
+      "드라이브"
+    ],
+    "group": "여돌",
+    "videoId": "js1CtxSY38I"
+  },
+  {
+    "id": "S118",
+    "title": "DM",
+    "artist": "프로미스나인",
+    "year": 2022,
+    "mood": "설렘두근",
+    "moments": [
+      "밤바다",
+      "드라이브"
+    ],
+    "group": "여돌",
+    "videoId": "4gXmClk8rKI"
+  },
+  {
+    "id": "S119",
+    "title": "Dreams Come True",
+    "artist": "aespa",
+    "year": 2022,
+    "mood": "설렘두근",
+    "moments": [
+      "밤바다",
+      "드라이브"
+    ],
+    "group": "여돌",
+    "videoId": "H69tJmsgd9I"
+  },
+  {
+    "id": "S121",
+    "title": "LOVE DIVE",
+    "artist": "IVE",
+    "year": 2022,
+    "mood": "설렘두근",
+    "moments": [
+      "밤바다",
+      "드라이브"
+    ],
+    "group": "여돌",
+    "videoId": "Y8JFxS1HlDo"
+  },
+  {
+    "id": "S122",
+    "title": "ELEVEN",
+    "artist": "IVE",
+    "year": 2021,
+    "mood": "설렘두근",
+    "moments": [
+      "밤바다"
+    ],
+    "group": "여돌",
+    "videoId": "--FmExEAsM8"
+  },
+  {
+    "id": "S123",
+    "title": "Stereotype (색안경)",
+    "artist": "STAYC",
+    "year": 2021,
+    "mood": "설렘두근",
+    "moments": [
+      "밤바다"
+    ],
+    "group": "여돌",
+    "videoId": "Xmxcnf2v_gs"
+  },
+  {
+    "id": "S124",
+    "title": "The Feels",
+    "artist": "트와이스",
+    "year": 2021,
+    "mood": "설렘두근",
+    "moments": [
+      "밤바다"
+    ],
+    "group": "여돌",
+    "videoId": "f5_wn8mexmM"
+  },
+  {
+    "id": "S126",
+    "title": "이루리 (As You Wish)",
+    "artist": "우주소녀",
+    "year": 2019,
+    "mood": "설렘두근",
+    "moments": [
+      "밤바다"
+    ],
+    "group": "여돌",
+    "videoId": "Q93dY2qeMeU"
+  },
+  {
+    "id": "S127",
+    "title": "What is Love?",
+    "artist": "트와이스",
+    "year": 2018,
+    "mood": "설렘두근",
+    "moments": [
+      "밤바다"
+    ],
+    "group": "여돌",
+    "videoId": "i0p1bmr0EmE"
+  },
+  {
+    "id": "S130",
+    "title": "위아래 (Up & Down)",
+    "artist": "EXID",
+    "year": 2014,
+    "mood": "설렘두근",
+    "moments": [
+      "밤바다"
+    ],
+    "group": "여돌",
+    "videoId": "hfXZ6ydgZyo"
+  },
+  {
+    "id": "S132",
+    "title": "Cool With You",
+    "artist": "NewJeans",
+    "year": 2023,
+    "mood": "센치감성",
+    "moments": [
+      "밤바다"
+    ],
+    "group": "여돌",
+    "videoId": "zsYSSVoQnP4"
+  },
+  {
+    "id": "S133",
+    "title": "Ditto",
+    "artist": "NewJeans",
+    "year": 2022,
+    "mood": "센치감성",
+    "moments": [
+      "비오는날",
+      "밤바다"
+    ],
+    "group": "여돌",
+    "videoId": "pSUydWEqKwE"
+  },
+  {
+    "id": "S134",
+    "title": "Lovesick Girls",
+    "artist": "블랙핑크",
+    "year": 2020,
+    "mood": "센치감성",
+    "moments": [
+      "밤바다"
+    ],
+    "group": "여돌",
+    "videoId": "dyRsYk0LyA8"
+  },
+  {
+    "id": "S135",
+    "title": "Feel Special",
+    "artist": "트와이스",
+    "year": 2019,
+    "mood": "센치감성",
+    "moments": [
+      "비오는날",
+      "밤바다"
+    ],
+    "group": "여돌",
+    "videoId": "3ymwOvzhwHs"
+  },
+  {
+    "id": "S136",
+    "title": "Bad Boy",
+    "artist": "레드벨벳",
+    "year": 2018,
+    "mood": "센치감성",
+    "moments": [
+      "밤바다"
+    ],
+    "group": "여돌",
+    "videoId": "J_CFBjAyPWE"
+  },
+  {
+    "id": "S169",
+    "title": "Butter",
+    "artist": "방탄소년단",
+    "year": 2021,
+    "mood": "청량시원",
+    "moments": [
+      "바다"
+    ],
+    "group": "남돌",
+    "videoId": "WMweEpGlu_U"
+  },
+  {
+    "id": "S178",
+    "title": "Left & Right",
+    "artist": "세븐틴",
+    "year": 2020,
+    "mood": "청량시원",
+    "moments": [
+      "바다",
+      "드라이브"
+    ],
+    "group": "남돌",
+    "videoId": "HdZdxocqzq4"
+  },
+  {
+    "id": "S188",
+    "title": "Everybody",
+    "artist": "샤이니",
+    "year": 2013,
+    "mood": "청량시원",
+    "moments": [
+      "드라이브"
+    ],
+    "group": "남돌",
+    "videoId": "hKbNV-4b_g8"
+  },
+  {
+    "id": "S190",
+    "title": "Sherlock (셜록)",
+    "artist": "샤이니",
+    "year": 2012,
+    "mood": "청량시원",
+    "moments": [
+      "바다"
+    ],
+    "group": "남돌",
+    "videoId": "8kyG5tTZ1iE"
+  },
+  {
+    "id": "S192",
+    "title": "Love 119",
+    "artist": "RIIZE",
+    "year": 2024,
+    "mood": "설렘두근",
+    "moments": [
+      "밤바다"
+    ],
+    "group": "남돌",
+    "videoId": "0TAAUWHo4Ec"
+  },
+  {
+    "id": "S195",
+    "title": "One and Only",
+    "artist": "보이넥스트도어",
+    "year": 2023,
+    "mood": "설렘두근",
+    "moments": [
+      "밤바다"
+    ],
+    "group": "남돌",
+    "videoId": "jizAb-SLvtM"
+  },
+  {
+    "id": "S196",
+    "title": "Sugar Rush Ride",
+    "artist": "투모로우바이투게더",
+    "year": 2023,
+    "mood": "설렘두근",
+    "moments": [
+      "밤바다",
+      "드라이브"
+    ],
+    "group": "남돌",
+    "videoId": "P9tKTxbgdkk"
+  },
+  {
+    "id": "S197",
+    "title": "Sweet Venom",
+    "artist": "엔하이픈",
+    "year": 2023,
+    "mood": "설렘두근",
+    "moments": [
+      "밤바다"
+    ],
+    "group": "남돌",
+    "videoId": "qedonJosQ3g"
+  },
+  {
+    "id": "S199",
+    "title": "Ready to love",
+    "artist": "세븐틴",
+    "year": 2021,
+    "mood": "설렘두근",
+    "moments": [
+      "밤바다",
+      "드라이브"
+    ],
+    "group": "남돌",
+    "videoId": "yCvSR4lSqTg"
+  },
+  {
+    "id": "S200",
+    "title": "WHISPER",
+    "artist": "더보이즈",
+    "year": 2021,
+    "mood": "설렘두근",
+    "moments": [
+      "밤바다",
+      "드라이브"
+    ],
+    "group": "남돌",
+    "videoId": "Pg2tKXBMIVw"
+  },
+  {
+    "id": "S202",
+    "title": "Calling You",
+    "artist": "하이라이트",
+    "year": 2019,
+    "mood": "설렘두근",
+    "moments": [
+      "밤바다",
+      "드라이브"
+    ],
+    "group": "남돌",
+    "videoId": "b6l0x9xxk4k"
+  },
+  {
+    "id": "S204",
+    "title": "빛나리 (Shine)",
+    "artist": "펜타곤",
+    "year": 2018,
+    "mood": "설렘두근",
+    "moments": [
+      "밤바다"
+    ],
+    "group": "남돌",
+    "videoId": "z4dH6hEMuwk"
+  },
+  {
+    "id": "S205",
+    "title": "사랑을 했다 (Love Scenario)",
+    "artist": "아이콘",
+    "year": 2018,
+    "mood": "설렘두근",
+    "moments": [
+      "밤바다",
+      "드라이브"
+    ],
+    "group": "남돌",
+    "videoId": "vecSVX1QYbQ"
+  },
+  {
+    "id": "S207",
+    "title": "으르렁 (Growl)",
+    "artist": "EXO",
+    "year": 2013,
+    "mood": "설렘두근",
+    "moments": [
+      "밤바다"
+    ],
+    "group": "남돌",
+    "videoId": "I3dezFzsNss"
+  },
+  {
+    "id": "S208",
+    "title": "LO$ER=LO♡ER",
+    "artist": "투모로우바이투게더",
+    "year": 2021,
+    "mood": "센치감성",
+    "moments": [
+      "밤바다"
+    ],
+    "group": "남돌",
+    "videoId": "JzODRUBBXpc"
+  },
+  {
+    "id": "S209",
+    "title": "Daisy",
+    "artist": "펜타곤",
+    "year": 2020,
+    "mood": "센치감성",
+    "moments": [
+      "밤바다"
+    ],
+    "group": "남돌",
+    "videoId": "W7ZIz4w9Edo"
+  },
+  {
+    "id": "S210",
+    "title": "Good Guy",
+    "artist": "SF9",
+    "year": 2020,
+    "mood": "센치감성",
+    "moments": [
+      "밤바다"
+    ],
+    "group": "남돌",
+    "videoId": "ur4dLy0ozRQ"
+  },
+  {
+    "id": "S211",
+    "title": "Howling",
+    "artist": "빅톤",
+    "year": 2020,
+    "mood": "센치감성",
+    "moments": [
+      "밤바다"
+    ],
+    "group": "남돌",
+    "videoId": "x0sVxTmLnh0"
+  },
+  {
+    "id": "S212",
+    "title": "You Calling My Name (니가 부르는 나의 이름)",
+    "artist": "갓세븐",
+    "year": 2019,
+    "mood": "센치감성",
+    "moments": [
+      "밤바다"
+    ],
+    "group": "남돌",
+    "videoId": "xQI9oZEY-B0"
+  },
+  {
+    "id": "S213",
+    "title": "Love Shot",
+    "artist": "EXO",
+    "year": 2018,
+    "mood": "센치감성",
+    "moments": [
+      "밤바다"
+    ],
+    "group": "남돌",
+    "videoId": "pSudEWBAYRE"
+  },
+  {
+    "id": "S214",
+    "title": "Shoot Out",
+    "artist": "몬스타엑스",
+    "year": 2018,
+    "mood": "센치감성",
+    "moments": [
+      "밤바다"
+    ],
+    "group": "남돌",
+    "videoId": "MS10Zz49FHE"
+  },
+  {
+    "id": "S228",
+    "title": "XOXO",
+    "artist": "전소미",
+    "year": 2022,
+    "mood": "설렘두근",
+    "moments": [
+      "밤바다"
+    ],
+    "group": "솔로",
+    "videoId": "H8kqPkEXP_E"
+  },
+  {
+    "id": "S238",
+    "title": "INVU",
+    "artist": "태연",
+    "year": 2022,
+    "mood": "센치감성",
+    "moments": [
+      "비오는날",
+      "밤바다"
+    ],
+    "group": "솔로",
+    "videoId": "AbZH7XWDW_k"
+  },
+  {
+    "id": "S239",
+    "title": "에피소드",
+    "artist": "이무진",
+    "year": 2022,
+    "mood": "센치감성",
+    "moments": [
+      "밤바다"
+    ],
+    "group": "솔로",
+    "videoId": "gH1rVdXUlpo"
+  },
+  {
+    "id": "S240",
+    "title": "Bambi",
+    "artist": "백현",
+    "year": 2021,
+    "mood": "센치감성",
+    "moments": [
+      "밤바다"
+    ],
+    "group": "솔로",
+    "videoId": "8M3WUaeIbOk"
+  },
+  {
+    "id": "S241",
+    "title": "Like Water",
+    "artist": "웬디",
+    "year": 2021,
+    "mood": "센치감성",
+    "moments": [
+      "밤바다"
+    ],
+    "group": "솔로",
+    "videoId": "-Ih5UArd4zk"
+  },
+  {
+    "id": "S263",
+    "title": "주인공 (Heroine)",
+    "artist": "선미",
+    "year": 2018,
+    "mood": "센치감성",
+    "moments": [
+      "비오는날",
+      "밤바다"
+    ],
+    "group": "솔로",
+    "videoId": "F4qfN5UeFvQ"
+  },
+  {
+    "id": "S264",
+    "title": "비도 오고 그래서",
+    "artist": "헤이즈",
+    "year": 2017,
+    "mood": "센치감성",
+    "moments": [
+      "비오는날",
+      "밤바다"
+    ],
+    "group": "솔로",
+    "videoId": "afxLaQiLu-o"
+  },
+  {
+    "id": "S265",
+    "title": "Rain",
+    "artist": "태연",
+    "year": 2016,
+    "mood": "센치감성",
+    "moments": [
+      "비오는날",
+      "밤바다"
+    ],
+    "group": "솔로",
+    "videoId": "eHir_vB1RUI"
+  },
+  {
+    "id": "S266",
+    "title": "비",
+    "artist": "폴킴",
+    "year": 2016,
+    "mood": "센치감성",
+    "moments": [
+      "비오는날",
+      "밤바다"
+    ],
+    "group": "솔로",
+    "videoId": "Cm08bRic7Jk"
+  },
+  {
+    "id": "S267",
+    "title": "푸르던",
+    "artist": "아이유",
+    "year": 2015,
+    "mood": "센치감성",
+    "moments": [
+      "비오는날",
+      "밤바다"
+    ],
+    "group": "솔로",
+    "videoId": "TRTquokWSCw"
+  },
+  {
+    "id": "S268",
+    "title": "비가 내린다",
+    "artist": "차은주",
+    "year": 2014,
+    "mood": "센치감성",
+    "moments": [
+      "비오는날",
+      "밤바다"
+    ],
+    "group": "솔로",
+    "videoId": "kYwAJCSonLg"
+  },
+  {
+    "id": "S269",
+    "title": "Rain",
+    "artist": "김예림",
+    "year": 2013,
+    "mood": "센치감성",
+    "moments": [
+      "비오는날",
+      "밤바다"
+    ],
+    "group": "솔로",
+    "videoId": "qlMXZvY-_cM"
+  },
+  {
+    "id": "S271",
+    "title": "장마",
+    "artist": "정인",
+    "year": 2011,
+    "mood": "센치감성",
+    "moments": [
+      "비오는날",
+      "밤바다"
+    ],
+    "group": "솔로",
+    "videoId": "zznSn57U_7U"
+  },
+  {
+    "id": "S300",
+    "title": "비가 와",
+    "artist": "소유, 백현",
+    "year": 2017,
+    "mood": "센치감성",
+    "moments": [
+      "비오는날",
+      "밤바다"
+    ],
+    "group": "기타",
+    "videoId": "1Q8J5nghxiM"
+  }
+]

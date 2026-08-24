@@ -1,0 +1,347 @@
+{
+  "phase": "Phase 7",
+  "step": "Step 3-5 (full-pool matching over 272, pre-registered, trivials injected)",
+  "status": "completed_with_hold_flags",
+  "method_note": "각 개정 이벤트를 집행기준 272개 전수 pool 대상으로 Direct Link 매칭(번호체계 조문 연결). 매칭 전 pre_registered_expected_prefix 고정. trivial 2건은 후보로 실투입해 precision 방어 확인. staleness(집행기준 본문 실제 미반영)는 26-41-1만 검증 완료, 나머지는 본문 대조 pending(hold).",
+  "aggregate": {
+    "events_processed": 15,
+    "trivial_processed": 2,
+    "events_with_candidate": 15,
+    "events_new_topic": 0,
+    "total_candidate_standard_hits": 31,
+    "prereg_agreement": "15/15",
+    "trivial_precision": "naive matched [15, 15] standards each, final flagged 0 (all excluded)",
+    "staleness_confirmed_positive": [
+      "26-41-1"
+    ],
+    "staleness_pending": 30
+  },
+  "event_records": [
+    {
+      "amendment_id": "VAT-DEC-41-34270",
+      "priority": "already_processed",
+      "changed_article": "부가가치세법 시행령 제41조",
+      "change_type": "면세 신설",
+      "pre_registered_expected_prefix": "26-41",
+      "full_pool_matched_standards": [
+        "26-41-1"
+      ],
+      "prereg_agreement": true,
+      "link_kind": "decree_direct_link (precise)",
+      "staleness": {
+        "26-41-1": "NOT_REFLECTED (Phase 2 verbatim: 토지임대부 미반영)"
+      },
+      "confidence": "high (precise decree link)",
+      "status": "candidate (confirmed positive)"
+    },
+    {
+      "amendment_id": "VAT-ACT-26-20614",
+      "priority": "high",
+      "changed_article": "부가가치세법 제26조 제1항",
+      "change_type": "면세 대상 확대",
+      "pre_registered_expected_prefix": "26-0",
+      "full_pool_matched_standards": [
+        "26-0-1",
+        "26-0-2",
+        "26-0-3",
+        "26-0-4",
+        "26-0-5"
+      ],
+      "prereg_agreement": true,
+      "link_kind": "law_direct_link (null-decree only; may miss delegated decree topics)",
+      "staleness": {
+        "26-0-1": "pending_body_verification",
+        "26-0-2": "pending_body_verification",
+        "26-0-3": "pending_body_verification",
+        "26-0-4": "pending_body_verification",
+        "26-0-5": "pending_body_verification"
+      },
+      "confidence": "medium (law link, needs logic narrowing)",
+      "status": "review_candidate"
+    },
+    {
+      "amendment_id": "VAT-DEC-35-34270",
+      "priority": "high",
+      "changed_article": "부가가치세법 시행령 제35조",
+      "change_type": "면세 의료보건용역 범위 재편",
+      "pre_registered_expected_prefix": "26-35",
+      "full_pool_matched_standards": [
+        "26-35-1",
+        "26-35-2",
+        "26-35-3"
+      ],
+      "prereg_agreement": true,
+      "link_kind": "decree_direct_link (precise)",
+      "staleness": {
+        "26-35-1": "pending_body_verification",
+        "26-35-2": "pending_body_verification",
+        "26-35-3": "pending_body_verification"
+      },
+      "confidence": "high (precise decree link)",
+      "status": "review_candidate"
+    },
+    {
+      "amendment_id": "VAT-DEC-36-34270",
+      "priority": "medium",
+      "changed_article": "부가가치세법 시행령 제36조",
+      "change_type": "면세 범위 확대",
+      "pre_registered_expected_prefix": "26-36",
+      "full_pool_matched_standards": [
+        "26-36-1"
+      ],
+      "prereg_agreement": true,
+      "link_kind": "decree_direct_link (precise)",
+      "staleness": {
+        "26-36-1": "pending_body_verification"
+      },
+      "confidence": "high (precise decree link)",
+      "status": "review_candidate"
+    },
+    {
+      "amendment_id": "VAT-DEC-37-34270",
+      "priority": "medium",
+      "changed_article": "부가가치세법 시행령 제37조",
+      "change_type": "면세 제외대상 확대",
+      "pre_registered_expected_prefix": "26-37",
+      "full_pool_matched_standards": [
+        "26-37-1"
+      ],
+      "prereg_agreement": true,
+      "link_kind": "decree_direct_link (precise)",
+      "staleness": {
+        "26-37-1": "pending_body_verification"
+      },
+      "confidence": "high (precise decree link)",
+      "status": "review_candidate"
+    },
+    {
+      "amendment_id": "VAT-DEC-42-34270",
+      "priority": "medium",
+      "changed_article": "부가가치세법 시행령 제42조",
+      "change_type": "면세 요건 조정",
+      "pre_registered_expected_prefix": "26-42",
+      "full_pool_matched_standards": [
+        "26-42-1",
+        "26-42-2"
+      ],
+      "prereg_agreement": true,
+      "link_kind": "decree_direct_link (precise)",
+      "staleness": {
+        "26-42-1": "pending_body_verification",
+        "26-42-2": "pending_body_verification"
+      },
+      "confidence": "high (precise decree link)",
+      "status": "review_candidate"
+    },
+    {
+      "amendment_id": "VAT-DEC-42-34270-APPLY",
+      "priority": "medium",
+      "changed_article": "부가가치세법 시행령 제42조 제2호",
+      "change_type": "면세 대상 신설",
+      "pre_registered_expected_prefix": "26-42",
+      "full_pool_matched_standards": [
+        "26-42-1",
+        "26-42-2"
+      ],
+      "prereg_agreement": true,
+      "link_kind": "decree_direct_link (precise)",
+      "staleness": {
+        "26-42-1": "pending_body_verification",
+        "26-42-2": "pending_body_verification"
+      },
+      "confidence": "high (precise decree link)",
+      "status": "review_candidate"
+    },
+    {
+      "amendment_id": "VAT-DEC-40-33474",
+      "priority": "medium",
+      "changed_article": "부가가치세법 시행령 제40조",
+      "change_type": "면세 축소(삭제)",
+      "pre_registered_expected_prefix": "26-40",
+      "full_pool_matched_standards": [
+        "26-40-1",
+        "26-40-2"
+      ],
+      "prereg_agreement": true,
+      "link_kind": "decree_direct_link (precise)",
+      "staleness": {
+        "26-40-1": "pending_body_verification",
+        "26-40-2": "pending_body_verification"
+      },
+      "confidence": "high (precise decree link)",
+      "status": "review_candidate"
+    },
+    {
+      "amendment_id": "VAT-DEC-35-33735",
+      "priority": "medium",
+      "changed_article": "부가가치세법 시행령 제35조",
+      "change_type": "면세 확대",
+      "pre_registered_expected_prefix": "26-35",
+      "full_pool_matched_standards": [
+        "26-35-1",
+        "26-35-2",
+        "26-35-3"
+      ],
+      "prereg_agreement": true,
+      "link_kind": "decree_direct_link (precise)",
+      "staleness": {
+        "26-35-1": "pending_body_verification",
+        "26-35-2": "pending_body_verification",
+        "26-35-3": "pending_body_verification"
+      },
+      "confidence": "high (precise decree link)",
+      "status": "review_candidate"
+    },
+    {
+      "amendment_id": "VAT-DEC-40-33735",
+      "priority": "medium",
+      "changed_article": "부가가치세법 시행령 제40조 제1항 제13호",
+      "change_type": "면세 대상 신설",
+      "pre_registered_expected_prefix": "26-40",
+      "full_pool_matched_standards": [
+        "26-40-1",
+        "26-40-2"
+      ],
+      "prereg_agreement": true,
+      "link_kind": "decree_direct_link (precise)",
+      "staleness": {
+        "26-40-1": "pending_body_verification",
+        "26-40-2": "pending_body_verification"
+      },
+      "confidence": "high (precise decree link)",
+      "status": "review_candidate"
+    },
+    {
+      "amendment_id": "VAT-DEC-40-35353",
+      "priority": "medium",
+      "changed_article": "부가가치세법 시행령 제40조",
+      "change_type": "면세 대상 신설",
+      "pre_registered_expected_prefix": "26-40",
+      "full_pool_matched_standards": [
+        "26-40-1",
+        "26-40-2"
+      ],
+      "prereg_agreement": true,
+      "link_kind": "decree_direct_link (precise)",
+      "staleness": {
+        "26-40-1": "pending_body_verification",
+        "26-40-2": "pending_body_verification"
+      },
+      "confidence": "high (precise decree link)",
+      "status": "review_candidate"
+    },
+    {
+      "amendment_id": "VAT-DEC-40-36133",
+      "priority": "medium",
+      "changed_article": "부가가치세법 시행령 제40조",
+      "change_type": "면세 대상 신설",
+      "pre_registered_expected_prefix": "26-40",
+      "full_pool_matched_standards": [
+        "26-40-1",
+        "26-40-2"
+      ],
+      "prereg_agreement": true,
+      "link_kind": "decree_direct_link (precise)",
+      "staleness": {
+        "26-40-1": "pending_body_verification",
+        "26-40-2": "pending_body_verification"
+      },
+      "confidence": "high (precise decree link)",
+      "status": "review_candidate"
+    },
+    {
+      "amendment_id": "VAT-DEC-45-34488",
+      "priority": "low",
+      "changed_article": "부가가치세법 시행령 제45조",
+      "change_type": "근거법 개편+경미 확대",
+      "pre_registered_expected_prefix": "26-45",
+      "full_pool_matched_standards": [
+        "26-45-1"
+      ],
+      "prereg_agreement": true,
+      "link_kind": "decree_direct_link (precise)",
+      "staleness": {
+        "26-45-1": "pending_body_verification"
+      },
+      "confidence": "high (precise decree link)",
+      "status": "review_candidate"
+    },
+    {
+      "amendment_id": "VAT-DEC-35-35597",
+      "priority": "low",
+      "changed_article": "부가가치세법 시행령 제35조",
+      "change_type": "근거법 갱신",
+      "pre_registered_expected_prefix": "26-35",
+      "full_pool_matched_standards": [
+        "26-35-1",
+        "26-35-2",
+        "26-35-3"
+      ],
+      "prereg_agreement": true,
+      "link_kind": "decree_direct_link (precise)",
+      "staleness": {
+        "26-35-1": "pending_body_verification",
+        "26-35-2": "pending_body_verification",
+        "26-35-3": "pending_body_verification"
+      },
+      "confidence": "high (precise decree link)",
+      "status": "review_candidate"
+    },
+    {
+      "amendment_id": "VAT-DEC-45-36133",
+      "priority": "low",
+      "changed_article": "부가가치세법 시행령 제45조",
+      "change_type": "근거법 갱신",
+      "pre_registered_expected_prefix": "26-45",
+      "full_pool_matched_standards": [
+        "26-45-1"
+      ],
+      "prereg_agreement": true,
+      "link_kind": "decree_direct_link (precise)",
+      "staleness": {
+        "26-45-1": "pending_body_verification"
+      },
+      "confidence": "high (precise decree link)",
+      "status": "review_candidate"
+    }
+  ],
+  "trivial_records": [
+    {
+      "amendment_id": "VAT-DEC-TYPO-35811",
+      "change_type": "자구정비(문자 정규화)",
+      "naive_article_matched_count": 15,
+      "naive_article_matched_sample": [
+        "26-34-1",
+        "26-35-1",
+        "26-35-2",
+        "26-35-3",
+        "26-36-1",
+        "26-37-1"
+      ],
+      "applied_filter": "Hard Filter: change_type=자구정비(문자/명칭 치환) → 실질 변경 없음 → 전건 EXCLUDE",
+      "final_matched_standards": [],
+      "status": "excluded (trivial, precision defended)"
+    },
+    {
+      "amendment_id": "VAT-DEC-MINLBL-35947",
+      "change_type": "자구정비(부처명칭)",
+      "naive_article_matched_count": 15,
+      "naive_article_matched_sample": [
+        "26-34-1",
+        "26-35-1",
+        "26-35-2",
+        "26-35-3",
+        "26-36-1",
+        "26-37-1"
+      ],
+      "applied_filter": "Hard Filter: change_type=자구정비(문자/명칭 치환) → 실질 변경 없음 → 전건 EXCLUDE",
+      "final_matched_standards": [],
+      "status": "excluded (trivial, precision defended)"
+    }
+  ],
+  "honest_limitations": [
+    "Direct Link는 번호체계 기반이라 decree 변경엔 정밀하나(항·호 미해상), law 변경(혈액=법 제26조1항)은 null-decree 표준을 전부 잡음. 검수 정정: 가시적 결함은 과대매칭(over-capture) — 동물혈액 이벤트가 26-0-3 미가공식료품·26-0-4 수돗물·26-0-5 연탄 등 명백히 무관한 표준까지 매칭됨(호 단위 해상도 부족). 부수적으로 위임 시행령 조문으로의 파급 미포착(under-capture) 가능성도 있음. 두 방향 모두 항·호→위임조문 링크 테이블로 해소.",
+    "positive 확정(집행기준이 실제로 미반영=stale)은 본문 verbatim 대조가 필요하며 현재 26-41-1만 완료. 나머지 candidate는 status=review_candidate이나 stale 확정은 pending.",
+    "prereg_agreement는 topical 기대와 numbering 링크의 일치도로, decree 링크가 결정적이라 구조적으로 높음. 독립 blind 채점은 아님."
+  ]
+}

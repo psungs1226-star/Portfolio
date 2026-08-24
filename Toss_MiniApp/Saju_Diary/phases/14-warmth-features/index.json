@@ -1,0 +1,10 @@
+{
+  "project": "Evry Times (evrytimes)",
+  "phase": "14-warmth-features",
+  "steps": [
+    { "step": 0, "name": "warm-redesign", "status": "completed", "summary": "디자인 'AI형' → 따뜻한 크림·로즈·허니로 전환(사용자 선택). tokens.ts에 warm 그룹(paper/cream/rose/roseBg/honey/honeyBg/terracotta/sage/ink/line/shadow) 추가. 차가운 cute(라벤더/보라) 참조를 운세 화면(FortuneScreen)·홈 운세(FortuneWidget)·일기 화면/위젯(DiaryScreen/DiaryWidget)·D-day(DdayWidget)에서 warm으로 스왑(배경 종이 크림, 포인트 테라코타/허니, 섹션 헤딩 갈색 잉크, 따뜻한 그림자). 기능/마크업 무변경. build/test/lint 통과." },
+    { "step": 1, "name": "diary-title-memo-color", "status": "completed", "summary": "(둘 다) 일기 제목칸+글자크기 & 메모 색 꾸미기. 타입: Diary.title?/titleSize?(DiaryTitleSize), Memo.color?(MemoColor). diary-ops upsertDiary가 title(trim·빈값 생략)·titleSize 저장. memo-ops addMemo color + setMemoColor(none이면 키 제거·불변). DiaryScreen 제목 input + 크기 SegmentedControl(작게16/보통20/크게26px, WYSIWYG), DiaryWidget 홈에 제목 노출. MemoWidget: MEMO_COLOR_STYLE(none/rose/honey/sage/blue/lavender 틴트+accent)·ColorSwatches(생성 스티키 + 행 펼침에서 recolor)·행 틴트/좌측 띠, 메모/D-day 버튼 테라코타. 단위(setMemoColor·addMemo color·upsertDiary title)+스모크. build/test/lint 통과." },
+    { "step": 2, "name": "fortune-trend-graph", "status": "completed", "summary": "주/월/연 운세 흐름 그래프 + 현위치(오늘). fortune-trend.ts(순수·결정론): computeTodayFortune 엔진 재사용으로 오늘 기준 표본 총운(week 7일/month 6점·6일간격/year 12개월), 첫 점=현위치. FortuneTrend.tsx: TDS BarChart(single-bar barIndex0 강조) + SegmentedControl(주/월/연) 토글, warm 톤. FortuneScreen에 배선. 단위(개수·현위치·값1~5·결정론)+스모크('운세 흐름'). build/test/lint 통과." },
+    { "step": 3, "name": "diary-image-save", "status": "completed", "summary": "일기를 이미지(PNG) 한 장으로 저장. diary-image.ts: 네이티브 Canvas2D로 종이 크림 포스터(제목·날짜·기분 별점·날씨/운세 한 줄·본문 wrap·Evry Times 푸터) 렌더 → toDataURL. 토스 웹뷰(window.ReactNativeWebView 존재)면 saveBase64Data로 기기 저장, 아니면 <a download> 폴백, canvas 미지원이면 'unsupported'(외부 전송 0·라이브러리 0·CRITICAL #1·#5). DiaryScreen '🖼️ 이미지로 저장' 버튼 + 결과 안내. 단위(node 폴백)+스모크(버튼·클릭 무throw). build/test(589)/lint 통과." }
+  ]
+}

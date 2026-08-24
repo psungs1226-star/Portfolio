@@ -1,0 +1,20 @@
+{
+  "schema_version": "0.1.0",
+  "profile": "official-corpus-human-review-readiness",
+  "status": "ready_for_human_review",
+  "candidate_sha256": "5f7ee21ead4c1c6f205618ea53cc378ab88ec6d8faee74e72d43f6ac4d78f08e",
+  "audit_sha256": "ec552882a3e54af74060c12cbc42f0c33ebd16232b593b02ca6af5de234f7faa",
+  "source_manifest_hash": "1277614361e19bc9362cba100364ff901ce27ea78245a41a6f3e1bbb34b8aa78",
+  "source_count": 16,
+  "provision_count": 12640,
+  "key_slice_count": 16,
+  "automated_audit": {
+    "passed": 12,
+    "total": 12,
+    "failed": 0
+  },
+  "human_approval": "pending",
+  "reviewer_count": 0,
+  "index_promotion": "blocked",
+  "blocked_reason": "독립 사람 검토자가 원문 대조와 승인 attestation을 완료하지 않았다."
+}

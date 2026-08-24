@@ -1,0 +1,203 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://insaon.example/schemas/evaluation-result.schema.json",
+  "title": "InsaON Evaluation Result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "run_id",
+    "status",
+    "started_at",
+    "completed_at",
+    "system",
+    "data",
+    "execution",
+    "metrics",
+    "fatal_errors",
+    "failure_types",
+    "case_results_path",
+    "limitations",
+    "notes"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "run_id": {"type": "string", "minLength": 1},
+    "status": {"enum": ["completed", "partial", "failed"]},
+    "started_at": {"type": "string", "format": "date-time"},
+    "completed_at": {
+      "oneOf": [
+        {"type": "string", "format": "date-time"},
+        {"type": "null"}
+      ]
+    },
+    "system": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "config_id",
+        "code_revision",
+        "retrieval_config",
+        "model",
+        "embedding",
+        "reranker",
+        "query_transform",
+        "prompt_version",
+        "rule_version",
+        "parser_version",
+        "index_version"
+      ],
+      "properties": {
+        "config_id": {"enum": ["B0", "B1", "H1", "H2", "H3", "H4", "SAMPLE"]},
+        "code_revision": {"type": "string", "minLength": 1},
+        "retrieval_config": {"type": "string", "minLength": 1},
+        "model": {"type": "string", "minLength": 1},
+        "embedding": {"type": "string", "minLength": 1},
+        "reranker": {"type": "string", "minLength": 1},
+        "query_transform": {"type": "string", "minLength": 1},
+        "prompt_version": {"type": "string", "minLength": 1},
+        "rule_version": {"type": "string", "minLength": 1},
+        "parser_version": {"type": "string", "minLength": 1},
+        "index_version": {"type": "string", "minLength": 1}
+      }
+    },
+    "data": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "dataset_id",
+        "dataset_version",
+        "dataset_hash",
+        "case_count",
+        "unique_case_count",
+        "source_snapshot_id",
+        "source_snapshot_hash",
+        "data_as_of"
+      ],
+      "properties": {
+        "dataset_id": {"type": "string", "minLength": 1},
+        "dataset_version": {"type": "string", "minLength": 1},
+        "dataset_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "case_count": {"type": "integer", "minimum": 0},
+        "unique_case_count": {"type": "integer", "minimum": 0},
+        "source_snapshot_id": {"type": "string", "minLength": 1},
+        "source_snapshot_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "data_as_of": {"type": "string", "format": "date"}
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "top_k",
+        "generation_repeats",
+        "seed_policy",
+        "environment_lock_hash"
+      ],
+      "properties": {
+        "top_k": {"type": "integer", "minimum": 1},
+        "generation_repeats": {"type": "integer", "minimum": 0},
+        "seed_policy": {"type": "string", "minLength": 1},
+        "environment_lock_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+      }
+    },
+    "metrics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "metric_id",
+          "slice_id",
+          "aggregation",
+          "numerator",
+          "denominator",
+          "value",
+          "ci95",
+          "undefined_reason"
+        ],
+        "properties": {
+          "metric_id": {"type": "string", "minLength": 1},
+          "slice_id": {"type": "string", "minLength": 1},
+          "aggregation": {
+            "enum": ["ratio", "macro_mean", "percentile", "count"]
+          },
+          "numerator": {
+            "oneOf": [{"type": "number"}, {"type": "null"}]
+          },
+          "denominator": {"type": "integer", "minimum": 0},
+          "value": {
+            "oneOf": [{"type": "number"}, {"type": "null"}]
+          },
+          "ci95": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["low", "high"],
+            "properties": {
+              "low": {
+                "oneOf": [{"type": "number"}, {"type": "null"}]
+              },
+              "high": {
+                "oneOf": [{"type": "number"}, {"type": "null"}]
+              }
+            }
+          },
+          "undefined_reason": {
+            "oneOf": [{"type": "string", "minLength": 1}, {"type": "null"}]
+          }
+        }
+      }
+    },
+    "fatal_errors": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["total", "by_type", "case_ids"],
+      "properties": {
+        "total": {"type": "integer", "minimum": 0},
+        "by_type": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "case_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "failure_types": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["by_type", "case_ids_by_type", "cases_with_any_failure"],
+      "properties": {
+        "by_type": {
+          "type": "object",
+          "additionalProperties": {"type": "integer", "minimum": 0}
+        },
+        "case_ids_by_type": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {"type": "string", "minLength": 1}
+          }
+        },
+        "cases_with_any_failure": {"type": "integer", "minimum": 0}
+      }
+    },
+    "case_results_path": {
+      "oneOf": [{"type": "string", "minLength": 1}, {"type": "null"}]
+    },
+    "limitations": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    },
+    "notes": {
+      "type": "array",
+      "items": {"type": "string", "minLength": 1}
+    }
+  }
+}

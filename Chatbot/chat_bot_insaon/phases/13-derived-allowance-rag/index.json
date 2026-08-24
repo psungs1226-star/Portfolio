@@ -1,0 +1,34 @@
+{
+  "project": "인사ON",
+  "phase": "13-derived-allowance-rag",
+  "steps": [
+    {
+      "step": 0,
+      "name": "derived-allowance-scope-and-conditions",
+      "status": "completed",
+      "completed_at": "2026-08-04T10:30:00+09:00",
+      "summary": "PAY-01을 제한적 deep-review로 분류하고 한국어·ISO·점 표기 기간, 단일 완료 복직의 종료 다음 날 파생, 다중·불일치 안전 재질문과 실제 누락값만 묻는 다중 turn 계약을 재검증했다."
+    },
+    {
+      "step": 1,
+      "name": "temporal-full-vector-retrieval",
+      "status": "completed",
+      "completed_at": "2026-08-04T10:31:00+09:00",
+      "summary": "2026-07-01 보수규정 버전을 공식 source로 추가하고 시점 필터 전 top-k 유실을 제거했다. 심층 lane 353개 조문 전체 vector와 model·원문·문서 ID 기반 private cache를 검증했다."
+    },
+    {
+      "step": 2,
+      "name": "deterministic-rate-and-grounded-generation",
+      "status": "completed",
+      "completed_at": "2026-08-04T10:33:00+09:00",
+      "summary": "날짜·기간·지급률을 결정적 코드로 계산하고 공식 교차 근거 4종을 검증한 뒤 Qwen에 설명만 맡겼다. 잘못된 15일 설명을 차단·개선해 실제 local smoke에서 6개월·100%를 확인했다."
+    },
+    {
+      "step": 3,
+      "name": "product-eval-and-handoff",
+      "status": "completed",
+      "completed_at": "2026-08-04T10:36:00+09:00",
+      "summary": "대시보드 첫 예시와 합성 조건 원클릭 입력, README 확인 절차, 제출 HTML, PRD·Architecture·Data Spec·평가·추적·ADR과 공개 artifact를 동기화했다. 186개 회귀, lint, mypy, Harness, 평가 계약과 공개 경계를 통과했다."
+    }
+  ]
+}

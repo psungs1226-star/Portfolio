@@ -1,0 +1,34 @@
+{
+  "project": "인사ON",
+  "phase": "11-design-ab-evaluation",
+  "steps": [
+    {
+      "step": 0,
+      "name": "three-isolated-directions",
+      "status": "completed",
+      "completed_at": "2026-08-03T12:28:00+09:00",
+      "summary": "A Evidence Ledger, B Case Workbench, C Regulation Map을 IA·구도·타입·팔레트·interaction이 다른 독립 HTML과 variant contract로 만들었다."
+    },
+    {
+      "step": 1,
+      "name": "rendered-self-review",
+      "status": "completed",
+      "completed_at": "2026-08-03T12:45:00+09:00",
+      "summary": "세 시안을 1440×1100·390×844 여섯 화면으로 렌더해 모두 원본 검수했다. headless mobile 폭 잘림을 수정하고 재렌더했으며 AI 임시 검토 기록을 남겼다."
+    },
+    {
+      "step": 2,
+      "name": "controlled-ab-contract",
+      "status": "completed",
+      "completed_at": "2026-08-03T12:54:00+09:00",
+      "summary": "현행 production과 사람 선택 후보가 동일 CASE-A/B/C를 쓰는 A/B 계약을 만들었다. 참여자 0명이라 완료율·시간·선호는 모두 미측정으로 유지했다."
+    },
+    {
+      "step": 3,
+      "name": "selected-direction-rollout",
+      "status": "completed",
+      "completed_at": "2026-08-03T14:10:00+09:00",
+      "summary": "포트폴리오 소유자가 선택한 B Case Workbench를 챗봇·launcher·planning report·case study에 적용했다. LINE Seed 자체 호스팅, 390~1680px 렌더 검수, product-ui composition sweep, 171개 전체 회귀와 공개 경계를 통과했으며 사람 사용성은 미측정으로 유지했다."
+    }
+  ]
+}

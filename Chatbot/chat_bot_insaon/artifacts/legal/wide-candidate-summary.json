@@ -1,0 +1,245 @@
+{
+  "schema_version": "0.1.0",
+  "profile": "legal-corpus-candidate",
+  "candidate_status": "pending_human_approval",
+  "source_manifest_hash": "1277614361e19bc9362cba100364ff901ce27ea78245a41a6f3e1bbb34b8aa78",
+  "parser_version": "official-html-v0.2.0",
+  "source_count": 16,
+  "sources": [
+    {
+      "snapshot_id": "SNAP-LAW-LOCAL-OFFICIAL-b610461b6e51",
+      "source_id": "LAW-LOCAL-OFFICIAL",
+      "official_source_id": "lsId:001653",
+      "source_url": "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=286499&efYd=20260602&ancYnChk=0",
+      "content_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266",
+      "retrieved_at": "2026-08-03T03:06:38.230194+00:00",
+      "effective_from": "2026-06-02",
+      "effective_to": null
+    },
+    {
+      "snapshot_id": "SNAP-DECREE-LOCAL-APPOINTMENT-OFFICIAL-7b25189d3995",
+      "source_id": "DECREE-LOCAL-APPOINTMENT-OFFICIAL",
+      "official_source_id": "lsId:005050",
+      "source_url": "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=287515&efYd=20260630&ancYnChk=0",
+      "content_hash": "7b25189d399566ff89f2e99f37132f075ec43be00f105e6451ad3210ad652217",
+      "retrieved_at": "2026-08-03T03:06:39.310485+00:00",
+      "effective_from": "2026-06-30",
+      "effective_to": null
+    },
+    {
+      "snapshot_id": "SNAP-RULE-LOCAL-HR-GUIDE-OFFICIAL-ac6f5373a804",
+      "source_id": "RULE-LOCAL-HR-GUIDE-OFFICIAL",
+      "official_source_id": "admRulSeq:2100000277056",
+      "source_url": "https://www.law.go.kr/LSW/admRulInfoR.do?admRulSeq=2100000277056",
+      "content_hash": "ac6f5373a80463c8cb0ee7cb4fb1f5c5fcebd3ba3f431e6f642b80b30162a9ee",
+      "retrieved_at": "2026-08-03T03:06:39.644043+00:00",
+      "effective_from": "2026-04-07",
+      "effective_to": null
+    },
+    {
+      "snapshot_id": "SNAP-LAW-LOCAL-OFFICIAL-20221227-be99a77dfede",
+      "source_id": "LAW-LOCAL-OFFICIAL-20221227",
+      "official_source_id": "lsiSeq:246623",
+      "source_url": "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=246623&efYd=20221227&ancYnChk=0",
+      "content_hash": "be99a77dfedeed910b4d29268ec554c2e7a7f9aeda2e36c098a5ac1287afea72",
+      "retrieved_at": "2026-08-03T07:11:23.403536+00:00",
+      "effective_from": "2022-12-27",
+      "effective_to": "2024-09-20"
+    },
+    {
+      "snapshot_id": "SNAP-DECREE-LOCAL-APPOINTMENT-OFFICIAL-20230613-edaf5736b61f",
+      "source_id": "DECREE-LOCAL-APPOINTMENT-OFFICIAL-20230613",
+      "official_source_id": "lsiSeq:251545",
+      "source_url": "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=251545&efYd=20230613&ancYnChk=0",
+      "content_hash": "edaf5736b61fbf51197f768513322f447226a9e5347b60ce120b28d6e271f5de",
+      "retrieved_at": "2026-08-03T07:11:24.358316+00:00",
+      "effective_from": "2023-06-13",
+      "effective_to": "2024-06-27"
+    },
+    {
+      "snapshot_id": "SNAP-RULE-LOCAL-HR-GUIDE-OFFICIAL-20231228-45a5c90fa143",
+      "source_id": "RULE-LOCAL-HR-GUIDE-OFFICIAL-20231228",
+      "official_source_id": "admRulSeq:2100000234008",
+      "source_url": "https://www.law.go.kr/LSW/admRulInfoR.do?admRulSeq=2100000234008",
+      "content_hash": "45a5c90fa143bce0a47993953015da6bae87c2c680585d69c0910ff20657ba72",
+      "retrieved_at": "2026-08-03T07:11:24.680865+00:00",
+      "effective_from": "2023-12-28",
+      "effective_to": "2024-06-27"
+    },
+    {
+      "snapshot_id": "SNAP-RULE-LOCAL-PERSONNEL-RECORDS-OFFICIAL-c8a7c8a6efb5",
+      "source_id": "RULE-LOCAL-PERSONNEL-RECORDS-OFFICIAL",
+      "official_source_id": "lsiSeq:239195",
+      "source_url": "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=239195&efYd=20220113&ancYnChk=0",
+      "content_hash": "c8a7c8a6efb5755e2069f6f8a786aedbbb662c9893cf33a71b6b18009905e376",
+      "retrieved_at": "2026-08-03T03:06:39.927716+00:00",
+      "effective_from": "2022-01-13",
+      "effective_to": null
+    },
+    {
+      "snapshot_id": "SNAP-RULE-LOCAL-PERFORMANCE-OFFICIAL-44d84ab08f4f",
+      "source_id": "RULE-LOCAL-PERFORMANCE-OFFICIAL",
+      "official_source_id": "lsiSeq:287747",
+      "source_url": "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=287747&efYd=20260630&ancYnChk=0",
+      "content_hash": "44d84ab08f4fd57cc3164007e6c48d7ac4877d487c40d9bdcf63842a9d271b59",
+      "retrieved_at": "2026-08-03T03:06:40.267605+00:00",
+      "effective_from": "2026-06-30",
+      "effective_to": null
+    },
+    {
+      "snapshot_id": "SNAP-DECREE-LOCAL-SERVICE-OFFICIAL-7911eaf86786",
+      "source_id": "DECREE-LOCAL-SERVICE-OFFICIAL",
+      "official_source_id": "lsiSeq:287219",
+      "source_url": "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=287219&efYd=20260623&ancYnChk=0",
+      "content_hash": "7911eaf86786e22c62fc3630b9bba7875e9a0412896638f6696d3c78e2bb8761",
+      "retrieved_at": "2026-08-03T03:06:40.543286+00:00",
+      "effective_from": "2026-06-23",
+      "effective_to": null
+    },
+    {
+      "snapshot_id": "SNAP-DECREE-LOCAL-PAY-OFFICIAL-badc782626e9",
+      "source_id": "DECREE-LOCAL-PAY-OFFICIAL",
+      "official_source_id": "lsiSeq:288435",
+      "source_url": "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=288435&efYd=20260801&ancYnChk=0",
+      "content_hash": "badc782626e9384a89457dbe1c22e6d11cf8589232ae62d9f269d3317d003b11",
+      "retrieved_at": "2026-08-03T03:06:40.954624+00:00",
+      "effective_from": "2026-08-01",
+      "effective_to": null
+    },
+    {
+      "snapshot_id": "SNAP-DECREE-LOCAL-PAY-20260701-OFFICIAL-201d81a81456",
+      "source_id": "DECREE-LOCAL-PAY-20260701-OFFICIAL",
+      "official_source_id": "lsiSeq:287049",
+      "source_url": "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=287049&efYd=20260701&ancYnChk=0",
+      "content_hash": "201d81a81456333b81c3e28d3ced3f57c9788f93fdc322be78a08844477f3444",
+      "retrieved_at": "2026-08-04T00:52:20.394536+00:00",
+      "effective_from": "2026-07-01",
+      "effective_to": "2026-08-01"
+    },
+    {
+      "snapshot_id": "SNAP-DECREE-LOCAL-ALLOWANCE-OFFICIAL-a4e849fd80f4",
+      "source_id": "DECREE-LOCAL-ALLOWANCE-OFFICIAL",
+      "official_source_id": "lsiSeq:287339",
+      "source_url": "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=287339&efYd=20260701&ancYnChk=0",
+      "content_hash": "a4e849fd80f47a5542e8ea01a97b8793ad060bbd4faf9f2c483bf8c67f06a1c8",
+      "retrieved_at": "2026-08-03T03:06:41.307528+00:00",
+      "effective_from": "2026-07-01",
+      "effective_to": null
+    },
+    {
+      "snapshot_id": "SNAP-DECREE-LOCAL-DISCIPLINE-OFFICIAL-53df80b5eb53",
+      "source_id": "DECREE-LOCAL-DISCIPLINE-OFFICIAL",
+      "official_source_id": "lsiSeq:272557",
+      "source_url": "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=272557&efYd=20250701&ancYnChk=0",
+      "content_hash": "53df80b5eb533b7bdfa0c45a96256ba64b51e3c5ee5d327ec46cbed5669a2fb0",
+      "retrieved_at": "2026-08-03T03:06:41.615605+00:00",
+      "effective_from": "2025-07-01",
+      "effective_to": null
+    },
+    {
+      "snapshot_id": "SNAP-LAW-LOCAL-TRAINING-OFFICIAL-1bf15fffcd77",
+      "source_id": "LAW-LOCAL-TRAINING-OFFICIAL",
+      "official_source_id": "lsiSeq:236001",
+      "source_url": "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=236001&efYd=20220113&ancYnChk=0",
+      "content_hash": "1bf15fffcd77593e1c111cd5ebb9052bed6c19253af570ad599aa8fb8bbf2002",
+      "retrieved_at": "2026-08-03T03:06:41.860245+00:00",
+      "effective_from": "2022-01-13",
+      "effective_to": null
+    },
+    {
+      "snapshot_id": "SNAP-DECREE-LOCAL-TRAINING-OFFICIAL-7abf1a80714b",
+      "source_id": "DECREE-LOCAL-TRAINING-OFFICIAL",
+      "official_source_id": "lsiSeq:237291",
+      "source_url": "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=237291&efYd=20220113&ancYnChk=0",
+      "content_hash": "7abf1a80714b510efdb9e9d1ea9b7c9771b6a63d06ddf11756fff386395803dd",
+      "retrieved_at": "2026-08-03T03:06:42.109561+00:00",
+      "effective_from": "2022-01-13",
+      "effective_to": null
+    },
+    {
+      "snapshot_id": "SNAP-DECREE-LOCAL-RETIREMENT-ALLOWANCE-OFFICIAL-f4bc56ad1d5e",
+      "source_id": "DECREE-LOCAL-RETIREMENT-ALLOWANCE-OFFICIAL",
+      "official_source_id": "lsiSeq:257543",
+      "source_url": "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=257543&efYd=20240102&ancYnChk=0",
+      "content_hash": "f4bc56ad1d5ea2e114bd1c8428ca0e048fc64adc13ab7ead24581fa2afe693a1",
+      "retrieved_at": "2026-08-03T03:06:42.328077+00:00",
+      "effective_from": "2024-01-02",
+      "effective_to": null
+    }
+  ],
+  "provision_count": 12640,
+  "supplementary_count": 5777,
+  "quality": {
+    "fatal_count": 0,
+    "warning_count": 0,
+    "informational_count": 72,
+    "issue_counts": [
+      {
+        "source_id": "DECREE-LOCAL-ALLOWANCE-OFFICIAL",
+        "code": "DELETED_ARTICLE_TOMBSTONE",
+        "count": 10
+      },
+      {
+        "source_id": "DECREE-LOCAL-APPOINTMENT-OFFICIAL",
+        "code": "DELETED_ARTICLE_TOMBSTONE",
+        "count": 11
+      },
+      {
+        "source_id": "DECREE-LOCAL-APPOINTMENT-OFFICIAL-20230613",
+        "code": "DELETED_ARTICLE_TOMBSTONE",
+        "count": 12
+      },
+      {
+        "source_id": "DECREE-LOCAL-DISCIPLINE-OFFICIAL",
+        "code": "DELETED_ARTICLE_TOMBSTONE",
+        "count": 1
+      },
+      {
+        "source_id": "DECREE-LOCAL-PAY-20260701-OFFICIAL",
+        "code": "DELETED_ARTICLE_TOMBSTONE",
+        "count": 3
+      },
+      {
+        "source_id": "DECREE-LOCAL-PAY-OFFICIAL",
+        "code": "DELETED_ARTICLE_TOMBSTONE",
+        "count": 3
+      },
+      {
+        "source_id": "LAW-LOCAL-OFFICIAL",
+        "code": "DELETED_ARTICLE_TOMBSTONE",
+        "count": 6
+      },
+      {
+        "source_id": "LAW-LOCAL-OFFICIAL-20221227",
+        "code": "DELETED_ARTICLE_TOMBSTONE",
+        "count": 6
+      },
+      {
+        "source_id": "RULE-LOCAL-HR-GUIDE-OFFICIAL",
+        "code": "DELETED_ARTICLE_TOMBSTONE",
+        "count": 7
+      },
+      {
+        "source_id": "RULE-LOCAL-PERFORMANCE-OFFICIAL",
+        "code": "DELETED_ARTICLE_TOMBSTONE",
+        "count": 11
+      },
+      {
+        "source_id": "RULE-LOCAL-PERSONNEL-RECORDS-OFFICIAL",
+        "code": "DELETED_ARTICLE_TOMBSTONE",
+        "count": 2
+      }
+    ]
+  },
+  "approval": {
+    "status": "pending",
+    "reviewer_count": 0
+  },
+  "release_status": "hold",
+  "blocked_reason": "자동 구조 품질감사는 통과했지만 본문·단서·부칙을 원문 대조하고 승인 hash를 남길 독립 사람 승인자가 없다.",
+  "limitations": [
+    "Parser output is a candidate, not an approved legal index.",
+    "A human reviewer must compare source hashes, legal hierarchy, provisos and supplements.",
+    "The public manual remains metadata-only until its PDF redistribution and parsing are reviewed."
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "schema_version": "0.1.0",
+  "run_id": "SAMPLE-NOT-A-MEASUREMENT",
+  "status": "partial",
+  "started_at": "2026-07-29T00:00:00+09:00",
+  "completed_at": null,
+  "system": {
+    "config_id": "SAMPLE",
+    "code_revision": "UNAVAILABLE",
+    "retrieval_config": "UNIMPLEMENTED",
+    "model": "none",
+    "embedding": "none",
+    "reranker": "none",
+    "query_transform": "none",
+    "prompt_version": "UNIMPLEMENTED",
+    "rule_version": "UNIMPLEMENTED",
+    "parser_version": "UNIMPLEMENTED",
+    "index_version": "UNIMPLEMENTED"
+  },
+  "data": {
+    "dataset_id": "insaon-contract-sample",
+    "dataset_version": "0.1.0-sample",
+    "dataset_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "case_count": 0,
+    "unique_case_count": 0,
+    "source_snapshot_id": "UNAVAILABLE",
+    "source_snapshot_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+    "data_as_of": "2026-07-29"
+  },
+  "execution": {
+    "top_k": 5,
+    "generation_repeats": 0,
+    "seed_policy": "contract sample only",
+    "environment_lock_hash": "0000000000000000000000000000000000000000000000000000000000000000"
+  },
+  "metrics": [
+    {
+      "metric_id": "retrieval.set_recall_at_5",
+      "slice_id": "all",
+      "aggregation": "macro_mean",
+      "numerator": null,
+      "denominator": 0,
+      "value": null,
+      "ci95": {
+        "low": null,
+        "high": null
+      },
+      "undefined_reason": "not_measured"
+    }
+  ],
+  "fatal_errors": {
+    "total": 0,
+    "by_type": {},
+    "case_ids": []
+  },
+  "failure_types": {
+    "by_type": {},
+    "case_ids_by_type": {},
+    "cases_with_any_failure": 0
+  },
+  "case_results_path": null,
+  "limitations": [
+    "Schema validation sample only; no system was evaluated."
+  ],
+  "notes": [
+    "Do not publish this file as a measured result."
+  ]
+}

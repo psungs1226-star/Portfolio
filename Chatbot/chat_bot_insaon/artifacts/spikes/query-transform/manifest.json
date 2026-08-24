@@ -1,0 +1,94 @@
+{
+  "schema_version": "0.1.0",
+  "purpose": "vocabulary gap probe for query transformation; not holdout performance and not a substitute for the locked regression set",
+  "dataset_id": "insaon-synthetic-vocabulary-gap-probe-v0.1",
+  "top_k": 5,
+  "query_count": 15,
+  "inputs": {
+    "probe_path": "vocabulary-gap-probe.json",
+    "probe_sha256": "6960bc1325d5bb7ba8376374e04f24b37ffeccc1cb816a883da409beff3c3d33",
+    "reference_date": "2024-01-01",
+    "subject": "local_general_service",
+    "query_transform": "synonym-expansion-v1:insaon-practitioner-to-statutory-ko",
+    "transformer_fired_on": {
+      "numerator": 11,
+      "denominator": 15
+    }
+  },
+  "candidates": {
+    "H3": {
+      "hit_rate_at_k": {
+        "numerator": 6,
+        "denominator": 15,
+        "value": 0.4
+      },
+      "mrr_at_k": {
+        "numerator": 4.7,
+        "denominator": 15,
+        "value": 0.3133
+      },
+      "hit_rate_by_surface_style": {
+        "practitioner": {
+          "numerator": 2,
+          "denominator": 11,
+          "value": 0.1818
+        },
+        "statutory_control": {
+          "numerator": 4,
+          "denominator": 4,
+          "value": 1.0
+        }
+      },
+      "missed_query_ids": [
+        "GAP-Q-02",
+        "GAP-Q-03",
+        "GAP-Q-04",
+        "GAP-Q-05",
+        "GAP-Q-06",
+        "GAP-Q-07",
+        "GAP-Q-08",
+        "GAP-Q-09",
+        "GAP-Q-10"
+      ]
+    },
+    "H4": {
+      "hit_rate_at_k": {
+        "numerator": 12,
+        "denominator": 15,
+        "value": 0.8
+      },
+      "mrr_at_k": {
+        "numerator": 8.7,
+        "denominator": 15,
+        "value": 0.58
+      },
+      "hit_rate_by_surface_style": {
+        "practitioner": {
+          "numerator": 8,
+          "denominator": 11,
+          "value": 0.7273
+        },
+        "statutory_control": {
+          "numerator": 4,
+          "denominator": 4,
+          "value": 1.0
+        }
+      },
+      "missed_query_ids": [
+        "GAP-Q-02",
+        "GAP-Q-10",
+        "GAP-Q-11"
+      ]
+    }
+  },
+  "comparison_rule": "H4 differs from H3 only by synonym query expansion; every other stage is identical, so any difference is attributable to that stage alone",
+  "environment": {
+    "python": "3.14.6",
+    "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O"
+  },
+  "limitations": [
+    "Synthetic development corpus and hand-written probe queries; no legal correctness claim and no real practitioner phrasing sample.",
+    "Fifteen queries is too few for a confidence interval to be informative.",
+    "The dictionary was written before the probe was measured, but both were written by the same author, so this is a design probe rather than a blind evaluation."
+  ]
+}

@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>메디테라피 패키징 전 테스트 리포트</title>
+  <style>
+    :root {
+      --bg: #f7f8fa;
+      --panel: #fff;
+      --ink: #171a1f;
+      --muted: #5d6875;
+      --line: #d9dee5;
+      --good: #0f766e;
+      --good-soft: #dff5f1;
+      --warn: #9a5b00;
+      --warn-soft: #fff1d6;
+      --bad: #b42318;
+      --bad-soft: #fde7e4;
+      --neutral-soft: #edf0f3;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 14px/1.55 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    main { max-width: 1180px; margin: 0 auto; padding: 28px 20px 48px; }
+    h1 { margin: 0 0 8px; font-size: 28px; line-height: 1.2; letter-spacing: 0; }
+    h2 { margin: 26px 0 12px; font-size: 18px; letter-spacing: 0; }
+    p { margin: 0; color: var(--muted); }
+    .summary { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; margin: 18px 0; }
+    .metric {
+      border: 1px solid var(--line);
+      background: var(--panel);
+      border-radius: 8px;
+      padding: 14px;
+      min-height: 82px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .metric span { color: var(--muted); font-size: 12px; }
+    .metric strong { font-size: 24px; line-height: 1; }
+    .panel { border: 1px solid var(--line); background: var(--panel); border-radius: 8px; padding: 16px; margin: 12px 0; }
+    .callout { border-left: 4px solid var(--warn); background: var(--warn-soft); color: #4d3300; padding: 12px 14px; border-radius: 6px; }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+    th, td { border-bottom: 1px solid var(--line); padding: 10px 8px; text-align: left; vertical-align: top; word-break: break-word; }
+    th { color: var(--muted); font-size: 12px; background: #fbfcfd; }
+    tr:last-child td { border-bottom: 0; }
+    pre { margin: 0; white-space: pre-wrap; font: 12px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; color: #29313a; }
+    .badge { display: inline-block; padding: 3px 8px; border-radius: 999px; font-size: 12px; font-weight: 650; }
+    .pass { color: var(--good); background: var(--good-soft); }
+    .warn { color: var(--warn); background: var(--warn-soft); }
+    .fail { color: var(--bad); background: var(--bad-soft); }
+    .table-wrap { overflow-x: auto; }
+    @media (max-width: 760px) {
+      main { padding: 18px 12px 32px; }
+      .summary { grid-template-columns: 1fr 1fr; }
+      h1 { font-size: 23px; }
+      table { table-layout: auto; }
+      th, td { min-width: 150px; }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>메디테라피 패키징 전 테스트 리포트</h1>
+      <p>Phase 0-8 산출물과 제출 패키징 준비 상태를 분리해 검증한 결과입니다. 생성 시각: 2026-07-09T02:51:47.724404Z</p>
+    </header>
+
+    <section class="summary">
+      <div class="metric"><span>전체 상태</span><strong>pass</strong></div>
+      <div class="metric"><span>통과</span><strong>10</strong></div>
+      <div class="metric"><span>주의</span><strong>0</strong></div>
+      <div class="metric"><span>실패</span><strong>0</strong></div>
+    </section>
+
+    <section class="panel">
+      <h2>해석</h2>
+      <div class="callout">패키징 전 핵심 테스트가 모두 통과했습니다.</div>
+    </section>
+
+    <section class="panel">
+      <h2>테스트 결과</h2>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>테스트</th><th>상태</th><th>설명</th><th>근거</th></tr>
+          </thead>
+          <tbody>
+            
+        <tr>
+          <td>Python 실행 스크립트 컴파일</td>
+          <td><span class="badge pass">통과</span></td>
+          <td>8개 run_*.py 스크립트 컴파일 검사</td>
+          <td><pre></pre></td>
+        </tr>
+        
+
+        <tr>
+          <td>JSON 문법 검사</td>
+          <td><span class="badge pass">통과</span></td>
+          <td>51개 JSON 파일 검사</td>
+          <td><pre></pre></td>
+        </tr>
+        
+
+        <tr>
+          <td>JSONL 문법 및 행 수 검사</td>
+          <td><span class="badge pass">통과</span></td>
+          <td>7개 JSONL 파일 검사</td>
+          <td><pre>{&quot;submission/logs/matching_trace.jsonl&quot;: 270, &quot;submission/logs/new_product_matching_trace.jsonl&quot;: 30, &quot;submission/src/data/content_observations.jsonl&quot;: 300, &quot;submission/src/data/influencer_candidates.jsonl&quot;: 30, &quot;submission/src/data/influencer_profiles.jsonl&quot;: 30, &quot;submission/src/logs/matching_trace.jsonl&quot;: 270, &quot;submission/src/logs/new_product_matching_trace.jsonl&quot;: 30}</pre></td>
+        </tr>
+        
+
+        <tr>
+          <td>Phase validation 최신본 검사</td>
+          <td><span class="badge pass">통과</span></td>
+          <td>Phase 0-8 최신 validation 로그 기준</td>
+          <td><pre>{
+  &quot;Phase 0&quot;: {
+    &quot;phase_id&quot;: &quot;phase_0_problem_evidence_lock&quot;,
+    &quot;reviewer_status&quot;: null,
+    &quot;issue_counts&quot;: {},
+    &quot;can_request_user_approval&quot;: true
+  },
+  &quot;Phase 1&quot;: {
+    &quot;phase_id&quot;: &quot;phase_1_product_ontology&quot;,
+    &quot;reviewer_status&quot;: null,
+    &quot;issue_counts&quot;: {},
+    &quot;can_request_user_approval&quot;: true
+  },
+  &quot;Phase 2&quot;: {
+    &quot;phase_id&quot;: &quot;phase_2_influencer_collection&quot;,
+    &quot;reviewer_status&quot;: null,
+    &quot;issue_counts&quot;: {},
+    &quot;can_request_user_approval&quot;: true
+  },
+  &quot;Phase 3&quot;: {
+    &quot;phase_id&quot;: &quot;phase_3_influencer_parameter_normalization&quot;,
+    &quot;reviewer_status&quot;: null,
+    &quot;issue_counts&quot;: {},
+    &quot;can_request_user_approval&quot;: true
+  },
+  &quot;Phase 4&quot;: {
+    &quot;phase_id&quot;: &quot;phase_4_product_influencer_matching&quot;,
+    &quot;reviewer_status&quot;: &quot;pass&quot;,
+    &quot;issue_counts&quot;: {
+      &quot;blocker&quot;: 0,
+      &quot;must_fix&quot;: 0,
+      &quot;should_fix&quot;: 0
+    },
+    &quot;can_request_user_approval&quot;: true
+  },
+  &quot;Phase 5&quot;: {
+    &quot;phase_id&quot;: &quot;phase_5_seeding_execution_briefs&quot;,
+    &quot;reviewer_status&quot;: &quot;pass&quot;,
+    &quot;issue_counts&quot;: {
+      &quot;blocker&quot;: 0,
+      &quot;must_fix&quot;: 0,
+      &quot;should_fix&quot;: 0
+    },
+    &quot;can_request_user_approval&quot;: true
+  },
+  &quot;Phase 6&quot;: {
+    &quot;phase_id&quot;: &quot;phase_6_result_collection_and_interpretation&quot;,
+    &quot;reviewer_status&quot;: &quot;pass&quot;,
+    &quot;issue_counts&quot;: {
+      &quot;blocker&quot;: 0,
+      &quot;must_fix&quot;: 0,
+      &quot;should_fix&quot;: 0
+    },
+    &quot;can_request_user_approval&quot;: true
+  },
+  &quot;Phase 6A&quot;: {
+    &quot;phase_id&quot;: &quot;phase_6a_new_product_db_ranking&quot;,
+    &quot;reviewer_status&quot;: &quot;pass&quot;,
+    &quot;issue_counts&quot;: {
+      &quot;blocker&quot;: 0,
+      &quot;must_fix&quot;: 0,
+      &quot;should_fix&quot;: 0
+    },
+    &quot;can_request_user_approval&quot;: true
+  },
+  &quot;Phase 6B&quot;: {
+    &quot;phase_id&quot;: &quot;phase_6b_new_product_research_gap&quot;,
+    &quot;reviewer_status&quot;: &quot;pass&quot;,
+    &quot;issue_counts&quot;: {
+      &quot;blocker&quot;: 0,
+      &quot;must_fix&quot;: 0,
+      &quot;should_fix&quot;: 0
+    },
+    &quot;can_request_user_approval&quot;: true
+  },
+  &quot;Phase 7&quot;: {
+    &quot;phase_id&quot;: &quot;phase_7_5_4_mini_reviewer&quot;,
+    &quot;reviewer_status&quot;: &quot;pass&quot;,
+    &quot;issue_counts&quot;: {
+      &quot;blocker&quot;: 0,
+      &quot;must_fix&quot;: 0,
+      &quot;should_fix&quot;: 0
+    },
+    &quot;can_request_user_approval&quot;: true
+  },
+  &quot;Phase 8&quot;: {
+    &quot;phase_id&quot;: &quot;phase_8_iteration_learning&quot;,
+    &quot;reviewer_status&quot;: &quot;pass&quot;,
+    &quot;issue_counts&quot;: {
+      &quot;blocker&quot;: 0,
+      &quot;must_fix&quot;: 0,
+      &quot;should_fix&quot;: 0
+    },
+    &quot;can_request_user_approval&quot;: true
+  }
+}</pre></td>
+        </tr>
+        
+
+        <tr>
+          <td>핵심 데이터 계약 검사</td>
+          <td><span class="badge pass">통과</span></td>
+          <td>MVP 규모, 추천 수, trace 수, reviewer, 반복 학습 계약</td>
+          <td><pre>{
+  &quot;checks&quot;: {
+    &quot;mvp_product_count&quot;: 9,
+    &quot;profile_count&quot;: 30,
+    &quot;content_observation_count&quot;: 300,
+    &quot;phase4_seed_count&quot;: 6,
+    &quot;phase4_control_count&quot;: 3,
+    &quot;phase4_trace_count&quot;: 270,
+    &quot;phase5_seed_brief_count&quot;: 6,
+    &quot;phase6_seed_result_count&quot;: 6,
+    &quot;phase6_sales_claim_count&quot;: 0,
+    &quot;phase6a_selected_count&quot;: 6,
+    &quot;phase6a_trace_count&quot;: 30,
+    &quot;phase6b_decision&quot;: &quot;existing_db_sufficient&quot;,
+    &quot;phase7_status&quot;: &quot;pass&quot;,
+    &quot;phase8_actual_rule_updates&quot;: 0,
+    &quot;phase8_hypothesis_only_updates&quot;: 6
+  },
+  &quot;failures&quot;: []
+}</pre></td>
+        </tr>
+        
+
+        <tr>
+          <td>보고서 산출물 계약 검사</td>
+          <td><span class="badge pass">통과</span></td>
+          <td>신제품 HTML/Markdown 보고서와 보고자용 선정 사유 섹션 필수 포함</td>
+          <td><pre>{
+  &quot;evidence&quot;: {
+    &quot;new_product_markdown_report&quot;: {
+      &quot;path&quot;: &quot;submission/logs/new_product_ranking_report.md&quot;,
+      &quot;size_bytes&quot;: 19444,
+      &quot;required_patterns_present&quot;: true
+    },
+    &quot;new_product_html_report&quot;: {
+      &quot;path&quot;: &quot;submission/logs/new_product_ranking_report.html&quot;,
+      &quot;size_bytes&quot;: 31320,
+      &quot;required_patterns_present&quot;: true
+    },
+    &quot;latest_new_product_test_result&quot;: {
+      &quot;path&quot;: &quot;submission/logs/latest_new_product_test_result.md&quot;,
+      &quot;size_bytes&quot;: 6602,
+      &quot;required_patterns_present&quot;: true
+    }
+  },
+  &quot;failures&quot;: []
+}</pre></td>
+        </tr>
+        
+
+        <tr>
+          <td>리스크 가드레일 검사</td>
+          <td><span class="badge pass">통과</span></td>
+          <td>hard exclusion, needs_more_data, 내부 매출 데이터 분리</td>
+          <td><pre></pre></td>
+        </tr>
+        
+
+        <tr>
+          <td>비밀정보 노출 검사</td>
+          <td><span class="badge pass">통과</span></td>
+          <td>API key/token/password 패턴 검색</td>
+          <td><pre></pre></td>
+        </tr>
+        
+
+        <tr>
+          <td>매출/ROAS/주문 단정 표현 검사</td>
+          <td><span class="badge pass">통과</span></td>
+          <td>부정/금지 문맥을 제외하고 단정 표현 검색</td>
+          <td><pre></pre></td>
+        </tr>
+        
+
+        <tr>
+          <td>제출 패키징 준비도 검사</td>
+          <td><span class="badge pass">통과</span></td>
+          <td>plugin.json, SKILL.md, README, 불필요 파일 확인</td>
+          <td><pre>{
+  &quot;failures&quot;: [],
+  &quot;warnings&quot;: [],
+  &quot;skill_files&quot;: [
+    &quot;submission/src/skills/meditherapy-influencer-seeding/SKILL.md&quot;
+  ]
+}</pre></td>
+        </tr>
+        
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

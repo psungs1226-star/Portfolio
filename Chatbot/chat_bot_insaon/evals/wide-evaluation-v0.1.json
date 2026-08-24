@@ -1,0 +1,138 @@
+{
+  "schema_version": "0.1.0",
+  "protocol_id": "wide-evaluation-v0.1",
+  "status": "structural_and_routing_contract_complete_legal_metrics_unmeasured",
+  "candidate": {
+    "approval_status": "pending",
+    "reviewer_count": 0,
+    "source_manifest_sha256": "1277614361e19bc9362cba100364ff901ce27ea78245a41a6f3e1bbb34b8aa78",
+    "candidate_sha256": "5f7ee21ead4c1c6f205618ea53cc378ab88ec6d8faee74e72d43f6ac4d78f08e",
+    "parser_version": "official-html-v0.2.0",
+    "registry_source_count": 17,
+    "parsed_source_count": 16,
+    "metadata_only_source_count": 1,
+    "provision_count": 12640,
+    "supplementary_count": 5777
+  },
+  "topics": [
+    "appointment",
+    "personnel_records",
+    "performance_and_promotion",
+    "service_and_leave",
+    "pay_and_allowance",
+    "discipline_and_appeal",
+    "training",
+    "retirement"
+  ],
+  "group_splits": {
+    "development": [
+      "WIDE-DEV-APPOINTMENT-01",
+      "WIDE-DEV-RECORDS-01",
+      "WIDE-DEV-PERFORMANCE-01",
+      "WIDE-DEV-SERVICE-01",
+      "WIDE-DEV-PAY-01",
+      "WIDE-DEV-DISCIPLINE-01",
+      "WIDE-DEV-TRAINING-01",
+      "WIDE-DEV-RETIREMENT-01"
+    ],
+    "locked": [],
+    "overlap": [],
+    "locked_status": "unavailable_no_independent_legal_labels"
+  },
+  "routing_probes": [
+    {
+      "group_id": "WIDE-DEV-APPOINTMENT-01",
+      "topic": "appointment",
+      "question": "2026-08-01 신규임용 관련 규정을 찾아주세요"
+    },
+    {
+      "group_id": "WIDE-DEV-RECORDS-01",
+      "topic": "personnel_records",
+      "question": "2026-08-01 인사기록카드 근거를 찾아주세요"
+    },
+    {
+      "group_id": "WIDE-DEV-PERFORMANCE-01",
+      "topic": "performance_and_promotion",
+      "question": "2026-08-01 승진 평정 기준 근거를 찾아주세요"
+    },
+    {
+      "group_id": "WIDE-DEV-SERVICE-01",
+      "topic": "service_and_leave",
+      "question": "2026-08-01 연가 복무 규정을 찾아주세요"
+    },
+    {
+      "group_id": "WIDE-DEV-PAY-01",
+      "topic": "pay_and_allowance",
+      "question": "2026-08-01 초과근무수당 근거를 찾아주세요"
+    },
+    {
+      "group_id": "WIDE-DEV-DISCIPLINE-01",
+      "topic": "discipline_and_appeal",
+      "question": "2026-08-01 징계 소청 절차 조문을 찾아주세요"
+    },
+    {
+      "group_id": "WIDE-DEV-TRAINING-01",
+      "topic": "training",
+      "question": "2026-08-01 위탁교육 의무복무 근거를 찾아주세요"
+    },
+    {
+      "group_id": "WIDE-DEV-RETIREMENT-01",
+      "topic": "retirement",
+      "question": "2026-08-01 명예퇴직수당 규정을 찾아주세요"
+    }
+  ],
+  "measured_contracts": {
+    "source_endpoint_probe": {
+      "status": "passed",
+      "success_count": 17,
+      "total_count": 17,
+      "artifact": "artifacts/legal/wide-source-probe.json"
+    },
+    "candidate_structural_audit": {
+      "status": "passed",
+      "success_count": 12,
+      "total_count": 12,
+      "artifact": "artifacts/legal/wide-quality-audit.json"
+    },
+    "topic_routing_contract": {
+      "status": "passed",
+      "success_count": 8,
+      "total_count": 8,
+      "review_tier": "evidence_only"
+    }
+  },
+  "legal_retrieval_results": {
+    "status": "unmeasured",
+    "dataset_version": null,
+    "dataset_sha256": null,
+    "configurations": {
+      "B0": null,
+      "B1": null,
+      "H1": null,
+      "H2": null,
+      "H3": null
+    },
+    "set_recall_at_5": null,
+    "mrr_at_10": null,
+    "citation_accuracy": null,
+    "citation_completeness": null,
+    "fatal_error_count": null
+  },
+  "topic_denominators": {
+    "appointment": {"routing_development": 1, "locked_legal": 0},
+    "personnel_records": {"routing_development": 1, "locked_legal": 0},
+    "performance_and_promotion": {"routing_development": 1, "locked_legal": 0},
+    "service_and_leave": {"routing_development": 1, "locked_legal": 0},
+    "pay_and_allowance": {"routing_development": 1, "locked_legal": 0},
+    "discipline_and_appeal": {"routing_development": 1, "locked_legal": 0},
+    "training": {"routing_development": 1, "locked_legal": 0},
+    "retirement": {"routing_development": 1, "locked_legal": 0}
+  },
+  "known_limitations": [
+    "공식 candidate가 독립 사람 승인을 받지 않았다.",
+    "주제별 독립 검토 locked legal 정답셋이 없다.",
+    "metadata-only 실무편람 1종은 12,640개 provision 검색 대상에 포함되지 않는다.",
+    "과거 버전 4종의 효력 interval은 구조 검증됐지만 법률 적용 정답성은 독립 검토되지 않았다.",
+    "기관 내부 규정은 수집하지 않아 미확인으로 남긴다."
+  ]
+}

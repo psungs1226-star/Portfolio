@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>서울 러닝 페스타 2026</title>
+<style>
+/* plan
+   판돈: 주목 | 어조: 단정형 | 밀도: 저밀도 | 장르: 마케팅
+   톤: 임팩트
+   스타일: neobrutal
+   레이아웃: zpattern / split / card
+   모션: 없음 — press 피드백만, signature 없음
+*/
+/* 일반화 프로브 ③ — 임팩트 톤 + 주목 판돈(이벤트 캠페인).
+   이 톤의 관용을 그대로 따랐다: 큰 디스플레이 타입 · 고채도 · 그라데이션 히어로 ·
+   액센트 면적을 크게 · 하드 오프셋 섀도 */
+  :root{
+    --acc:#C42A16;          /* 고채도 버밀리언 — 흰 글씨 5.5:1을 내는 fill 단계 */
+    --acc-bright:#E8341F;   /* 칠하는 용도(작은 면)에만 — 이 위엔 흰 글씨를 얹지 않는다 */
+    --acc-hi:#FF5A44;
+    --acc-cont:#FFE1DC;
+    --acc-on:#7A1409;
+
+    --ink:#141210;
+    --ink-2:#3E3833;
+    --ink-3:#635C55;
+    --bg:#FFF8F0;
+    --surface:#FFFFFF;
+    --outline:#8A817A;
+
+    --fs-cap:13px; --fs-ctl:15px; --fs-body:17px; --fs-lead:21px;
+    --fs-h3:26px; --fs-h2:34px; --fs-h1:48px; --fs-disp:72px;
+
+    --sp-1:4px; --sp-2:8px; --sp-3:16px; --sp-4:28px; --sp-5:56px; --sp-6:112px;
+    --r:14px;
+    --shadow:6px 6px 0 var(--ink);
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    font-size:var(--fs-body); line-height:1.6;
+    word-break:keep-all; overflow-wrap:break-word;
+  }
+  h1,h2,h3{margin:0; font-weight:800; letter-spacing:-0.03em; line-height:1.05; text-wrap:balance;}
+  p{margin:0;}
+  .wrap{max-width:1120px; margin:0 auto; padding:0 var(--sp-4);}
+  section{padding:var(--sp-6) 0;}
+
+  .hero{background:var(--acc); color:#fff; padding:var(--sp-6) 0 var(--sp-5);}
+  .hero .wrap{display:grid; grid-template-columns:1.2fr 0.8fr; gap:var(--sp-5); align-items:center;}
+  .kicker{
+    display:inline-block; background:#fff; color:var(--acc-on); border:3px solid var(--ink);
+    border-radius:var(--r); padding:var(--sp-1) var(--sp-3);
+    font-size:var(--fs-cap); font-weight:800; letter-spacing:0.06em; margin-bottom:var(--sp-3);
+  }
+  .hero h1{font-size:var(--fs-disp); margin-bottom:var(--sp-3); color:#fff;}
+  .hero p{font-size:var(--fs-lead); color:#FFF0ED; max-width:34ch; text-wrap:pretty; margin-bottom:var(--sp-4);}
+  .when{
+    background:var(--surface); border:3px solid var(--ink); border-radius:var(--r);
+    box-shadow:var(--shadow); padding:var(--sp-4); color:var(--ink);
+  }
+  .when dt{font-size:var(--fs-cap); font-weight:800; letter-spacing:0.05em; color:var(--ink-3);}
+  .when dd{margin:0 0 var(--sp-3); font-size:var(--fs-h3); font-weight:800; letter-spacing:-0.02em;}
+  .when dd:last-child{margin-bottom:0;}
+
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; min-height:52px;
+    padding:0 var(--sp-4); border:3px solid var(--ink); border-radius:var(--r);
+    font-size:var(--fs-ctl); font-weight:800; text-decoration:none;
+    background:#fff; color:var(--ink); box-shadow:var(--shadow);
+    transition:transform 90ms linear, box-shadow 90ms linear;
+  }
+  .btn:hover,.btn:focus-visible{transform:translate(4px,4px); box-shadow:2px 2px 0 var(--ink); outline:none;}
+
+  .sec-h{font-size:var(--fs-h2); margin-bottom:var(--sp-4);}
+  .courses{display:grid; grid-template-columns:repeat(3,1fr); gap:var(--sp-4);}
+  .course{
+    background:var(--surface); border:3px solid var(--ink); border-radius:var(--r);
+    box-shadow:var(--shadow); padding:var(--sp-4);
+  }
+  .course .km{font-size:var(--fs-h1); font-weight:800; letter-spacing:-0.03em; display:block; margin-bottom:var(--sp-1);}
+  .course h3{font-size:var(--fs-h3); margin-bottom:var(--sp-2);}
+  .course p{font-size:var(--fs-ctl); color:var(--ink-2); text-wrap:pretty;}
+  .course.pick{background:var(--acc-cont);}
+  .course.pick .km{color:var(--acc-on);}
+
+  .band{background:var(--ink); color:#FFF8F0;}
+  .band h2{font-size:var(--fs-h2); color:#fff; margin-bottom:var(--sp-3);}
+  .band p{color:#D9D2CB; max-width:56ch; text-wrap:pretty;}
+  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:var(--sp-4); margin-top:var(--sp-5);}
+  .step{border:3px solid var(--acc-hi); border-radius:var(--r); padding:var(--sp-3) var(--sp-4);}
+  .step b{display:block; font-size:var(--fs-h3); color:var(--acc-hi); margin-bottom:var(--sp-1);}
+  .step span{font-size:var(--fs-ctl); color:#D9D2CB;}
+
+  .cta{background:var(--acc); color:#fff; text-align:center;}
+  .cta h2{font-size:var(--fs-h1); color:#fff; margin-bottom:var(--sp-3);}
+  .cta p{color:#FFF0ED; margin-bottom:var(--sp-4); font-size:var(--fs-lead);}
+  footer{padding:var(--sp-4) 0; font-size:var(--fs-cap); color:var(--ink-3);}
+  footer .wrap{display:flex; justify-content:space-between; gap:var(--sp-3); flex-wrap:wrap;}
+
+  @media (prefers-reduced-motion:reduce){
+    /* 이동·스케일은 정지, 색 피드백은 남긴다(motion.md §6.1) */
+    .btn{transition:none;}
+  }
+  @media (max-width:900px){
+    .hero h1{font-size:var(--fs-h1);}
+    .cta h2{font-size:var(--fs-h2);}
+    .hero .wrap{grid-template-columns:1fr;}
+    /* 전폭이 되면 짧은 항목 옆이 텅 빈다 — 가로 3열로 재배치 */
+    .when{display:grid; grid-template-columns:repeat(3,1fr); gap:var(--sp-3);}
+    .when dd{margin-bottom:0; font-size:var(--fs-body);}
+    .courses,.steps{grid-template-columns:1fr;}
+    section{padding:var(--sp-5) 0;}
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="kicker">2026.10.11 SUN</span>
+      <h1>가을 한강을 달린다</h1>
+      <p>서울 러닝 페스타 2026. 5K·10K·하프 세 코스, 완주자 전원 메달과 기록칩 제공.</p>
+      <a class="btn" href="#apply">참가 신청하기</a>
+    </div>
+    <dl class="when">
+      <dt>일시</dt><dd>10월 11일 일요일 07:00</dd>
+      <dt>출발</dt><dd>여의도한강공원</dd>
+      <dt>모집</dt><dd>선착순 8,000명</dd>
+    </dl>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2 class="sec-h">코스 고르기</h2>
+    <div class="courses">
+      <article class="course">
+        <span class="km">5K</span>
+        <h3>첫 대회라면</h3>
+        <p>제한시간 없이 걸어도 완주로 인정합니다. 가족 동반 참가가 가장 많은 코스입니다.</p>
+      </article>
+      <article class="course pick">
+        <span class="km">10K</span>
+        <h3>가장 인기</h3>
+        <p>한강을 따라 반환점을 돌아오는 코스. 페이스메이커가 55분·70분 두 그룹으로 함께 뜁니다.</p>
+      </article>
+      <article class="course">
+        <span class="km">21K</span>
+        <h3>기록에 도전</h3>
+        <p>공인 계측 구간입니다. 제한시간 3시간, 급수대 여섯 곳이 운영됩니다.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="wrap">
+    <h2>신청은 세 단계면 끝납니다</h2>
+    <p>배번호는 대회 2주 전에 문자로 안내하고, 기념 티셔츠는 신청할 때 고른 사이즈로 현장에서 받습니다.</p>
+    <div class="steps">
+      <div class="step"><b>01</b><span>코스와 티셔츠 사이즈 선택</span></div>
+      <div class="step"><b>02</b><span>참가비 결제 (5K 25,000원 / 10K 35,000원 / 21K 45,000원)</span></div>
+      <div class="step"><b>03</b><span>확인 문자 수신 — 이걸로 신청 완료</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="apply">
+  <div class="wrap">
+    <h2>8,000명 중 한 자리</h2>
+    <p>작년에는 접수 9일 만에 마감됐습니다.</p>
+    <a class="btn" href="#apply">참가 신청하기</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>서울 러닝 페스타 2026</span>
+    <span>문의 · 대회사무국</span>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,304 @@
+{
+  "schema_version": "0.1.0",
+  "profile": "official-corpus-automated-quality-audit",
+  "candidate_status": "pending_human_approval",
+  "source_manifest_hash": "30773474f71dcbe0f38cb606e9572dd98466639537b7730e886a3108a195e1d0",
+  "parser_version": "official-html-v0.2.0",
+  "automated_structural_quality": "passed",
+  "check_summary": {
+    "passed": 12,
+    "total": 12,
+    "failed": 0
+  },
+  "quality_counts": {
+    "fatal": 0,
+    "warning": 0,
+    "deleted_article_tombstones": 24,
+    "provisions": 4106,
+    "supplementary": 1510
+  },
+  "checks": [
+    {
+      "check_id": "source_snapshot_integrity",
+      "passed": true,
+      "observed": [
+        {
+          "source_id": "LAW-LOCAL-OFFICIAL",
+          "snapshot_id": "SNAP-LAW-LOCAL-OFFICIAL-b610461b6e51",
+          "metadata_match": true,
+          "file_exists": true,
+          "hash_match": true,
+          "byte_count_match": true
+        },
+        {
+          "source_id": "DECREE-LOCAL-APPOINTMENT-OFFICIAL",
+          "snapshot_id": "SNAP-DECREE-LOCAL-APPOINTMENT-OFFICIAL-7b25189d3995",
+          "metadata_match": true,
+          "file_exists": true,
+          "hash_match": true,
+          "byte_count_match": true
+        },
+        {
+          "source_id": "RULE-LOCAL-HR-GUIDE-OFFICIAL",
+          "snapshot_id": "SNAP-RULE-LOCAL-HR-GUIDE-OFFICIAL-ac6f5373a804",
+          "metadata_match": true,
+          "file_exists": true,
+          "hash_match": true,
+          "byte_count_match": true
+        }
+      ]
+    },
+    {
+      "check_id": "selected_source_manifest_hash",
+      "passed": true,
+      "observed": "30773474f71dcbe0f38cb606e9572dd98466639537b7730e886a3108a195e1d0"
+    },
+    {
+      "check_id": "deterministic_reparse_equivalence",
+      "passed": true,
+      "observed": {
+        "reparsed": 4106,
+        "candidate": 4106
+      }
+    },
+    {
+      "check_id": "parser_issue_reproducibility",
+      "passed": true,
+      "observed": {
+        "DELETED_ARTICLE_TOMBSTONE": 24
+      }
+    },
+    {
+      "check_id": "article_header_coverage",
+      "passed": true,
+      "observed": {
+        "active_unparsed": 0,
+        "fatal": 0,
+        "deleted_article_tombstones": 24
+      }
+    },
+    {
+      "check_id": "candidate_quality_count_contract",
+      "passed": true,
+      "observed": {
+        "reported": {
+          "fatal": 0,
+          "warning": 0,
+          "informational": 24,
+          "issue_counts": {
+            "DELETED_ARTICLE_TOMBSTONE": 24
+          }
+        },
+        "actual": {
+          "fatal": 0,
+          "warning": 0,
+          "informational": 24,
+          "issue_counts": {
+            "DELETED_ARTICLE_TOMBSTONE": 24
+          }
+        }
+      }
+    },
+    {
+      "check_id": "tree_integrity",
+      "passed": true,
+      "observed": {
+        "duplicates": 0,
+        "orphans": 0,
+        "empty_text": 0,
+        "invalid_validity": 0
+      }
+    },
+    {
+      "check_id": "relation_target_integrity",
+      "passed": true,
+      "observed": {
+        "unresolved_relations": 0
+      }
+    },
+    {
+      "check_id": "proviso_extraction_integrity",
+      "passed": true,
+      "observed": {
+        "provisos": 269,
+        "mismatches": 0
+      }
+    },
+    {
+      "check_id": "key_leave_slice_presence",
+      "passed": true,
+      "observed": [
+        {
+          "source_id": "LAW-LOCAL-OFFICIAL",
+          "article_path": "제63조 제1항 제1호",
+          "markers": [
+            "장기요양"
+          ],
+          "requires_proviso": false,
+          "passed": true
+        },
+        {
+          "source_id": "LAW-LOCAL-OFFICIAL",
+          "article_path": "제63조 제2항 제4호",
+          "markers": [
+            "자녀"
+          ],
+          "requires_proviso": false,
+          "passed": true
+        },
+        {
+          "source_id": "LAW-LOCAL-OFFICIAL",
+          "article_path": "제63조 제2항 제5호",
+          "markers": [
+            "돌보기"
+          ],
+          "requires_proviso": false,
+          "passed": true
+        },
+        {
+          "source_id": "LAW-LOCAL-OFFICIAL",
+          "article_path": "제63조 제2항 제7호",
+          "markers": [
+            "자기개발"
+          ],
+          "requires_proviso": false,
+          "passed": true
+        },
+        {
+          "source_id": "LAW-LOCAL-OFFICIAL",
+          "article_path": "제64조 제1호",
+          "markers": [
+            "1년 이내"
+          ],
+          "requires_proviso": true,
+          "passed": true
+        },
+        {
+          "source_id": "LAW-LOCAL-OFFICIAL",
+          "article_path": "제64조 제8호",
+          "markers": [
+            "3년 이내"
+          ],
+          "requires_proviso": false,
+          "passed": true
+        },
+        {
+          "source_id": "LAW-LOCAL-OFFICIAL",
+          "article_path": "제64조 제9호",
+          "markers": [
+            "총 3년"
+          ],
+          "requires_proviso": false,
+          "passed": true
+        },
+        {
+          "source_id": "LAW-LOCAL-OFFICIAL",
+          "article_path": "제64조 제10호",
+          "markers": [
+            "1년 이내"
+          ],
+          "requires_proviso": false,
+          "passed": true
+        },
+        {
+          "source_id": "DECREE-LOCAL-APPOINTMENT-OFFICIAL",
+          "article_path": "제2조 제2호",
+          "markers": [
+            "복직"
+          ],
+          "requires_proviso": false,
+          "passed": true
+        },
+        {
+          "source_id": "DECREE-LOCAL-APPOINTMENT-OFFICIAL",
+          "article_path": "제27조의3 제5항 제1호",
+          "markers": [
+            "질병휴직"
+          ],
+          "requires_proviso": false,
+          "passed": true
+        },
+        {
+          "source_id": "DECREE-LOCAL-APPOINTMENT-OFFICIAL",
+          "article_path": "제27조의3 제5항 제2호",
+          "markers": [
+            "육아휴직"
+          ],
+          "requires_proviso": false,
+          "passed": true
+        },
+        {
+          "source_id": "DECREE-LOCAL-APPOINTMENT-OFFICIAL",
+          "article_path": "제31조의6 제2항 제1호 다목",
+          "markers": [
+            "육아휴직"
+          ],
+          "requires_proviso": true,
+          "passed": true
+        },
+        {
+          "source_id": "RULE-LOCAL-HR-GUIDE-OFFICIAL",
+          "article_path": "제70조 제1항",
+          "markers": [
+            "질병휴직"
+          ],
+          "requires_proviso": false,
+          "passed": true
+        },
+        {
+          "source_id": "RULE-LOCAL-HR-GUIDE-OFFICIAL",
+          "article_path": "제76조 제1항",
+          "markers": [
+            "육아휴직"
+          ],
+          "requires_proviso": false,
+          "passed": true
+        },
+        {
+          "source_id": "RULE-LOCAL-HR-GUIDE-OFFICIAL",
+          "article_path": "제77조 제1항",
+          "markers": [
+            "돌봄대상자"
+          ],
+          "requires_proviso": false,
+          "passed": true
+        },
+        {
+          "source_id": "RULE-LOCAL-HR-GUIDE-OFFICIAL",
+          "article_path": "제78조 제1항 제1호",
+          "markers": [
+            "자기개발"
+          ],
+          "requires_proviso": false,
+          "passed": true
+        }
+      ]
+    },
+    {
+      "check_id": "required_topic_coverage",
+      "passed": true,
+      "observed": {
+        "medical_leave": 72,
+        "parental_leave": 54,
+        "family_care_leave": 6,
+        "self_development_leave": 12
+      }
+    },
+    {
+      "check_id": "candidate_count_contract",
+      "passed": true,
+      "observed": {
+        "provisions": 4106,
+        "supplementary": 1510
+      }
+    }
+  ],
+  "legal_content_accuracy": "unmeasured",
+  "human_approval": "pending",
+  "release_status": "hold",
+  "limitations": [
+    "Automated checks establish file, parser and structural consistency only.",
+    "They do not establish legal interpretation, completeness or current-law guarantees.",
+    "Independent human source comparison is required before index promotion."
+  ]
+}

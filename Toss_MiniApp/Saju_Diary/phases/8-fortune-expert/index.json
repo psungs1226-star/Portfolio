@@ -1,0 +1,8 @@
+{
+  "project": "Evry Times (evrytimes)",
+  "phase": "8-fortune-expert",
+  "steps": [
+    { "step": 0, "name": "day-modulated-engine", "status": "completed", "summary": "timeSegments가 day를 사용해 매일 변동(체질 희기 ± 六合/六沖 보정, branchRelation export); TimeSegment.dayBranch + FortuneBasis.todayTenGod/deLing 노출; deLing 헬퍼 export. 순수·결정론·새 의존성 0. 471 tests green." },
+    { "step": 1, "name": "expert-copy", "status": "completed", "summary": "전문가 수준 한국어 문구. describeChart=득령/실령+신강신약+희신 계열(오행) 정확 명시, buildSegmentLine=stance×dayBranch(합/충/同/무 근거, he≠chong), buildCautionLine=정확한 십신(편재/정재 등 정/편, 계열 폴백), buildReflectiveLines=정확한 십신 회고(과거형, 계열 폴백), result.iljin에 오늘 십신+의미 노출(UI 무변경). phrases.ts 선택자 6종 추가(pickSegmentDayBranch/pickDeLing/pickXiShen/pickTenGodMeaning/pickCautionTenGod/pickReflectTenGod)+MIN 6종+validateBank 확장. fortune-phrases.json schemaVersion 4(기존 보존). 순수·결정론·새 의존성 0. build/lint pass, 490 tests green." }
+  ]
+}

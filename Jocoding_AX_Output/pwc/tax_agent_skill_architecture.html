@@ -1,0 +1,674 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tax Agent 보강 스킬 아키텍처</title>
+  <style>
+    :root {
+      --bg: #f6f8f7;
+      --ink: #17201c;
+      --muted: #5f6b66;
+      --line: #d7ded9;
+      --panel: #ffffff;
+      --green: #1f7a55;
+      --blue: #245f9e;
+      --red: #a3433e;
+      --gold: #9a6b1f;
+      --soft-green: #e8f3ed;
+      --soft-blue: #e9f0f8;
+      --soft-gold: #f6efdF;
+      --soft-red: #f8ecea;
+      --shadow: 0 18px 45px rgba(23, 32, 28, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.58;
+    }
+
+    header {
+      background: #10241c;
+      color: #fff;
+      padding: 56px 24px 42px;
+    }
+
+    .wrap {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    .eyebrow {
+      margin: 0 0 14px;
+      color: #a9d8c1;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0;
+    }
+
+    h1 {
+      margin: 0;
+      max-width: 900px;
+      font-size: clamp(34px, 5vw, 62px);
+      line-height: 1.05;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      margin: 22px 0 0;
+      max-width: 860px;
+      color: #dce8e2;
+      font-size: 18px;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(246, 248, 247, 0.95);
+      border-bottom: 1px solid var(--line);
+      backdrop-filter: blur(14px);
+    }
+
+    nav .wrap {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      padding: 10px 24px;
+    }
+
+    nav a {
+      white-space: nowrap;
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 8px 12px;
+      border-radius: 6px;
+    }
+
+    nav a:hover {
+      background: var(--soft-green);
+    }
+
+    main {
+      padding: 34px 24px 70px;
+    }
+
+    section {
+      margin: 0 auto 36px;
+      max-width: 1180px;
+    }
+
+    h2 {
+      margin: 0 0 14px;
+      font-size: 28px;
+      line-height: 1.2;
+      letter-spacing: 0;
+    }
+
+    h3 {
+      margin: 0 0 8px;
+      font-size: 19px;
+      line-height: 1.3;
+      letter-spacing: 0;
+    }
+
+    p {
+      margin: 0 0 12px;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      gap: 16px;
+    }
+
+    .grid.cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid.cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .panel,
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .panel {
+      padding: 24px;
+    }
+
+    .card {
+      padding: 20px;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 5px 10px;
+      border-radius: 6px;
+      background: var(--soft-green);
+      color: #145437;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .badge.blue {
+      background: var(--soft-blue);
+      color: var(--blue);
+    }
+
+    .badge.gold {
+      background: var(--soft-gold);
+      color: var(--gold);
+    }
+
+    .badge.red {
+      background: var(--soft-red);
+      color: var(--red);
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .step {
+      min-height: 112px;
+      padding: 14px;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid var(--line);
+      position: relative;
+    }
+
+    .step strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--green);
+      font-size: 14px;
+    }
+
+    .step span {
+      display: block;
+      color: var(--ink);
+      font-weight: 750;
+      line-height: 1.35;
+    }
+
+    .skill-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .skill {
+      display: grid;
+      grid-template-columns: 150px 1fr 1fr;
+      gap: 18px;
+      align-items: start;
+      padding: 20px;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .skill-index {
+      color: var(--green);
+      font-weight: 800;
+      font-size: 14px;
+    }
+
+    ul {
+      margin: 10px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+    }
+
+    li + li {
+      margin-top: 6px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      overflow: hidden;
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    th,
+    td {
+      padding: 12px 14px;
+      text-align: left;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    th {
+      background: #eef4f0;
+      color: #24332c;
+      font-size: 14px;
+    }
+
+    tr:last-child td {
+      border-bottom: 0;
+    }
+
+    .code {
+      padding: 16px;
+      overflow-x: auto;
+      background: #15231d;
+      color: #e6f0eb;
+      border-radius: 8px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .phase {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-top: 5px solid var(--green);
+      border-radius: 8px;
+      padding: 18px;
+    }
+
+    .phase:nth-child(2) {
+      border-top-color: var(--blue);
+    }
+
+    .phase:nth-child(3) {
+      border-top-color: var(--gold);
+    }
+
+    .phase:nth-child(4) {
+      border-top-color: var(--red);
+    }
+
+    .callout {
+      border-left: 5px solid var(--green);
+      background: var(--soft-green);
+      padding: 18px 20px;
+      border-radius: 0 8px 8px 0;
+    }
+
+    @media (max-width: 980px) {
+      .grid.cols-2,
+      .grid.cols-3,
+      .timeline {
+        grid-template-columns: 1fr;
+      }
+
+      .flow {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .skill {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 560px) {
+      header {
+        padding: 42px 18px 32px;
+      }
+
+      main {
+        padding: 26px 18px 54px;
+      }
+
+      .flow {
+        grid-template-columns: 1fr;
+      }
+
+      .panel,
+      .card {
+        padding: 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <p class="eyebrow">AX Hackathon · Samil PwC Tax Agent Extension</p>
+      <h1>부가가치세 개정 영향 탐지 스킬 아키텍처</h1>
+      <p class="lead">법령 변경을 입력하면 기존 집행기준 중 변경 영향 가능성이 높은 항목을 우선순위로 뽑아 내부용 변경 예상 검토리스트로 전환하는 MVP 설계입니다. 해석례는 세법해석정비 정답셋과 보조 판단 사례로만 사용합니다.</p>
+      <div class="badge-row">
+        <span class="badge">MVP: 부가가치세</span>
+        <span class="badge blue">대상: 영세사업자</span>
+        <span class="badge gold">데이터: 집행기준 중심</span>
+        <span class="badge red">판단: 전문가 검토 연결</span>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="wrap">
+      <a href="#scope">범위</a>
+      <a href="#flow">흐름</a>
+      <a href="#skills">스킬</a>
+      <a href="#data">데이터</a>
+      <a href="#parsing">파싱</a>
+      <a href="#classification">분류</a>
+      <a href="#validation">검증</a>
+      <a href="#mvp">대회 범위</a>
+    </div>
+  </nav>
+
+  <main>
+    <section id="scope" class="grid cols-2">
+      <div class="panel">
+        <h2>핵심 판단</h2>
+        <p>이번 대회에서는 전체 세법 자동화를 목표로 잡지 않습니다. 부가가치세 1개 세목에서 집행기준의 변경 영향 가능성을 찾고, 해석례는 정답셋과 보조 판단 사례로만 쓰는 작은 파이프라인을 만드는 것이 적합합니다.</p>
+        <div class="badge-row">
+          <span class="badge">작게 구현</span>
+          <span class="badge blue">근거 중심</span>
+          <span class="badge gold">검증 가능</span>
+        </div>
+      </div>
+      <div class="panel">
+        <h2>제외할 것</h2>
+        <ul>
+          <li>모든 세목과 모든 자료를 수집하는 범용 세법 AI</li>
+          <li>판례 <b>전체 수집(sweep corpus)</b> 및 자동 법률 판단 · 결론 단정</li>
+          <li>납세자에게 유리/불리한 결론 단정</li>
+          <li>실제 신고 의사결정 자동화</li>
+        </ul>
+        <p class="note" style="margin-top:8px;font-size:12.5px;color:#5a6472">단, 판례를 <b>전체 수집</b>하지 않을 뿐 — <b>심판례(조세심판원)는 좁은 불안정 "신호"(L2), 대법원 판례는 사후 "검증자"(L3)</b>로 한정 사용한다(sweep 코퍼스도 아니고 자동 단정도 아님). 즉 "판례 전체 수집·자동판단 제외"와 "심판례를 좁은 신호로 사용"은 모순이 아니라 정확히 위 제외선을 지키는 설계다.</p>
+      </div>
+    </section>
+
+    <section id="flow" class="panel">
+      <h2>전체 처리 흐름</h2>
+      <p>법령 변경 입력을 기준으로 기존 세무 기준문서와 매칭하고, 영향 가능성과 검토 우선순위를 산출합니다.</p>
+      <div class="flow">
+        <div class="step"><strong>01</strong><span>법령 변경 입력</span></div>
+        <div class="step"><strong>02</strong><span>조문·요건 파싱</span></div>
+        <div class="step"><strong>03</strong><span>집행기준 우선 검색</span></div>
+        <div class="step"><strong>04</strong><span>영향 유형 분류</span></div>
+        <div class="step"><strong>05</strong><span>검토 리스트 생성</span></div>
+        <div class="step"><strong>06</strong><span>Agent 가드레일 적용</span></div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <h2>스킬별 아키텍처</h2>
+      <div class="skill-list">
+        <article class="skill">
+          <div>
+            <div class="skill-index">Skill 1</div>
+            <h3>법령 변경 입력 정규화</h3>
+          </div>
+          <div>
+            <p>개정 법령, 신구조문대비표, 시행일, 적용례를 구조화합니다.</p>
+            <ul>
+              <li>조문번호, 변경 전후 문구 추출</li>
+              <li>신설/삭제/요건변경/기준금액변경 분류</li>
+              <li>시행일과 경과조치 분리</li>
+            </ul>
+          </div>
+          <div>
+            <p><strong>출력</strong></p>
+            <p>세목, 조문, 변경 유형, 적용 대상, 핵심 용어, 시행일을 담은 JSON 객체</p>
+          </div>
+        </article>
+
+        <article class="skill">
+          <div>
+            <div class="skill-index">Skill 2</div>
+            <h3>기준문서 수집·인덱싱</h3>
+          </div>
+          <div>
+            <p>집행기준을 검색 가능한 단위로 저장하고, 해석례는 세법해석정비 정답셋과 보조 판단 사례로만 저장합니다.</p>
+            <ul>
+              <li>문서번호, 생산일자, 관련 조문</li>
+              <li>질의·회신·판단요지 분리</li>
+              <li>키워드 검색과 벡터 검색 동시 구성</li>
+            </ul>
+          </div>
+          <div>
+            <p><strong>출력</strong></p>
+            <p>문서 청크, 메타데이터, 쟁점 태그, 납세자 태그, 검색 인덱스</p>
+          </div>
+        </article>
+
+        <article class="skill">
+          <div>
+            <div class="skill-index">Skill 3</div>
+            <h3>영향 후보 탐색</h3>
+          </div>
+          <div>
+            <p>변경 조문과 기존 문서를 매칭해 영향 가능성이 있는 후보를 뽑습니다.</p>
+            <ul>
+              <li>조문 직접 매칭</li>
+              <li>키워드·요건·거래유형 매칭</li>
+              <li>의미 검색 기반 관련 문서 탐색</li>
+            </ul>
+          </div>
+          <div>
+            <p><strong>출력</strong></p>
+            <p>영향 유형, 점수, 신뢰도, 매칭 근거, 전문가 검토 필요 여부</p>
+          </div>
+        </article>
+
+        <article class="skill">
+          <div>
+            <div class="skill-index">Skill 4</div>
+            <h3>전문가 검토 리포트</h3>
+          </div>
+          <div>
+            <p>후보를 회계법인 임직원이 바로 검토할 수 있는 리스트로 정리합니다.</p>
+            <ul>
+              <li>우선순위와 영향 이유</li>
+              <li>관련 고객군과 실무 쟁점</li>
+              <li>내부 영업자료 또는 Agent 경고문으로 변환</li>
+            </ul>
+          </div>
+          <div>
+            <p><strong>출력</strong></p>
+            <p>검토 리스트, 고객 안내 초안, Tax Agent 응답 가드레일</p>
+          </div>
+        </article>
+
+        <article class="skill">
+          <div>
+            <div class="skill-index">Skill 5</div>
+            <h3>검증·피드백</h3>
+          </div>
+          <div>
+            <p>과거 개정 사례를 정답셋으로 두고 후보 탐지 품질을 확인합니다.</p>
+            <ul>
+              <li>실제 영향 문서와 비교</li>
+              <li>누락·오탐 원인 분류</li>
+              <li>태그, 룰, 검색 쿼리 개선</li>
+            </ul>
+          </div>
+          <div>
+            <p><strong>출력</strong></p>
+            <p>Recall, Precision, 근거율, 전문가 검토 유용성, 안전성 지표</p>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section id="data">
+      <h2>수집할 데이터</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>데이터</th>
+            <th>필요도</th>
+            <th>용도</th>
+            <th>MVP 기준</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>부가가치세법·시행령</td>
+            <td>필수</td>
+            <td>변경 조문과 판단 요건의 기준</td>
+            <td>개정 사례 2~3개</td>
+          </tr>
+          <tr>
+            <td>신구조문대비표</td>
+            <td>필수</td>
+            <td>변경 전후 문구 분리</td>
+            <td>조문별 표 구조 보존</td>
+          </tr>
+          <tr>
+            <td>부가가치세 집행기준</td>
+            <td>필수</td>
+            <td>실무 기준 영향 탐지</td>
+            <td>쟁점별 일부 수집</td>
+          </tr>
+          <tr>
+            <td>국세청 해석례</td>
+            <td>필수</td>
+            <td>기존 회신 영향 후보 탐색</td>
+            <td>30~100건 샘플</td>
+          </tr>
+          <tr>
+            <td>내부지침/기재부/기본통칙</td>
+            <td>권장</td>
+            <td>회계법인 고유 moat 반영</td>
+            <td>샘플 3~5건</td>
+          </tr>
+          <tr>
+            <td>판례</td>
+            <td>제외/검증용</td>
+            <td>최신판례는 기존 Tax Agent 자산 활용 가정</td>
+            <td>정답셋 보조 자료만</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="parsing" class="grid cols-2">
+      <div class="panel">
+        <h2>파싱 방식</h2>
+        <ul>
+          <li>법령은 조, 항, 호, 목 단위로 분리합니다.</li>
+          <li>신구조문대비표는 변경 전과 변경 후를 별도 필드로 저장합니다.</li>
+          <li>해석례는 세법해석정비 전후 비교와 보조 판단용으로만 나눕니다.</li>
+          <li>집행기준은 기준번호, 제목, 관련 조문, 본문을 분리합니다.</li>
+          <li>내부지침, 기재부 해석, 기본통칙은 1차 MVP에서 제외합니다.</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h2>기본 저장 스키마</h2>
+        <pre class="code">{
+  "doc_type": "집행기준|세법해석정비해석례|법령",
+  "tax_type": "VAT",
+  "article_refs": ["부가가치세법 제XX조"],
+  "issue_tags": ["매입세액공제"],
+  "taxpayer_tags": ["영세사업자"],
+  "text": "...",
+  "summary": "..."
+}</pre>
+      </div>
+    </section>
+
+    <section id="classification">
+      <h2>분류 체계</h2>
+      <div class="grid cols-3">
+        <div class="card">
+          <h3>납세자</h3>
+          <p>영세사업자, 개인사업자, 간이과세자, 일반과세자, 면세사업자, 법인사업자</p>
+        </div>
+        <div class="card">
+          <h3>거래</h3>
+          <p>세금계산서, 전자상거래, 플랫폼 거래, 부동산임대, 수출입, 용역, 면세거래</p>
+        </div>
+        <div class="card">
+          <h3>쟁점</h3>
+          <p>과세대상, 면세, 영세율, 공급시기, 공급가액, 매입세액공제, 간이과세, 가산세</p>
+        </div>
+      </div>
+      <div class="panel" style="margin-top: 16px;">
+        <h3>영향 유형</h3>
+        <div class="badge-row">
+          <span class="badge">조문 직접 영향</span>
+          <span class="badge blue">요건 변경</span>
+          <span class="badge gold">대상 변경</span>
+          <span class="badge red">해석 충돌 가능성</span>
+          <span class="badge">절차 변경</span>
+          <span class="badge blue">금액 기준 변경</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="validation">
+      <h2>검증 루프</h2>
+      <div class="timeline">
+        <div class="phase">
+          <h3>1. 정답셋</h3>
+          <p>과거 부가가치세 개정 사례 2~3개와 실제 영향 문서를 준비합니다.</p>
+        </div>
+        <div class="phase">
+          <h3>2. 자동 탐색</h3>
+          <p>스킬이 변경 영향 가능성이 높은 집행기준 후보를 자동으로 추출하고, 해석례로 검증·보조합니다.</p>
+        </div>
+        <div class="phase">
+          <h3>3. 비교</h3>
+          <p>누락, 오탐, 근거 부족, 요건 불일치를 분류합니다.</p>
+        </div>
+        <div class="phase">
+          <h3>4. 개선</h3>
+          <p>태그, 룰, 검색 쿼리, chunk 크기를 수정하고 다시 실행합니다.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="mvp" class="grid cols-2">
+      <div class="panel">
+        <h2>대회에서 반드시 구현</h2>
+        <ul>
+          <li>부가가치세 개정 조문 입력</li>
+          <li>집행기준 샘플 인덱싱과 해석례 보조 데이터 정리</li>
+          <li>영향 후보 추출</li>
+          <li>영향 유형과 신뢰도 분류</li>
+          <li>전문가 검토용 리스트 출력</li>
+          <li>과거 사례 기반 검증 1회</li>
+        </ul>
+      </div>
+      <div class="panel">
+        <h2>안전한 응답 정책</h2>
+        <div class="callout">
+          <p>해당 쟁점은 최근 부가가치세법 개정 조문과 연결될 수 있어 기존 해석례를 그대로 적용하기 전에 검토가 필요합니다. 시행일, 적용례, 거래시점에 따라 결론이 달라질 수 있으므로 회계법인 전문가 확인이 필요합니다.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>

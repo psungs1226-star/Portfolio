@@ -1,0 +1,9 @@
+{
+  "project": "Evry Times (evrytimes)",
+  "phase": "7-fortune-depth",
+  "steps": [
+    { "step": 0, "name": "daily-detail-engine", "status": "completed", "summary": "types: DayPart·TimeSegment·DailyCaution·FortuneDetail 추가, FortuneResult.detail 필수화. engine: timeSegments/dailyCaution/fortuneDetail export(四正 왕지+favorableGroups/ZHI_CHONG 재사용, 결정론·순수), buildFortune이 detail 배선. 테스트/픽스처(engine·diary-ops·share) 갱신, ARCHITECTURE §5 #12 해석 레이어 단락 추가. AC: build 0 / test 424 pass / lint 0." },
+    { "step": 1, "name": "detail-copy-bank", "status": "completed", "summary": "fortune-today: describeChart(사주 설명·서술형)·buildSegmentLine(시간대 한 줄·예측형)·buildCautionLine(오늘 조심, 없으면 null)·buildReflectiveLines(일기 회고 summary+question·회고질문형) export(순수·결정론, seed/phrases 선택자 재사용). phrases.json schemaVersion 3: chartTraits(오행×strength)·segment(part×stance)·cautionArea(계열)·cautionChong·reflectSummary(계열)·reflectQuestion(common+계열) 섹션 추가(자체작성·해요체·단정예언/공포/명령약속 금지). phrases.ts: pick* 선택자 6종 + MIN_* 상수 6종 + validateBank가 detail 섹션 검증. diary-ops: FortuneSnapshot.basis 복사 저장(회고 입력). 톤 분리(오늘=서술예측/일기=회고질문) 확인. AC: build 0 / test 459 pass / lint 0." },
+    { "step": 2, "name": "fortune-detail-ui", "status": "completed", "summary": "fortune-today: TodayFortune에 detailText(chart·segments[part/label/stance/text]·caution) 추가, computeTodayFortune가 step1 빌더로 미리 조립(위젯=순수 presenter, birthDate/시드 미취급). FortuneWidget: 압축 1행 유지, 펼침을 「내 사주(describeChart 단락)→시간대별 기운(아침/낮/저녁/밤 4줄+stance 점·라벨)→오늘 조심(없으면 생략, 정보톤)→기존 세부운/행운색/방향/일진/조언/타로」로 재구성, buildBasisLine 한 줄 대체. DiaryScreen SnapshotHeader: 명령약속 basisLine을 회고형(buildReflectiveLines summary+question, basis+birthDate로 조립)으로 교체, 별점·색·일진 박제와 그날완료한일 유지, basis 없는 과거 스냅샷은 basisLine 폴백(깨짐0). 스모크: 펼침 4줄+조심·회고헤더 추가. AC: build 0 / test 461 pass / lint 0." }
+  ]
+}

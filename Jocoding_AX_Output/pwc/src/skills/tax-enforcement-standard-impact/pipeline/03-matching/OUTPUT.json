@@ -1,0 +1,159 @@
+{
+  "phase": "Phase 3",
+  "status": "completed",
+  "status_note": "Phase 1 개정(시행령 제41조 토지임대부 신설) ↔ Phase 2 집행기준 매칭. Hard Filter→Direct Link→Logic→Keyword→Semantic→Evidence→Score 순 적용. 1차 후보 26-41-1은 direct link+logic 완전일치+effect 격차로 high. 인접 29-65는 제외로 precision 시연.",
+  "change": {
+    "change_id": "vat-decree-41-2024-landlease",
+    "law_name": "부가가치세법 시행령",
+    "article_path": "제41조 제1항 제2호 (신설)",
+    "parent_article": "부가가치세법 제26조 제1항 제12호",
+    "effective_date": "2024-07-01",
+    "legal_logic": {
+      "target": ["토지임대부 분양주택에 부수되는 토지의 임대 용역"],
+      "condition": ["주택법 제2조 제9호 토지임대부 분양주택", "주택법 제2조 제6호 국민주택규모 한정", "시행령 제41조 제2항 면적 기준 이내"],
+      "action": ["토지 임대 용역 공급"],
+      "effect": ["부가가치세 면세 대상에 포함"],
+      "exception": ["면적 기준 초과분 제외"],
+      "time_scope": ["2024-07-01 이후 용역 공급분"]
+    }
+  },
+  "rule_assets_used": {
+    "article_linkage": "집행기준 번호 26-41-x = 법 제26조 · 시행령 제41조 (번호체계 기반 직접 연결)",
+    "issue_synonyms": ["주택임대용역", "주택 부수토지", "부수토지 임대", "토지임대부 분양주택", "국민주택규모"],
+    "generic_keyword_stoplist": ["임대", "면세", "용역", "부수"],
+    "evidence_checklist": ["changed_article", "standard_no", "related_article", "rule_paragraph", "amendment_reflection"]
+  },
+  "matching_records": [
+    {
+      "change_id": "vat-decree-41-2024-landlease",
+      "standard_id": "vat-exec-26-41-1",
+      "standard_no": "26-41-1",
+      "standard_title": "주택임대용역의 면세 범위",
+      "hard_filter_status": "pass",
+      "hard_filter_reason": "VAT, 집행기준, 거래유형=주택·부수토지 임대, 쟁점=면세 범위로 개정과 동일 축.",
+      "direct_link": true,
+      "direct_link_reason": "집행기준 26-41-1이 법 제26조·시행령 제41조를 번호체계로 직접 지시. 개정 조문(제41조)과 동일 조.",
+      "logic_match": {
+        "target": true,
+        "condition": true,
+        "action": true,
+        "effect": true,
+        "exception": true,
+        "time_scope": false
+      },
+      "logic_match_note": "target: 둘 다 '주택/부수토지 임대 용역'. condition: 면적 기준 공유(집행기준 ①·②, 개정 제41조 제2항). effect: 둘 다 '면세'. effect 격차 존재 — 집행기준은 상시주거용만, 개정은 토지임대부 추가 → effect conflict(강한 검토 신호). exception: 면적 초과분 제외 공유. time_scope: 집행기준 본문에 시점 서술 없음(개정만 2024-07-01).",
+      "keyword_hits": ["주택임대용역", "부수토지", "면적 기준"],
+      "keyword_note": "issue-specific 키워드가 logic match를 보강. generic('임대','면세')는 stoplist로 가중 제외.",
+      "semantic_rank": null,
+      "semantic_note": "direct link+logic로 충분해 semantic 불필요.",
+      "evidence_items": [
+        "changed_article: 부가가치세법 시행령 제41조 제1항 제2호(신설)",
+        "standard_no: 26-41-1",
+        "related_article: 부가가치세법 제26조 제1항 제12호",
+        "rule_paragraph: 집행기준 26-41-1 ①~⑤ verbatim(Phase 2)",
+        "amendment_reflection: 집행기준 26-41-1 본문에 토지임대부 미반영(stale)"
+      ],
+      "score_breakdown": {
+        "direct_article_link": 35,
+        "target_match": 15,
+        "condition_match": 15,
+        "effect_match_or_conflict": 15,
+        "issue_keyword_match": 10,
+        "semantic_top_hit": 0,
+        "timing_relevance": 10
+      },
+      "score": 100,
+      "confidence": "high",
+      "status": "candidate",
+      "review_note": "1차 변경 예상 집행기준. 집행기준 26-41-1이 개정 대비 stale이므로 '검토/개정 필요' 후보. Phase 6 mini-set P1/P2/P3의 ground-truth positive."
+    },
+    {
+      "change_id": "vat-decree-41-2024-landlease",
+      "standard_id": "vat-exec-26-0-2",
+      "standard_no": "26-0-2",
+      "standard_title": "부가가치세 면제 대상",
+      "hard_filter_status": "pass",
+      "hard_filter_reason": "VAT, 집행기준, 면세 일반. 다만 주택임대 하위축을 특정하지 않는 상위 열거.",
+      "direct_link": false,
+      "direct_link_reason": "법 제26조 일반에 연결되나 개정 조문(제26조①12호/시행령 제41조)을 특정 지시하지 않음.",
+      "logic_match": {
+        "target": false,
+        "condition": false,
+        "action": false,
+        "effect": true,
+        "exception": false,
+        "time_scope": false
+      },
+      "logic_match_note": "면제 대상 열거이므로 effect(면세) 축은 겹치나 target/condition은 주택임대 특정이 아님. 토지임대부가 신규 면세 '유형'으로 상위 열거에 반영돼야 하는지 여부는 낮은 가능성.",
+      "keyword_hits": ["면세"],
+      "keyword_note": "generic 키워드만 히트 → 가중 제외.",
+      "semantic_rank": null,
+      "evidence_items": [
+        "standard_no: 26-0-2",
+        "related_article: 부가가치세법 제26조",
+        "changed_article: 시행령 제41조(상위 맥락)"
+      ],
+      "score_breakdown": {
+        "direct_article_link": 0,
+        "target_match": 0,
+        "condition_match": 0,
+        "effect_match_or_conflict": 15,
+        "issue_keyword_match": 0,
+        "semantic_top_hit": 0,
+        "timing_relevance": 0
+      },
+      "score": 15,
+      "confidence": "low",
+      "status": "hold",
+      "review_note": "보조/상위 맥락. 면제 대상 상위 열거에 토지임대부 반영 필요 여부만 낮은 우선순위로 확인."
+    },
+    {
+      "change_id": "vat-decree-41-2024-landlease",
+      "standard_id": "vat-exec-29-65-1",
+      "standard_no": "29-65-1 / 29-65-2",
+      "standard_title": "부동산임대용역에 대한 공급가액 계산 / 전세금 등 세부담",
+      "hard_filter_status": "hold",
+      "hard_filter_reason": "거래유형(부동산임대)은 인접하나 쟁점축이 과세표준/공급가액(제29조)이라 면세 범위 개정과 상이. transaction 유사·issue 상이.",
+      "direct_link": false,
+      "direct_link_reason": "제29조 규정으로 개정 조문(제26조/제41조)과 연결 없음.",
+      "logic_match": {
+        "target": false,
+        "condition": false,
+        "action": false,
+        "effect": false,
+        "exception": false,
+        "time_scope": false
+      },
+      "logic_match_note": "부동산임대라는 표면 겹침만 있고 대상·효과(면세 vs 과세표준)가 다름. keyword-only 유사.",
+      "keyword_hits": ["임대"],
+      "keyword_note": "generic '임대'만 → precision 트랩. 가중 제외.",
+      "semantic_rank": null,
+      "evidence_items": [
+        "standard_no: 29-65-1/2",
+        "related_article: 부가가치세법 제29조 (개정 조문과 불일치)"
+      ],
+      "score_breakdown": {
+        "direct_article_link": 0,
+        "target_match": 0,
+        "condition_match": 0,
+        "effect_match_or_conflict": 0,
+        "issue_keyword_match": 0,
+        "semantic_top_hit": 0,
+        "timing_relevance": 0
+      },
+      "score": 0,
+      "confidence": "low",
+      "status": "exclude",
+      "review_note": "precision 시연: 부동산임대 키워드는 겹치나 면세 범위 개정과 무관 → 제외. 키워드 오탐 방어 확인."
+    }
+  ],
+  "summary": {
+    "candidates": ["26-41-1"],
+    "holds": ["26-0-2"],
+    "excludes": ["29-65-1/2"],
+    "primary_result": "26-41-1 주택임대용역의 면세 범위 (score 100, high) — 변경 예상 집행기준 1순위.",
+    "precision_note": "동일 상위조(제26조) 일반 열거(26-0-2)는 hold, 부동산임대 키워드 인접(29-65)은 exclude로 분리 → direct link+logic 없이는 후보로 승격되지 않음.",
+    "new_review_topic": "토지임대부 분양주택 부수토지 임대용역 면세는 신설 대상 — 집행기준 26-41-1 개정 또는 신규 문단 검토 필요(Phase 4/5로 이관)."
+  },
+  "phase4_ready": true
+}

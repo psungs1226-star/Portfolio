@@ -1,0 +1,54 @@
+{
+  "project": "인사ON",
+  "phase": "16-retrieval-evidence",
+  "steps": [
+    {
+      "step": 0,
+      "name": "distractor-corpus",
+      "status": "completed",
+      "summary": "오프라인 corpus를 7건에서 93건으로 교체했다. scripts/build_distractor_corpus.py가 종전 16·미시행 13·행정 32·인접 10·단서 9·부칙 9건을 생성하고 data/sample/distractor-corpus.json에 기록한다. factory.py는 하드코딩 fixture 대신 이 파일을 로드하며 파일이 없으면 실패한다. 기존 7건은 ID·문구·효력기간까지 프로그램 대조로 완전 보존을 확인했다. 통과 기준 달성: B0 Set Recall@5 = 0.353 (< 0.8)."
+    },
+    {
+      "step": 1,
+      "name": "ablation-remeasure",
+      "status": "completed",
+      "summary": "B0~H3를 새 corpus로 재측정했다. Recall@5 B0 0.353 / B1 0.000 / H1 0.118 / H2 0.882 / H3 0.882, 인용 완전성 H2 0.556 → H3 0.852, 치명적 오류 H2 12 → H3 4. 하이브리드가 lexical보다 낮고 재랭킹이 회수를 못 늘리는 결과를 그대로 공개했다. H3 잔존 치명 4건(CASE-LOCKED-013~016) 때문에 release_check가 hold_fatal_errors_present를 기록하고 exit 1로 실패한다. 게이트 실패 시에도 매니페스트를 쓰도록 _write_hold_manifest()를 추가했고, 과도하게 특정된 local RAG 인용 단언과 fatal gate 테스트를 측정 추종형으로 바꿨다."
+    },
+    {
+      "step": 2,
+      "name": "retrieval-defect-fix",
+      "status": "completed",
+      "summary": "step1이 드러낸 세 증상이 하나의 원인으로 수렴했다. RetrievalPipeline은 B0·B1 외 모든 구성에서 RRF를 쓰므로 잡음 벡터 arm이 H2·H3까지 오염시킨다. (1) DeterministicEmbeddingGateway를 64차원 원시 누적에서 1024차원 sublinear TF 부호 랜덤 투영으로 교체하고 model_id를 deterministic-hash-projection-v2로 바꿔 벡터 캐시를 무효화했다. 차원은 평가셋이 아니라 조문 제목을 짧은 유사 쿼리로 쓴 내재적 충실도(top-5 재현율 0.85 이상 최소 2의 거듭제곱)로 골랐다. (2) TokenOverlapReranker를 IdfWeightedReranker(idf-weighted-rerank-v2)로 교체했다. 정규화 없는 집합 교집합이 긴 조문을 상위 독점시키던 것을 IDF 가중 코사인으로 바꿨다. 결과: Recall@5 B0 0.353 / B1 0.118 / H1 0.353 / H2 1.000 / H3 1.000, 예외 번들 회수 H2 0.000 → H3 1.000, 인용 완전성 H2 0.630 → H3 1.000, 치명적 오류 H2 12 → H3 0. release_check --profile offline이 exit 0으로 통과한다. 새 발견: 재랭킹은 MRR을 0.882 → 0.794로 낮추면서 예외 번들과 인용 완전성을 완성시킨다. corpus는 건드리지 않았다."
+    },
+    {
+      "step": 3,
+      "name": "chunking-comparison",
+      "status": "completed",
+      "summary": "structure-v1 / fixed-512 / recursive-512-64을 같은 corpus·질의·top_k=5에서 비교했다. src/insaon/evaluation/chunking.py(평가 전용, 런타임 미import), data/sample/chunking-spike.json(12건 공개 합성 질의), configs/spike/chunking.toml, CLI 하위명령 chunking-spike를 추가했다. Set Recall@5는 현행이 꼴찌다(0.958 / 0.979 / 1.000). 그러나 같은 top_k=5가 돌려주는 corpus 비율이 0.052 / 0.315 / 0.296이라 청크 크기가 다르면 Recall@k가 비교 지표가 아님을 retrieved_corpus_share_at_k로 정량화했다. MRR@10은 0.944 / 0.611 / 0.569로 역전되고, 문자 수 분할 두 후보는 인용 가능 청크 0/16·0/17로 12건 질의 전부가 정답을 인용 불가 청크로만 도달한다. relation_ids 추적도 끊긴다. 산출물: artifacts/spikes/chunking/manifest.json(.gitignore allowlist 등재), evals/reports/chunking-comparison.md, docs/adr/0018-structure-aware-chunking.md, docs/adr/README.md에 ADR-0017·0018 등재(0017은 누락돼 있었다). 테스트 4건 추가."
+    },
+    {
+      "step": 4,
+      "name": "query-transform-h4",
+      "status": "completed",
+      "summary": "QueryTransformer port(application/ports.py), 결정적 동의어 구현(application/query_transform.py), 검토 가능한 사전(data/query/synonyms.json, scope=retrieval_expansion_only 미선언 시 로딩 실패), H4 config(pipeline.py의 TEMPORAL_FILTER_CONFIGS·DEEP_CONFIGS), evals/results/h4_query_transform.json을 추가했다. 회귀셋의 질문이 전부 법령 용어라 어휘 간극이 데이터에 없어 H4=H3다(둘 다 Recall@5 1.000). 그래서 data/sample/vocabulary-gap-probe.json(실무 표현 11 + 법령 표현 대조군 4)과 src/insaon/evaluation/query_probe.py, CLI query-transform-probe를 만들어 따로 측정했다: 실무 표현 회수율 H3 2/11 0.182 → H4 8/11 0.727, 대조군은 4/4 1.000 불변. 두 차례 결함을 고쳤다. (1) 무조건 확장이 회귀셋 Recall@5를 1.000 → 0.882로 떨어뜨려(예외→단서 오발화) 질문에 법령 용어가 있으면 확장하지 않는 게이트를 넣었고 두 수치를 모두 공개했다. (2) 확장어를 원문에 이어 붙이기만 하면 길이 정규화 때문에 효과가 없어 독립 질의로도 검색하고 재랭커에도 확장 질의를 넘긴다. 분류기는 확장으로 범위만 열고 leave_type은 확정하지 않는다('출산 후 언제부터 쉴 수 있나요' → REVIEW_REQUIRED, missing에 leave_type 유지). '오늘 날씨 어때'는 여전히 no_supported_topic_signal. 산출물: artifacts/spikes/query-transform/manifest.json(.gitignore 등재), evals/reports/query-transform.md, docs/adr/0019-query-transformation-boundary.md. release.py의 ABLATION_CONFIG_IDS와 evals/schemas/evaluation-result.schema.json에 H4·query_transform 추가. README·AGENTS.md의 '질의 변환 미구현' 서술 갱신. 테스트 8건 추가."
+    },
+    {
+      "step": 5,
+      "name": "failure-taxonomy",
+      "status": "completed",
+      "summary": "실패를 7종으로 분류하는 src/insaon/evaluation/failures.py를 추가했다(FAILURE_TYPES, FATAL_EQUIVALENTS로 과거 FATAL_ 라벨과의 대응 유지). 정답은 evaluation 레이어 안에서만 쓰고 런타임으로 넘기지 않는다. 관측된 유형은 5종: RETRIEVAL_MISS, WRONG_VERSION, ADJACENT_TYPE_CONFUSION, MISSING_DECISIVE_EXCEPTION, WRONG_STATUS. CITATION_INCOMPLETE와 RISKY_ANSWER는 0건이라 표에서 제외했고 지어내지 않았다. 치명적 오류는 B0 0건 · H4 0건이며, B0~H1의 0건은 안전이 아니라 답변을 만들지 않은 결과다(WRONG_STATUS 34/60 동반). 핵심 발견: 시점 선필터가 RETRIEVAL_MISS 22→0, WRONG_VERSION 34→0, WRONG_STATUS 34→0을 만드는 대신 ADJACENT_TYPE_CONFUSION 12→34, MISSING_DECISIVE_EXCEPTION 0→12를 새로 만든다. 재랭킹·문맥확장이 후자를 34→22, 12→0으로 되돌린다. EvaluationResult에 failure_types(by_type·case_ids_by_type·cases_with_any_failure) 계약을 추가하고 JSON schema·validate_eval_contract.py·evals/result_schema.md에 반영했다. 건수가 case ID 목록 길이와 다르면 검증이 실패한다. reporting.write_failures를 결과 디렉토리 기반으로 바꿔 구성별 분포표와 단계별 증감표를 생성한다. release_check의 failures 호출도 갱신했다. 공개 리포트에 질문 원문·잠금 정답이 없음을 테스트로 강제한다. 테스트 5건 추가."
+    },
+    {
+      "step": 6,
+      "name": "measurement-integrity",
+      "status": "completed",
+      "summary": "감사에서 네 가지 결함을 찾아 고쳤다. (1) 평가셋 패딩: case_id·group_id는 60개였지만 (질문+기준일+대상+기대) 조합은 12개뿐이라 모든 분모가 약 5배 부풀고 신뢰구간이 근거보다 좁았다. evals/result_schema.md의 '고유 case 수' 규칙 위반이다. 기준일 8종과 표현을 실제로 달리해 59건 전부 고유하게 재생성했고, unique_case_count를 EvaluationData·JSON schema·validate_eval_contract.py에 계약으로 추가해 두 값이 다르면 실패시킨다. (2) 적용대상 필터 미검증: 돌연변이 테스트에서 is_effective_on의 subject 절을 제거해도 274건이 전부 통과했다. corpus 전체가 한 직군이라 걸러질 조문이 없었다. 기준일에 유효하되 직군이 다른 함정 8건(SYNTH-D-*-SUBJ-*)을 추가해 corpus를 101건으로 늘리고 tests/security/test_subject_scope_filter.py 4건을 추가했다. 이제 같은 돌연변이가 잡힌다. (3) 죽은 안전 라벨: FATAL_DOCUMENT_INSTRUCTION_FOLLOWED가 FATAL_TYPES에 선언만 되고 아무 코드도 설정하지 않아 매번 0으로 공개됐다. critical_flags 기반으로 실제 구현했고, security slice 전체에 붙던 FATAL_PERSONAL_DATA_EGRESS도 personal_data_must_not_egress 플래그로 한정했다. (4) 지표 분모 오류: security.privacy_block_recall 분모가 security slice 전체라 주입 케이스까지 세어 0.500으로 보였다. 해당 플래그 케이스로 한정해 4/4 1.000. 추가로 release.py와 test_ablation_runner.py의 case_count == 60 하드코딩을 '고유하고 비어있지 않은 셋' 불변식으로 교체했다. 재측정: B0 Recall@5 0.649, 시점 버전 정확도 B0 0.615 / B1 0.923 / H2+ 1.000(패딩 셋에서는 거의 움직이지 않던 축), H3·H4 치명 0, H2 8. 테스트 288건, coverage 79%. 평가 산출 코드에 직접 테스트 10건(tests/unit/evaluation/test_result_integrity.py)을 추가했다."
+    },
+    {
+      "step": 7,
+      "name": "live-model-check",
+      "status": "completed",
+      "summary": "공개 ablation이 DeterministicReviewModel로만 실행돼 '상태 정확도 1.000'이 배관 검증인지 모델 품질인지 구분되지 않던 한계를 실측으로 채웠다. build_local_runtime(evidence_corpus=None)으로 합성 corpus 101건 + 실모델(qwen3:4b-instruct 생성·재랭킹, bge-m3 임베딩, 127.0.0.1:11434 loopback)을 묶어 잠금 평가셋 59건을 1회 실행했다(32.8분). 안전 계약 유지: 존재하지 않는 조문 인용 0/59, 무효 버전 인용 0/59, 적용대상 불일치 인용 0/59, 런타임 오류 0/59, 범위 밖·조건 누락·개인정보 22건 전부 기대대로. 검색 품질은 옮겨가지 않았다: 상태 정확도 58/59 0.983(결정적 59/59), 필수 근거 인용 31/37 0.838(오프라인 47/47 1.000), 결정적 예외 인용 6/8 0.750(오프라인 8/8 1.000). 놓친 6건은 전부 육아휴직이며 BGE-M3·Qwen 재랭커가 행정 절차·인접 유형 조문을 근거 조문 위에 놓는다. CASE-LOCKED-007은 후보가 남지 않아 생성 전 보류. 응답시간 p50 46.9s / p90 63.8s / max 65.8s, 모델 호출은 59건 중 36건. 산출물: artifacts/provider/local-model-check.json(.gitignore 등재, 기대 상태는 정답이므로 미포함), evals/reports/local-model-check.md, README에 실측 절과 한계 갱신. release_check에는 연결하지 않았다. 게이트가 모델 설치를 요구하면 모델 없이 검증 가능하다는 성질을 잃는다."
+    }
+  ]
+}

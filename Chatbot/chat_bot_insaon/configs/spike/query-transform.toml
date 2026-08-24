@@ -1,0 +1,3 @@
+probe = "data/sample/vocabulary-gap-probe.json"
+output = "artifacts/spikes/query-transform/manifest.json"
+top_k = 5

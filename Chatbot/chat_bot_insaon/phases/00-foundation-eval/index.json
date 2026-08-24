@@ -1,0 +1,27 @@
+{
+  "project": "인사ON",
+  "phase": "00-foundation-eval",
+  "steps": [
+    {
+      "step": 0,
+      "name": "project-scaffold",
+      "status": "completed",
+      "completed_at": "2026-07-29T14:43:25+09:00",
+      "summary": "FastAPI app factory와 안전한 Settings, /healthz, Python 품질 게이트, Codex/Claude Harness executor를 구현하고 8개 테스트를 통과했다."
+    },
+    {
+      "step": 1,
+      "name": "core-contracts",
+      "status": "completed",
+      "completed_at": "2026-07-29T15:04:06+09:00",
+      "summary": "프레임워크 독립 도메인 타입, 반개구간 valid_time, 세 답변 상태와 repository·retrieval·model port를 구현하고 계약 테스트를 통과했다."
+    },
+    {
+      "step": 2,
+      "name": "eval-contract",
+      "status": "completed",
+      "completed_at": "2026-07-29T15:04:06+09:00",
+      "summary": "평가 JSON Schema를 Pydantic 계약으로 연결하고 metric 불변조건, CASE-A/B/C seed와 private import 경계 검사를 구현했다."
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "phase": "Phase 1",
+  "completed_steps": [
+    "Step 1. Collect Law Inputs",
+    "Step 2. Parse Article Structure",
+    "Step 3. Compare Before and After"
+  ],
+  "status": "partial_hold",
+  "superseded_by": "OUTPUT.json — 본 파일은 해석례를 입력으로 잘못 잡았던 과거 partial 산출물. 현행 산출물 아님(historical note 전용).",
+  "basis": {
+    "selected_issue": "면세/과세구분",
+    "phase0_output": "src/skills/tax-enforcement-standard-impact/pipeline/00-issue-selection/OUTPUT.json",
+    "source_name": "국세법령정보시스템 세법해석정비",
+    "source_url": "https://taxlaw.nts.go.kr/qt/USEQTE001M.do"
+  },
+  "step1_raw_law_change_package": {
+    "source_id": "200000000000000130",
+    "source_type": "tax_interpretation_revision_case",
+    "tax_type": "VAT",
+    "tax_type_label": "부가가치세",
+    "issue": "면세/과세구분",
+    "title": "임대형 민간투자방식(BTL)에서 사업시행자가 국가로부터 지급받는 시설임대료는 부가가치세 과세대상 아님",
+    "revision_reason": "국세법령해석심의위원회의 심의를 거쳐 기존 해석사례를 변경하는 경우",
+    "before_interpretation": {
+      "doc_no": "부가가치세과-2162",
+      "doc_id": "010000000000071784",
+      "date": "2008-07-22"
+    },
+    "after_interpretation": {
+      "doc_no": "사전-2025-법규부가-0184",
+      "doc_id": "200000000000019876",
+      "date": "2026-03-30"
+    },
+    "law_change_inputs": {
+      "law_name": "부가가치세법",
+      "article_path": null,
+      "before_text": null,
+      "after_text": null,
+      "effective_date": null,
+      "application_rule": null,
+      "transition_rule": null,
+      "linked_enforcement_decree_article": null
+    },
+    "collection_flags": [
+      "article_path_missing",
+      "before_after_article_text_missing",
+      "effective_date_missing",
+      "application_rule_missing",
+      "source_is_interpretation_revision_not_law_amendment"
+    ]
+  },
+  "step2_parsed_article_structure": {
+    "parse_status": "needs_manual_review",
+    "law_name": "부가가치세법",
+    "article_no": null,
+    "paragraph_no": null,
+    "item_no": null,
+    "subitem_no": null,
+    "proviso": null,
+    "parenthetical_clause": null,
+    "supplementary_provision": null,
+    "parsed_from": [
+      "tax_type_label",
+      "revision_title"
+    ],
+    "parse_flags": [
+      "no_article_number_in_list_record",
+      "no_before_after_article_text",
+      "do_not_run_high_confidence_matching"
+    ]
+  },
+  "step3_change_deltas": {
+    "compare_status": "low_confidence",
+    "comparison_basis": "revision case metadata and title only",
+    "removed_terms": [],
+    "added_terms": [
+      "시설임대료는 부가가치세 과세대상 아님"
+    ],
+    "changed_numbers": [],
+    "changed_thresholds": [],
+    "changed_obligation_wording": [],
+    "changed_target": [
+      {
+        "term": "임대형 민간투자방식(BTL) 사업시행자가 국가로부터 지급받는 시설임대료",
+        "confidence": "inferred_from_title"
+      }
+    ],
+    "changed_effect": [
+      {
+        "term": "부가가치세 과세대상 아님",
+        "confidence": "inferred_from_title"
+      }
+    ],
+    "new_exception": [],
+    "deleted_exception": [],
+    "timing_or_application_changes": [],
+    "delta_flags": [
+      "cannot_compare_article_text_without_before_after_text",
+      "interpretation_conclusion_changed_but_underlying_law_change_not_confirmed",
+      "hold_until_related_article_and_effective_date_are_collected"
+    ]
+  },
+  "next_required_inputs_for_step4": [
+    "related VAT Act article path",
+    "before article text",
+    "after article text",
+    "effective date or application rule",
+    "directly linked Enforcement Decree article if any"
+  ]
+}

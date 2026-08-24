@@ -1,0 +1,10 @@
+{
+  "project": "Evry Times (evrytimes)",
+  "phase": "12-feedback-polish",
+  "steps": [
+    { "step": 0, "name": "home-top-greeting-fortune", "status": "completed", "summary": "#1 AppHeader paddingTop을 calc(env(safe-area-inset-top)+14px)로 올려 상단 여백 확보. #2 TodayScreen 상단 인사 카피('어제와 달라진 오늘이에요…') 제거(헤더가 브랜드를 보여 중복) — subtitleBottom은 StreakBadge만. #3 FortuneWidget 홈 카드 높이 절감·배열 정리: 별자리 슬롯 72→56, 운별 별점 4줄→2×2 그리드, '운세 보기 ›'를 헤더 오른쪽으로 올려 푸터 줄 제거(샘플일 때만 '내 생일 넣기' 푸터). App.smoke 인사 단언 2건을 '확인' 섹션으로 교체. build/test(574)/lint 통과." },
+    { "step": 1, "name": "memo-rename-box", "status": "completed", "summary": "#4 메모 '던지기' 워딩 제거 → '메모하기'. MemoWidget 입력 placeholder '한 줄 던지기'→'클릭해서 메모를 작성하세요', aria-label '메모 한 줄 던지기'→'메모 작성', 버튼 '던지기'→'메모하기', 입력 박스 또렷하게(height 44·surface 배경), 빈 상태 '클릭해서 메모를 작성해 보세요.', widget-config memo description '수시로 적는 한 줄 메모'. widgets.smoke 3건 갱신. build/test/lint 통과." },
+    { "step": 2, "name": "diary-ux", "status": "completed", "summary": "#5 일기에서 '그날 완료한 일' 섹션·CompletedTodos·doneTodos·memos 로드 제거(완료 메모는 메모/캘린더에만, 일기 비표시). #6 상단 '오늘 기분' 카드 제거, 본문(✍️ 오늘 한 편)을 위로, 맨 아래에 'RateToday'(눌러서 펼치는 '오늘 평가하기' → '오늘 하루는 어땠나요?' 별점). 기존 일기는 펼친 상태로 시작. widgets.smoke DiaryScreen 테스트를 신 UX(완료한 일 미표시·오늘 평가하기 펼침)로 재작성. build/test/lint 통과." },
+    { "step": 3, "name": "onboarding-reentry-example", "status": "completed", "summary": "#7 첫 화면(온보딩) 재진입 + 전체화면 예시. 신규 WidgetExample(풀스크린 오버레이, 위젯별 충실 정적 목업 — 외부 이미지/네트워크 0·순환의존 회피, '홈에서 이렇게 보여요' + '나중에 언제든 바꿀 수 있어요' 안내). OnboardingScreen: STEP1 항목 탭 → 예시 오버레이, mode='reconfigure'+initialSelected/initialSizes/initialSaju/preserveWeather props로 재진입 시 기존 설정 미리채움·날씨 지역 보존(finish에서 settingsFromOnboarding 결과의 regions를 preserveWeather로 덮음, 일기·메모·D-day는 별도 키라 무영향). App: reconfig 상태+startReconfigure(현재 설정 로드→풀스크린 온보딩)+finishReconfigure(refreshKey 리마운트·saju 재로딩), renderScreen이 WidgetsScreen에 onReconfigure 전달. WidgetsScreen: 상단 '✨ 홈 화면 처음부터 꾸미기' 버튼(onReconfigure)+행 아이콘/라벨 탭→예시 오버레이('예시 보기 ›'). 스모크 +3(예시 오버레이·재설정 버튼·온보딩 재설정 모드). build/test(577)/lint 통과." }
+  ]
+}

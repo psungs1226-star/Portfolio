@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-labelledby="t d">
+  <title id="t">Design Fieldbook</title>
+  <desc id="d">같은 기준선 위에 무게가 다른 두 블록, 그 아래 주황 룰.</desc>
+  <rect width="48" height="48" fill="#16161A"/>
+  <rect x="11" y="10" width="10" height="22" fill="#F7F7F4"/>
+  <rect x="25.25" y="18.25" width="12.5" height="13.5" fill="none" stroke="#F7F7F4" stroke-width="2.5"/>
+  <rect x="11" y="35" width="26" height="3" fill="#FF4D00"/>
+</svg>

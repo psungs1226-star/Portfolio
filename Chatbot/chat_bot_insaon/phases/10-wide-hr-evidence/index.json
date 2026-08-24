@@ -1,0 +1,34 @@
+{
+  "project": "인사ON",
+  "phase": "10-wide-hr-evidence",
+  "steps": [
+    {
+      "step": 0,
+      "name": "wide-source-contract",
+      "status": "completed",
+      "completed_at": "2026-08-03T12:06:10+09:00",
+      "summary": "13개 공식 공개 source, 8개 인사 topic, 3개 review tier의 keyless exact allowlist를 실제 endpoint probe와 함께 검증했다."
+    },
+    {
+      "step": 1,
+      "name": "wide-immutable-ingestion",
+      "status": "completed",
+      "completed_at": "2026-08-03T12:18:00+09:00",
+      "summary": "13개 source를 private/legal-wide에 불변 수집했고, 본문 12종에서 7,630 provision·부칙 3,605개 candidate를 생성했다. 자동 구조 감사 12/12, fatal 0, warning 0이며 사람 승인은 대기 중이다."
+    },
+    {
+      "step": 2,
+      "name": "evidence-only-retrieval",
+      "status": "completed",
+      "completed_at": "2026-08-03T12:31:00+09:00",
+      "summary": "8개 인사 topic routing과 공식 candidate 검색을 런타임에 연결했다. evidence-only 결과는 실제 citation을 반환하되 항상 REVIEW_REQUIRED로 유지한다. 혼합 leave/pay 질문은 요청 topic을 우선하고, 레인 전환 조건 오염과 유효 과거 version 부재를 회귀 테스트로 차단했다."
+    },
+    {
+      "step": 3,
+      "name": "wide-topic-evaluation",
+      "status": "completed",
+      "completed_at": "2026-08-03T13:02:00+09:00",
+      "summary": "13/13 source probe, 12/12 구조 감사와 8/8 합성 개발 routing을 분리해 공개했다. 승인자·locked legal set이 없어 B0~H3 검색·인용 지표는 모두 미측정으로 고정했다."
+    }
+  ]
+}

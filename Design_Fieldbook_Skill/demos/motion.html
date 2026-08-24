@@ -1,0 +1,561 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>모션 챕터 인터랙티브 데모</title>
+<style>
+  :root{
+    --ink:#F2F2F3; --ink-2:#A2A2AA; --ink-3:#8A8A93;
+    --bg:#0C0C0E; --bg-2:#101013; --surface:#17171A; --line:#2A2A2E; --line-2:#232327;
+    --acc-500:#FF5A1F; --acc-600:#FF6B33; --acc-ink:#16161A;
+    --ok-text:#5FD39B; --ok-bg:#11241B; --ok-line:#2C5942;
+    --err-text:#FF9B92; --err-bg:#2E1917; --err-line:#5E3330;
+    --r-s:0; --r-m:2px; --r-l:4px;
+
+    --dur-short1:50ms; --dur-short2:100ms; --dur-short3:150ms; --dur-short4:200ms;
+    --dur-medium1:250ms; --dur-medium2:300ms; --dur-medium3:350ms; --dur-medium4:400ms;
+    --dur-long1:450ms; --dur-long2:500ms; --dur-long3:550ms; --dur-long4:600ms;
+    --dur-extralong1:700ms; --dur-extralong2:800ms; --dur-extralong3:900ms; --dur-extralong4:1000ms;
+
+    --ease-standard: cubic-bezier(0.2,0,0,1);
+    --ease-standard-decel: cubic-bezier(0,0,0,1);
+    --ease-standard-accel: cubic-bezier(0.3,0,1,1);
+    --ease-emphasized-decel: cubic-bezier(0.05,0.7,0.1,1);
+    --ease-emphasized-accel: cubic-bezier(0.3,0,0.8,0.15);
+
+    --lift:-4px; --nudge:-2px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--bg); color:var(--ink);
+    font:15px/1.6 -apple-system,'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    padding:0 0 120px;
+  }
+  a{color:var(--acc-600)}
+  h1,h2,h3{font-family:'Space Grotesk','Pretendard',sans-serif; font-weight:700; line-height:1.2; margin:0 0 8px}
+  code{font-family:'JetBrains Mono',ui-monospace,'SF Mono',Menlo,monospace; background:var(--bg-2); padding:2px 6px; border-radius:var(--r-m); font-size:13px; color:var(--acc-600)}
+
+  header{padding:48px 28px 32px; border-bottom:1px solid var(--line); background:var(--bg-2)}
+  header .wrap{max-width:1040px; margin:0 auto}
+  header h1{font-size:34px}
+  header p{color:var(--ink-2); font-size:15px; max-width:640px}
+
+  main{max-width:1040px; margin:0 auto; padding:0 28px}
+  section{padding:56px 0; border-bottom:1px solid var(--line-2)}
+  section:last-child{border-bottom:none}
+  section > h2{font-size:20px; margin-bottom:6px}
+  section > .desc{color:var(--ink-2); font-size:13px; margin-bottom:24px; max-width:680px}
+
+  .panel{background:var(--surface); border:1px solid var(--line); border-radius:var(--r-l); padding:24px}
+
+  button{
+    font:inherit; cursor:pointer; border:1px solid var(--line); background:var(--bg-2); color:var(--ink);
+    padding:8px 14px; border-radius:var(--r-m); transition:transform var(--dur-short1) var(--ease-standard), background var(--dur-short2) var(--ease-standard);
+  }
+  button:hover{background:var(--line-2)}
+  button:active{transform:scale(.97)}
+  button:focus-visible{outline:2px solid var(--ink); outline-offset:2px; box-shadow:0 0 0 4px var(--bg-2)}
+  button.primary{background:var(--acc-600); border-color:var(--acc-600); color:var(--acc-ink); font-weight:600}
+  button.primary:hover{background:var(--acc-500)}
+  button[aria-pressed="true"]{background:var(--acc-600); border-color:var(--acc-600); color:var(--acc-ink)}
+
+  .row{display:flex; gap:8px; flex-wrap:wrap; align-items:center}
+
+  /* ---------- 1. Easing visualizer ---------- */
+  #easeGraph{background:var(--bg); border:1px solid var(--line); border-radius:var(--r-m)}
+  #easeGraph path{fill:none; stroke:var(--acc-500); stroke-width:2}
+  #easeGraph .grid{stroke:var(--line-2); stroke-width:1}
+  #easeGraph .dot{fill:var(--ink)}
+  .ease-lane{position:relative; height:56px; background:var(--bg); border:1px solid var(--line); border-radius:var(--r-m); margin-top:16px; overflow:hidden}
+  .ease-ball{position:absolute; top:12px; left:8px; width:32px; height:32px; border-radius:50%; background:var(--acc-500)}
+  .ease-meta{font-size:12px; color:var(--ink-3); margin-top:8px; font-family:'JetBrains Mono',monospace}
+
+  /* ---------- 2. Duration slider ---------- */
+  input[type=range]{width:100%; accent-color:var(--acc-600)}
+  .dur-lane{position:relative; height:56px; background:var(--bg); border:1px solid var(--line); border-radius:var(--r-m); margin-top:16px; overflow:hidden}
+  .dur-ball{position:absolute; top:12px; left:8px; width:32px; height:32px; border-radius:50%; background:var(--acc-500)}
+  .dur-readout{font-family:'JetBrains Mono',monospace; font-size:13px; color:var(--ink); margin-top:10px}
+  .dur-readout b{color:var(--acc-600)}
+
+  /* ---------- 3. Pattern catalog ---------- */
+  .pattern-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:16px}
+  .pattern-card h3{font-size:14px; margin-bottom:2px}
+  .pattern-card .sub{font-size:12px; color:var(--ink-3); margin-bottom:14px}
+  .pattern-stage{position:relative; height:130px; background:var(--bg); border:1px solid var(--line); border-radius:var(--r-m); overflow:hidden; display:flex; align-items:center; justify-content:center}
+  .pattern-ctrl{display:flex; gap:8px; margin-top:12px}
+  .pattern-ctrl button{flex:1; font-size:12px; padding:6px 8px}
+  .badge{font-size:10px; font-family:'JetBrains Mono',monospace; letter-spacing:.06em; padding:2px 6px; border-radius:var(--r-s); position:absolute; top:8px; left:8px; z-index:5}
+  .badge.bad{color:var(--err-text); background:var(--err-bg); border:1px solid var(--err-line)}
+  .badge.good{color:var(--ok-text); background:var(--ok-bg); border:1px solid var(--ok-line)}
+
+  .demo-box{width:64px; height:64px; background:var(--acc-500); border-radius:var(--r-m)}
+  .demo-card{width:150px; padding:14px; background:var(--surface); border:1px solid var(--line); border-radius:var(--r-m); font-size:12px}
+
+  /* fade */
+  .p-fade .demo-box{opacity:0}
+  .p-fade.show .demo-box.bad{opacity:1; transition:opacity var(--dur-extralong2) linear}
+  .p-fade.show .demo-box.good{opacity:1; transform:translateY(0); transition:opacity var(--dur-medium1) var(--ease-standard-decel), transform var(--dur-medium1) var(--ease-standard-decel)}
+  .p-fade .demo-box.good{transform:translateY(8px)}
+
+  /* slide */
+  .p-slide{justify-content:flex-start; padding:0 12px}
+  .p-slide .trigger{position:absolute; top:8px; width:22px; height:22px; border-radius:50%; background:var(--ink-3)}
+  .p-slide .trigger.right{right:8px}
+  .p-slide .panel-demo{position:absolute; top:34px; bottom:8px; width:70%; background:var(--surface); border:1px solid var(--acc-600); border-radius:var(--r-m)}
+  .p-slide.show .panel-demo.bad{left:8px; animation:slideFromLeft var(--dur-medium2) var(--ease-standard-decel)}
+  .p-slide.show .panel-demo.good{right:8px; animation:slideFromRight var(--dur-medium2) var(--ease-standard-decel)}
+  .p-slide .panel-demo{right:8px; opacity:0}
+  .p-slide.show .panel-demo{opacity:1}
+  @keyframes slideFromLeft{from{transform:translateX(-120%)} to{transform:translateX(0)}}
+  @keyframes slideFromRight{from{transform:translateX(120%)} to{transform:translateX(0)}}
+
+  /* scale */
+  .p-scale .trigger{position:absolute; bottom:10px; right:14px; width:26px; height:26px; border-radius:50%; background:var(--ink-3)}
+  .p-scale .pop{position:absolute; width:88px; height:56px; background:var(--surface); border:1px solid var(--acc-600); border-radius:var(--r-m); opacity:0; transform:scale(.6)}
+  .p-scale.show .pop{opacity:1; transform:scale(1)}
+  .p-scale.show .pop.bad{top:50%; left:50%; margin:-28px 0 0 -44px; transition:opacity var(--dur-short4) var(--ease-standard-decel), transform var(--dur-short4) var(--ease-standard-decel); transform-origin:center}
+  .p-scale.show .pop.good{bottom:44px; right:10px; transition:opacity var(--dur-short4) var(--ease-standard-decel), transform var(--dur-short4) var(--ease-standard-decel); transform-origin:bottom right}
+  .p-scale .pop.good{transform-origin:bottom right}
+
+  /* collapse */
+  .p-collapse .acc{width:80%; background:var(--surface); border:1px solid var(--line); border-radius:var(--r-m); overflow:hidden}
+  .p-collapse .acc-h{padding:8px 10px; font-size:12px; color:var(--ink-2)}
+  .p-collapse .acc-body{display:grid; grid-template-rows:0fr; transition:grid-template-rows var(--dur-medium2) var(--ease-standard)}
+  .p-collapse .acc-body > div{overflow:hidden; padding:0 10px; font-size:11px; color:var(--ink-3)}
+  .p-collapse.show .acc-body.good{grid-template-rows:1fr}
+  .p-collapse.show .acc-body.good > div{padding:0 10px 10px}
+  .p-collapse .acc-body.bad{display:block; height:0; overflow:hidden}
+  .p-collapse.show .acc-body.bad{height:auto}
+
+  /* stagger */
+  .p-stagger{flex-direction:column; align-items:flex-start; padding:14px; gap:6px; justify-content:center}
+  .p-stagger .si{width:80%; height:14px; background:var(--surface); border:1px solid var(--line); border-radius:var(--r-s); opacity:0; transform:translateY(6px)}
+  .p-stagger.show .si{animation:siIn var(--dur-short3) var(--ease-standard-decel) forwards}
+  @keyframes siIn{to{opacity:1; transform:translateY(0)}}
+
+  /* morph — good은 JS FLIP(transform만 애니메이션), 3.4 금지 패턴(transition:all·layout property) 준수 */
+  .p-morph{position:relative}
+  .p-morph .src{width:70px; height:44px; background:var(--surface); border:1px solid var(--acc-600); border-radius:var(--r-m); position:absolute}
+  .p-morph .src.bad{transition:opacity var(--dur-short4) var(--ease-standard-accel)}
+  .p-morph .detail{position:absolute; inset:8px; background:var(--surface); border:1px solid var(--line); border-radius:var(--r-m); opacity:0; font-size:11px; padding:8px; color:var(--ink-3); transition:opacity var(--dur-short4) var(--ease-standard-decel)}
+  .p-morph.show .detail{opacity:1}
+  .p-morph .src{top:44px; left:18px}
+  .p-morph.show .src.good{top:8px; left:8px; width:calc(100% - 16px); height:28px}
+  .p-morph.show .src.bad{opacity:0}
+
+  /* press */
+  .p-press .demo-card{cursor:pointer; user-select:none}
+  .p-press .demo-card.good{transition:transform var(--dur-short2) var(--ease-standard)}
+  .p-press .demo-card.good:active{transform:scale(.97)}
+  .p-press .demo-card.bad{transition:none}
+
+  /* scroll reveal */
+  .p-reveal{flex-direction:column; gap:6px; padding:10px; justify-content:center}
+  .p-reveal .sec{width:85%; height:18px; background:var(--surface); border:1px solid var(--line); border-radius:var(--r-s); opacity:0}
+  .p-reveal.show .sec.bad{animation:secIn var(--dur-medium1) var(--ease-standard-decel) forwards; animation-delay:calc(var(--i,0) * 60ms)}
+  .p-reveal.show .sec.good.only-one{animation:secIn var(--dur-medium1) var(--ease-standard-decel) forwards}
+  .p-reveal.show .sec.good.static{opacity:1}
+  @keyframes secIn{to{opacity:1}}
+
+  /* parallax */
+  .p-parallax{overflow:hidden}
+  .p-parallax .bg{position:absolute; inset:-20px; background:repeating-linear-gradient(45deg,var(--bg-2) 0 10px, var(--surface) 10px 20px)}
+  .p-parallax.show .bg.bad{animation:pxMove 1.2s linear infinite alternate}
+  .p-parallax .bg.good{inset:0}
+  @keyframes pxMove{from{transform:translateY(0)} to{transform:translateY(-24px)}}
+
+  /* ---------- 4. Gate wizard ---------- */
+  .gate-flow{max-width:560px}
+  .gate-scenario{padding:14px; background:var(--bg); border:1px dashed var(--line); border-radius:var(--r-m); font-size:13px; color:var(--ink-2); margin-bottom:20px}
+  .gate-step{display:none; padding:18px; border:1px solid var(--line); border-radius:var(--r-m); background:var(--bg)}
+  .gate-step.active{display:block}
+  .gate-step .g-title{font-size:12px; font-family:'JetBrains Mono',monospace; color:var(--acc-600); letter-spacing:.06em; margin-bottom:6px}
+  .gate-step p{margin:0 0 16px; font-size:14px}
+  .gate-result{padding:18px; border-radius:var(--r-m); display:none}
+  .gate-result.show{display:block}
+  .gate-result.pass{background:var(--ok-bg); border:1px solid var(--ok-line); color:var(--ok-text)}
+  .gate-result.fail{background:var(--err-bg); border:1px solid var(--err-line); color:var(--err-text)}
+  .gate-track{display:flex; gap:4px; margin-bottom:16px}
+  .gate-track span{flex:1; height:4px; background:var(--line); border-radius:2px}
+  .gate-track span.done{background:var(--ok-text)}
+  .gate-track span.fail{background:var(--err-text)}
+
+  /* ---------- 5. Slop comparison ---------- */
+  .slop-mock{position:relative; border:1px solid var(--line); border-radius:var(--r-l); overflow:hidden; background:var(--bg)}
+  .slop-mock .m-hero{padding:32px 20px; text-align:center}
+  .slop-mock .m-hero h3{font-size:20px}
+  .slop-mock .m-hero p{color:var(--ink-3); font-size:12px}
+  .slop-mock .m-cards{display:grid; grid-template-columns:repeat(3,1fr); gap:10px; padding:0 20px 24px}
+  .slop-mock .m-card{background:var(--surface); border:1px solid var(--line); border-radius:var(--r-m); padding:14px; font-size:11px; color:var(--ink-2)}
+  .slop-mock .m-cta{display:block; margin:0 auto 24px; }
+  .slop-mock .blob{position:absolute; width:160px; height:160px; border-radius:50%; background:radial-gradient(circle,rgba(255,90,31,.35),transparent 70%); top:-60px; right:-60px; filter:blur(10px)}
+  .slop.slop-mode .blob{animation:blobFloat 3s ease-in-out infinite alternate}
+  @keyframes blobFloat{from{transform:translate(0,0)} to{transform:translate(-16px,20px)}}
+  .slop.slop-mode .m-hero, .slop.slop-mode .m-cards .m-card{opacity:0; animation:mIn var(--dur-medium2) var(--ease-standard-decel) forwards}
+  .slop.slop-mode .m-cards .m-card:nth-child(1){animation-delay:80ms}
+  .slop.slop-mode .m-cards .m-card:nth-child(2){animation-delay:160ms}
+  .slop.slop-mode .m-cards .m-card:nth-child(3){animation-delay:240ms}
+  @keyframes mIn{from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:translateY(0)}}
+  .slop.slop-mode .m-cards .m-card{transition:transform var(--dur-short3) var(--ease-standard)}
+  .slop.slop-mode .m-cards .m-card:hover{transform:translateY(-4px)}
+  .slop:not(.slop-mode) .m-cta{transition:transform var(--dur-short2) var(--ease-standard)}
+  .slop:not(.slop-mode) .m-cta:hover{transform:translateY(-2px)}
+
+  footer{max-width:1040px; margin:0 auto; padding:32px 28px; color:var(--ink-3); font-size:12px}
+
+  @media (prefers-reduced-motion: reduce){
+    *, *::before, *::after{
+      animation-duration:0.01ms !important;
+      animation-iteration-count:1 !important;
+      transition-duration:0.01ms !important;
+      scroll-behavior:auto !important;
+    }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <h1>모션 챕터 인터랙티브 데모</h1>
+    <p>design-fieldbook 스킬의 <code>references/motion.md</code>에 정의된 duration·easing 토큰, 9종 패턴, 4-gate 필터, 슬롭 시그니처를 직접 조작하며 확인한다. 이 페이지 자체도 <code>prefers-reduced-motion</code>을 지킨다.</p>
+  </div>
+</header>
+
+<main>
+
+  <!-- 1. Easing curve visualizer -->
+  <section>
+    <h2>1. 이징 곡선 시각화</h2>
+    <p class="desc">motion.md §3.2의 easing 토큰 5개. 곡선을 선택하고 재생하면 그 커브 그대로 공이 움직인다 — 그래프의 기울기가 급한 구간일수록 실제로도 빠르게 지나간다.</p>
+    <div class="panel">
+      <div class="row" id="easeTabs" role="tablist" aria-label="이징 토큰 선택"></div>
+      <div class="row" style="margin-top:16px; align-items:flex-start; gap:24px; flex-wrap:wrap">
+        <svg id="easeGraph" width="220" height="220" viewBox="0 0 220 220" role="img" aria-label="선택된 이징 곡선 그래프"></svg>
+        <div style="flex:1; min-width:220px">
+          <button class="primary" id="easePlay">재생 ▸</button>
+          <div class="ease-lane"><div class="ease-ball" id="easeBall"></div></div>
+          <div class="ease-meta" id="easeMeta"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2. Duration slider -->
+  <section>
+    <h2>2. Duration 슬라이더</h2>
+    <p class="desc">motion.md §3.1의 duration 16단계(50ms~1000ms). 슬라이더를 옮기면 같은 이동 거리를 그 duration으로 재생해 체감 속도를 비교한다.</p>
+    <div class="panel">
+      <input type="range" id="durSlider" min="0" max="15" step="1" value="4" />
+      <div class="dur-readout" id="durReadout"></div>
+      <button class="primary" id="durPlay" style="margin-top:12px">재생 ▸</button>
+      <div class="dur-lane"><div class="dur-ball" id="durBall"></div></div>
+    </div>
+  </section>
+
+  <!-- 3. Pattern catalog -->
+  <section>
+    <h2>3. 패턴 카탈로그 (9종)</h2>
+    <p class="desc">motion.md 4절. 각 카드에서 Bad/Good을 토글하고 "실행"을 눌러 차이를 직접 본다.</p>
+    <div class="pattern-grid" id="patternGrid"></div>
+  </section>
+
+  <!-- 4. 4-gate decision tree -->
+  <section>
+    <h2>4. 4-gate 필터 의사결정 트리</h2>
+    <p class="desc">motion.md §6.4의 실제 워크스루: "카드에 hover 시 그림자가 커지며 3D로 살짝 기운다"에 4개 게이트를 순서대로 적용한다.</p>
+    <div class="panel gate-flow">
+      <div class="gate-scenario">검토 대상: <strong>카드 hover 시 그림자 확대 + 3D 기울임(perspective tilt)</strong></div>
+      <div class="gate-track" id="gateTrack"></div>
+      <div class="gate-step active" data-gate="1">
+        <div class="g-title">GATE 1 · FREQUENCY</div>
+        <p>이 카드 그리드는 얼마나 자주 hover되는가? — 반복 노출이 잦지만, hover는 사용자의 의도적 동작이다.</p>
+        <div class="row"><button class="primary" data-next="pass" data-gate="1">통과 — Gate 2로</button></div>
+      </div>
+      <div class="gate-step" data-gate="2">
+        <div class="g-title">GATE 2 · PURPOSE</div>
+        <p>이 모션은 상태 변화·공간 관계·주의 유도 중 무엇을 전달하는가?</p>
+        <div class="row">
+          <button data-next="fail" data-gate="2" data-reason="그림자 확대는 '클릭 가능함'을 전달하지만, 3D 기울임은 아무 정보도 전달하지 않는 순수 장식이다.">3D 기울임은 순수 장식이다 — 탈락</button>
+          <button data-next="pass" data-gate="2">정보를 전달한다 — Gate 3로</button>
+        </div>
+      </div>
+      <div class="gate-step" data-gate="3">
+        <div class="g-title">GATE 3 · SPEED</div>
+        <p>§3 토큰표에서 이 요소에 맞는 duration·easing을 찾을 수 있는가?</p>
+        <div class="row"><button class="primary" data-next="pass" data-gate="3">찾음 (hover는 short3 · standard) — Gate 4로</button></div>
+      </div>
+      <div class="gate-step" data-gate="4">
+        <div class="g-title">GATE 4 · FUNCTION</div>
+        <p><code>prefers-reduced-motion</code>·hover capability·60fps 규칙을 지키는가?</p>
+        <div class="row"><button class="primary" data-next="pass" data-gate="4">지킨다 — 최종 승인</button></div>
+      </div>
+      <div class="gate-result" id="gateResult"></div>
+      <div class="row" style="margin-top:16px"><button id="gateReset">다시 시작</button></div>
+    </div>
+  </section>
+
+  <!-- 5. Slop comparison -->
+  <section>
+    <h2>5. 슬롭 시그니처 비교</h2>
+    <p class="desc">motion.md §5.1. 같은 미니 랜딩페이지를 슬롭 버전(<code>SLOP-FADE-UP-ALL</code> + <code>SLOP-HOVER-LIFT-ALL</code> + <code>SLOP-AMBIENT-LOOP</code>)과 절제 버전(signature motion 1개만)으로 토글한다.</p>
+    <div class="panel">
+      <div class="row" style="margin-bottom:16px">
+        <button id="slopBtn" aria-pressed="true">슬롭 버전</button>
+        <button id="cleanBtn" aria-pressed="false">절제 버전</button>
+        <button id="slopReplay">다시 재생 ▸</button>
+      </div>
+      <div class="slop-mock slop slop-mode" id="slopMock">
+        <div class="blob"></div>
+        <div class="m-hero">
+          <h3>Design that works.</h3>
+          <p>슬롭 버전: 모든 섹션 fade-up + 모든 카드 hover lift + 배경 무한 루프</p>
+        </div>
+        <div class="m-cards">
+          <div class="m-card">Feature 1</div>
+          <div class="m-card">Feature 2</div>
+          <div class="m-card">Feature 3</div>
+        </div>
+        <button class="primary m-cta">Get Started</button>
+      </div>
+      <div class="ease-meta" id="slopLabel" style="margin-top:10px"></div>
+    </div>
+  </section>
+
+</main>
+
+<footer>design-fieldbook · references/motion.md 기반 인터랙티브 데모 · 사람용 학습 자료(에이전트는 로드하지 않음)</footer>
+
+<script>
+  const $ = (s,c=document)=>c.querySelector(s);
+  const $$ = (s,c=document)=>[...c.querySelectorAll(s)];
+
+  /* ---------- 1. Easing visualizer ---------- */
+  const EASES = [
+    {id:'standard', label:'standard', curve:[0.2,0,0,1], desc:'화면 내 이동·변형 기본값'},
+    {id:'standard-decel', label:'standard-decel', curve:[0,0,0,1], desc:'등장(entrance)'},
+    {id:'standard-accel', label:'standard-accel', curve:[0.3,0,1,1], desc:'퇴장(exit)'},
+    {id:'emphasized-decel', label:'emphasized-decel', curve:[0.05,0.7,0.1,1], desc:'강조 등장'},
+    {id:'emphasized-accel', label:'emphasized-accel', curve:[0.3,0,0.8,0.15], desc:'강조 퇴장'},
+  ];
+  let curEase = EASES[0];
+
+  function drawEaseGraph(e){
+    const P = 20, S = 180; // padding, size
+    const [x1,y1,x2,y2] = e.curve;
+    const toX = t => P + t*S;
+    const toY = v => P + S - v*S; // y=0 at bottom, y=1 at top (invert since v can exceed [0,1] for emphasized-ish curves, clamp)
+    let d = `M ${toX(0)} ${toY(0)} C ${toX(x1)} ${toY(y1)} ${toX(x2)} ${toY(y2)} ${toX(1)} ${toY(1)}`;
+    const grid = [0,.25,.5,.75,1].map(t=>
+      `<line class="grid" x1="${toX(t)}" y1="${P}" x2="${toX(t)}" y2="${P+S}"/>` +
+      `<line class="grid" x1="${P}" y1="${toY(t)}" x2="${P+S}" y2="${toY(t)}"/>`
+    ).join('');
+    $('#easeGraph').innerHTML = grid +
+      `<path d="${d}"/>` +
+      `<circle class="dot" cx="${toX(0)}" cy="${toY(0)}" r="3"/>` +
+      `<circle class="dot" cx="${toX(1)}" cy="${toY(1)}" r="3"/>`;
+    $('#easeMeta').textContent = `cubic-bezier(${e.curve.join(', ')}) — ${e.desc}`;
+  }
+
+  function buildEaseTabs(){
+    const wrap = $('#easeTabs');
+    wrap.innerHTML = EASES.map(e=>`<button role="tab" aria-selected="${e.id===curEase.id}" data-id="${e.id}">${e.label}</button>`).join('');
+    wrap.addEventListener('click', ev=>{
+      const b = ev.target.closest('button'); if(!b) return;
+      curEase = EASES.find(e=>e.id===b.dataset.id);
+      buildEaseTabs(); drawEaseGraph(curEase);
+    });
+  }
+  buildEaseTabs(); drawEaseGraph(curEase);
+
+  $('#easePlay').addEventListener('click', ()=>{
+    const ball = $('#easeBall');
+    ball.style.transition = 'none';
+    ball.style.left = '8px';
+    void ball.offsetWidth;
+    const laneW = $('.ease-lane').clientWidth - 40;
+    ball.style.transition = `left 900ms cubic-bezier(${curEase.curve.join(',')})`;
+    ball.style.left = (8+laneW) + 'px';
+  });
+
+  /* ---------- 2. Duration slider ---------- */
+  const DURS = [
+    ['short1','50ms'],['short2','100ms'],['short3','150ms'],['short4','200ms'],
+    ['medium1','250ms'],['medium2','300ms'],['medium3','350ms'],['medium4','400ms'],
+    ['long1','450ms'],['long2','500ms'],['long3','550ms'],['long4','600ms'],
+    ['extralong1','700ms'],['extralong2','800ms'],['extralong3','900ms'],['extralong4','1000ms'],
+  ];
+  function renderDur(){
+    const i = +$('#durSlider').value;
+    $('#durReadout').innerHTML = `<b>--dur-${DURS[i][0]}</b> · ${DURS[i][1]}`;
+  }
+  $('#durSlider').addEventListener('input', renderDur);
+  renderDur();
+  $('#durPlay').addEventListener('click', ()=>{
+    const i = +$('#durSlider').value;
+    const ms = DURS[i][1];
+    const ball = $('#durBall');
+    ball.style.transition = 'none';
+    ball.style.left = '8px';
+    void ball.offsetWidth;
+    const laneW = $('.dur-lane').clientWidth - 40;
+    ball.style.transition = `left ${ms} var(--ease-standard)`;
+    ball.style.left = (8+laneW) + 'px';
+  });
+
+  /* ---------- 3. Pattern catalog ---------- */
+  const PATTERNS = [
+    {id:'fade', name:'4.1 Fade', sub:'opacity 단독 vs opacity+translate',
+      stage:`<div class="demo-box bad"></div><div class="demo-box good" style="display:none"></div>`},
+    {id:'slide', name:'4.2 Slide', sub:'트리거 위치에 앵커된 방향',
+      stage:`<div class="trigger right"></div><div class="panel-demo bad"></div><div class="panel-demo good" style="display:none"></div>`},
+    {id:'scale', name:'4.3 Scale', sub:'modal center vs popover origin',
+      stage:`<div class="trigger"></div><div class="pop bad"></div><div class="pop good" style="display:none"></div>`},
+    {id:'collapse', name:'4.4 Collapse/Expand', sub:'height:auto 문제와 대안',
+      stage:`<div class="acc"><div class="acc-h">아코디언 헤더</div><div class="acc-body bad"><div>내용이 여기 있다. height:auto는 애니메이션이 안 돼 순간 팝(jump)한다.</div></div><div class="acc-body good" style="display:none"><div>내용이 여기 있다. grid-template-rows 0fr→1fr는 부드럽게 확장된다.</div></div></div>`},
+    {id:'stagger', name:'4.5 Stagger', sub:'delay 간격과 최대 개수',
+      stage:`<div id="staggerItems"></div>`},
+    {id:'morph', name:'4.6 Morph/Shared-element', sub:'container transform',
+      stage:`<div class="src bad"></div><div class="src good" style="display:none"></div><div class="detail" style="display:none">상세: 제목 · 이미지가 카드에서 이어진다</div>`},
+    {id:'press', name:'4.7 Press feedback', sub:'scale(.97) 100–150ms',
+      stage:`<div class="demo-card bad">Bad: 클릭해도 반응 없음</div><div class="demo-card good" style="display:none">Good: 눌러보세요</div>`},
+    {id:'reveal', name:'4.8 Scroll-reveal', sub:'슬롭의 진원지',
+      stage:`<div id="revealItems"></div>`},
+    {id:'parallax', name:'4.9 패럴랙스/Scroll-jacking', sub:'원칙적 금지',
+      stage:`<div class="bg bad"></div><div class="bg good" style="display:none"></div>`},
+  ];
+
+  const grid = $('#patternGrid');
+  grid.innerHTML = PATTERNS.map(p=>`
+    <div class="pattern-card panel">
+      <h3>${p.name}</h3>
+      <div class="sub">${p.sub}</div>
+      <div class="pattern-stage p-${p.id}" data-mode="bad">
+        <span class="badge bad">BAD</span>
+        ${p.stage}
+      </div>
+      <div class="pattern-ctrl">
+        <button data-act="toggle" data-id="${p.id}">Good 보기</button>
+        <button class="primary" data-act="play" data-id="${p.id}">실행 ▸</button>
+      </div>
+    </div>
+  `).join('');
+
+  // stagger items build
+  const staggerHost = $('#staggerItems');
+  function buildStagger(mode){
+    const n = mode==='bad' ? 8 : 6;
+    staggerHost.innerHTML = Array.from({length:n},(_,i)=>`<div class="si" style="animation-delay:${i*(mode==='bad'?500:80)}ms"></div>`).join('');
+  }
+  buildStagger('bad');
+
+  const revealHost = $('#revealItems');
+  function buildReveal(mode){
+    if(mode==='bad'){
+      revealHost.innerHTML = Array.from({length:4},(_,i)=>`<div class="sec bad" style="--i:${i}"></div>`).join('');
+    } else {
+      revealHost.innerHTML = `<div class="sec good only-one"></div><div class="sec good static"></div><div class="sec good static"></div><div class="sec good static"></div>`;
+    }
+  }
+  buildReveal('bad');
+
+  grid.addEventListener('click', ev=>{
+    const b = ev.target.closest('button'); if(!b) return;
+    const id = b.dataset.id;
+    const stage = $(`.p-${id}`);
+    const card = b.closest('.pattern-card');
+
+    if(b.dataset.act === 'toggle'){
+      const toGood = stage.dataset.mode === 'bad';
+      stage.dataset.mode = toGood ? 'good' : 'bad';
+      $(`.badge`, stage).className = 'badge ' + (toGood?'good':'bad');
+      $(`.badge`, stage).textContent = toGood ? 'GOOD' : 'BAD';
+      b.textContent = toGood ? 'Bad 보기' : 'Good 보기';
+      $$('.bad', stage).forEach(el=>{ el.style.display = toGood?'none':''; });
+      $$('.good', stage).forEach(el=>{ el.style.display = toGood?'':'none'; });
+      if(id==='stagger') buildStagger(toGood?'good':'bad');
+      if(id==='reveal') buildReveal(toGood?'good':'bad');
+      stage.classList.remove('show');
+    }
+
+    if(b.dataset.act === 'play'){
+      stage.classList.remove('show'); void stage.offsetWidth;
+      // morph good은 FLIP: 최종 지오메트리를 즉시 적용하고 transform으로만 되감아 재생 (§6.3 transform+opacity only)
+      const morphGood = (id==='morph' && stage.dataset.mode==='good') ? $('.src.good', stage) : null;
+      let first = null;
+      if(morphGood){ morphGood.style.transition='none'; morphGood.style.transform=''; first = morphGood.getBoundingClientRect(); }
+      stage.classList.add('show');
+      if(morphGood){
+        const last = morphGood.getBoundingClientRect();
+        morphGood.style.transformOrigin = 'top left';
+        morphGood.style.transform = `translate(${first.left-last.left}px, ${first.top-last.top}px) scale(${first.width/last.width}, ${first.height/last.height})`;
+        void morphGood.offsetWidth;
+        morphGood.style.transition = 'transform var(--dur-medium3) var(--ease-emphasized-decel)';
+        morphGood.style.transform = '';
+      }
+      if(id==='stagger') buildStagger(stage.dataset.mode);
+      if(id==='reveal') buildReveal(stage.dataset.mode);
+    }
+  });
+
+  /* ---------- 4. Gate wizard ---------- */
+  const gateSteps = $$('.gate-step');
+  const gateTrack = $('#gateTrack');
+  gateTrack.innerHTML = '<span></span><span></span><span></span><span></span>';
+
+  function showGate(n){
+    gateSteps.forEach(s=>s.classList.toggle('active', +s.dataset.gate===n));
+  }
+  function markTrack(n, status){
+    const seg = gateTrack.children[n-1];
+    seg.className = status;
+  }
+  $('.gate-flow').addEventListener('click', ev=>{
+    const b = ev.target.closest('button[data-next]'); if(!b) return;
+    const g = +b.dataset.gate;
+    if(b.dataset.next === 'fail'){
+      markTrack(g, 'fail');
+      $('#gateResult').className = 'gate-result show fail';
+      $('#gateResult').innerHTML = `<strong>Gate ${g}에서 탈락 — SLOP 판정.</strong><br>${b.dataset.reason}<br><br>재설계안: 그림자 확대(정보 전달)는 유지하고, 3D 기울임(순수 장식)만 제거한다.`;
+      gateSteps.forEach(s=>s.classList.remove('active'));
+    } else {
+      markTrack(g, 'done');
+      if(g < 4){ showGate(g+1); }
+      else {
+        $('#gateResult').className = 'gate-result show pass';
+        $('#gateResult').innerHTML = `<strong>4개 게이트 전부 통과 — 최종 승인.</strong><br>그림자 확대 hover 모션은 short3(150ms) · standard easing으로 구현한다.`;
+        gateSteps.forEach(s=>s.classList.remove('active'));
+      }
+    }
+  });
+  $('#gateReset').addEventListener('click', ()=>{
+    [...gateTrack.children].forEach(s=>s.className='');
+    $('#gateResult').className = 'gate-result';
+    showGate(1);
+  });
+  showGate(1);
+
+  /* ---------- 5. Slop comparison ---------- */
+  const slopMock = $('#slopMock');
+  function setSlop(isSlop){
+    slopMock.classList.toggle('slop-mode', isSlop);
+    $('#slopBtn').setAttribute('aria-pressed', String(isSlop));
+    $('#cleanBtn').setAttribute('aria-pressed', String(!isSlop));
+    $('#slopLabel').textContent = isSlop
+      ? 'SLOP-FADE-UP-ALL + SLOP-HOVER-LIFT-ALL + SLOP-AMBIENT-LOOP 전부 적용 — 아무것도 강조되지 않는다'
+      : '섹션은 즉시 노출, signature motion은 CTA hover 하나뿐 — 나머지는 조용하다';
+    replaySlop();
+  }
+  function replaySlop(){
+    slopMock.style.animation = 'none';
+    $$('.m-hero, .m-card', slopMock).forEach(el=>{ el.style.animation='none'; void el.offsetWidth; el.style.animation=''; });
+  }
+  $('#slopBtn').addEventListener('click', ()=>setSlop(true));
+  $('#cleanBtn').addEventListener('click', ()=>setSlop(false));
+  $('#slopReplay').addEventListener('click', replaySlop);
+  setSlop(true);
+</script>
+</body>
+</html>

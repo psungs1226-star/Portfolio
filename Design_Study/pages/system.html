@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="ko" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>디자인 시스템 · Design Fieldbook</title>
+<meta name="description" content="Design Fieldbook 10장 — 디자인 시스템.">
+<link rel="icon" href="../assets/fieldbook-mark.svg">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="../assets/app.css">
+<script>(function(){var t=localStorage.getItem('dkm-theme');if(t)document.documentElement.setAttribute('data-theme',t);})();</script>
+</head>
+<body>
+<div id="progress"></div>
+
+<header class="header" id="header">
+  <div class="header-in">
+    <a class="brand" href="../index.html">
+      <img class="brand-mark" src="../assets/fieldbook-mark.svg" alt="">
+      Design&nbsp;Fieldbook
+    </a>
+    <nav class="nav" aria-label="메인 내비게이션">
+      <a href="../index.html">Roadmap</a>
+      <a href="principles.html">Principles</a>
+      <a href="styles.html">Styles</a>
+      <a href="compare.html">Compare</a>
+      <a href="relation.html">Relations</a>
+      <a href="layouts.html">Layouts</a>
+      <a href="ui.html">UI</a>
+      <a href="type.html">Type</a>
+      <a href="color.html">Color</a>
+      <a href="a11y.html">A11y</a>
+      <a href="system.html" class="active">System</a>
+      <a href="analyzer.html">Analyze</a>
+    </nav>
+    <div class="header-right">
+      <div class="search" id="searchWrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+        <input type="text" id="globalSearch" placeholder="스타일 · 레이아웃 · 패턴 검색…" autocomplete="off" aria-label="전체 검색"
+               role="combobox" aria-expanded="false" aria-controls="searchResults" aria-autocomplete="list">
+        <div class="search-results" id="searchResults" role="listbox" aria-label="검색 결과"></div>
+        <span class="sr-only" id="srCount" aria-live="polite"></span>
+      </div>
+      <button class="icon-btn search-toggle" id="searchToggle" aria-label="검색 열기" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </button>
+      <button class="icon-btn" id="favBtn" aria-label="즐겨찾기">
+        <svg id="favIconStar" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17.2 6.6 20l1-6.1L3.2 9.5l6.1-.9z"/></svg>
+        <span class="badge" id="favBadge">0</span>
+      </button>
+      <button class="icon-btn" id="themeBtn" aria-label="테마 전환">
+        <svg id="themeIconLight" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.9 4.9l1.4 1.4m11.4 11.4 1.4 1.4M2 12h2m16 0h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>
+        <svg id="themeIconDark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+<section class="section study-section" id="system" style="background:var(--bg-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)">
+  <div class="container">
+    <span class="section-id">10</span>
+    <div class="section-row">
+      <div class="section-head">
+        <span class="section-num">10 · DESIGN SYSTEM</span>
+        <h1>토큰과 컴포넌트로<br>반복을 없앤다</h1>
+        <p>디자인 시스템은 컴포넌트 모음이 아니라 <b>결정을 한 번만 내리는 장치</b>다. 이 챕터의 예제는 전부 이 사이트다 — 정리하기 전과 후를 그대로 싣는다.</p>
+      </div>
+      <div class="st-legend">
+        <span>아래 토큰 표는 지금 이 페이지에서 실제로 읽어온 값이다</span>
+        <span>테마를 바꾸면 값도 함께 바뀐다</span>
+      </div>
+    </div>
+
+    <h2 class="sys-h">토큰이 없으면 이렇게 된다</h2>
+    <p class="sys-lead">이 사이트를 만들 때 나는 토큰을 <b>선언만 하고 쓰지 않았다.</b> <code>:root</code>에 radius 토큰 3개를 정의해 놓고 실제 CSS에는 15가지 값이 흩어져 있었다. 아래는 정리 전후를 실제로 센 것이다.</p>
+    <div class="sys-table" id="sysBefore"></div>
+
+    <h2 class="sys-h">두 개의 디자인 언어가 겹쳐 있었다</h2>
+    <p class="sys-lead">더 큰 문제는 개수가 아니었다. CSS가 사실상 두 레이어였고 <b>뒤쪽 레이어가 앞쪽을 선택적으로만 덮어썼다.</b> 그래서 둥근 모달 안에 각진 박스가 들어가는 화면이 나왔다. 시스템이 없으면 이런 충돌은 눈으로 찾을 수밖에 없다.</p>
+    <div class="sys-layers">
+      <div class="sys-layer">
+        <b>레이어 A — 소프트 · 카드</b>
+        <span>radius 14px · 본문 13px · 그림자로 띄우는 카드</span>
+      </div>
+      <div class="sys-vs">겹침</div>
+      <div class="sys-layer">
+        <b>레이어 B — 에디토리얼 · 보드</b>
+        <span>radius 0 · 본문 15px · 1px 룰로 구획</span>
+      </div>
+    </div>
+    <p class="sys-lead">해결은 새로 디자인하는 게 아니라 <b>이미 내린 결정을 끝까지 적용하는 것</b>이었다. B로 통일하고 A의 죽은 선언을 지웠다. 같은 파일에서 중복 선언 19쌍이 사라졌다.</p>
+
+    <h2 class="sys-h">지금 살아 있는 토큰</h2>
+    <p class="sys-lead">아래 값은 하드코딩이 아니라 <code>getComputedStyle</code>로 지금 이 문서에서 읽어온 것이다. 헤더의 테마 버튼을 누르면 색 토큰이 함께 바뀐다.</p>
+    <div class="sys-tokens" id="sysTokens"></div>
+
+    <h2 class="sys-h">만들지 않은 토큰</h2>
+    <p class="sys-lead">간격에는 <code>--sp-1</code>…<code>--sp-8</code> 같은 범용 스케일을 <b>일부러 만들지 않았다.</b> 이 사이트의 간격은 이미 2px 그리드 위에 있었고(정리 후 100%), 실제로 쓰이는 값은 8·10·12·14·16·18·20px에 고르게 퍼져 있다. 여기에 6~8단 스케일을 얹으면 절반 이상을 1~2px씩 움직여야 하는데, 그래봐야 남는 건 "가짓수가 줄었다" 하나뿐이고, 대신 손으로 맞춰둔 밀도를 잃는다.</p>
+    <p class="sys-lead">그래서 <b>여러 곳에서 같아야만 하는 역할</b>에만 이름을 붙였다 — 섹션 리듬(<code>--pad-sec</code>)과 페이지 여백(<code>--pad-x</code>). 이 둘은 챕터마다 달라지면 즉시 티가 나고, 반응형 재정의도 한 곳에서 끝나야 한다. <b>쓰이지 않을 토큰을 선언하는 것은 이 챕터가 처음에 지적한 문제 그 자체다.</b></p>
+
+    <h2 class="sys-h">토큰 → 컴포넌트 → 패턴</h2>
+    <p class="sys-lead">시스템은 세 층으로 쌓인다. 아래로 갈수록 매번 정해야 할 것이 줄어든다.</p>
+    <div class="sys-steps">
+      <div class="sys-step"><em>01</em><b>Token</b><span>색·크기·간격 같은 <b>원자값</b>에 이름을 붙인다. <code>--acc-500</code>은 "주황"이 아니라 "액센트"라는 <b>역할</b>이다. 그래서 다크 모드에서 값이 바뀌어도 이름은 그대로다.</span></div>
+      <div class="sys-step"><em>02</em><b>Component</b><span>토큰을 조합해 재사용 단위를 만든다. 버튼은 색을 직접 고르지 않고 <code>--acc-500</code>을 가리킨다. 컴포넌트가 값을 모르는 것이 핵심이다.</span></div>
+      <div class="sys-step"><em>03</em><b>Pattern Library</b><span>컴포넌트를 <b>언제 쓰는지</b>까지 적는다. 이 사이트의 UI 패턴 챕터가 그것이다 — 18개 패턴 각각에 Use / Avoid / Mistake가 붙어 있다.</span></div>
+    </div>
+    <div class="sys-cta">
+      <a class="btn btn-ghost" href="ui.html">UI 패턴 라이브러리 보기</a>
+      <a class="btn btn-ghost" href="color.html">컬러 시스템 보기</a>
+    </div>
+  </div>
+</section>
+</main>
+<nav class="chapter-nav container" aria-label="챕터 이동">
+  <a class="cn-link prev" href="a11y.html">
+    <i>09</i>
+    <span><em>← 이전 챕터</em><b>접근성</b></span>
+  </a>
+  <span class="cn-pos">10 / 11</span>
+  <a class="cn-link next" href="analyzer.html">
+    <i>11</i>
+    <span><em>다음 챕터 →</em><b>디자인 분석기</b></span>
+  </a>
+</nav>
+<div class="modal-backdrop" id="styleModal">
+  <div class="modal" role="dialog" aria-modal="true">
+    <div class="modal-pv" id="modalPv"></div>
+    <button class="modal-close" id="modalClose" aria-label="닫기">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="favModal">
+  <div class="modal" role="dialog" aria-modal="true" style="max-width:760px">
+    <div class="modal-body">
+      <div class="modal-top" style="justify-content:space-between">
+        <h2>즐겨찾기</h2>
+        <button class="btn btn-ghost btn-sm" id="favModalClose">닫기</button>
+      </div>
+      <p class="modal-def">LocalStorage에 저장되어 브라우저를 닫아도 유지됩니다.</p>
+      <div class="st-grid" id="favGrid" style="margin-top:24px"></div>
+      <div class="empty-state" id="favEmpty" hidden>
+        <div><b>아직 즐겨찾기가 없습니다</b><p>스타일 카드의 ☆를 눌러 저장해보세요.</p></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" id="lyModal">
+  <div class="modal" role="dialog" aria-modal="true" style="max-width:880px">
+    <div class="modal-body">
+      <div class="modal-top" style="justify-content:space-between">
+        <h2 id="lyModalTitle"></h2>
+        <button class="btn btn-ghost btn-sm" id="lyModalClose">닫기</button>
+      </div>
+      <div class="ly-toggle" id="lyModalToggle" style="margin-top:18px">
+        <button data-m="wire" class="on">WIREFRAME</button>
+        <button data-m="real">REALISTIC</button>
+      </div>
+      <div class="ly-pv" id="lyModalPv" style="height:320px;position:relative;border:1px solid var(--line-2);border-radius:var(--r-m);overflow:hidden;margin-top:12px;background:var(--bg-2)"></div>
+      <div class="ly-detail-grid" style="margin-top:30px">
+        <div>
+          <h3 role="presentation" style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:12px">ANATOMY — 영역 hover 시 강조</h3>
+          <div class="ly-an-grid" id="lyAnatomy"></div>
+        </div>
+        <div>
+          <h4 style="font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);margin-bottom:12px">WHEN TO USE</h4>
+          <div class="feature-row"><b>01</b><span id="lyModalUse"></span></div>
+          <p id="lyModalDesc" style="font-size:13.5px;color:var(--ink-2);line-height:1.65;margin-top:14px"></p>
+          <div class="ly-meta" style="margin-top:20px;padding-top:12px;border-top:1px solid var(--line)">실사용 예 · <span id="lyModalEx" class="mono" style="color:var(--ink-3)"></span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="globalToast"></div>
+<button class="back-top" id="backTop" aria-label="맨 위로">
+  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 19V5m0 0-6 6m6-6 6 6"/></svg>
+</button>
+
+<nav class="chapter-nav container" id="chapterNav" aria-label="챕터 이동" hidden></nav>
+
+<footer class="footer">
+  <div class="container">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-brand"><img class="brand-mark" src="../assets/fieldbook-mark.svg" alt="">Design Fieldbook</div>
+        <p>처음 디자인을 배우는 사람을 위한 인터랙티브 디자인 교과서. 용어를 읽고, 직접 만든 예시를 보고, 실제 사이트를 분석한다.</p>
+      </div>
+      <div class="foot-col">
+        <h5>Encyclopedia</h5>
+        <a href="../index.html">Learning Roadmap</a>
+        <a href="styles.html">Style Encyclopedia</a>
+        <a href="layouts.html">Layout Encyclopedia</a>
+        <a href="color.html">Color System</a>
+      </div>
+      <div class="foot-col">
+        <h5>Practice</h5>
+        <a href="ui.html">UI Pattern Library</a>
+        <a href="type.html">Typography Lab</a>
+        <a href="a11y.html">Accessibility</a>
+        <a href="system.html">Design System</a>
+        <a href="analyzer.html">Design Analyzer</a>
+      </div>
+      <div class="foot-col">
+        <h5>Notes</h5>
+        <a href="analyzer.html">분석 체크리스트</a>
+        <a href="styles.html">☆ 즐겨찾기 사용법</a>
+        <a href="#" data-scrolltop>맨 위로 ↑</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Design Fieldbook — interactive design textbook</span>
+      <span>Made for designers who design.</span>
+    </div>
+  </div>
+</footer>
+
+
+<script src="../assets/app.js" defer></script>
+</body>
+</html>

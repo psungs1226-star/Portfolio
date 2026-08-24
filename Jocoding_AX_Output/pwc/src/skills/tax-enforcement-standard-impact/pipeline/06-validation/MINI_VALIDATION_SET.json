@@ -1,0 +1,149 @@
+{
+  "phase": "Phase 6",
+  "artifact": "mini_validation_set",
+  "status": "completed_in_use_scored_by_phase6",
+  "purpose": "제41조(토지임대부 분양주택 부수토지 임대용역 면세) 개정 1건에 대해, 동일축(주택·부수토지·면세) positive와 인접 negative/hold로 파이프라인 로직만 sanity-check 하기 위한 소형 검증셋. 통계적 recall/precision이 목적이 아니라 (가)류 로직 오류(키워드 오탐, 근거 없는 고점수, 신규주제 오분류)를 걸러내는 게이트.",
+  "axis": {
+    "selected_issue": "면세/과세구분",
+    "target_axis": "주택·부수토지 임대 면세 (부가가치세법 제26조 제1항 제12호 / 시행령 제41조)",
+    "law_change_under_test": "부가가치세법 시행령 제41조 2024-07-01 적용 개정 (토지임대부 분양주택 부수토지 임대용역 면세 신설)"
+  },
+  "scoring_note": "positive는 대부분 Phase 2 집행기준 본문 수집 후에야 실제 채점 가능. 현재는 각 케이스의 expected outcome과 방어 대상 failure label만 확정.",
+  "cases": [
+    {
+      "case_id": "P1-standard-26-41-housing-lease",
+      "type": "enforcement_standard_topic",
+      "related_law_article": "부가가치세법 제26조 제1항 제12호 / 시행령 제41조 제1항 제1호",
+      "description": "주택과 이에 부수되는 토지의 임대 용역 면세 범위를 서술하는 집행기준 문단(상시주거용 주택+부수토지, 면적 기준).",
+      "expected_status": "positive",
+      "expected_should_surface": true,
+      "expected_match_stage": "Direct Link",
+      "expected_impact_type": "Direct article impact / Target impact",
+      "expected_confidence": "high",
+      "guards_failure_label": ["Missed article link", "Recall"],
+      "source_status": "to_collect_in_phase2"
+    },
+    {
+      "case_id": "P2-standard-41-area-threshold",
+      "type": "enforcement_standard_topic",
+      "related_law_article": "부가가치세법 시행령 제41조 제2항",
+      "description": "부수토지 면적 기준(연면적/정착면적 배수) 초과분 면세 제외를 서술하는 집행기준 문단. 개정으로 제1항 내포에서 제2항으로 분리됨.",
+      "expected_status": "positive",
+      "expected_should_surface": true,
+      "expected_match_stage": "Logic Match",
+      "expected_impact_type": "Effect impact / Exception impact",
+      "expected_confidence": "medium",
+      "guards_failure_label": ["Logic extraction error", "Recall"],
+      "source_status": "to_collect_in_phase2"
+    },
+    {
+      "case_id": "P3-new-topic-land-lease-housing",
+      "type": "new_review_topic",
+      "related_law_article": "부가가치세법 시행령 제41조 제1항 제2호 (신설) / 주택법 제2조 제6호·제9호",
+      "description": "토지임대부 분양주택(국민주택규모 한정) 부수토지 임대용역 면세. 신설 대상이라 대응 집행기준이 없을 가능성이 큼.",
+      "expected_status": "positive",
+      "expected_should_surface": true,
+      "expected_match_stage": "Direct Link (신설 조문)",
+      "expected_impact_type": "Target impact (신규 대상 추가)",
+      "expected_confidence": "high",
+      "expected_branch_if_no_standard": "new review topic with no enforcement standard candidate",
+      "guards_failure_label": ["Interpretation example treated as primary standard", "New-topic branch coverage"],
+      "source_status": "new_added_by_amendment"
+    },
+    {
+      "case_id": "N1-btl-facility-lease",
+      "type": "interpretation_revision_case",
+      "case_ref": "200000000000000130",
+      "title": "임대형 민간투자방식(BTL)에서 사업시행자가 국가로부터 지급받는 시설임대료는 부가가치세 과세대상 아님",
+      "shared_tempting_keywords": ["임대", "임대료"],
+      "expected_status": "negative",
+      "expected_should_surface": false,
+      "expected_reason": "‘임대’ 키워드는 겹치나 국가 지급 시설임대료의 과세대상 여부이고 주택·부수토지 면세 범위와 무관. Hard Filter 또는 Logic Match에서 제외.",
+      "guards_failure_label": ["Keyword false positive"]
+    },
+    {
+      "case_id": "N2-lupin-seed-exemption",
+      "type": "interpretation_revision_case",
+      "case_ref": "000000000000000929",
+      "title": "루핀종자를 정선하여 껍질과 알곡으로 분리 판매하는 경우 부가가치세 면제 여부",
+      "shared_tempting_keywords": ["면세", "면제"],
+      "expected_status": "negative",
+      "expected_should_surface": false,
+      "expected_reason": "면세 키워드만 공유. 미가공식료품 축으로 주택임대와 완전히 다른 조문.",
+      "guards_failure_label": ["Keyword false positive"]
+    },
+    {
+      "case_id": "N3-education-lecture-exemption",
+      "type": "interpretation_revision_case",
+      "case_ref": "000000000000000858",
+      "title": "출장강의가 면세대상 교육용역에 포함되는지 여부",
+      "shared_tempting_keywords": ["면세", "용역"],
+      "expected_status": "negative",
+      "expected_should_surface": false,
+      "expected_reason": "교육용역 면세 축. 주택·부수토지와 무관.",
+      "guards_failure_label": ["Keyword false positive", "Wrong issue tag"]
+    },
+    {
+      "case_id": "N4-finance-similar-service-exemption",
+      "type": "interpretation_revision_case",
+      "case_ref": "000000000000000663",
+      "title": "주된 사업에 부수하여 금융보험 유사용역을 제공하는 경우 부가가치세 면제",
+      "shared_tempting_keywords": ["면제", "부수"],
+      "expected_status": "negative",
+      "expected_should_surface": false,
+      "expected_reason": "‘부수’ 키워드 트랩(부수용역 vs 부수토지). 금융보험 축으로 제외되어야 함.",
+      "guards_failure_label": ["Keyword false positive"]
+    },
+    {
+      "case_id": "N5-transfer-agent-payment-invoice",
+      "type": "interpretation_revision_case",
+      "case_ref": "000000000000000860",
+      "title": "사업양수도 대가 분할 지급 시 대리납부·세금계산서 가산세 적용 여부",
+      "shared_tempting_keywords": ["과세구분"],
+      "expected_status": "negative",
+      "expected_should_surface": false,
+      "expected_reason": "세금계산서·대리납부·가산세 축. 면세 범위 개정과 무관한 절차 이슈.",
+      "guards_failure_label": ["Wrong issue tag"]
+    },
+    {
+      "case_id": "H1-officetel-exempt-conversion",
+      "type": "interpretation_revision_case",
+      "case_ref": "000000000000000837",
+      "title": "오피스텔 면세전용 시 과세시점 및 가산세 부과 여부",
+      "shared_tempting_keywords": ["주택", "면세", "오피스텔"],
+      "expected_status": "hold",
+      "expected_should_surface": false,
+      "expected_reason": "주택·면세와 인접해 유혹적이나 쟁점은 면세전용 간주공급의 과세시점/가산세이지 제41조 면세 범위가 아님. 근거 부족으로 hold 처리되어야 하며 positive로 오르면 안 됨.",
+      "guards_failure_label": ["No evidence but scored too high", "Hold quality"]
+    },
+    {
+      "case_id": "H2-mixed-business-tax-base",
+      "type": "interpretation_revision_case",
+      "case_ref": "000000000000000836",
+      "title": "과면세 겸영사업자가 사업 개시 전 사업권 양도 시 과세표준",
+      "shared_tempting_keywords": ["과면세", "면세"],
+      "expected_status": "hold",
+      "expected_should_surface": false,
+      "expected_reason": "과면세 겸영 맥락으로 면세와 인접하나 과세표준 산정 이슈. 제41조 대상/요건과 직접 연결 근거 없음 → hold.",
+      "guards_failure_label": ["No evidence but scored too high", "Hold quality"]
+    },
+    {
+      "case_id": "H3-concession-exempt-conversion",
+      "type": "interpretation_revision_case",
+      "case_ref": "000000000000000821",
+      "title": "기부채납으로 부여받은 시설관리운영권의 면세전용 간주공급 적용 여부",
+      "shared_tempting_keywords": ["면세전용", "면세"],
+      "expected_status": "hold",
+      "expected_should_surface": false,
+      "expected_reason": "면세전용 키워드 공유하나 관리운영권 간주공급 축. 제41조 주택 부수토지 면세 범위와 직접 근거 없음 → hold.",
+      "guards_failure_label": ["No evidence but scored too high", "Hold quality"]
+    }
+  ],
+  "expected_summary": {
+    "positive": 3,
+    "negative": 5,
+    "hold": 3,
+    "pass_condition": "positive 3건 surface, negative 5건 미surface(키워드 트랩 통과), hold 3건은 positive로 승격되지 않고 hold. 하나라도 어기면 해당 guards_failure_label의 규칙을 Phase 6 step 05에서 보정 후 재실행."
+  },
+  "gate_role": "이 미니셋 통과 = 로직 (가)류 오류 없음으로 판단하고 재실행형 패키징(A)으로 진행. 통계적 검증은 이벤트 다수 확보 후 별도."
+}

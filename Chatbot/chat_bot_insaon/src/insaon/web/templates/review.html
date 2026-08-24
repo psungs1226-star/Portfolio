@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="지방공무원 인사 공개 규정 검색·검토 지원 챗봇">
+  <title>인사ON · 지방공무원 인사규정 챗봇</title>
+  <link rel="icon" href="../static/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../static/dashboard.css?v=20260808">
+  <script src="../static/file-preview.js?v=20260803"></script>
+</head>
+<body>
+<section class="file-preview" aria-labelledby="file-preview-title">
+  <div class="file-preview-card launcher-card">
+    <header class="launcher-brand">
+      <span class="brand-mark" aria-hidden="true">인</span>
+      <span><strong>인사ON</strong><small>인사규정 근거 질문</small></span>
+    </header>
+    <div class="launcher-copy">
+      <h1 id="file-preview-title">한 번 눌러 대시보드 열기</h1>
+      <p>별도 인증 없이 내 컴퓨터에서 인사ON 챗봇을 실행합니다.</p>
+    </div>
+    <ul class="launcher-features" aria-label="자동 실행 항목">
+      <li><span aria-hidden="true">01</span>필요한 로컬 모델 확인</li>
+      <li><span aria-hidden="true">02</span>인사ON 자동 시작</li>
+      <li><span aria-hidden="true">03</span>브라우저에서 챗봇 열기</li>
+    </ul>
+    <a class="file-preview-link launcher-primary" id="dashboard-launch" href="insaon://launch">
+      <span>대시보드 열기</span><span aria-hidden="true">→</span>
+    </a>
+    <p class="launcher-status" id="launcher-status" role="status" aria-live="polite">기본 실행은 로컬 모델이며 외부 인증 정보가 필요 없습니다.</p>
+    <div class="launcher-fallback" id="launcher-fallback" hidden>
+      <p>대시보드 창이 열리지 않았다면 프로젝트 폴더의 <code>InsaON Launcher.app</code>을 한 번 연 뒤 다시 눌러 주세요.</p>
+      <a href="http://127.0.0.1:8000/">이미 실행 중인 대시보드 확인</a>
+    </div>
+  </div>
+</section>
+<div class="template-definitions" aria-hidden="true">
+{% set condition_labels = {
+  "employee_system": "공무원 체계",
+  "employee_category": "직군",
+  "topic": "검토 업무",
+  "leave_type": "휴직 유형",
+  "allowance_type": "수당 유형",
+  "allowance_period": "정근수당 산정 반기",
+  "reference_date": "질문 기준일",
+  "reinstatement_date": "복직일",
+  "leave_periods": "이번 휴직 기간",
+  "prior_same_child_leave_months": "같은 자녀의 기존 육아휴직 개월",
+  "salary_on_payment_date": "지급일 재직·봉급 지급 여부",
+  "disciplinary_action_in_period": "산정기간 중 징계 여부",
+  "other_nonservice_periods": "직위해제 등 제외기간",
+  "annual_salary_exclusion_applies": "정근수당 별도 미지급 연봉제 여부",
+  "child_order": "자녀 순서",
+  "expanded_parental_leave_eligibility": "육아휴직 산입 확대 요건",
+  "child_birth_date": "자녀 출생일",
+  "same_child": "동일 자녀 여부",
+  "medical_leave_basis": "질병휴직 사유 구분",
+  "care_recipient_relation": "돌봄 대상과의 관계",
+  "application_purpose": "자기개발휴직 신청 목적",
+  "previous_leave_periods": "기존 휴직 기간",
+  "spouse_usage": "배우자 사용 여부",
+  "local_rule_checked": "기관 규정 확인"
+} %}
+{% set reason_labels = {
+  "out_of_scope": "현재 지원 범위를 벗어난 질문",
+  "unsupported_subject_or_topic": "지원 대상·업무 범위를 벗어난 질문",
+  "evidence_only_human_review": "공개 근거를 한 번 더 확인해 주세요",
+  "candidate_corpus_unapproved": "공식 원문을 함께 확인해 주세요",
+  "wide_corpus_unavailable": "공식 자료를 불러오지 못했어요",
+  "derived_pay_corpus_unavailable": "정근수당 자료를 불러오지 못했어요",
+  "required_regular_allowance_evidence_missing": "필요한 근거를 모두 찾지 못했어요",
+  "required_parental_evidence_missing": "육아휴직의 사유·기간·복직 근거를 모두 찾지 못했어요",
+  "required_medical_evidence_missing": "질병휴직의 사유·기간·복직 근거를 모두 찾지 못했어요",
+  "ambiguous_leave_type": "휴직 유형을 구분할 추가 정보 필요",
+  "required_conditions_missing": "필수 조건 확인 필요",
+  "local_rule_unconfirmed": "기관 규정 확인 필요",
+  "privacy_input_blocked": "개인정보 의심 입력 차단",
+  "reference_date_required": "질문 기준일 확인 필요",
+  "decisive_exception_missing": "결론을 바꿀 수 있는 예외 근거 부족",
+  "provider_unavailable": "답변 모델을 불러오지 못했어요",
+  "model_recommends_human_review": "추가 확인이 필요해요",
+  "model_recommends_insufficient_evidence": "답변할 근거가 부족해요",
+  "normal_case_assumptions_applied": "위 가정을 기준으로 확인했어요",
+  "invalid_effective_version": "기준일에 유효한 규정 버전 확인 필요",
+  "temporal_fallback": "시점 검증 없이 참고용 조문을 검색했어요",
+  "citation_id_not_found": "검증 가능한 인용 근거 부족",
+  "local_rule_conflict": "기관 규정 충돌 가능성 확인 필요",
+  "supplementary_interpretation_required": "부칙 적용 여부의 사람 검토 필요",
+  "resident_registration_number": "주민등록번호 형식 감지",
+  "phone_number": "전화번호 형식 감지",
+  "employee_number": "사번 형식 감지",
+  "email": "이메일 형식 감지"
+} %}
+{% set claim_kind_labels = {
+  "review_position": "검토 결과",
+  "basis": "근거",
+  "exception": "예외",
+  "next_check": "유의사항"
+} %}
+{% set assumed_condition_labels = {
+  "prior_same_child_leave_months": "같은 자녀 육아휴직 1년 이내",
+  "salary_on_payment_date": "지급기준일 재직·봉급",
+  "disciplinary_action_in_period": "징계 등 지급 제외 없음",
+  "other_nonservice_periods": "징계 등 지급 제외 없음",
+  "annual_salary_exclusion_applies": "징계 등 지급 제외 없음"
+} %}
+{% set assumption_summary = namespace(labels=[]) %}
+{% if initial_response %}
+  {% for condition in initial_response.assumed_conditions %}
+    {% set assumption_label = assumed_condition_labels.get(condition, condition_labels.get(condition, "추가 가정 조건")) %}
+    {% if assumption_label not in assumption_summary.labels %}
+      {% set assumption_summary.labels = assumption_summary.labels + [assumption_label] %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+{% set visible_condition_names = ["leave_type", "allowance_period", "reference_date", "reinstatement_date", "leave_periods", "child_birth_date", "previous_leave_periods", "medical_leave_basis", "care_recipient_relation", "application_purpose"] %}
+{% set visible_conditions = namespace(items=[]) %}
+{% if initial_response %}
+  {% for condition in initial_response.confirmed_conditions %}
+    {% if condition in visible_condition_names %}
+      {% set visible_conditions.items = visible_conditions.items + [condition] %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+</div>
+<a class="skip-link" href="#question">질문 입력으로 바로가기</a>
+<div
+  class="app-shell {% if initial_response %}has-result{% else %}is-empty{% endif %}"
+  id="dashboard-app"
+  data-session-id="{{ initial_response.session_id if initial_response else '' }}"
+  data-runtime-profile="{{ runtime_profile }}"
+>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="인사ON 홈">
+      <span class="brand-mark" aria-hidden="true">인</span>
+      <span><strong>인사ON</strong><small>지방공무원 인사규정</small></span>
+    </a>
+    <div class="topbar-context">
+      <span class="scope-dot" aria-hidden="true"></span>
+      지방공무원 공개 규정 기반
+    </div>
+    <div class="topbar-actions">
+      <a class="new-review topbar-new" href="/"><span aria-hidden="true">＋</span> 새 대화</a>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <section class="chat-column conversation-panel" aria-labelledby="workspace-title">
+      <header class="workspace-header">
+        <div>
+          <p class="eyebrow">인사ON 대화</p>
+          <h1 id="workspace-title">인사규정 근거 질문</h1>
+          <p>질문 기준일에 유효한 공개 근거를 찾아 드려요. 휴직·복직은 필요한 조건까지 확인해 결론을 정리하고, 그 밖의 인사 영역은 근거 조문을 찾아 담당자 검토로 넘겨요.</p>
+        </div>
+        <div class="workspace-tools">
+          <div class="workspace-state" id="workspace-state">
+            <span class="state-indicator {% if initial_response and initial_response.status == 'ANSWERABLE' %}answerable{% elif initial_response and initial_response.status == 'REVIEW_REQUIRED' %}review-required{% elif initial_response %}insufficient-evidence{% else %}neutral{% endif %}" aria-hidden="true"></span>
+            <span id="workspace-state-label">
+              {% if not initial_response %}질문을 입력해 주세요
+              {% elif initial_response.status == "ANSWERABLE" %}근거를 확인했어요
+              {% elif initial_response.status == "REVIEW_REQUIRED" and initial_response.assumed_conditions %}조건부 확인
+              {% elif initial_response.status == "REVIEW_REQUIRED" and initial_response.claims and not initial_response.missing_conditions and initial_response.citations %}원문 확인이 필요해요
+              {% elif initial_response.status == "REVIEW_REQUIRED" %}조금만 더 알려주세요
+              {% elif "unsupported_subject_or_topic" in initial_response.review_reasons %}지원 범위를 벗어난 질문이에요
+              {% else %}답변할 근거가 부족해요{% endif %}
+            </span>
+          </div>
+          <a class="mobile-evidence-link" href="#evidence-rail">근거와 유의사항 보기 ↓</a>
+        </div>
+      </header>
+
+      <div class="privacy-notice" role="note">
+        <span class="notice-icon" aria-hidden="true">!</span>
+        <p><strong>실제 개인정보를 입력하지 마십시오.</strong> 공개 규정과 비식별 예시만 사용해 주세요.</p>
+        <button class="notice-close" type="button" aria-label="안내 닫기">×</button>
+      </div>
+
+      <div class="conversation" id="conversation" aria-live="polite" aria-busy="false">
+        {% if initial_response %}
+        <article class="message user-message">
+          <div class="user-message-body">
+            <div class="message-meta"><span>나</span><span>방금 전</span></div>
+            <p>{{ initial_question }}</p>
+          </div>
+        </article>
+        <article class="message assistant-message">
+          <div class="assistant-avatar" aria-hidden="true">인</div>
+          <div class="message-content">
+            <div class="message-meta"><span>인사ON</span><span>방금 전</span></div>
+            <div class="answer-status status-{{ initial_response.status|lower }}">
+              {% if initial_response.status == "ANSWERABLE" %}근거 확인 완료
+              {% elif initial_response.status == "REVIEW_REQUIRED" and initial_response.assumed_conditions %}조건부 확인
+              {% elif initial_response.status == "REVIEW_REQUIRED" and initial_response.missing_conditions %}조금만 더 알려주세요
+              {% elif initial_response.status == "REVIEW_REQUIRED" %}원문 확인 필요
+              {% elif "unsupported_subject_or_topic" in initial_response.review_reasons %}지원 범위 밖
+              {% else %}근거 부족{% endif %}
+            </div>
+            {% if initial_response.missing_conditions %}
+              {% if "allowance_type" in initial_response.confirmed_conditions %}
+                {% if assumption_summary.labels %}
+                <p class="answer-assumptions-inline" role="note">
+                  <strong>가정</strong>
+                  <span>{{ assumption_summary.labels|join(" · ") }}. 이 조건을 기준으로 확인했어요. 조건이 다르면 실제 조건으로 다시 질문해 주세요.</span>
+                </p>
+                {% endif %}
+              {% set core_followup = namespace(count=0, lines=[]) %}
+              {% if "allowance_period" in initial_response.missing_conditions or "reference_date" in initial_response.missing_conditions %}
+                {% set core_followup.count = core_followup.count + 1 %}
+                {% set core_followup.lines = core_followup.lines + ["정근수당 산정 반기: ____년 상반기 / 하반기"] %}
+              {% endif %}
+              {% if "reinstatement_date" in initial_response.missing_conditions %}
+                {% set core_followup.count = core_followup.count + 1 %}
+                {% set core_followup.lines = core_followup.lines + ["복직일: ____-__-__"] %}
+              {% endif %}
+              {% if "leave_periods" in initial_response.missing_conditions %}
+                {% set core_followup.count = core_followup.count + 1 %}
+                {% set core_followup.lines = core_followup.lines + ["이번 육아휴직 기간: ____-__-__ ~ ____-__-__"] %}
+              {% endif %}
+              <p class="answer-copy answer-prompt-copy">{% if core_followup.count %}지급률을 확인하려면 아래 {{ core_followup.count }}가지만 더 알려주세요.{% else %}{{ initial_response.short_answer }}{% endif %}</p>
+              <div class="followup-card compact-followup" aria-label="추가로 필요한 조건">
+                <div class="followup-actions followup-chip-row">
+                  {% if "allowance_period" in initial_response.missing_conditions or "reference_date" in initial_response.missing_conditions %}
+                  <button type="button" class="followup-chip" data-followup="allowance_period">산정 반기</button>
+                  {% endif %}
+                  {% if "reinstatement_date" in initial_response.missing_conditions %}
+                  <button type="button" class="followup-chip" data-followup="reinstatement_date">복직일</button>
+                  {% endif %}
+                  {% if "leave_periods" in initial_response.missing_conditions %}
+                  <button type="button" class="followup-chip" data-followup="leave_periods">이번 육아휴직 기간</button>
+                  {% endif %}
+                  {% if core_followup.count > 1 %}
+                  <button type="button" class="followup-chip followup-example" data-followup-example="{{ core_followup.lines|join('\n') }}">한 번에 답하기</button>
+                  {% endif %}
+                  {% for condition in initial_response.missing_conditions %}
+                    {% if condition not in ["allowance_period", "reference_date", "reinstatement_date", "leave_periods"] %}
+                    <button type="button" class="followup-chip" data-followup="{{ condition }}">{{ condition_labels.get(condition, "추가 확인 항목") }}</button>
+                    {% endif %}
+                  {% endfor %}
+                </div>
+              </div>
+              {% else %}
+              <p class="answer-copy">{{ initial_response.short_answer }}</p>
+              <div class="followup-card compact-followup" aria-label="추가로 필요한 조건">
+                <div class="followup-actions followup-chip-row">
+                  {% for condition in initial_response.missing_conditions %}
+                  <button type="button" class="followup-chip" data-followup="{{ condition }}">{{ condition_labels.get(condition, "추가 확인 항목") }}</button>
+                  {% endfor %}
+                </div>
+              </div>
+              {% endif %}
+            {% else %}
+            <p class="answer-copy">{{ initial_response.short_answer }}</p>
+              {% if assumption_summary.labels %}
+              <p class="answer-assumptions-inline" role="note">
+                <strong>가정</strong>
+                <span>{{ assumption_summary.labels|join(" · ") }}. 이 조건을 기준으로 확인했어요. 조건이 다르면 실제 조건으로 다시 질문해 주세요.</span>
+              </p>
+              {% endif %}
+              {% set basis_claims = initial_response.claims|selectattr("kind", "equalto", "basis")|list %}
+              {% if basis_claims %}
+              <div class="answer-basis-summary">
+                <strong>근거 요약</strong>
+                <p>{{ basis_claims[0].text }}</p>
+              </div>
+              {% endif %}
+            {% endif %}
+            {% if initial_response.citations %}
+            <a class="answer-evidence-link" href="#evidence-rail">관련 근거 {{ initial_response.citations|length }}건 보기 <span aria-hidden="true">→</span></a>
+            {% endif %}
+          </div>
+        </article>
+        {% else %}
+        <section class="empty-state" id="empty-state" aria-labelledby="empty-title">
+          <div class="empty-symbol" aria-hidden="true">
+            <span>인</span>
+          </div>
+          <h2 id="empty-title">무엇을 확인할까요?</h2>
+          <p>임용·복무·평정·승진·보수·수당·징계·교육훈련·퇴직과 휴직·복직 질문을 입력해 주세요.</p>
+        </section>
+        {% endif %}
+      </div>
+
+      <form class="composer question-panel" id="review-form">
+        <div class="composer-box">
+          <label for="question" class="sr-only">검토 질문 입력</label>
+          <textarea
+            id="question"
+            name="question"
+            rows="1"
+            maxlength="2000"
+            placeholder="예: 2026년 8월 1일 기준 승진임용 관련 공개 근거 조문을 찾아주세요."
+            aria-describedby="composer-help form-error"
+            required
+          ></textarea>
+          <div class="composer-actions">
+            <label class="rule-check">
+              <input type="checkbox" id="local-rule-checked">
+              <span>기관 규정을 직접 확인했어요</span>
+            </label>
+            <div>
+              <span class="keyboard-hint">⌘/Ctrl + Enter</span>
+              <button class="send-button" type="submit" aria-keyshortcuts="Control+Enter Meta+Enter">
+                <span>보내기</span><span aria-hidden="true">→</span>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="composer-meta">
+          <p id="composer-help"><strong>개인정보 입력 금지</strong> · 실제 직원 정보는 입력하지 마세요.</p>
+          <span id="character-count" aria-live="polite">0 / 2000</span>
+        </div>
+        <p class="form-error" id="form-error" role="alert"></p>
+      </form>
+
+      {% if not initial_response %}
+      <section class="quick-prompts" id="quick-prompts" aria-labelledby="quick-prompts-title">
+        <h2 class="sr-only" id="quick-prompts-title">예시 질문</h2>
+        <div class="prompt-grid" aria-label="예시 질문">
+          <button type="button" class="prompt-card" data-prompt="2026년 8월 1일 기준, 2022년 5월 1일생 자녀의 육아휴직 후 복직 근거를 찾아주세요. 같은 자녀의 이전 육아휴직은 없습니다.">
+            <span>육아휴직·복직</span>
+          </button>
+          <button type="button" class="prompt-card" data-prompt="2026년 8월 1일 기준 비공무상 질병휴직 후 복직에 적용되는 공개 근거를 찾아주세요.">
+            <span>질병휴직·복직</span>
+          </button>
+          <button type="button" class="prompt-card" data-prompt="2026년 8월 1일 기준 부모를 돌보기 위한 가족돌봄휴직 근거를 찾아주세요.">
+            <span>가족돌봄휴직</span>
+          </button>
+          <button type="button" class="prompt-card" data-prompt="2026년 8월 1일 기준 승진임용 관련 공개 근거 조문을 찾아주세요.">
+            <span>근무성적평정·승진</span>
+          </button>
+          <button type="button" class="prompt-card" data-prompt="2026년 8월 1일 기준 징계 종류에 관한 공개 근거 조문을 찾아주세요.">
+            <span>징계·소청</span>
+          </button>
+          <button type="button" class="prompt-card" data-prompt="2026년 8월 1일 기준 수당 지급 요건 공개 근거 조문을 찾아주세요.">
+            <span>보수·수당</span>
+          </button>
+        </div>
+      </section>
+      {% endif %}
+    </section>
+
+    <aside class="evidence-rail evidence-panel" id="evidence-rail" aria-label="근거와 유의사항">
+      <div class="rail-panel" id="panel-review">
+        <section class="rail-section" aria-labelledby="conditions-title">
+          <div class="section-heading">
+            <div><p class="panel-kicker">질문 내용</p><h2 id="conditions-title">확인한 조건</h2></div>
+            <span class="count-badge" id="condition-count">{{ visible_conditions.items|length if initial_response else 0 }}</span>
+          </div>
+          <div class="condition-list" id="condition-list">
+            {% if initial_response %}
+              {% for condition in visible_conditions.items %}
+              <div class="condition-item confirmed"><span aria-hidden="true">✓</span><div><strong>{{ condition_labels.get(condition, "추가 확인 항목") }}</strong><small>질문에서 확인했어요</small></div></div>
+              {% endfor %}
+            {% else %}
+              <div class="rail-empty"><span aria-hidden="true">○</span><p>질문을 입력하면 확인한 조건을<br>여기에 정리해 드려요.</p></div>
+            {% endif %}
+          </div>
+        </section>
+
+        <section class="rail-section evidence-section" aria-labelledby="evidence-title">
+          <div class="section-heading">
+            <div><p class="panel-kicker">답변 근거</p><h2 id="evidence-title">관련 조문</h2></div>
+            <span class="count-badge" id="citation-count">{{ initial_response.citations|length if initial_response else 0 }}</span>
+          </div>
+          <div class="citation-list" id="citation-list">
+            {% if initial_response and initial_response.citations %}
+              {% for citation in initial_response.citations %}
+              <article class="citation-card">
+                <div class="citation-topline"><span>{{ citation.source_name|replace("합성 법령 시나리오", "예시 규정 자료") }}</span><span>{{ citation.effective_from }} 기준</span></div>
+                <h3>{{ citation.article_path|replace("합성 ", "") }}</h3>
+                <p class="citation-explanation">
+                  {% if "allowance_type" in initial_response.confirmed_conditions and citation.source_name == "지방공무원 수당 등에 관한 규정" and ("제6조 제1항 제1호" in citation.article_path or "제6조 제1항 제2호" in citation.article_path) %}「지방공무원 수당 등에 관한 규정」 {{ citation.article_path|replace("합성 ", "") }}에 따라 지급기준일 재직 여부와 봉급 지급 여부를 확인합니다.
+                  {% elif "allowance_type" in initial_response.confirmed_conditions and citation.source_name == "지방공무원 수당 등에 관한 규정" and "제6조 제2항" in citation.article_path %}「지방공무원 수당 등에 관한 규정」 제6조 제2항에 따라 산입 대상 육아휴직 기간은 실제 근무기간으로 봅니다.
+                  {% elif "allowance_type" in initial_response.confirmed_conditions and citation.source_name == "지방공무원 보수규정" and "제14조 제3호의2" in citation.article_path %}「지방공무원 보수규정」 제14조 제3호의2에 따라 같은 자녀의 육아휴직은 기본 1년까지 실제 근무기간에 산입합니다.
+                  {% elif "allowance_type" in initial_response.confirmed_conditions and citation.source_name == "지방공무원 수당 등에 관한 규정" and "제19조 제10항" in citation.article_path %}「지방공무원 수당 등에 관한 규정」 제19조 제10항에 따라 정근수당 별도 미지급 연봉제 대상인지 확인합니다.
+                  {% else %}답변에 적용된 조문과 시행일을 확인해 주세요.{% endif %}
+                </p>
+                <button
+                  type="button"
+                  class="source-preview-button"
+                  aria-haspopup="dialog"
+                  data-source-name="{{ citation.source_name|replace('합성 법령 시나리오', '예시 규정 자료') }}"
+                  data-source-article="{{ citation.article_path|replace('합성 ', '') }}"
+                  data-source-effective="{{ citation.effective_from }}{% if citation.effective_to %} ~ {{ citation.effective_to }} 전{% endif %}"
+                  data-source-excerpt="{{ citation.excerpt or '원문 발췌를 제공하지 않습니다.' }}"
+                  data-source-url="{{ citation.source_url }}"
+                >발췌 보기 <span aria-hidden="true">→</span></button>
+              </article>
+              {% endfor %}
+            {% else %}
+              <div class="rail-empty"><span aria-hidden="true">⌕</span><p>답변에 사용한 조문과<br>짧은 설명이 여기에 표시돼요.</p></div>
+            {% endif %}
+          </div>
+        </section>
+
+        <section class="rail-section review-boundary" aria-labelledby="boundary-title">
+          <p class="panel-kicker">유의사항</p>
+          <h2 id="boundary-title">확인해 주세요</h2>
+          <dl>
+            <div><dt>기관 규정</dt><dd id="local-rule-status">{{ "확인했어요" if initial_response and initial_response.local_rule_status == "checked" else "별도 확인이 필요해요" }}</dd></div>
+            <div><dt>자료 확인일</dt><dd id="data-as-of">{{ initial_response.data_as_of if initial_response and initial_response.data_as_of else "—" }}</dd></div>
+          </dl>
+          <div id="review-reasons">
+            {% if initial_response and initial_response.review_reasons %}
+            <ul>{% for reason in initial_response.review_reasons %}<li>{{ reason_labels.get(reason, reason) }}</li>{% endfor %}</ul>
+            {% else %}
+            <p>답변과 함께 확인할 유의사항을 여기에 표시해요.</p>
+            {% endif %}
+          </div>
+          <div id="review-limitations">
+            {% if initial_response and initial_response.limitations %}
+            <ul>{% for limitation in initial_response.limitations %}<li>{{ limitation }}</li>{% endfor %}</ul>
+            {% else %}
+            <p>결과는 최종 인사처분 또는 법률해석을 대신하지 않습니다. 질문 기준일의 원문과 기관 규정을 함께 확인해 주세요.</p>
+            {% endif %}
+          </div>
+          <div class="review-actions">
+            <button type="button" class="secondary-button" id="copy-review">결과 복사</button>
+            <span id="copy-status" aria-live="polite"></span>
+          </div>
+        </section>
+      </div>
+
+    </aside>
+  </main>
+</div>
+<dialog class="source-dialog" id="source-dialog" aria-labelledby="source-dialog-title">
+  <div class="source-dialog-inner">
+    <header class="source-dialog-header">
+      <div>
+        <p class="panel-kicker">원문 발췌</p>
+        <h2 id="source-dialog-title">관련 조문</h2>
+      </div>
+      <button type="button" class="source-dialog-close" data-source-dialog-close aria-label="원문 발췌 닫기">×</button>
+    </header>
+    <p class="source-dialog-meta" id="source-dialog-meta"></p>
+    <blockquote class="source-dialog-body" id="source-dialog-body"></blockquote>
+    <div class="source-dialog-actions">
+      <button type="button" class="secondary-button" data-source-dialog-close>닫기</button>
+      <a id="source-dialog-external" href="#" target="_blank" rel="noreferrer">국가법령정보센터에서 전체 원문 보기 <span aria-hidden="true">↗</span></a>
+    </div>
+  </div>
+</dialog>
+<script src="../static/dashboard.js?v=20260808" defer></script>
+</body>
+</html>

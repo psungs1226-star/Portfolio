@@ -1,0 +1,42 @@
+{
+  "probe_id": "insaon-quantity-grounding-probe",
+  "version": "0.1.0",
+  "purpose": "잠금 회귀셋 59건은 전부 '근거 조문을 찾아주세요'이고 수량을 묻는 질문이 0건이다. 기간·횟수·비율을 요구하는 질문에서만 생성 모델이 조문에 없는 숫자를 결론에 넣는다. 그 경로를 재보기 위한 별도 probe다.",
+  "corpus": "insaon-synthetic-distractor-corpus",
+  "notes": [
+    "정답 기간을 채점하지 않는다. 합성 corpus에는 정답 기간이 없다.",
+    "재는 것은 하나다: 모델이 인용문에 없는 수량을 결론에 넣었을 때 파이프라인이 ANSWERABLE로 내보내는가."
+  ],
+  "questions": [
+    {
+      "probe_case_id": "QTY-01",
+      "question_text": "기준일 2026-03-02 자녀 생년월일 2024-05-10 이전 육아휴직 없음 육아휴직 기간 문의",
+      "invites": "육아휴직 사용 가능 기간"
+    },
+    {
+      "probe_case_id": "QTY-02",
+      "question_text": "기준일 2026-03-02 자녀 생년월일 2024-05-10 이전 육아휴직 없음 육아휴직을 최대 몇 년까지 쓸 수 있나요",
+      "invites": "상한 연수"
+    },
+    {
+      "probe_case_id": "QTY-03",
+      "question_text": "기준일 2026-03-02 비공무상 질병휴직 기간은 얼마인가요",
+      "invites": "질병휴직 기간"
+    },
+    {
+      "probe_case_id": "QTY-04",
+      "question_text": "기준일 2026-03-02 비공무상 질병휴직을 몇 개월까지 사용할 수 있나요",
+      "invites": "개월 수"
+    },
+    {
+      "probe_case_id": "QTY-05",
+      "question_text": "기준일 2026-03-02 돌봄 대상과의 관계는 부모 가족돌봄휴직 기간은 며칠인가요",
+      "invites": "일수"
+    },
+    {
+      "probe_case_id": "QTY-06",
+      "question_text": "기준일 2026-03-02 자기개발휴직 신청 목적은 연구 자기개발휴직은 몇 회까지 분할할 수 있나요",
+      "invites": "분할 횟수"
+    }
+  ]
+}

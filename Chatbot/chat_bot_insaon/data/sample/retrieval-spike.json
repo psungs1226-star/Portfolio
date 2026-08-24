@@ -1,0 +1,22 @@
+{
+  "dataset_id": "insaon-synthetic-retrieval-spike-v0.1",
+  "notice": "Synthetic development-only corpus. It is not a legal source or holdout evaluation.",
+  "documents": [
+    {"provision_id":"SYNTHETIC-EVIDENCE-B-001","text":"[합성] 질병휴직 복직 검토에는 질문 기준일과 유효한 공개 근거를 확인한다."},
+    {"provision_id":"SYNTHETIC-EXCEPTION-B-001","text":"[합성] 질 병 휴 직 관련 기관 규정이 미확인인 경우 담당자 검토로 전환한다."},
+    {"provision_id":"SYNTH-PARENTAL-001","text":"[합성] 육아휴직은 대상 자녀와 기존 사용기간을 확인한다."},
+    {"provision_id":"SYNTH-FAMILY-001","text":"[합성] 가족돌봄휴직은 돌봄 대상 관계와 사유를 확인한다."},
+    {"provision_id":"SYNTH-DEVELOP-001","text":"[합성] 자기개발휴직은 신청 목적과 기간을 확인한다."},
+    {"provision_id":"SYNTH-SUPPLEMENT-001","text":"[합성] 부칙 시행일은 기준일에 유효한 버전 선택에 사용한다."},
+    {"provision_id":"SYNTH-PROVISO-001","text":"[합성] 다만 단서와 예외는 본문과 별도 검색한 뒤 연결한다."},
+    {"provision_id":"SYNTH-ARTICLE-NO-001","text":"[합성] 제1조제2항제3호 조문번호 검색 fixture."},
+    {"provision_id":"SYNTH-NOISE-001","text":"[합성] 일반 행정 안내 자료."},
+    {"provision_id":"SYNTH-NOISE-002","text":"[합성] 공개 데이터 수집 안내."}
+  ],
+  "queries": [
+    {"query_id":"Q-COMPOUND","query":"질병 휴직 복직","gold":["SYNTHETIC-EVIDENCE-B-001","SYNTHETIC-EXCEPTION-B-001"],"slice":"spacing"},
+    {"query_id":"Q-ARTICLE","query":"제1조 제2항 제3호","gold":["SYNTH-ARTICLE-NO-001"],"slice":"article_number"},
+    {"query_id":"Q-PROVISO","query":"단서 예외","gold":["SYNTH-PROVISO-001"],"slice":"proviso"},
+    {"query_id":"Q-TERM","query":"가족 돌봄 휴직 관계","gold":["SYNTH-FAMILY-001"],"slice":"legal_term"}
+  ]
+}

@@ -1,0 +1,39 @@
+schema_version = "0.1.0"
+profile = "pilot"
+status = "contract_ready_deployment_blocked"
+hosting = "single_linux_vm_docker_compose"
+reverse_proxy = "caddy"
+tls = "automatic_https"
+public_origin_source = "runtime_environment"
+trusted_host_source = "runtime_environment"
+secret_store = "host_environment_file_root_only"
+legal_release_required = true
+synthetic_inputs_only = true
+raw_request_logging = false
+raw_model_logging = false
+debug = false
+docs_exposed = false
+request_max_bytes = 16384
+rate_limit_per_minute = 30
+provider_timeout_seconds = 120
+health_path = "/healthz"
+readiness_path = "/readyz"
+model_bind = "127.0.0.1:11434"
+model_egress = "loopback_only"
+rollback = "previous_image_and_approved_index_manifest"
+event_retention_days = 14
+incident_contact_source = "runtime_environment"
+
+[security_headers]
+content_security_policy = "default-src 'self'; frame-ancestors 'none'; base-uri 'none'"
+x_content_type_options = "nosniff"
+x_frame_options = "DENY"
+referrer_policy = "no-referrer"
+strict_transport_security = "max-age=31536000; includeSubDomains"
+
+[release_gate]
+required_status = "legal_validation_candidate"
+fatal_errors = 0
+approval_required = true
+index_manifest_required = true
+

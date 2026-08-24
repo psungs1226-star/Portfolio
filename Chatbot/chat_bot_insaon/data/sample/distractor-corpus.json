@@ -1,0 +1,4366 @@
+{
+  "dataset_id": "insaon-synthetic-distractor-corpus",
+  "version": "0.3.0",
+  "notice": "공개 가능한 합성 자료다. 실제 법령 원문이 아니며 검색 구성의 변별력을 확인하기 위해 의도적으로 혼동되는 조문을 포함한다.",
+  "distractor_families": {
+    "superseded_or_future": "질문 기준일에 효력이 없는 근사 중복 조문",
+    "administrative": "같은 휴직 유형의 유효한 행정 절차 조문",
+    "adjacent_confusable": "인접 휴직 유형과 어휘가 겹치는 조문",
+    "proviso": "결론을 뒤집을 수 있는 단서 조문",
+    "subject_mismatch": "기준일에 유효하지만 적용대상 직군이 다른 조문",
+    "wide_evidence": "휴직 외 인사 영역의 근거 조문과 그 폐지된 옛 버전"
+  },
+  "wide_topics": {
+    "appointment": {
+      "label": "신규임용",
+      "source_id": "SYNTHETIC-WIDE-APPOINTMENT",
+      "source_name": "지방공무원 인사규정 . 신규임용",
+      "source_url": "https://example.invalid/real/appointment"
+    },
+    "personnel_records": {
+      "label": "인사기록",
+      "source_id": "SYNTHETIC-WIDE-PERSONNEL-RECORDS",
+      "source_name": "지방공무원 인사규정 . 인사기록",
+      "source_url": "https://example.invalid/real/personnel_records"
+    },
+    "performance_and_promotion": {
+      "label": "근무성적평정.승진",
+      "source_id": "SYNTHETIC-WIDE-PERFORMANCE-AND-PROMOTION",
+      "source_name": "지방공무원 인사규정 . 근무성적평정.승진",
+      "source_url": "https://example.invalid/real/performance_and_promotion"
+    },
+    "service_and_leave": {
+      "label": "복무.연가",
+      "source_id": "SYNTHETIC-WIDE-SERVICE-AND-LEAVE",
+      "source_name": "지방공무원 인사규정 . 복무.연가",
+      "source_url": "https://example.invalid/real/service_and_leave"
+    },
+    "pay_and_allowance": {
+      "label": "보수.수당",
+      "source_id": "SYNTHETIC-WIDE-PAY-AND-ALLOWANCE",
+      "source_name": "지방공무원 인사규정 . 보수.수당",
+      "source_url": "https://example.invalid/real/pay_and_allowance"
+    },
+    "discipline_and_appeal": {
+      "label": "징계.소청",
+      "source_id": "SYNTHETIC-WIDE-DISCIPLINE-AND-APPEAL",
+      "source_name": "지방공무원 인사규정 . 징계.소청",
+      "source_url": "https://example.invalid/real/discipline_and_appeal"
+    },
+    "training": {
+      "label": "교육훈련",
+      "source_id": "SYNTHETIC-WIDE-TRAINING",
+      "source_name": "지방공무원 인사규정 . 교육훈련",
+      "source_url": "https://example.invalid/real/training"
+    },
+    "retirement": {
+      "label": "퇴직",
+      "source_id": "SYNTHETIC-WIDE-RETIREMENT",
+      "source_name": "지방공무원 인사규정 . 퇴직",
+      "source_url": "https://example.invalid/real/retirement"
+    }
+  },
+  "provisions": [
+    {
+      "provision_id": "SYNTHETIC-EVIDENCE-B-001",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 제1조",
+      "title": "질병휴직·복직 검토 fixture",
+      "text": "[합성] 질병휴직과 복직의 공개 근거는 질문 기준일에 유효한 원문으로 검토한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "medical_leave",
+        "reinstatement"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "SYNTHETIC-EXCEPTION-B-001",
+        "SYNTH-SUPPLEMENT-001"
+      ],
+      "source_hash": "26282a077b6ce0913df683c92e71e885dba74285a1e9ba9296e7ee48954346b3"
+    },
+    {
+      "provision_id": "SYNTHETIC-EXCEPTION-B-001",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 제1조 단서",
+      "title": "기관 규정 확인 fixture",
+      "text": "[합성] 다만 기관 규정이 필요한 경우 최종 판단을 보류한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "medical_leave",
+        "proviso"
+      ],
+      "parent_provision_id": "SYNTHETIC-EVIDENCE-B-001",
+      "relation_ids": [],
+      "source_hash": "d7a01b2c2491f9507ee99f3047e074b4b51566c5869da40da0c615c786bdab45"
+    },
+    {
+      "provision_id": "SYNTH-PARENTAL-001",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 제2조",
+      "title": "육아휴직 검토 fixture",
+      "text": "[합성] 육아휴직 검토에는 자녀와 기존 기간 조건을 확인한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "parental_leave"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "SYNTH-SUPPLEMENT-001"
+      ],
+      "source_hash": "ff8bcb1a11dbcef552130758eccf931fd8dca51b7c46c13cb40fe872fce6fe99"
+    },
+    {
+      "provision_id": "SYNTH-FAMILY-001",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 제3조",
+      "title": "가족돌봄휴직 검토 fixture",
+      "text": "[합성] 가족돌봄휴직 검토에는 돌봄 관계를 확인한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "family_care_leave"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "SYNTH-SUPPLEMENT-001"
+      ],
+      "source_hash": "39be9a7a1954d6541c47fba74ef204ba0f42ed1b3c5f7710bb95eb8701241f2a"
+    },
+    {
+      "provision_id": "SYNTH-DEVELOP-001",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 제4조",
+      "title": "자기개발휴직 검토 fixture",
+      "text": "[합성] 자기개발휴직 검토에는 신청 목적을 확인한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "self_development_leave"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "SYNTH-SUPPLEMENT-001"
+      ],
+      "source_hash": "46fc01d288b1c91c60d38aad821a291bf4186af5f770e131fdf4e2b12bbfd6ee"
+    },
+    {
+      "provision_id": "SYNTH-SUPPLEMENT-001",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 부칙 제1조",
+      "title": "공통 시행일 fixture",
+      "text": "[합성] 부칙과 시행일은 질문 기준일과 함께 검토한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "supplementary"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "513465d9265d651f66845cece24bd098d128dd814aca74ff12297f0abd67ba41"
+    },
+    {
+      "provision_id": "SYNTHETIC-NOT-EFFECTIVE-B-001",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 미시행 제1조",
+      "title": "미시행 질병휴직 fixture",
+      "text": "[합성] 질병휴직 복직의 미래 시행 예정 자료.",
+      "valid_time": {
+        "start": "2027-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "medical_leave",
+        "not_yet_effective"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "bc4c844a46c88f6cdb2cabed744c0e04f4286d6b07533dc168f86aa6b3c0e3b4"
+    },
+    {
+      "provision_id": "SYNTH-D-PARENTAL-OLD-01",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 종전 제1조",
+      "title": "육아휴직 공개 근거 종전 제1차",
+      "text": "[합성] 육아휴직 공개 근거 종전 규정 제1차. 육아휴직 검토에는 자녀와 기존 기간 조건을 확인한다.",
+      "valid_time": {
+        "start": "2017-01-01",
+        "end": "2018-01-01"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "parental_leave",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "628b4762e6cbcadd13835a3b4f78cac2697abae06c28e347c3f237dff03a477d"
+    },
+    {
+      "provision_id": "SYNTH-D-PARENTAL-OLD-02",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 종전 제2조",
+      "title": "육아휴직 공개 근거 종전 제2차",
+      "text": "[합성] 육아휴직 공개 근거 종전 규정 제2차. 육아휴직 검토에는 자녀와 기존 기간 조건을 확인한다.",
+      "valid_time": {
+        "start": "2018-01-01",
+        "end": "2019-01-01"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "parental_leave",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "8105abb56f9720043d9f7f9842354195ae65c0059bb6e180f6dd8eb9ea329c0b"
+    },
+    {
+      "provision_id": "SYNTH-D-PARENTAL-OLD-03",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 종전 제3조",
+      "title": "육아휴직 공개 근거 종전 제3차",
+      "text": "[합성] 육아휴직 공개 근거 종전 규정 제3차. 육아휴직 검토에는 자녀와 기존 기간 조건을 확인한다.",
+      "valid_time": {
+        "start": "2019-01-01",
+        "end": "2020-01-01"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "parental_leave",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "bbbe4f6ed2aeb776c6eecf055392779d2e99c65dd23e42313e2a134db2b350a6"
+    },
+    {
+      "provision_id": "SYNTH-D-PARENTAL-OLD-04",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 종전 제4조",
+      "title": "육아휴직 공개 근거 종전 제4차",
+      "text": "[합성] 육아휴직 공개 근거 종전 규정 제4차. 육아휴직 검토에는 자녀와 기존 기간 조건을 확인한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": "2021-01-01"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "parental_leave",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "0f2feeacad3b120ccc5d5d05aa844f7c28038a8c2c55d12b7853a1adbd34c1c7"
+    },
+    {
+      "provision_id": "SYNTH-D-PARENTAL-OLD-05",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 종전 제5조",
+      "title": "육아휴직 공개 근거 종전 제5차",
+      "text": "[합성] 육아휴직 공개 근거 종전 규정 제5차. 육아휴직 검토에는 자녀와 기존 기간 조건을 확인한다.",
+      "valid_time": {
+        "start": "2021-01-01",
+        "end": "2022-01-01"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "parental_leave",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "a5987cd6e8f425bc45a13dae730efa23519d5b384c27c48bb3da0a43c9f61f8a"
+    },
+    {
+      "provision_id": "SYNTH-D-PARENTAL-OLD-06",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 종전 제6조",
+      "title": "육아휴직 공개 근거 종전 제6차",
+      "text": "[합성] 육아휴직 공개 근거 종전 규정 제6차. 육아휴직 검토에는 자녀와 기존 기간 조건을 확인한다.",
+      "valid_time": {
+        "start": "2022-01-01",
+        "end": "2023-01-01"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "parental_leave",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "9f4edabd6eefcd8dc042913521bd415a47eac93da6d471395d94662486128cef"
+    },
+    {
+      "provision_id": "SYNTH-D-PARENTAL-FUT-01",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 미시행 제1조",
+      "title": "육아휴직 개정 예정 제1차",
+      "text": "[합성] 장래 시행 예정인 육아휴직 개정안이다. 육아휴직 검토에는 자녀와 기존 기간 조건을 확인한다. 시행일 도래 전에는 적용하지 아니한다.",
+      "valid_time": {
+        "start": "2027-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "parental_leave",
+        "not_yet_effective"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "f7ee8492603c402f0760129c5ac3fc2ea5ebf2f0b31ff54d4e1a017d229df0a0"
+    },
+    {
+      "provision_id": "SYNTH-D-PARENTAL-FUT-02",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 미시행 제2조",
+      "title": "육아휴직 개정 예정 제2차",
+      "text": "[합성] 장래 시행 예정인 육아휴직 개정안이다. 육아휴직 검토에는 자녀와 기존 기간 조건을 확인한다. 시행일 도래 전에는 적용하지 아니한다.",
+      "valid_time": {
+        "start": "2028-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "parental_leave",
+        "not_yet_effective"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "b610250358af271910067d10c38fd3dcd1687f50e2bb0e9f48aa3643c5605959"
+    },
+    {
+      "provision_id": "SYNTH-D-PARENTAL-FUT-03",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 미시행 제3조",
+      "title": "육아휴직 개정 예정 제3차",
+      "text": "[합성] 장래 시행 예정인 육아휴직 개정안이다. 육아휴직 검토에는 자녀와 기존 기간 조건을 확인한다. 시행일 도래 전에는 적용하지 아니한다.",
+      "valid_time": {
+        "start": "2029-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "parental_leave",
+        "not_yet_effective"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "f3b2711ddae56551f021d0fdb5b6f927317ebae38ce29323a01fcb7356ea7b68"
+    },
+    {
+      "provision_id": "SYNTH-D-MEDICAL-OLD-01",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 종전 제1조",
+      "title": "질병휴직 공개 근거 종전 제1차",
+      "text": "[합성] 질병휴직 공개 근거 종전 규정 제1차. 질병휴직과 복직의 공개 근거는 질문 기준일에 유효한 원문으로 검토한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": "2021-01-01"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "medical_leave",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "935c4a38966c2fa455963bc4afcf58ffe64828649406a2b22b7403e2136f71bc"
+    },
+    {
+      "provision_id": "SYNTH-D-MEDICAL-OLD-02",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 종전 제2조",
+      "title": "질병휴직 공개 근거 종전 제2차",
+      "text": "[합성] 질병휴직 공개 근거 종전 규정 제2차. 질병휴직과 복직의 공개 근거는 질문 기준일에 유효한 원문으로 검토한다.",
+      "valid_time": {
+        "start": "2021-01-01",
+        "end": "2022-01-01"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "medical_leave",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "fcba379dc57fa667de5b771da40452f98fd9ac5463415eb66e60e95bf5ccecbe"
+    },
+    {
+      "provision_id": "SYNTH-D-MEDICAL-OLD-03",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 종전 제3조",
+      "title": "질병휴직 공개 근거 종전 제3차",
+      "text": "[합성] 질병휴직 공개 근거 종전 규정 제3차. 질병휴직과 복직의 공개 근거는 질문 기준일에 유효한 원문으로 검토한다.",
+      "valid_time": {
+        "start": "2022-01-01",
+        "end": "2023-01-01"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "medical_leave",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "3364d4e85b13596f9b5672e4280c448dd6489ce3d63fef7b6b56d10e08ee0601"
+    },
+    {
+      "provision_id": "SYNTH-D-MEDICAL-FUT-01",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 미시행 제1조",
+      "title": "질병휴직 개정 예정 제1차",
+      "text": "[합성] 장래 시행 예정인 질병휴직 개정안이다. 질병휴직과 복직의 공개 근거는 질문 기준일에 유효한 원문으로 검토한다. 시행일 도래 전에는 적용하지 아니한다.",
+      "valid_time": {
+        "start": "2027-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "medical_leave",
+        "not_yet_effective"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "4c242fe8b537db4603db43be953383956289ee645d2a54c0ef53a85d8f143b35"
+    },
+    {
+      "provision_id": "SYNTH-D-MEDICAL-FUT-02",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 미시행 제2조",
+      "title": "질병휴직 개정 예정 제2차",
+      "text": "[합성] 장래 시행 예정인 질병휴직 개정안이다. 질병휴직과 복직의 공개 근거는 질문 기준일에 유효한 원문으로 검토한다. 시행일 도래 전에는 적용하지 아니한다.",
+      "valid_time": {
+        "start": "2028-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "medical_leave",
+        "not_yet_effective"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "4ded0721601e93783c77e918247cc0ecb2f6276be34980b6304f71ca6bd5bdc0"
+    },
+    {
+      "provision_id": "SYNTH-D-MEDICAL-FUT-03",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 미시행 제3조",
+      "title": "질병휴직 개정 예정 제3차",
+      "text": "[합성] 장래 시행 예정인 질병휴직 개정안이다. 질병휴직과 복직의 공개 근거는 질문 기준일에 유효한 원문으로 검토한다. 시행일 도래 전에는 적용하지 아니한다.",
+      "valid_time": {
+        "start": "2029-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "medical_leave",
+        "not_yet_effective"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "638bc043de67f4b01748e9a85bc3ffee12f2460d4fd20b4dc02c237b7110da7d"
+    },
+    {
+      "provision_id": "SYNTH-D-FAMILY_CARE-OLD-01",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 종전 제1조",
+      "title": "가족돌봄휴직 공개 근거 종전 제1차",
+      "text": "[합성] 가족돌봄휴직 공개 근거 종전 규정 제1차. 가족돌봄휴직 검토에는 돌봄 관계를 확인한다.",
+      "valid_time": {
+        "start": "2021-01-01",
+        "end": "2022-01-01"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "family_care_leave",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "9f1f32b1ce6a6058a150a3f2620eded5d88f431984acfa38be586d093671f56a"
+    },
+    {
+      "provision_id": "SYNTH-D-FAMILY_CARE-OLD-02",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 종전 제2조",
+      "title": "가족돌봄휴직 공개 근거 종전 제2차",
+      "text": "[합성] 가족돌봄휴직 공개 근거 종전 규정 제2차. 가족돌봄휴직 검토에는 돌봄 관계를 확인한다.",
+      "valid_time": {
+        "start": "2022-01-01",
+        "end": "2023-01-01"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "family_care_leave",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "1b8a11df9d2134da501425bcd8675cbd9d67df1fa84b2160474c230becca9ca6"
+    },
+    {
+      "provision_id": "SYNTH-D-FAMILY_CARE-FUT-01",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 미시행 제1조",
+      "title": "가족돌봄휴직 개정 예정 제1차",
+      "text": "[합성] 장래 시행 예정인 가족돌봄휴직 개정안이다. 가족돌봄휴직 검토에는 돌봄 관계를 확인한다. 시행일 도래 전에는 적용하지 아니한다.",
+      "valid_time": {
+        "start": "2027-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "family_care_leave",
+        "not_yet_effective"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "1ed1b674dc9f620a70b6cfca463ac1dd4cae5b5166ee63bf0da1ef36bd64ec5f"
+    },
+    {
+      "provision_id": "SYNTH-D-FAMILY_CARE-FUT-02",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 미시행 제2조",
+      "title": "가족돌봄휴직 개정 예정 제2차",
+      "text": "[합성] 장래 시행 예정인 가족돌봄휴직 개정안이다. 가족돌봄휴직 검토에는 돌봄 관계를 확인한다. 시행일 도래 전에는 적용하지 아니한다.",
+      "valid_time": {
+        "start": "2028-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "family_care_leave",
+        "not_yet_effective"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "a51db4267a960e75e2cb4c7625edcd8fe27575683fe92f37a574f0ea64ea0841"
+    },
+    {
+      "provision_id": "SYNTH-D-FAMILY_CARE-FUT-03",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 미시행 제3조",
+      "title": "가족돌봄휴직 개정 예정 제3차",
+      "text": "[합성] 장래 시행 예정인 가족돌봄휴직 개정안이다. 가족돌봄휴직 검토에는 돌봄 관계를 확인한다. 시행일 도래 전에는 적용하지 아니한다.",
+      "valid_time": {
+        "start": "2029-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "family_care_leave",
+        "not_yet_effective"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "2ab2b087f1fd5dc2f13167f903cee4653940416a8ee0a5de0f0f805272c3ac3f"
+    },
+    {
+      "provision_id": "SYNTH-D-SELF_DEVELOPMENT-OLD-01",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 종전 제1조",
+      "title": "자기개발휴직 공개 근거 종전 제1차",
+      "text": "[합성] 자기개발휴직 공개 근거 종전 규정 제1차. 자기개발휴직 검토에는 신청 목적을 확인한다.",
+      "valid_time": {
+        "start": "2018-01-01",
+        "end": "2019-01-01"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "self_development_leave",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "3d509bd2d4ec53a7c94614428f311f6f0cc4b6f0a60fc0f5426c09f48f121821"
+    },
+    {
+      "provision_id": "SYNTH-D-SELF_DEVELOPMENT-OLD-02",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 종전 제2조",
+      "title": "자기개발휴직 공개 근거 종전 제2차",
+      "text": "[합성] 자기개발휴직 공개 근거 종전 규정 제2차. 자기개발휴직 검토에는 신청 목적을 확인한다.",
+      "valid_time": {
+        "start": "2019-01-01",
+        "end": "2020-01-01"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "self_development_leave",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "0293003259c7220b26eed2f971f52f3152a468ef31b5e0a7ea42725fd800d412"
+    },
+    {
+      "provision_id": "SYNTH-D-SELF_DEVELOPMENT-OLD-03",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 종전 제3조",
+      "title": "자기개발휴직 공개 근거 종전 제3차",
+      "text": "[합성] 자기개발휴직 공개 근거 종전 규정 제3차. 자기개발휴직 검토에는 신청 목적을 확인한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": "2021-01-01"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "self_development_leave",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "e37e2dbc11988bd983fc35504dc623d5f245c264903b5a9a2a41055b71d1a4b2"
+    },
+    {
+      "provision_id": "SYNTH-D-SELF_DEVELOPMENT-OLD-04",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 종전 제4조",
+      "title": "자기개발휴직 공개 근거 종전 제4차",
+      "text": "[합성] 자기개발휴직 공개 근거 종전 규정 제4차. 자기개발휴직 검토에는 신청 목적을 확인한다.",
+      "valid_time": {
+        "start": "2021-01-01",
+        "end": "2022-01-01"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "self_development_leave",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "84c37615ae6cd7d85deaf7f43dfc6c5302e03427a2ecaacef94bebebdc1258db"
+    },
+    {
+      "provision_id": "SYNTH-D-SELF_DEVELOPMENT-OLD-05",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 종전 제5조",
+      "title": "자기개발휴직 공개 근거 종전 제5차",
+      "text": "[합성] 자기개발휴직 공개 근거 종전 규정 제5차. 자기개발휴직 검토에는 신청 목적을 확인한다.",
+      "valid_time": {
+        "start": "2022-01-01",
+        "end": "2023-01-01"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "self_development_leave",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "fd27a843e970165222e986d9d31f93e7dd16483c4f7352b304f6ff2af1985202"
+    },
+    {
+      "provision_id": "SYNTH-D-SELF_DEVELOPMENT-FUT-01",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 미시행 제1조",
+      "title": "자기개발휴직 개정 예정 제1차",
+      "text": "[합성] 장래 시행 예정인 자기개발휴직 개정안이다. 자기개발휴직 검토에는 신청 목적을 확인한다. 시행일 도래 전에는 적용하지 아니한다.",
+      "valid_time": {
+        "start": "2027-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "self_development_leave",
+        "not_yet_effective"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "f17593f469a14793105b70c9c7063e47488ac5e0940bc77684102c5d47917c0a"
+    },
+    {
+      "provision_id": "SYNTH-D-SELF_DEVELOPMENT-FUT-02",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 미시행 제2조",
+      "title": "자기개발휴직 개정 예정 제2차",
+      "text": "[합성] 장래 시행 예정인 자기개발휴직 개정안이다. 자기개발휴직 검토에는 신청 목적을 확인한다. 시행일 도래 전에는 적용하지 아니한다.",
+      "valid_time": {
+        "start": "2028-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "self_development_leave",
+        "not_yet_effective"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "e0e33c7429789629f3179669d63e93c4d2a3837448257ecec2bd05a2dc176b88"
+    },
+    {
+      "provision_id": "SYNTH-D-SELF_DEVELOPMENT-FUT-03",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 미시행 제3조",
+      "title": "자기개발휴직 개정 예정 제3차",
+      "text": "[합성] 장래 시행 예정인 자기개발휴직 개정안이다. 자기개발휴직 검토에는 신청 목적을 확인한다. 시행일 도래 전에는 적용하지 아니한다.",
+      "valid_time": {
+        "start": "2029-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "self_development_leave",
+        "not_yet_effective"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "529a48df1dcca851c9e65ae33c5dd0f6f3df153c8708cbb87b80f61ee61528c2"
+    },
+    {
+      "provision_id": "SYNTH-D-PARENTAL-ALT-01",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제1조",
+      "title": "육아휴직 신청서 서식",
+      "text": "[합성] 육아휴직 신청서 서식에 관하여 신청서 서식과 첨부 서류의 보관 기간을 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "parental_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "27056b5598c0cce459b27d4f71b948dfb3f2503de96e6e16fd1d1db5f54e70b7"
+    },
+    {
+      "provision_id": "SYNTH-D-PARENTAL-ALT-02",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제2조",
+      "title": "육아휴직 결재 절차",
+      "text": "[합성] 육아휴직 결재 절차에 관하여 소속 부서장의 결재 절차와 위임 전결 사항을 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "parental_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "6db06420b6ff5dea4eb9d6aff7a70b6db0472b1aadc191f0e719b5db4b4bd2d3"
+    },
+    {
+      "provision_id": "SYNTH-D-PARENTAL-ALT-03",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제3조",
+      "title": "육아휴직 대체인력",
+      "text": "[합성] 육아휴직 대체인력에 관하여 대체인력 배치와 업무 인수인계 방법을 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "parental_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "dfcf10dd6219b9a5df8bb1f35fb73fbcec823c13ee056b8c08cf642c4665cdc7"
+    },
+    {
+      "provision_id": "SYNTH-D-PARENTAL-ALT-04",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제4조",
+      "title": "육아휴직 통계 보고",
+      "text": "[합성] 육아휴직 통계 보고에 관하여 반기별 사용 현황 통계의 보고 서식을 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "parental_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "733a1280317a7243a26a353cad969eadf5763bdfbbd5069b2e137a3b22ef0c21"
+    },
+    {
+      "provision_id": "SYNTH-D-PARENTAL-ALT-05",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제5조",
+      "title": "육아휴직 전산 등록",
+      "text": "[합성] 육아휴직 전산 등록에 관하여 인사 전산시스템 등록 항목과 정정 방법을 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "parental_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "d037e80e98b0f517e5e0074896c5ccf8b7eab1ed8216a9ffe62f2002eb7bb77a"
+    },
+    {
+      "provision_id": "SYNTH-D-PARENTAL-ALT-06",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제6조",
+      "title": "육아휴직 사후 점검",
+      "text": "[합성] 육아휴직 사후 점검에 관하여 사용 종료 후 사후 점검표 작성 방법을 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "parental_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "6c9089f3ddd0bfcddd8c6b89ab287ecf34a4f90c317109b3e7238c37264dc6d2"
+    },
+    {
+      "provision_id": "SYNTH-D-PARENTAL-ALT-07",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제7조",
+      "title": "육아휴직 교육 안내",
+      "text": "[합성] 육아휴직 교육 안내에 관하여 복무 담당자 대상 안내 교육의 실시 주기를 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "parental_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "b9ee4c52012609719d782100c8feecc3804c7ec0bb58862692469594f9726afa"
+    },
+    {
+      "provision_id": "SYNTH-D-PARENTAL-ALT-08",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제8조",
+      "title": "육아휴직 서류 이관",
+      "text": "[합성] 육아휴직 서류 이관에 관하여 부서 이동 시 관련 서류의 이관 절차를 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "parental_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "d255ae4e13a29e8e18e2c9d1f83e33c78ad72cdc6ac24e6fd39f622c7e17f197"
+    },
+    {
+      "provision_id": "SYNTH-D-MEDICAL-ALT-01",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제1조",
+      "title": "질병휴직 신청서 서식",
+      "text": "[합성] 질병휴직 신청서 서식에 관하여 신청서 서식과 첨부 서류의 보관 기간을 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "medical_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "2f378d54cb14a98daace2d41e5ac2bb337a9cbe19e1951bf2f3d02e3f4fe0481"
+    },
+    {
+      "provision_id": "SYNTH-D-MEDICAL-ALT-02",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제2조",
+      "title": "질병휴직 결재 절차",
+      "text": "[합성] 질병휴직 결재 절차에 관하여 소속 부서장의 결재 절차와 위임 전결 사항을 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "medical_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "567aed24c530b8f70fee88fd8ab1bab72038287bdb5edc250b7eefefe99795d9"
+    },
+    {
+      "provision_id": "SYNTH-D-MEDICAL-ALT-03",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제3조",
+      "title": "질병휴직 대체인력",
+      "text": "[합성] 질병휴직 대체인력에 관하여 대체인력 배치와 업무 인수인계 방법을 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "medical_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "20b642cf57a70f318cad81a52542e5330ee07dc9e4d0dee206e648ca5a276da4"
+    },
+    {
+      "provision_id": "SYNTH-D-MEDICAL-ALT-04",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제4조",
+      "title": "질병휴직 통계 보고",
+      "text": "[합성] 질병휴직 통계 보고에 관하여 반기별 사용 현황 통계의 보고 서식을 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "medical_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "dc938d6651dfbeee26e12ec82773a56c54384784c4bc5dd52642936ff732be71"
+    },
+    {
+      "provision_id": "SYNTH-D-MEDICAL-ALT-05",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제5조",
+      "title": "질병휴직 전산 등록",
+      "text": "[합성] 질병휴직 전산 등록에 관하여 인사 전산시스템 등록 항목과 정정 방법을 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "medical_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "b5f20d125e7fdfea3b8f80aaba7f3f625c2a8bb4f11c4e8a20d808ca784776bb"
+    },
+    {
+      "provision_id": "SYNTH-D-MEDICAL-ALT-06",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제6조",
+      "title": "질병휴직 사후 점검",
+      "text": "[합성] 질병휴직 사후 점검에 관하여 사용 종료 후 사후 점검표 작성 방법을 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "medical_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "c68bb3c0e2bf899a4aef2befceb3fb214e3cc7c2f926e6f6b47992b9d8f85637"
+    },
+    {
+      "provision_id": "SYNTH-D-MEDICAL-ALT-07",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제7조",
+      "title": "질병휴직 교육 안내",
+      "text": "[합성] 질병휴직 교육 안내에 관하여 복무 담당자 대상 안내 교육의 실시 주기를 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "medical_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "db08391362456e21801c6270b1172f77d1aab64fc5b6d6297e4954eb3ed0c366"
+    },
+    {
+      "provision_id": "SYNTH-D-MEDICAL-ALT-08",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제8조",
+      "title": "질병휴직 서류 이관",
+      "text": "[합성] 질병휴직 서류 이관에 관하여 부서 이동 시 관련 서류의 이관 절차를 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "medical_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "cfa1262c9e3670ede8b2c30f08f42fa0e5f95bd42d8413b5846c9c1cfd2bdb48"
+    },
+    {
+      "provision_id": "SYNTH-D-FAMILY_CARE-ALT-01",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제1조",
+      "title": "가족돌봄휴직 신청서 서식",
+      "text": "[합성] 가족돌봄휴직 신청서 서식에 관하여 신청서 서식과 첨부 서류의 보관 기간을 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "family_care_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "84f2f2bb12beaa957f030e8ef37c352a6a86d793c1e718509dd13bf085a9b6a2"
+    },
+    {
+      "provision_id": "SYNTH-D-FAMILY_CARE-ALT-02",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제2조",
+      "title": "가족돌봄휴직 결재 절차",
+      "text": "[합성] 가족돌봄휴직 결재 절차에 관하여 소속 부서장의 결재 절차와 위임 전결 사항을 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "family_care_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "d6f00cf1ce2082eb1d33d9f83dc454907519768170a2a683ab125c3214c9733f"
+    },
+    {
+      "provision_id": "SYNTH-D-FAMILY_CARE-ALT-03",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제3조",
+      "title": "가족돌봄휴직 대체인력",
+      "text": "[합성] 가족돌봄휴직 대체인력에 관하여 대체인력 배치와 업무 인수인계 방법을 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "family_care_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "8c77e2a1e1186e85b3ad2ebfdb2852bc7452716002bad08ca5dc60777a49c0a4"
+    },
+    {
+      "provision_id": "SYNTH-D-FAMILY_CARE-ALT-04",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제4조",
+      "title": "가족돌봄휴직 통계 보고",
+      "text": "[합성] 가족돌봄휴직 통계 보고에 관하여 반기별 사용 현황 통계의 보고 서식을 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "family_care_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "8b7491c6c159915b7d7675689dd4d34b7ed0b68ff3ed764d120ea941fd3a3703"
+    },
+    {
+      "provision_id": "SYNTH-D-FAMILY_CARE-ALT-05",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제5조",
+      "title": "가족돌봄휴직 전산 등록",
+      "text": "[합성] 가족돌봄휴직 전산 등록에 관하여 인사 전산시스템 등록 항목과 정정 방법을 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "family_care_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "6cc0fa90b55804df43fc0af4a7ab14d5c2e3752285af4103e41458a6bc3d0d50"
+    },
+    {
+      "provision_id": "SYNTH-D-FAMILY_CARE-ALT-06",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제6조",
+      "title": "가족돌봄휴직 사후 점검",
+      "text": "[합성] 가족돌봄휴직 사후 점검에 관하여 사용 종료 후 사후 점검표 작성 방법을 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "family_care_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "e7af330741181b41ca6a671a16d8541541f369ccdc25108ca0fae53c0eb0227e"
+    },
+    {
+      "provision_id": "SYNTH-D-FAMILY_CARE-ALT-07",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제7조",
+      "title": "가족돌봄휴직 교육 안내",
+      "text": "[합성] 가족돌봄휴직 교육 안내에 관하여 복무 담당자 대상 안내 교육의 실시 주기를 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "family_care_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "2ef17bc5648fcee6f7a22a872e6d39c63d4ebd2822d60870a30ff25c7f8cc8b7"
+    },
+    {
+      "provision_id": "SYNTH-D-FAMILY_CARE-ALT-08",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제8조",
+      "title": "가족돌봄휴직 서류 이관",
+      "text": "[합성] 가족돌봄휴직 서류 이관에 관하여 부서 이동 시 관련 서류의 이관 절차를 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "family_care_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "89478de754370fe3feb3a33f53acc5823af24b71ecef6f9950877c993c4231e4"
+    },
+    {
+      "provision_id": "SYNTH-D-SELF_DEVELOPMENT-ALT-01",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제1조",
+      "title": "자기개발휴직 신청서 서식",
+      "text": "[합성] 자기개발휴직 신청서 서식에 관하여 신청서 서식과 첨부 서류의 보관 기간을 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "self_development_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "d92be9f6eeb28585a39d0bafaacebfef3af7a687b136dedf21a58850f6f5865f"
+    },
+    {
+      "provision_id": "SYNTH-D-SELF_DEVELOPMENT-ALT-02",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제2조",
+      "title": "자기개발휴직 결재 절차",
+      "text": "[합성] 자기개발휴직 결재 절차에 관하여 소속 부서장의 결재 절차와 위임 전결 사항을 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "self_development_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "f5826ca5160613de370cc3f5fc9b97422315ba45fd7f161e0d686b2bd8602c55"
+    },
+    {
+      "provision_id": "SYNTH-D-SELF_DEVELOPMENT-ALT-03",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제3조",
+      "title": "자기개발휴직 대체인력",
+      "text": "[합성] 자기개발휴직 대체인력에 관하여 대체인력 배치와 업무 인수인계 방법을 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "self_development_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "5550bd9aaf22af47ff7cb5ec0ee3948c7b2d0c55442e95572c475a61f3671cef"
+    },
+    {
+      "provision_id": "SYNTH-D-SELF_DEVELOPMENT-ALT-04",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제4조",
+      "title": "자기개발휴직 통계 보고",
+      "text": "[합성] 자기개발휴직 통계 보고에 관하여 반기별 사용 현황 통계의 보고 서식을 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "self_development_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "1f2e7f810595a48ad438862c6bb8b0f74e5b7d7ac171240d3c8a99872054a1d3"
+    },
+    {
+      "provision_id": "SYNTH-D-SELF_DEVELOPMENT-ALT-05",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제5조",
+      "title": "자기개발휴직 전산 등록",
+      "text": "[합성] 자기개발휴직 전산 등록에 관하여 인사 전산시스템 등록 항목과 정정 방법을 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "self_development_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "149ef4b44d137d40017364138aef4549abb20daf4354b915771365a1f12896b6"
+    },
+    {
+      "provision_id": "SYNTH-D-SELF_DEVELOPMENT-ALT-06",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제6조",
+      "title": "자기개발휴직 사후 점검",
+      "text": "[합성] 자기개발휴직 사후 점검에 관하여 사용 종료 후 사후 점검표 작성 방법을 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "self_development_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "b5aaf3967aaee24e0c01eae0442eb356b81509396e63057c3820976e94a23d08"
+    },
+    {
+      "provision_id": "SYNTH-D-SELF_DEVELOPMENT-ALT-07",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제7조",
+      "title": "자기개발휴직 교육 안내",
+      "text": "[합성] 자기개발휴직 교육 안내에 관하여 복무 담당자 대상 안내 교육의 실시 주기를 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "self_development_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "61705a0f833464acb78b8baa4eece045b57ea87414d9e1f58e42d61a3ec10099"
+    },
+    {
+      "provision_id": "SYNTH-D-SELF_DEVELOPMENT-ALT-08",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 시행세칙 제8조",
+      "title": "자기개발휴직 서류 이관",
+      "text": "[합성] 자기개발휴직 서류 이관에 관하여 부서 이동 시 관련 서류의 이관 절차를 정한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "self_development_leave",
+        "administrative"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "85bf9c15ab170f9c57abe9a0f9d8a7bbf75b276df97d8b765309a3a56731f4e3"
+    },
+    {
+      "provision_id": "SYNTH-D-ADJ-01-1",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 유사조 제1조의1",
+      "title": "육아휴직·가족돌봄휴직 구분",
+      "text": "[합성] 육아휴직과 가족돌봄휴직을 혼동하지 않도록 자녀 돌봄과 가족 돌봄의 사용 요건이 서로 다르다는 점을 구분한다. 사용 요건과 기간 산정 방법이 서로 다르다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "parental_leave",
+        "adjacent_confusable"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "79c5a1f06216e91df1e37ae98a466762ddfdc30223b04b2160483b060a9e1bf9"
+    },
+    {
+      "provision_id": "SYNTH-D-ADJ-01-2",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 유사조 제1조의2",
+      "title": "가족돌봄휴직·육아휴직 구분",
+      "text": "[합성] 육아휴직과 가족돌봄휴직을 혼동하지 않도록 자녀 돌봄과 가족 돌봄의 사용 요건이 서로 다르다는 점을 구분한다. 사용 요건과 기간 산정 방법이 서로 다르다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "family_care_leave",
+        "adjacent_confusable"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "32d05c11b8fdf7cf43bbacfe80af997e4946aabfc702d78ba860b7de894fda33"
+    },
+    {
+      "provision_id": "SYNTH-D-ADJ-02-1",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 유사조 제2조의1",
+      "title": "질병휴직·질병휴직 구분",
+      "text": "[합성] 질병휴직과 질병휴직을 혼동하지 않도록 공무상 질병과 비공무상 질병의 요양 절차가 다르다는 점을 구분한다. 사용 요건과 기간 산정 방법이 서로 다르다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "medical_leave",
+        "adjacent_confusable"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "18233428eb404b251bea7da96213878f416af0570fa0eae389cf07077a7c243f"
+    },
+    {
+      "provision_id": "SYNTH-D-ADJ-02-2",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 유사조 제2조의2",
+      "title": "질병휴직·질병휴직 구분",
+      "text": "[합성] 질병휴직과 질병휴직을 혼동하지 않도록 공무상 질병과 비공무상 질병의 요양 절차가 다르다는 점을 구분한다. 사용 요건과 기간 산정 방법이 서로 다르다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "medical_leave",
+        "adjacent_confusable"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "39f538b6d6612cd515e3d3a417f84612f270f47e2142587dc2653cefd18f7483"
+    },
+    {
+      "provision_id": "SYNTH-D-ADJ-03-1",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 유사조 제3조의1",
+      "title": "가족돌봄휴직·육아휴직 구분",
+      "text": "[합성] 가족돌봄휴직과 육아휴직을 혼동하지 않도록 돌봄 대상이 자녀인 경우와 부모인 경우의 구분을 구분한다. 사용 요건과 기간 산정 방법이 서로 다르다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "family_care_leave",
+        "adjacent_confusable"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "2fe7384bebde28b3cc7f1423e22da053c245ab38525ccfe604f52b862164eb7a"
+    },
+    {
+      "provision_id": "SYNTH-D-ADJ-03-2",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 유사조 제3조의2",
+      "title": "육아휴직·가족돌봄휴직 구분",
+      "text": "[합성] 가족돌봄휴직과 육아휴직을 혼동하지 않도록 돌봄 대상이 자녀인 경우와 부모인 경우의 구분을 구분한다. 사용 요건과 기간 산정 방법이 서로 다르다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "parental_leave",
+        "adjacent_confusable"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "c6ac26cf532f1ba38102cb876a461f5a83311f5fb6a4817373f6a4435bb22b84"
+    },
+    {
+      "provision_id": "SYNTH-D-ADJ-04-1",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 유사조 제4조의1",
+      "title": "자기개발휴직·육아휴직 구분",
+      "text": "[합성] 자기개발휴직과 육아휴직을 혼동하지 않도록 자기개발 목적과 양육 목적의 구분을 구분한다. 사용 요건과 기간 산정 방법이 서로 다르다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "self_development_leave",
+        "adjacent_confusable"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "6be7c3ea425d336b4533f989fbf8d25a062265264874203d5a99b7f1bacbb5a6"
+    },
+    {
+      "provision_id": "SYNTH-D-ADJ-04-2",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 유사조 제4조의2",
+      "title": "육아휴직·자기개발휴직 구분",
+      "text": "[합성] 자기개발휴직과 육아휴직을 혼동하지 않도록 자기개발 목적과 양육 목적의 구분을 구분한다. 사용 요건과 기간 산정 방법이 서로 다르다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "parental_leave",
+        "adjacent_confusable"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "2515012e0cf9bef4a611bffc29a8d3dbd930b9f85448702030c1a94f65b3a827"
+    },
+    {
+      "provision_id": "SYNTH-D-ADJ-05-1",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 유사조 제5조의1",
+      "title": "질병휴직·가족돌봄휴직 구분",
+      "text": "[합성] 질병휴직과 가족돌봄휴직을 혼동하지 않도록 본인 질병과 가족 간병의 구분을 구분한다. 사용 요건과 기간 산정 방법이 서로 다르다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "medical_leave",
+        "adjacent_confusable"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "3b0acbac1343e00e6e9114e036f814f752a757c2a2b3d0b5ad4dde0b2cc164bd"
+    },
+    {
+      "provision_id": "SYNTH-D-ADJ-05-2",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 유사조 제5조의2",
+      "title": "가족돌봄휴직·질병휴직 구분",
+      "text": "[합성] 질병휴직과 가족돌봄휴직을 혼동하지 않도록 본인 질병과 가족 간병의 구분을 구분한다. 사용 요건과 기간 산정 방법이 서로 다르다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "family_care_leave",
+        "adjacent_confusable"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "b8858fc3f9085a0757407c4e1e393ae70e48fbb02fd2ad3ef8a0f191ae6175c2"
+    },
+    {
+      "provision_id": "SYNTH-D-PARENTAL-EXC-01",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 제1조 단서",
+      "title": "육아휴직 기관 규정 우선 단서",
+      "text": "[합성] 다만 기관 규정이 상위 규정과 다르게 정한 경우 검토를 보류한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "parental_leave",
+        "proviso"
+      ],
+      "parent_provision_id": "SYNTH-PARENTAL-001",
+      "relation_ids": [],
+      "source_hash": "a9e973fd0ece691228868aaacbe1de76c8c04e38d6317b3eab84818867f4984e"
+    },
+    {
+      "provision_id": "SYNTH-D-PARENTAL-EXC-02",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 제2조 단서",
+      "title": "육아휴직 합산 한도 단서",
+      "text": "[합성] 다만 동일 사유로 이미 사용한 기간은 한도에 합산한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "parental_leave",
+        "proviso"
+      ],
+      "parent_provision_id": "SYNTH-PARENTAL-001",
+      "relation_ids": [],
+      "source_hash": "3ed73d4508b3b4cc218c135720dca27d144adf2838a6453832e5f386421de984"
+    },
+    {
+      "provision_id": "SYNTH-D-MEDICAL-EXC-01",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 제1조 단서",
+      "title": "질병휴직 기관 규정 우선 단서",
+      "text": "[합성] 다만 기관 규정이 상위 규정과 다르게 정한 경우 검토를 보류한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "medical_leave",
+        "proviso"
+      ],
+      "parent_provision_id": "SYNTHETIC-EVIDENCE-B-001",
+      "relation_ids": [],
+      "source_hash": "d453e2e866182d3e89709949a12dbe237e23edce5b7bc049c52b838fce0c23e8"
+    },
+    {
+      "provision_id": "SYNTH-D-MEDICAL-EXC-02",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 제2조 단서",
+      "title": "질병휴직 합산 한도 단서",
+      "text": "[합성] 다만 동일 사유로 이미 사용한 기간은 한도에 합산한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "medical_leave",
+        "proviso"
+      ],
+      "parent_provision_id": "SYNTHETIC-EVIDENCE-B-001",
+      "relation_ids": [],
+      "source_hash": "6ca26decb7cdc0a50f84425763a5879214f98b9ead0ff98c36a33478e1a103ae"
+    },
+    {
+      "provision_id": "SYNTH-D-FAMILY_CARE-EXC-01",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 제1조 단서",
+      "title": "가족돌봄휴직 기관 규정 우선 단서",
+      "text": "[합성] 다만 기관 규정이 상위 규정과 다르게 정한 경우 검토를 보류한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "family_care_leave",
+        "proviso"
+      ],
+      "parent_provision_id": "SYNTH-FAMILY-001",
+      "relation_ids": [],
+      "source_hash": "9f341575c39ee1b2c791d2fee587974b71d68376f2c96db6be050d32e896cc10"
+    },
+    {
+      "provision_id": "SYNTH-D-FAMILY_CARE-EXC-02",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 제2조 단서",
+      "title": "가족돌봄휴직 합산 한도 단서",
+      "text": "[합성] 다만 동일 사유로 이미 사용한 기간은 한도에 합산한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "family_care_leave",
+        "proviso"
+      ],
+      "parent_provision_id": "SYNTH-FAMILY-001",
+      "relation_ids": [],
+      "source_hash": "baf6ec587353d30a670fdfe0e4b6eaacee2b71abdddd0e277acd0997b34de522"
+    },
+    {
+      "provision_id": "SYNTH-D-SELF_DEVELOPMENT-EXC-01",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 제1조 단서",
+      "title": "자기개발휴직 기관 규정 우선 단서",
+      "text": "[합성] 다만 기관 규정이 상위 규정과 다르게 정한 경우 검토를 보류한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "self_development_leave",
+        "proviso"
+      ],
+      "parent_provision_id": "SYNTH-DEVELOP-001",
+      "relation_ids": [],
+      "source_hash": "a25c83cf522fa6f7b92869059eda7a87ffae38585fc894b20cb3384b34863af0"
+    },
+    {
+      "provision_id": "SYNTH-D-SELF_DEVELOPMENT-EXC-02",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 제2조 단서",
+      "title": "자기개발휴직 합산 한도 단서",
+      "text": "[합성] 다만 동일 사유로 이미 사용한 기간은 한도에 합산한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "self_development_leave",
+        "proviso"
+      ],
+      "parent_provision_id": "SYNTH-DEVELOP-001",
+      "relation_ids": [],
+      "source_hash": "bc28f1c4ad9aab6e28a0cfa0354869ee1eca0649af824b0936a3a6fd00ae0983"
+    },
+    {
+      "provision_id": "SYNTH-D-PARENTAL-SUBJ-01",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 특정직 제1조",
+      "title": "특정직 육아휴직 검토",
+      "text": "[합성] 특정직 공무원의 육아휴직 검토에는 자녀와 기존 기간 조건을 확인한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_special_service"
+      ],
+      "topic_tags": [
+        "parental_leave",
+        "subject_mismatch"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "107a771e448243c9048f52769ad8816e7bb2ec315d917540e9ee04887be9e33d"
+    },
+    {
+      "provision_id": "SYNTH-D-PARENTAL-SUBJ-02",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 별정직 제2조",
+      "title": "별정직 육아휴직 검토",
+      "text": "[합성] 별정직 공무원의 육아휴직 검토에는 자녀와 기존 기간 조건을 확인한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_special_service"
+      ],
+      "topic_tags": [
+        "parental_leave",
+        "subject_mismatch"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "feff34745b159b787f06c4c0c17978fd4cd6769a0be4682b7ddeb07cf7a20394"
+    },
+    {
+      "provision_id": "SYNTH-D-MEDICAL-SUBJ-01",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 특정직 제1조",
+      "title": "특정직 질병휴직 검토",
+      "text": "[합성] 특정직 공무원의 질병휴직과 복직의 공개 근거는 질문 기준일에 유효한 원문으로 검토한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_special_service"
+      ],
+      "topic_tags": [
+        "medical_leave",
+        "subject_mismatch"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "249693325b343e090642aa1317b04ee44df49b54ecbdfadeb0c61720df47dd07"
+    },
+    {
+      "provision_id": "SYNTH-D-MEDICAL-SUBJ-02",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 별정직 제2조",
+      "title": "별정직 질병휴직 검토",
+      "text": "[합성] 별정직 공무원의 질병휴직과 복직의 공개 근거는 질문 기준일에 유효한 원문으로 검토한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_special_service"
+      ],
+      "topic_tags": [
+        "medical_leave",
+        "subject_mismatch"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "709e78fed5cf787dfcb2df0fb97fb29e52702669a8c50589deda69b8ddebe07b"
+    },
+    {
+      "provision_id": "SYNTH-D-FAMILY_CARE-SUBJ-01",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 특정직 제1조",
+      "title": "특정직 가족돌봄휴직 검토",
+      "text": "[합성] 특정직 공무원의 가족돌봄휴직 검토에는 돌봄 관계를 확인한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_special_service"
+      ],
+      "topic_tags": [
+        "family_care_leave",
+        "subject_mismatch"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "c9820ce291f0a01e37e740fede068571aa5f09b0e53d1be431750c17f00c7b28"
+    },
+    {
+      "provision_id": "SYNTH-D-FAMILY_CARE-SUBJ-02",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 별정직 제2조",
+      "title": "별정직 가족돌봄휴직 검토",
+      "text": "[합성] 별정직 공무원의 가족돌봄휴직 검토에는 돌봄 관계를 확인한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_special_service"
+      ],
+      "topic_tags": [
+        "family_care_leave",
+        "subject_mismatch"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "8e23e6837dbfeb869e1783a27b46f31235030987e88af9f7ed6474537ea81199"
+    },
+    {
+      "provision_id": "SYNTH-D-SELF_DEVELOPMENT-SUBJ-01",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 특정직 제1조",
+      "title": "특정직 자기개발휴직 검토",
+      "text": "[합성] 특정직 공무원의 자기개발휴직 검토에는 신청 목적을 확인한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_special_service"
+      ],
+      "topic_tags": [
+        "self_development_leave",
+        "subject_mismatch"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "057100849ca59aeac0895e141cf9c569f7b228b085daaae82d3066ea28d0b4b3"
+    },
+    {
+      "provision_id": "SYNTH-D-SELF_DEVELOPMENT-SUBJ-02",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 별정직 제2조",
+      "title": "별정직 자기개발휴직 검토",
+      "text": "[합성] 별정직 공무원의 자기개발휴직 검토에는 신청 목적을 확인한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_special_service"
+      ],
+      "topic_tags": [
+        "self_development_leave",
+        "subject_mismatch"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "6dfcc8053b068c793745f6aea25fa3f4e1c3095fd8622719053c75c5f174d0ff"
+    },
+    {
+      "provision_id": "SYNTH-D-SUP-01",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 부칙 제2조",
+      "title": "경과조치 제1호",
+      "text": "[합성] 제1차 개정 당시 이미 사용 중이던 기간에 관한 경과조치를 정한다. 시행일 전후의 적용 관계를 구분한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "supplementary"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "73b155d68a6accb0cdb6ee7b87aaf886eee6603f65f7412efb6902156c58dbef"
+    },
+    {
+      "provision_id": "SYNTH-D-SUP-02",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 부칙 제3조",
+      "title": "경과조치 제2호",
+      "text": "[합성] 제2차 개정 당시 이미 사용 중이던 기간에 관한 경과조치를 정한다. 시행일 전후의 적용 관계를 구분한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "supplementary"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "fc37309f41a310d635650fcd38c5e5286c8103c8ac0b9d19ec1d3bc0ed0bf968"
+    },
+    {
+      "provision_id": "SYNTH-D-SUP-03",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 부칙 제4조",
+      "title": "경과조치 제3호",
+      "text": "[합성] 제3차 개정 당시 이미 사용 중이던 기간에 관한 경과조치를 정한다. 시행일 전후의 적용 관계를 구분한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "supplementary"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "a496208a90864065c652748c6d568b1c5050a98c1345f90bb61ae01551be7b43"
+    },
+    {
+      "provision_id": "SYNTH-D-SUP-04",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 부칙 제5조",
+      "title": "경과조치 제4호",
+      "text": "[합성] 제4차 개정 당시 이미 사용 중이던 기간에 관한 경과조치를 정한다. 시행일 전후의 적용 관계를 구분한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "supplementary"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "ee34266382abf21276eb5dd17adec4356fafb0112c383d400efcb1c83126180e"
+    },
+    {
+      "provision_id": "SYNTH-D-SUP-05",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 부칙 제6조",
+      "title": "경과조치 제5호",
+      "text": "[합성] 제5차 개정 당시 이미 사용 중이던 기간에 관한 경과조치를 정한다. 시행일 전후의 적용 관계를 구분한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "supplementary"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "064367b0acf2879cfd80ff9385ffd785fc118952397d2190182e066d33cc14ce"
+    },
+    {
+      "provision_id": "SYNTH-D-SUP-06",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 부칙 제7조",
+      "title": "경과조치 제6호",
+      "text": "[합성] 제6차 개정 당시 이미 사용 중이던 기간에 관한 경과조치를 정한다. 시행일 전후의 적용 관계를 구분한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "supplementary"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "7ac16ab72020a0fddf8cb0e128e69f214735987033f3800ca4a04e9a12231466"
+    },
+    {
+      "provision_id": "SYNTH-D-SUP-07",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 부칙 제8조",
+      "title": "경과조치 제7호",
+      "text": "[합성] 제7차 개정 당시 이미 사용 중이던 기간에 관한 경과조치를 정한다. 시행일 전후의 적용 관계를 구분한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "supplementary"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "1ab2185a0fe003af4c2ea6b6700a6a4868ae1d2099ab15c69386022d8ecb05cf"
+    },
+    {
+      "provision_id": "SYNTH-D-SUP-08",
+      "source_id": "SYNTHETIC-PUBLIC-FIXTURE",
+      "article_path": "합성 부칙 제9조",
+      "title": "경과조치 제8호",
+      "text": "[합성] 제8차 개정 당시 이미 사용 중이던 기간에 관한 경과조치를 정한다. 시행일 전후의 적용 관계를 구분한다.",
+      "valid_time": {
+        "start": "2020-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "supplementary"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "d238e1beb11c94aeb636ba3d5ca2d8777fc6e7e96925b7dcbbc00f6e4ea5a4be"
+    },
+    {
+      "provision_id": "REAL-W-DISCIPLINE-AND-APPEAL-01",
+      "source_id": "SYNTHETIC-WIDE-DISCIPLINE-AND-APPEAL",
+      "article_path": "제70조",
+      "title": "징계.소청 . 징계의 종류",
+      "text": "징계는 파면ㆍ해임ㆍ강등ㆍ정직ㆍ감봉 및 견책으로 구분한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "discipline_and_appeal",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-DISCIPLINE-AND-APPEAL-SUP"
+      ],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-DISCIPLINE-AND-APPEAL-02",
+      "source_id": "SYNTHETIC-WIDE-DISCIPLINE-AND-APPEAL",
+      "article_path": "제69조 제1항",
+      "title": "징계.소청 . 징계사유",
+      "text": "공무원이 다음 각 호의 어느 하나에 해당하면 징계의결을 요구하여야 하고, 징계의결의 결과에 따라 징계처분을 하여야 한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "discipline_and_appeal",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-DISCIPLINE-AND-APPEAL-SUP"
+      ],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-DISCIPLINE-AND-APPEAL-03",
+      "source_id": "SYNTHETIC-WIDE-DISCIPLINE-AND-APPEAL",
+      "article_path": "제69조의2 제1항",
+      "title": "징계.소청 . 징계부가금",
+      "text": "제69조에 따라 공무원의 징계 의결을 요구하는 경우 그 징계 사유가 다음 각 호의 어느 하나에 해당하는 경우에는 해당 징계 외에 다음 각 호의 행위로 취득하거나 제공한 금전 또는 재산상 이득(금전이 아닌 재산상 이득의 경우에는 금전으로 환산한 금액을 말한다)의 5배 내의 징계부가금 부과 의결을 인사위원회에 요구하여야 한다. <개정 2015. 5. 18.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "discipline_and_appeal",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-DISCIPLINE-AND-APPEAL-SUP"
+      ],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-DISCIPLINE-AND-APPEAL-04",
+      "source_id": "SYNTHETIC-WIDE-DISCIPLINE-AND-APPEAL",
+      "article_path": "제73조의2 제1항",
+      "title": "징계.소청 . 징계 및 징계부가금 부과 사유의 시효",
+      "text": "징계의결등의 요구는 징계 등 사유가 발생한 날부터 다음 각 호의 구분에 따른 기간이 지나면 하지 못한다. <개정 2021. 6. 8.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "discipline_and_appeal",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-DISCIPLINE-AND-APPEAL-SUP"
+      ],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-DISCIPLINE-AND-APPEAL-05",
+      "source_id": "SYNTHETIC-WIDE-DISCIPLINE-AND-APPEAL",
+      "article_path": "제65조의3 제1항",
+      "title": "징계.소청 . 직위해제",
+      "text": "임용권자는 다음 각 호의 어느 하나에 해당하는 사람에 대하여는 직위를 부여하지 아니할 수 있다. <개정 2010. 3. 22., 2015. 5. 18.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "discipline_and_appeal",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-DISCIPLINE-AND-APPEAL-SUP"
+      ],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-DISCIPLINE-AND-APPEAL-PROV",
+      "source_id": "SYNTHETIC-WIDE-DISCIPLINE-AND-APPEAL",
+      "article_path": "제65조의3 제5항",
+      "title": "징계.소청 . 직위해제",
+      "text": "공무원에 대하여 제1항제1호의 직위해제 사유와 같은 항 제2호부터 제4호까지의 직위해제 사유가 경합(競合)할 때에는 같은 항 제2호부터 제4호까지의 직위해제 처분을 하여야 한다. <개정 2015. 5. 18.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "discipline_and_appeal",
+        "wide_evidence",
+        "proviso"
+      ],
+      "parent_provision_id": "REAL-W-DISCIPLINE-AND-APPEAL-01",
+      "relation_ids": [],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-DISCIPLINE-AND-APPEAL-SUP",
+      "source_id": "SYNTHETIC-WIDE-DISCIPLINE-AND-APPEAL",
+      "article_path": "제1조",
+      "title": "징계.소청 . 목적",
+      "text": "이 영은 「지방공무원법」 제9장 및 제21조에 따른 공무원의 징계와 징계부가금 부과 및 소청(訴請) 절차에 필요한 사항을 규정함을 목적으로 한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "discipline_and_appeal",
+        "wide_evidence",
+        "supplementary"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "53df80b5eb533b7bdfa0c45a96256ba64b51e3c5ee5d327ec46cbed5669a2fb0"
+    },
+    {
+      "provision_id": "REAL-W-DISCIPLINE-AND-APPEAL-01-OLD",
+      "source_id": "SYNTHETIC-WIDE-DISCIPLINE-AND-APPEAL",
+      "article_path": "제70조",
+      "title": "징계.소청 . 징계의 종류 (구버전)",
+      "text": "징계는 파면ㆍ해임ㆍ강등ㆍ정직ㆍ감봉 및 견책으로 구분한다.",
+      "valid_time": {
+        "start": "2022-12-27",
+        "end": "2024-09-20"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "discipline_and_appeal",
+        "wide_evidence",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "be99a77dfedeed910b4d29268ec554c2e7a7f9aeda2e36c098a5ac1287afea72"
+    },
+    {
+      "provision_id": "REAL-W-DISCIPLINE-AND-APPEAL-02-OLD",
+      "source_id": "SYNTHETIC-WIDE-DISCIPLINE-AND-APPEAL",
+      "article_path": "제69조 제1항",
+      "title": "징계.소청 . 징계사유 (구버전)",
+      "text": "공무원이 다음 각 호의 어느 하나에 해당하면 징계의결을 요구하여야 하고, 징계의결의 결과에 따라 징계처분을 하여야 한다.",
+      "valid_time": {
+        "start": "2022-12-27",
+        "end": "2024-09-20"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "discipline_and_appeal",
+        "wide_evidence",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "be99a77dfedeed910b4d29268ec554c2e7a7f9aeda2e36c098a5ac1287afea72"
+    },
+    {
+      "provision_id": "REAL-W-DISCIPLINE-AND-APPEAL-FUT",
+      "source_id": "SYNTHETIC-WIDE-DISCIPLINE-AND-APPEAL",
+      "article_path": "제4조 제3항",
+      "title": "징계.소청 . 개정 예정",
+      "text": "일반직공무원과 일반직공무원의 계급에 준하여 임용하는 별정직공무원의 봉급월액은 「공무원보수규정」 [별표 3]을 준용한다. <개정 2005. 1. 7.>",
+      "valid_time": {
+        "start": "2027-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "discipline_and_appeal",
+        "wide_evidence",
+        "not_yet_effective"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "201d81a81456333b81c3e28d3ced3f57c9788f93fdc322be78a08844477f3444"
+    },
+    {
+      "provision_id": "REAL-W-DISCIPLINE-AND-APPEAL-ADJ",
+      "source_id": "SYNTHETIC-WIDE-DISCIPLINE-AND-APPEAL",
+      "article_path": "제38조 제1항",
+      "title": "징계.소청.근무성적평정.승진 구분",
+      "text": "계급 간의 승진임용은 근무성적평정, 경력평정, 그 밖의 능력의 실증에 따라 한다. 다만, 1급부터 3급까지의 공무원으로의 승진임용은 능력과 경력 등을 고려하여 임용하며, 5급 공무원으로의 승진임용은 승진시험을 거치도록 하되, 필요하다고 인정하면 대통령령으로 정하는 바에 따라 인사위원회의 의결을 거쳐 임용할 수 있다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "discipline_and_appeal",
+        "performance_and_promotion",
+        "wide_evidence",
+        "adjacent_confusable"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-DISCIPLINE-AND-APPEAL-SUBJ",
+      "source_id": "SYNTHETIC-WIDE-DISCIPLINE-AND-APPEAL",
+      "article_path": "제73조의3",
+      "title": "징계.소청 . 다른 직군",
+      "text": "다른 법률에 특별한 규정이 있는 경우 외에는 대통령령으로 정하는 바에 따라 특수경력직공무원에 대하여도 이 장의 규정을 준용할 수 있다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "discipline_and_appeal",
+        "wide_evidence",
+        "subject_mismatch"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-PERFORMANCE-AND-PROMOTION-01",
+      "source_id": "SYNTHETIC-WIDE-PERFORMANCE-AND-PROMOTION",
+      "article_path": "제38조 제1항",
+      "title": "근무성적평정.승진 . 승진",
+      "text": "계급 간의 승진임용은 근무성적평정, 경력평정, 그 밖의 능력의 실증에 따라 한다. 다만, 1급부터 3급까지의 공무원으로의 승진임용은 능력과 경력 등을 고려하여 임용하며, 5급 공무원으로의 승진임용은 승진시험을 거치도록 하되, 필요하다고 인정하면 대통령령으로 정하는 바에 따라 인사위원회의 의결을 거쳐 임용할 수 있다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "performance_and_promotion",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-PERFORMANCE-AND-PROMOTION-SUP"
+      ],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-PERFORMANCE-AND-PROMOTION-02",
+      "source_id": "SYNTHETIC-WIDE-PERFORMANCE-AND-PROMOTION",
+      "article_path": "제39조의3 제1항",
+      "title": "근무성적평정.승진 . 우수 공무원 등의 특별승진",
+      "text": "공무원이 다음 각 호의 어느 하나에 해당할 때에는 제38조 및 제39조제1항부터 제3항까지의 규정에도 불구하고 특별승진임용할 수 있다. 다만, 6급 공무원에 대하여는 승진시험에 우선 응시하게 하거나 인사위원회의 승진 의결 대상자로 할 수 있다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "performance_and_promotion",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-PERFORMANCE-AND-PROMOTION-SUP"
+      ],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-PERFORMANCE-AND-PROMOTION-03",
+      "source_id": "SYNTHETIC-WIDE-PERFORMANCE-AND-PROMOTION",
+      "article_path": "제39조의2 제1항",
+      "title": "근무성적평정.승진 . 승진시험의 방법",
+      "text": "승진시험은 일반승진시험과 공개경쟁승진시험으로 구분한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "performance_and_promotion",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-PERFORMANCE-AND-PROMOTION-SUP"
+      ],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-PERFORMANCE-AND-PROMOTION-04",
+      "source_id": "SYNTHETIC-WIDE-PERFORMANCE-AND-PROMOTION",
+      "article_path": "제33조 제1항",
+      "title": "근무성적평정.승진 . 승진소요 최저연수",
+      "text": "공무원이 승진하려면 다음 각 호의 구분에 따른 기간 동안 해당 계급에 재직해야 한다. <개정 2024. 6. 27.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "performance_and_promotion",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-PERFORMANCE-AND-PROMOTION-SUP"
+      ],
+      "source_hash": "7b25189d399566ff89f2e99f37132f075ec43be00f105e6451ad3210ad652217"
+    },
+    {
+      "provision_id": "REAL-W-PERFORMANCE-AND-PROMOTION-05",
+      "source_id": "SYNTHETIC-WIDE-PERFORMANCE-AND-PROMOTION",
+      "article_path": "제7조",
+      "title": "근무성적평정.승진 . 4급 이상 공무원 등의 근무성적평정",
+      "text": "제3조제1항에 해당하는 평정대상 공무원의 근무성적평정점은 제6조제2항에 따른 해당 평정 대상기간의 성과목표 달성도 등의 평정점으로 한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "performance_and_promotion",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-PERFORMANCE-AND-PROMOTION-SUP"
+      ],
+      "source_hash": "44d84ab08f4fd57cc3164007e6c48d7ac4877d487c40d9bdcf63842a9d271b59"
+    },
+    {
+      "provision_id": "REAL-W-PERFORMANCE-AND-PROMOTION-PROV",
+      "source_id": "SYNTHETIC-WIDE-PERFORMANCE-AND-PROMOTION",
+      "article_path": "제33조 제3항",
+      "title": "근무성적평정.승진 . 승진소요 최저연수",
+      "text": "제1항에도 불구하고 다음 각 호의 경력이 있는 공무원에 대해서는 규칙으로 정하는 바에 따라 1년의 범위에서 해당 호의 구분에 따른 기간만큼 해당 계급의 승진소요 최저연수를 단축할 수 있다. <신설 2026. 6. 30.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "performance_and_promotion",
+        "wide_evidence",
+        "proviso"
+      ],
+      "parent_provision_id": "REAL-W-PERFORMANCE-AND-PROMOTION-01",
+      "relation_ids": [],
+      "source_hash": "7b25189d399566ff89f2e99f37132f075ec43be00f105e6451ad3210ad652217"
+    },
+    {
+      "provision_id": "REAL-W-PERFORMANCE-AND-PROMOTION-SUP",
+      "source_id": "SYNTHETIC-WIDE-PERFORMANCE-AND-PROMOTION",
+      "article_path": "제1조",
+      "title": "근무성적평정.승진 . 목적",
+      "text": "이 규칙은 「지방공무원 임용령」 제31조의2부터 제31조의4까지, 제31조의6, 제31조의7 및 제32조와 「지방 연구직 및 지도직공무원의 임용 등에 관한 규정」 제14조, 제15조, 제17조부터 제19조까지의 규정에 따른 근무성적평정ㆍ경력평정 및 승진후보자 명부 작성에 관한 사항을 규정함을 목적으로 한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "performance_and_promotion",
+        "wide_evidence",
+        "supplementary"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "44d84ab08f4fd57cc3164007e6c48d7ac4877d487c40d9bdcf63842a9d271b59"
+    },
+    {
+      "provision_id": "REAL-W-PERFORMANCE-AND-PROMOTION-01-OLD",
+      "source_id": "SYNTHETIC-WIDE-PERFORMANCE-AND-PROMOTION",
+      "article_path": "제38조 제1항",
+      "title": "근무성적평정.승진 . 승진 (구버전)",
+      "text": "계급 간의 승진임용은 근무성적평정, 경력평정, 그 밖의 능력의 실증에 따라 한다. 다만, 1급부터 3급까지의 공무원으로의 승진임용은 능력과 경력 등을 고려하여 임용하며, 5급 공무원으로의 승진임용은 승진시험을 거치도록 하되, 필요하다고 인정하면 대통령령으로 정하는 바에 따라 인사위원회의 의결을 거쳐 임용할 수 있다.",
+      "valid_time": {
+        "start": "2022-12-27",
+        "end": "2024-09-20"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "performance_and_promotion",
+        "wide_evidence",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "be99a77dfedeed910b4d29268ec554c2e7a7f9aeda2e36c098a5ac1287afea72"
+    },
+    {
+      "provision_id": "REAL-W-PERFORMANCE-AND-PROMOTION-02-OLD",
+      "source_id": "SYNTHETIC-WIDE-PERFORMANCE-AND-PROMOTION",
+      "article_path": "제33조 제1항",
+      "title": "근무성적평정.승진 . 승진소요 최저연수 (구버전)",
+      "text": "공무원이 승진하려면 다음 각 호의 구분에 따른 기간 동안 해당 계급에 재직하여야 한다. <개정 2013. 11. 20.>",
+      "valid_time": {
+        "start": "2023-06-13",
+        "end": "2024-06-27"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "performance_and_promotion",
+        "wide_evidence",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "edaf5736b61fbf51197f768513322f447226a9e5347b60ce120b28d6e271f5de"
+    },
+    {
+      "provision_id": "REAL-W-PERFORMANCE-AND-PROMOTION-FUT",
+      "source_id": "SYNTHETIC-WIDE-PERFORMANCE-AND-PROMOTION",
+      "article_path": "제8조 제1항",
+      "title": "근무성적평정.승진 . 개정 예정",
+      "text": "공무원을 신규임용하는 경우에는 초임호봉을 획정한다.",
+      "valid_time": {
+        "start": "2027-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "performance_and_promotion",
+        "wide_evidence",
+        "not_yet_effective"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "201d81a81456333b81c3e28d3ced3f57c9788f93fdc322be78a08844477f3444"
+    },
+    {
+      "provision_id": "REAL-W-PERFORMANCE-AND-PROMOTION-ADJ",
+      "source_id": "SYNTHETIC-WIDE-PERFORMANCE-AND-PROMOTION",
+      "article_path": "제70조",
+      "title": "근무성적평정.승진.징계.소청 구분",
+      "text": "징계는 파면ㆍ해임ㆍ강등ㆍ정직ㆍ감봉 및 견책으로 구분한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "performance_and_promotion",
+        "discipline_and_appeal",
+        "wide_evidence",
+        "adjacent_confusable"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-PERFORMANCE-AND-PROMOTION-SUBJ",
+      "source_id": "SYNTHETIC-WIDE-PERFORMANCE-AND-PROMOTION",
+      "article_path": "제39조의2 제3항",
+      "title": "근무성적평정.승진 . 다른 직군",
+      "text": "공개경쟁승진시험은 5급 공무원으로의 승진에 한정하되, 지방자치단체 간 승진 기회의 균형을 유지하고 유능한 공무원을 발탁하기 위하여 필요한 경우에 실시하며, 시험성적으로 합격자를 결정한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "performance_and_promotion",
+        "wide_evidence",
+        "subject_mismatch"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-PAY-AND-ALLOWANCE-01",
+      "source_id": "SYNTHETIC-WIDE-PAY-AND-ALLOWANCE",
+      "article_path": "제44조 제1항",
+      "title": "보수.수당 . 보수결정의 원칙",
+      "text": "공무원의 보수는 직무의 곤란성과 책임의 정도에 맞도록 계급별ㆍ직위별 또는 직무등급별로 정한다. 다만, 다음 각 호의 어느 하나에 해당하는 공무원의 보수는 따로 정할 수 있다. <개정 2012. 12. 11.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "pay_and_allowance",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-PAY-AND-ALLOWANCE-SUP"
+      ],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-PAY-AND-ALLOWANCE-02",
+      "source_id": "SYNTHETIC-WIDE-PAY-AND-ALLOWANCE",
+      "article_path": "제3조 제1호",
+      "title": "보수.수당 . 용어의 정의",
+      "text": "“보수”라 함은 봉급과 기타 각종 수당을 합산한 금액을 말한다. 다만, 연봉제적용대상공무원은 연봉과 기타 각종 수당을 합산한 금액을 말한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "pay_and_allowance",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-PAY-AND-ALLOWANCE-SUP"
+      ],
+      "source_hash": "badc782626e9384a89457dbe1c22e6d11cf8589232ae62d9f269d3317d003b11"
+    },
+    {
+      "provision_id": "REAL-W-PAY-AND-ALLOWANCE-03",
+      "source_id": "SYNTHETIC-WIDE-PAY-AND-ALLOWANCE",
+      "article_path": "제3조 제2호",
+      "title": "보수.수당 . 용어의 정의",
+      "text": "“봉급”이라 함은 직무의 곤란성 및 책임의 정도에 따라 직책별로 지급되는 기본급여 또는 직무의 곤란성 및 책임의 정도와 재직기간등에 따라 계급(직위를 포함한다. 이하 같다)별ㆍ호봉별로 지급되는 기본급여를 말한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "pay_and_allowance",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-PAY-AND-ALLOWANCE-SUP"
+      ],
+      "source_hash": "badc782626e9384a89457dbe1c22e6d11cf8589232ae62d9f269d3317d003b11"
+    },
+    {
+      "provision_id": "REAL-W-PAY-AND-ALLOWANCE-04",
+      "source_id": "SYNTHETIC-WIDE-PAY-AND-ALLOWANCE",
+      "article_path": "제27조 제1항",
+      "title": "보수.수당 . 휴직기간중의 봉급감액",
+      "text": "「지방공무원법」 제63조제1항제1호 또는 「교육공무원법」 제44조제1항제1호ㆍ제7호의3에 따라 휴직한 공무원에게는 다음 각 호의 구분에 따라 봉급의 일부를 지급한다. 다만, 공무상 질병 또는 부상으로 휴직한 경우에는 그 기간 중 봉급 전액을 지급한다. <개정 2014. 1. 8., 2017. 1. 6., 2018. 1. 18., 2025. 1. 3.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "pay_and_allowance",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-PAY-AND-ALLOWANCE-SUP"
+      ],
+      "source_hash": "badc782626e9384a89457dbe1c22e6d11cf8589232ae62d9f269d3317d003b11"
+    },
+    {
+      "provision_id": "REAL-W-PAY-AND-ALLOWANCE-05",
+      "source_id": "SYNTHETIC-WIDE-PAY-AND-ALLOWANCE",
+      "article_path": "제6조 제1항",
+      "title": "보수.수당 . 정근수당",
+      "text": "공무원에게는 예산의 범위안에서 근무연수에 따라 매년 1월과 7월의 보수지급일에 별표 2의 지급구분에 의하여 다음과 같이 정근수당을 지급한다. <개정 1986. 1. 25., 1999. 1. 21., 2003. 1. 20., 2008. 9. 10.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "pay_and_allowance",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-PAY-AND-ALLOWANCE-SUP"
+      ],
+      "source_hash": "a4e849fd80f47a5542e8ea01a97b8793ad060bbd4faf9f2c483bf8c67f06a1c8"
+    },
+    {
+      "provision_id": "REAL-W-PAY-AND-ALLOWANCE-06",
+      "source_id": "SYNTHETIC-WIDE-PAY-AND-ALLOWANCE",
+      "article_path": "제15조 제1항",
+      "title": "보수.수당 . 시간외근무수당",
+      "text": "근무명령에 의하여 규정된 근무시간외에 근무한 자에 대하여는 예산의 범위안에서 시간외근무수당을 지급한다. <개정 1990. 1. 15., 1999. 1. 21., 2008. 9. 10.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "pay_and_allowance",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-PAY-AND-ALLOWANCE-SUP"
+      ],
+      "source_hash": "a4e849fd80f47a5542e8ea01a97b8793ad060bbd4faf9f2c483bf8c67f06a1c8"
+    },
+    {
+      "provision_id": "REAL-W-PAY-AND-ALLOWANCE-PROV",
+      "source_id": "SYNTHETIC-WIDE-PAY-AND-ALLOWANCE",
+      "article_path": "제27조 제4항",
+      "title": "보수.수당 . 휴직기간중의 봉급감액",
+      "text": "제1항 및 제2항에 규정되지 아니한 휴직의 경우에는 봉급을 지급하지 아니한다. <개정 1990. 7. 11., 2014. 1. 8.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "pay_and_allowance",
+        "wide_evidence",
+        "proviso"
+      ],
+      "parent_provision_id": "REAL-W-PAY-AND-ALLOWANCE-01",
+      "relation_ids": [],
+      "source_hash": "badc782626e9384a89457dbe1c22e6d11cf8589232ae62d9f269d3317d003b11"
+    },
+    {
+      "provision_id": "REAL-W-PAY-AND-ALLOWANCE-SUP",
+      "source_id": "SYNTHETIC-WIDE-PAY-AND-ALLOWANCE",
+      "article_path": "제1조",
+      "title": "보수.수당 . 목적",
+      "text": "이 영은 「지방공무원법」 제45조ㆍ제46조 및 「지방공무원보수규정」 제30조의 규정에 의하여 지방공무원에게 지급하는 수당 및 실비보상 등에 관한 사항을 규정함을 목적으로 한다. <개정 1986. 12. 31., 2001. 1. 29., 2005. 1. 7., 2015. 9. 25.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "pay_and_allowance",
+        "wide_evidence",
+        "supplementary"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "a4e849fd80f47a5542e8ea01a97b8793ad060bbd4faf9f2c483bf8c67f06a1c8"
+    },
+    {
+      "provision_id": "REAL-W-PAY-AND-ALLOWANCE-01-OLD",
+      "source_id": "SYNTHETIC-WIDE-PAY-AND-ALLOWANCE",
+      "article_path": "제3조 제1호",
+      "title": "보수.수당 . 용어의 정의 (구버전)",
+      "text": "“보수”라 함은 봉급과 기타 각종 수당을 합산한 금액을 말한다. 다만, 연봉제적용대상공무원은 연봉과 기타 각종 수당을 합산한 금액을 말한다.",
+      "valid_time": {
+        "start": "2026-07-01",
+        "end": "2026-08-01"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "pay_and_allowance",
+        "wide_evidence",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "201d81a81456333b81c3e28d3ced3f57c9788f93fdc322be78a08844477f3444"
+    },
+    {
+      "provision_id": "REAL-W-PAY-AND-ALLOWANCE-02-OLD",
+      "source_id": "SYNTHETIC-WIDE-PAY-AND-ALLOWANCE",
+      "article_path": "제3조 제2호",
+      "title": "보수.수당 . 용어의 정의 (구버전)",
+      "text": "“봉급”이라 함은 직무의 곤란성 및 책임의 정도에 따라 직책별로 지급되는 기본급여 또는 직무의 곤란성 및 책임의 정도와 재직기간등에 따라 계급(직위를 포함한다. 이하 같다)별ㆍ호봉별로 지급되는 기본급여를 말한다.",
+      "valid_time": {
+        "start": "2026-07-01",
+        "end": "2026-08-01"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "pay_and_allowance",
+        "wide_evidence",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "201d81a81456333b81c3e28d3ced3f57c9788f93fdc322be78a08844477f3444"
+    },
+    {
+      "provision_id": "REAL-W-PAY-AND-ALLOWANCE-FUT",
+      "source_id": "SYNTHETIC-WIDE-PAY-AND-ALLOWANCE",
+      "article_path": "제4조 제4항",
+      "title": "보수.수당 . 개정 예정",
+      "text": "지방전문경력관의 봉급월액은 「공무원보수규정」 별표 3의2를 준용한다. <신설 2013. 12. 11.>",
+      "valid_time": {
+        "start": "2027-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "pay_and_allowance",
+        "wide_evidence",
+        "not_yet_effective"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "201d81a81456333b81c3e28d3ced3f57c9788f93fdc322be78a08844477f3444"
+    },
+    {
+      "provision_id": "REAL-W-PAY-AND-ALLOWANCE-ADJ",
+      "source_id": "SYNTHETIC-WIDE-PAY-AND-ALLOWANCE",
+      "article_path": "제66조 제1항",
+      "title": "보수.수당.퇴직 구분",
+      "text": "공무원의 정년은 다른 법률에 특별한 규정이 있는 경우를 제외하고는 60세로 한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "pay_and_allowance",
+        "retirement",
+        "wide_evidence",
+        "adjacent_confusable"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-PAY-AND-ALLOWANCE-SUBJ",
+      "source_id": "SYNTHETIC-WIDE-PAY-AND-ALLOWANCE",
+      "article_path": "제18조",
+      "title": "보수.수당 . 다른 직군",
+      "text": "공무원에게는 예산의 범위에서 월 16만원의 정액급식비를 지급한다. 다만, 제3조에 따라 수당등을 지급받는 국외파견공무원과 제17조의2제1항 단서에 해당되는 자에 대해서는 이를 지급하지 않는다. <개정 2001. 11. 14., 2003. 1. 20., 2004. 1. 20., 2005. 1. 7., 2008. 9. 10., 2020. 1. 7., 2026. 1. 2.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "pay_and_allowance",
+        "wide_evidence",
+        "subject_mismatch"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "a4e849fd80f47a5542e8ea01a97b8793ad060bbd4faf9f2c483bf8c67f06a1c8"
+    },
+    {
+      "provision_id": "REAL-W-SERVICE-AND-LEAVE-01",
+      "source_id": "SYNTHETIC-WIDE-SERVICE-AND-LEAVE",
+      "article_path": "제2조 제1항",
+      "title": "복무.연가 . 근무시간 등",
+      "text": "공무원의 1주간 근무시간은 점심시간을 제외하고 40시간으로 하며, 토요일은 휴무함을 원칙으로 한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "service_and_leave",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-SERVICE-AND-LEAVE-SUP"
+      ],
+      "source_hash": "7911eaf86786e22c62fc3630b9bba7875e9a0412896638f6696d3c78e2bb8761"
+    },
+    {
+      "provision_id": "REAL-W-SERVICE-AND-LEAVE-02",
+      "source_id": "SYNTHETIC-WIDE-SERVICE-AND-LEAVE",
+      "article_path": "제6조 제1항",
+      "title": "복무.연가 . 휴가의 종류",
+      "text": "공무원의 휴가는 연가ㆍ병가ㆍ공가(公暇) 및 특별휴가로 구분한다. <개정 2019. 12. 31.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "service_and_leave",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-SERVICE-AND-LEAVE-SUP"
+      ],
+      "source_hash": "7911eaf86786e22c62fc3630b9bba7875e9a0412896638f6696d3c78e2bb8761"
+    },
+    {
+      "provision_id": "REAL-W-SERVICE-AND-LEAVE-03",
+      "source_id": "SYNTHETIC-WIDE-SERVICE-AND-LEAVE",
+      "article_path": "제7조 제1항",
+      "title": "복무.연가 . 연가일수 및 연가보상비의 지급",
+      "text": "공무원의 재직기간별 연가일수는 다음과 같다. 다만, 법 제27조제2항제2호ㆍ제3호 및 제9호에 따라 임용된 경력직공무원 및 특수경력직공무원의 재직기간이 5년 미만인 경우로서 지방자치단체의 조례로 정하는 공무원 경력 외의 유사경력이 있는 경우에는 5년 미만의 재직기간별 연가일수에 각각 3일을 더한다. <개정 2013. 12. 11., 2018. 12. 18., 2023. 7. 18., 2024. 7. 2.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "service_and_leave",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-SERVICE-AND-LEAVE-SUP"
+      ],
+      "source_hash": "7911eaf86786e22c62fc3630b9bba7875e9a0412896638f6696d3c78e2bb8761"
+    },
+    {
+      "provision_id": "REAL-W-SERVICE-AND-LEAVE-04",
+      "source_id": "SYNTHETIC-WIDE-SERVICE-AND-LEAVE",
+      "article_path": "제7조의5 제1항",
+      "title": "복무.연가 . 병가",
+      "text": "지방자치단체의 장과 지방의회의 의장은 소속 공무원이 다음 각 호의 어느 하나에 해당할 경우에는 연 60일의 범위에서 병가를 허가할 수 있다. 이 경우 질병이나 부상으로 인한 지각ㆍ조퇴 및 외출은 누계 8시간을 병가 1일로 계산하고, 제7조의2제7항 본문에 따라 연가 일수에서 빼는 병가는 병가 일수에 산입하지 않는다. <개정 2021. 11. 30.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "service_and_leave",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-SERVICE-AND-LEAVE-SUP"
+      ],
+      "source_hash": "7911eaf86786e22c62fc3630b9bba7875e9a0412896638f6696d3c78e2bb8761"
+    },
+    {
+      "provision_id": "REAL-W-SERVICE-AND-LEAVE-05",
+      "source_id": "SYNTHETIC-WIDE-SERVICE-AND-LEAVE",
+      "article_path": "제7조의6",
+      "title": "복무.연가 . 공가",
+      "text": "지방자치단체의 장과 지방의회의 의장은 소속 공무원(제10호의 경우 「공무원의 노동조합 설립 및 운영 등에 관한 법률 시행령」 제3조의3제2항에 따른 근무시간 면제자는 제외한다)이 다음 각 호의 어느 하나에 해당할 때에는 직접적으로 필요한 기간 또는 시간을 공가로 허가해야 한다. <개정 2011. 9. 29., 2012. 8. 31., 2016. 11. 29., 2018. 12. 18., 2019. 4. 16., 2019. 12. 24., 2020. 10. 20., 2021. 11. 30., 2021. 12. 31., 2023. 12. 5., 2026. 6. 23.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "service_and_leave",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-SERVICE-AND-LEAVE-SUP"
+      ],
+      "source_hash": "7911eaf86786e22c62fc3630b9bba7875e9a0412896638f6696d3c78e2bb8761"
+    },
+    {
+      "provision_id": "REAL-W-SERVICE-AND-LEAVE-PROV",
+      "source_id": "SYNTHETIC-WIDE-SERVICE-AND-LEAVE",
+      "article_path": "제7조의5 제3항",
+      "title": "복무.연가 . 병가",
+      "text": "병가 일수가 연 6일을 초과하는 경우에는 의사의 진단서를 첨부해야 한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "service_and_leave",
+        "wide_evidence",
+        "proviso"
+      ],
+      "parent_provision_id": "REAL-W-SERVICE-AND-LEAVE-01",
+      "relation_ids": [],
+      "source_hash": "7911eaf86786e22c62fc3630b9bba7875e9a0412896638f6696d3c78e2bb8761"
+    },
+    {
+      "provision_id": "REAL-W-SERVICE-AND-LEAVE-SUP",
+      "source_id": "SYNTHETIC-WIDE-SERVICE-AND-LEAVE",
+      "article_path": "제1조",
+      "title": "복무.연가 . 목적",
+      "text": "이 영은 「지방공무원법」에 따라 지방공무원의 복무에 관한 사항을 규정하는 것을 목적으로 한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "service_and_leave",
+        "wide_evidence",
+        "supplementary"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "7911eaf86786e22c62fc3630b9bba7875e9a0412896638f6696d3c78e2bb8761"
+    },
+    {
+      "provision_id": "REAL-W-SERVICE-AND-LEAVE-01-OLD",
+      "source_id": "SYNTHETIC-WIDE-SERVICE-AND-LEAVE",
+      "article_path": "제47조",
+      "title": "복무.연가 . 복무 선서 (구버전)",
+      "text": "공무원은 취임할 때에 소속 기관장 앞에서 조례로 정하는 바에 따라 선서를 하여야 한다. 다만, 불가피한 사유가 있을 때에는 취임 후에 선서하게 할 수 있다.",
+      "valid_time": {
+        "start": "2022-12-27",
+        "end": "2024-09-20"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "service_and_leave",
+        "wide_evidence",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "be99a77dfedeed910b4d29268ec554c2e7a7f9aeda2e36c098a5ac1287afea72"
+    },
+    {
+      "provision_id": "REAL-W-SERVICE-AND-LEAVE-02-OLD",
+      "source_id": "SYNTHETIC-WIDE-SERVICE-AND-LEAVE",
+      "article_path": "제48조",
+      "title": "복무.연가 . 성실의 의무 (구버전)",
+      "text": "모든 공무원은 법규를 준수하며 성실히 그 직무를 수행하여야 한다.",
+      "valid_time": {
+        "start": "2022-12-27",
+        "end": "2024-09-20"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "service_and_leave",
+        "wide_evidence",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "be99a77dfedeed910b4d29268ec554c2e7a7f9aeda2e36c098a5ac1287afea72"
+    },
+    {
+      "provision_id": "REAL-W-SERVICE-AND-LEAVE-FUT",
+      "source_id": "SYNTHETIC-WIDE-SERVICE-AND-LEAVE",
+      "article_path": "제27조 제1항",
+      "title": "복무.연가 . 개정 예정",
+      "text": "「지방공무원법」 제63조제1항제1호 또는 「교육공무원법」 제44조제1항제1호ㆍ제7호의3에 따라 휴직한 공무원에게는 다음 각 호의 구분에 따라 봉급의 일부를 지급한다. 다만, 공무상 질병 또는 부상으로 휴직한 경우에는 그 기간 중 봉급 전액을 지급한다. <개정 2014. 1. 8., 2017. 1. 6., 2018. 1. 18., 2025. 1. 3.>",
+      "valid_time": {
+        "start": "2027-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "service_and_leave",
+        "wide_evidence",
+        "not_yet_effective"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "201d81a81456333b81c3e28d3ced3f57c9788f93fdc322be78a08844477f3444"
+    },
+    {
+      "provision_id": "REAL-W-SERVICE-AND-LEAVE-ADJ",
+      "source_id": "SYNTHETIC-WIDE-SERVICE-AND-LEAVE",
+      "article_path": "제15조 제4항",
+      "title": "복무.연가.보수.수당 구분",
+      "text": "다음 각 호의 경우를 제외하고는 제1항에 따른 시간외근무수당이 지급되는 근무명령 시간은 1일에 4시간, 1개월에 57시간을 초과할 수 없다. <신설 2012. 9. 28., 2013. 3. 23., 2014. 11. 19., 2017. 7. 26., 2021. 11. 30., 2024. 1. 5.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "service_and_leave",
+        "pay_and_allowance",
+        "wide_evidence",
+        "adjacent_confusable"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "a4e849fd80f47a5542e8ea01a97b8793ad060bbd4faf9f2c483bf8c67f06a1c8"
+    },
+    {
+      "provision_id": "REAL-W-SERVICE-AND-LEAVE-SUBJ",
+      "source_id": "SYNTHETIC-WIDE-SERVICE-AND-LEAVE",
+      "article_path": "제7조의9",
+      "title": "복무.연가 . 다른 직군",
+      "text": "「지방공무원 임용령」 제3조의2제2호에 따른 시간선택제임기제공무원, 같은 조 제3호에 따른 한시임기제공무원, 같은 영 제3조의5제1항에 따른 시간선택제채용공무원 및 같은 영 제38조의15제1항 본문에 따른 시간선택제전환공무원(이하 “시간선택제공무원등”이라 한다)에 대한 휴가는 제4조제2항, 제7조제1항, 제7조의4제1항ㆍ제2항, 제7조의5, 제7조의7제7항ㆍ제8항 및 제7조의8에도 불구하고 별표 2에 따른다. <개정 2019. 4. 16., 2019. 12. 31., 2020. 10. 20.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "service_and_leave",
+        "wide_evidence",
+        "subject_mismatch"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "7911eaf86786e22c62fc3630b9bba7875e9a0412896638f6696d3c78e2bb8761"
+    },
+    {
+      "provision_id": "REAL-W-APPOINTMENT-01",
+      "source_id": "SYNTHETIC-WIDE-APPOINTMENT",
+      "article_path": "제27조 제1항",
+      "title": "신규임용 . 신규임용",
+      "text": "공무원의 신규임용은 공개경쟁임용시험으로 한다. <개정 2011. 5. 23.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "appointment",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-APPOINTMENT-SUP"
+      ],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-APPOINTMENT-02",
+      "source_id": "SYNTHETIC-WIDE-APPOINTMENT",
+      "article_path": "제27조 제2항",
+      "title": "신규임용 . 신규임용",
+      "text": "제1항에도 불구하고 다음 각 호의 어느 하나에 해당하는 경우에는 경력 등 응시요건을 정하여 같은 사유에 해당하는 다수인을 대상으로 경쟁의 방법으로 임용하는 시험(이하 “경력경쟁임용시험”이라 한다)으로 공무원을 임용할 수 있다. 다만, 제1호, 제3호, 제4호, 제5호, 제7호, 제10호의 어느 하나에 해당하는 경우 중 다수인을 대상으로 시험을 실시하는 것이 적당하지 아니하여 대통령령으로 정하는 경우에는 다수인을 대상으로 하지 아니한 시험으로 공무원을 임용할 수 있다. <개정 2011. 5. 23., 2012. 3. 21., 2012. 12. 11., 2013. 3. 23., 2014. 11. 19., 2015. 5. 18., 2017. 7. 26., 2018. 3. 20., 2024. 12. 31.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "appointment",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-APPOINTMENT-SUP"
+      ],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-APPOINTMENT-03",
+      "source_id": "SYNTHETIC-WIDE-APPOINTMENT",
+      "article_path": "제28조 제1항",
+      "title": "신규임용 . 시보임용",
+      "text": "5급 공무원(제4조제2항에 따라 같은 조 제1항의 계급 구분이나 직군 및 직렬의 분류를 적용하지 아니하는 공무원 중 5급에 상당하는 공무원을 포함한다. 이하 같다)을 신규임용하는 경우에는 1년, 6급 이하 공무원(제4조제2항에 따라 같은 조 제1항의 계급 구분이나 직군 및 직렬의 분류를 적용하지 아니하는 공무원 중 6급 이하에 상당하는 공무원을 포함한다. 이하 같다)을 신규임용하는 경우에는 6개월간 시보로 임용하고, 그 기간의 근무성적ㆍ교육훈련성적과 공무원으로서의 자질을 고려하여 정규 공무원으로 임용한다. 다만, 대통령령으로 정하는 경우에는 시보임용을 면제하거나 그 기간을 단축할 수 있다. <개정 2012. 12. 11., 2015. 5. 18.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "appointment",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-APPOINTMENT-SUP"
+      ],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-APPOINTMENT-04",
+      "source_id": "SYNTHETIC-WIDE-APPOINTMENT",
+      "article_path": "제31조",
+      "title": "신규임용 . 결격사유",
+      "text": "다음 각 호의 어느 하나에 해당하는 사람은 공무원이 될 수 없다. <개정 2010. 3. 22., 2013. 8. 6., 2015. 12. 29., 2018. 10. 16., 2021. 1. 12., 2022. 12. 27., 2024. 3. 19., 2024. 12. 31.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "appointment",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-APPOINTMENT-SUP"
+      ],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-APPOINTMENT-05",
+      "source_id": "SYNTHETIC-WIDE-APPOINTMENT",
+      "article_path": "제25조",
+      "title": "신규임용 . 임용의 기준",
+      "text": "공무원의 임용은 시험성적, 근무성적, 경력평정, 그 밖의 능력의 실증(實證)에 따라 한다. 다만, 지방자치단체의 장과 지방의회의 의장은 대통령령으로 정하는 바에 따라 장애인, 이공계 전공자, 저소득층, 다자녀 양육자 등에 대한 임용ㆍ승진ㆍ전보 등 인사관리상의 우대와 실질적 양성평등을 실현하기 위한 적극적인 정책을 실시할 수 있다. <개정 2021. 10. 8., 2024. 12. 31.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "appointment",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-APPOINTMENT-SUP"
+      ],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-APPOINTMENT-PROV",
+      "source_id": "SYNTHETIC-WIDE-APPOINTMENT",
+      "article_path": "제28조 제2항",
+      "title": "신규임용 . 시보임용",
+      "text": "휴직 기간, 직위해제 기간 및 징계에 따른 정직 또는 감봉처분을 받은 기간은 제1항의 시보임용 기간에 산입(算入)하지 아니한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "appointment",
+        "wide_evidence",
+        "proviso"
+      ],
+      "parent_provision_id": "REAL-W-APPOINTMENT-01",
+      "relation_ids": [],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-APPOINTMENT-SUP",
+      "source_id": "SYNTHETIC-WIDE-APPOINTMENT",
+      "article_path": "제13조 제1항",
+      "title": "신규임용 . 신규임용방법",
+      "text": "임용권자 또는 임용후보자 추천권자는 신규임용후보자를 임용 또는 임용 추천하려는 경우에는 신규임용후보자 명부의 순위가 높은 사람부터 임용예정된 인원 또는 임용 추천 요구된 인원의 3배수 이내에서 임용 또는 임용 추천을 하여야 한다. 다만, 다음 각 호의 어느 하나에 해당하는 경우에는 명부의 순위에 상관없이 임용 또는 임용 추천을 할 수 있다. <개정 2018. 7. 3., 2025. 1. 7.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "appointment",
+        "wide_evidence",
+        "supplementary"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "7b25189d399566ff89f2e99f37132f075ec43be00f105e6451ad3210ad652217"
+    },
+    {
+      "provision_id": "REAL-W-APPOINTMENT-01-OLD",
+      "source_id": "SYNTHETIC-WIDE-APPOINTMENT",
+      "article_path": "제27조 제1항",
+      "title": "신규임용 . 신규임용 (구버전)",
+      "text": "공무원의 신규임용은 공개경쟁임용시험으로 한다. <개정 2011. 5. 23.>",
+      "valid_time": {
+        "start": "2022-12-27",
+        "end": "2024-09-20"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "appointment",
+        "wide_evidence",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "be99a77dfedeed910b4d29268ec554c2e7a7f9aeda2e36c098a5ac1287afea72"
+    },
+    {
+      "provision_id": "REAL-W-APPOINTMENT-02-OLD",
+      "source_id": "SYNTHETIC-WIDE-APPOINTMENT",
+      "article_path": "제31조",
+      "title": "신규임용 . 결격사유 (구버전)",
+      "text": "다음 각 호의 어느 하나에 해당하는 사람은 공무원이 될 수 없다. <개정 2010. 3. 22., 2013. 8. 6., 2015. 12. 29., 2018. 10. 16., 2021. 1. 12., 2022. 12. 27.>",
+      "valid_time": {
+        "start": "2022-12-27",
+        "end": "2024-09-20"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "appointment",
+        "wide_evidence",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "be99a77dfedeed910b4d29268ec554c2e7a7f9aeda2e36c098a5ac1287afea72"
+    },
+    {
+      "provision_id": "REAL-W-APPOINTMENT-FUT",
+      "source_id": "SYNTHETIC-WIDE-APPOINTMENT",
+      "article_path": "제8조 제2항",
+      "title": "신규임용 . 개정 예정",
+      "text": "공무원의 초임호봉은 별표 1에 따라 획정한다. 이 경우 해당 공무원의 경력에 특별승급 또는 승급제한 등의 사유가 있을 때에는 이를 가감해야 하고, 경력과 경력이 중복될 때에는 그 중 유리한 경력 하나에 대해서만 획정해야 하며, 「지방공무원법」 제25조의3 또는 「국가공무원법」 제26조의2에 따라 통상적인 근무시간보다 짧게 근무하는 공무원의 경력은 정상근무시간을 기준으로 근무시간에 비례하여 획정하되, 1년 이하의 경력(「지방공무원 임용령」 제3조의2제2호ㆍ제3호 또는 「공무원임용령」 제3조의2제3호ㆍ제4호에 따른 시간선택제임기제공무원과 한시임기제공무원 및 「지방공무원 임용령」 제3조의5 또는 「공무원임용령」 제3조의3에 따른 시간선택제채용공무원의 경력은 제외한다)은 전부에 대하여 획정한다. <개정 2020. 1. 7., 2024. 1. 5., 2025. 1. 3.>",
+      "valid_time": {
+        "start": "2027-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "appointment",
+        "wide_evidence",
+        "not_yet_effective"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "201d81a81456333b81c3e28d3ced3f57c9788f93fdc322be78a08844477f3444"
+    },
+    {
+      "provision_id": "REAL-W-APPOINTMENT-ADJ",
+      "source_id": "SYNTHETIC-WIDE-APPOINTMENT",
+      "article_path": "제38조 제1항",
+      "title": "신규임용.근무성적평정.승진 구분",
+      "text": "계급 간의 승진임용은 근무성적평정, 경력평정, 그 밖의 능력의 실증에 따라 한다. 다만, 1급부터 3급까지의 공무원으로의 승진임용은 능력과 경력 등을 고려하여 임용하며, 5급 공무원으로의 승진임용은 승진시험을 거치도록 하되, 필요하다고 인정하면 대통령령으로 정하는 바에 따라 인사위원회의 의결을 거쳐 임용할 수 있다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "appointment",
+        "performance_and_promotion",
+        "wide_evidence",
+        "adjacent_confusable"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-APPOINTMENT-SUBJ",
+      "source_id": "SYNTHETIC-WIDE-APPOINTMENT",
+      "article_path": "제25조의2 제1항",
+      "title": "신규임용 . 다른 직군",
+      "text": "지방자치단체의 장과 지방의회의 의장은 국가안보 및 보안ㆍ기밀에 관계되는 분야를 제외한 분야에서 대통령령으로 정하는 바에 따라 외국인을 공무원으로 임용할 수 있다. <개정 2011. 5. 23., 2021. 10. 8.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "appointment",
+        "wide_evidence",
+        "subject_mismatch"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-RETIREMENT-01",
+      "source_id": "SYNTHETIC-WIDE-RETIREMENT",
+      "article_path": "제66조 제1항",
+      "title": "퇴직 . 정년",
+      "text": "공무원의 정년은 다른 법률에 특별한 규정이 있는 경우를 제외하고는 60세로 한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "retirement",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-RETIREMENT-SUP"
+      ],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-RETIREMENT-02",
+      "source_id": "SYNTHETIC-WIDE-RETIREMENT",
+      "article_path": "제66조 제2항",
+      "title": "퇴직 . 정년",
+      "text": "제1항에 따른 정년을 적용할 때 공무원은 그 정년에 이른 날이 1월에서 6월 사이에 있으면 6월 30일에, 7월에서 12월 사이에 있으면 12월 31일에 각각 당연히 퇴직한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "retirement",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-RETIREMENT-SUP"
+      ],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-RETIREMENT-03",
+      "source_id": "SYNTHETIC-WIDE-RETIREMENT",
+      "article_path": "제61조",
+      "title": "퇴직 . 당연퇴직",
+      "text": "공무원이 다음 각 호의 어느 하나에 해당할 때에는 당연히 퇴직한다. <개정 2015. 5. 18., 2015. 12. 29., 2018. 10. 16., 2022. 12. 27., 2024. 12. 31.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "retirement",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-RETIREMENT-SUP"
+      ],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-RETIREMENT-04",
+      "source_id": "SYNTHETIC-WIDE-RETIREMENT",
+      "article_path": "제66조의2 제1항",
+      "title": "퇴직 . 명예퇴직 등",
+      "text": "공무원으로 20년 이상 근속(勤續)한 사람이 정년 전에 스스로 퇴직하는 경우(임기제공무원이 아닌 경력직공무원이 임기제공무원으로 임용되어 퇴직하는 경우로서 대통령령으로 정하는 경우를 포함한다)에는 예산의 범위에서 명예퇴직수당을 지급할 수 있다. <개정 2012. 12. 11.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "retirement",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-RETIREMENT-SUP"
+      ],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-RETIREMENT-05",
+      "source_id": "SYNTHETIC-WIDE-RETIREMENT",
+      "article_path": "제4조",
+      "title": "퇴직 . 명예퇴직수당의 지급액",
+      "text": "명예퇴직수당의 지급액은 별표 1에 의하여 산정한 금액으로 한다. 다만, 대간첩작전 또는 이에 준하는 국가안보와 관련된 업무나 화재의 진압 등 생명ㆍ신체에 위험이 따르는 업무의 수행으로 인하여 장해가 발생한 사람에 대하여는 별표 2의 금액을 예산의 범위에서 가산 지급한다. <개정 2001. 1. 29., 2002. 12. 31., 2008. 2. 29., 2008. 12. 24., 2013. 3. 18., 2018. 9. 18.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "retirement",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-RETIREMENT-SUP"
+      ],
+      "source_hash": "f4bc56ad1d5ea2e114bd1c8428ca0e048fc64adc13ab7ead24581fa2afe693a1"
+    },
+    {
+      "provision_id": "REAL-W-RETIREMENT-PROV",
+      "source_id": "SYNTHETIC-WIDE-RETIREMENT",
+      "article_path": "제66조의2 제3항",
+      "title": "퇴직 . 명예퇴직 등",
+      "text": "제1항에 따라 명예퇴직수당을 받은 사람이 다음 각 호의 어느 하나에 해당하는 경우에는 명예퇴직수당을 지급한 지방자치단체의 장 또는 지방의회의 의장이 그 명예퇴직수당을 환수하여야 한다. 다만, 제2호에 해당하는 경우로서 지방공무원으로 재임용된 경우에는 재임용한 지방자치단체의 장 또는 지방의회의 의장이 환수하여야 한다. <개정 2012. 12. 11., 2021. 10. 8.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "retirement",
+        "wide_evidence",
+        "proviso"
+      ],
+      "parent_provision_id": "REAL-W-RETIREMENT-01",
+      "relation_ids": [],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-RETIREMENT-SUP",
+      "source_id": "SYNTHETIC-WIDE-RETIREMENT",
+      "article_path": "제1조",
+      "title": "퇴직 . 목적",
+      "text": "이 영은 「지방공무원법」 제66조의2제1항에 따라 공무원으로서 20년 이상 근속한 사람이 정년 전에 자진하여 퇴직하는 경우에 지급하는 명예퇴직수당과 같은 조 제2항에 따라 20년 미만 근속한 사람이 지방자치단체를 폐지하거나 설치하거나 나누거나 합친 경우, 직제와 정원이 개편되거나 폐지된 경우 또는 예산이 감소한 경우 등에 따라 직위가 없어지거나 정원이 초과되었을 때에 정년 전에 자진하여 퇴직하는 경우에 지급하는 수당의 지급대상 등에 관하여 필요한 사항을 규정함을 목적으로 한다. <개정 2021. 1. 5.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "retirement",
+        "wide_evidence",
+        "supplementary"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "f4bc56ad1d5ea2e114bd1c8428ca0e048fc64adc13ab7ead24581fa2afe693a1"
+    },
+    {
+      "provision_id": "REAL-W-RETIREMENT-01-OLD",
+      "source_id": "SYNTHETIC-WIDE-RETIREMENT",
+      "article_path": "제66조 제1항",
+      "title": "퇴직 . 정년 (구버전)",
+      "text": "공무원의 정년은 다른 법률에 특별한 규정이 있는 경우를 제외하고는 60세로 한다.",
+      "valid_time": {
+        "start": "2022-12-27",
+        "end": "2024-09-20"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "retirement",
+        "wide_evidence",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "be99a77dfedeed910b4d29268ec554c2e7a7f9aeda2e36c098a5ac1287afea72"
+    },
+    {
+      "provision_id": "REAL-W-RETIREMENT-02-OLD",
+      "source_id": "SYNTHETIC-WIDE-RETIREMENT",
+      "article_path": "제61조",
+      "title": "퇴직 . 당연퇴직 (구버전)",
+      "text": "공무원이 다음 각 호의 어느 하나에 해당할 때에는 당연히 퇴직한다. <개정 2015. 5. 18., 2015. 12. 29., 2018. 10. 16., 2022. 12. 27.>",
+      "valid_time": {
+        "start": "2022-12-27",
+        "end": "2024-09-20"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "retirement",
+        "wide_evidence",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "be99a77dfedeed910b4d29268ec554c2e7a7f9aeda2e36c098a5ac1287afea72"
+    },
+    {
+      "provision_id": "REAL-W-RETIREMENT-FUT",
+      "source_id": "SYNTHETIC-WIDE-RETIREMENT",
+      "article_path": "제4조 제6항",
+      "title": "퇴직 . 개정 예정",
+      "text": "연구직공무원의 봉급월액은 「공무원보수규정」 [별표 5]를 준용한다. <개정 2005. 1. 7., 2013. 12. 11.>",
+      "valid_time": {
+        "start": "2027-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "retirement",
+        "wide_evidence",
+        "not_yet_effective"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "201d81a81456333b81c3e28d3ced3f57c9788f93fdc322be78a08844477f3444"
+    },
+    {
+      "provision_id": "REAL-W-RETIREMENT-ADJ",
+      "source_id": "SYNTHETIC-WIDE-RETIREMENT",
+      "article_path": "제27조 제1항",
+      "title": "퇴직.신규임용 구분",
+      "text": "공무원의 신규임용은 공개경쟁임용시험으로 한다. <개정 2011. 5. 23.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "retirement",
+        "appointment",
+        "wide_evidence",
+        "adjacent_confusable"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-RETIREMENT-SUBJ",
+      "source_id": "SYNTHETIC-WIDE-RETIREMENT",
+      "article_path": "제10조",
+      "title": "퇴직 . 다른 직군",
+      "text": "조기퇴직수당액은 퇴직당시 월봉급액의 6월분에 상당하는 금액으로 한다. 다만, 정년 또는 근무상한연령까지의 잔여기간이 6월 미만인 경우에는 그 잔여기간에 상당하는 금액으로 한다. <개정 2002. 12. 31.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "retirement",
+        "wide_evidence",
+        "subject_mismatch"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "f4bc56ad1d5ea2e114bd1c8428ca0e048fc64adc13ab7ead24581fa2afe693a1"
+    },
+    {
+      "provision_id": "REAL-W-TRAINING-01",
+      "source_id": "SYNTHETIC-WIDE-TRAINING",
+      "article_path": "제4조 제1항",
+      "title": "교육훈련 . 교육훈련의 의무",
+      "text": "모든 지방공무원은 근무능률 및 대민봉사의 질을 향상하기 위하여 이 법에 따른 교육훈련을 성실하게 받아야 한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "training",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-TRAINING-SUP"
+      ],
+      "source_hash": "1bf15fffcd77593e1c111cd5ebb9052bed6c19253af570ad599aa8fb8bbf2002"
+    },
+    {
+      "provision_id": "REAL-W-TRAINING-02",
+      "source_id": "SYNTHETIC-WIDE-TRAINING",
+      "article_path": "제4조",
+      "title": "교육훈련 . 교육훈련의 구분",
+      "text": "교육훈련은 다음 각 호와 같이 구분한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "training",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-TRAINING-SUP"
+      ],
+      "source_hash": "7abf1a80714b510efdb9e9d1ea9b7c9771b6a63d06ddf11756fff386395803dd"
+    },
+    {
+      "provision_id": "REAL-W-TRAINING-03",
+      "source_id": "SYNTHETIC-WIDE-TRAINING",
+      "article_path": "제19조 제1항",
+      "title": "교육훈련 . 위탁교육훈련",
+      "text": "지방자치단체의 장과 지방의회의 의장은 국내외 위탁교육훈련계획을 수립하여 소속 지방공무원을 국내외 기관에 위탁하여 일정한 기간 교육훈련을 받게 할 수 있다. <개정 2021. 10. 8.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "training",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-TRAINING-SUP"
+      ],
+      "source_hash": "1bf15fffcd77593e1c111cd5ebb9052bed6c19253af570ad599aa8fb8bbf2002"
+    },
+    {
+      "provision_id": "REAL-W-TRAINING-04",
+      "source_id": "SYNTHETIC-WIDE-TRAINING",
+      "article_path": "제34조 제1항",
+      "title": "교육훈련 . 복무의무",
+      "text": "지방자치단체의 장이나 지방의회의 의장은 6개월 이상의 위탁교육훈련을 받은 공무원(위탁교육훈련 중에 복귀한 사람으로서 교육훈련을 받은 기간이 6개월 이상인 사람을 포함한다)에 대해서는 6년의 범위에서 다음 각 호의 구분에 따른 기간을 교육훈련분야와 관련된 직무분야에 복무하도록 해야 한다. 다만, 복무의무를 부과하기가 곤란하거나 복무의무를 부과한 후 이를 이행할 수 없는 특별한 사정이 생긴 경우에는 복무의무를 면제할 수 있다. <개정 2021. 11. 30.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "training",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-TRAINING-SUP"
+      ],
+      "source_hash": "7abf1a80714b510efdb9e9d1ea9b7c9771b6a63d06ddf11756fff386395803dd"
+    },
+    {
+      "provision_id": "REAL-W-TRAINING-05",
+      "source_id": "SYNTHETIC-WIDE-TRAINING",
+      "article_path": "제35조 제1항",
+      "title": "교육훈련 . 의무위반 등에 대한 소요경비 반납조치",
+      "text": "지방자치단체의 장과 지방의회의 의장은 위탁교육훈련 중이거나 위탁교육훈련을 마친 공무원이 다음 각 호의 어느 하나에 해당하게 된 경우에는 별표 2에서 정하는 반납액 산정기준의 범위에서 조례로 정하는 바에 따라 해당 공무원의 위탁교육훈련에 든 경비의 전액 또는 일부를 본인으로 하여금 반납하게 해야 한다. <개정 2021. 11. 30.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "training",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-TRAINING-SUP"
+      ],
+      "source_hash": "7abf1a80714b510efdb9e9d1ea9b7c9771b6a63d06ddf11756fff386395803dd"
+    },
+    {
+      "provision_id": "REAL-W-TRAINING-PROV",
+      "source_id": "SYNTHETIC-WIDE-TRAINING",
+      "article_path": "제7조 제2항",
+      "title": "교육훈련 . 교육훈련 이수시간의 승진 반영 등",
+      "text": "지방자치단체의 장과 지방의회의 의장은 제1항에도 불구하고 다음 각 호의 어느 하나에 해당하는 경우에는 교육훈련 이수시간을 승진임용에 반영하지 않을 수 있다. 다만, 제1호 또는 제2호에 해당하는 경우에는 승진임용에 반영하지 않는다. <개정 2021. 11. 30.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "training",
+        "wide_evidence",
+        "proviso"
+      ],
+      "parent_provision_id": "REAL-W-TRAINING-01",
+      "relation_ids": [],
+      "source_hash": "7abf1a80714b510efdb9e9d1ea9b7c9771b6a63d06ddf11756fff386395803dd"
+    },
+    {
+      "provision_id": "REAL-W-TRAINING-SUP",
+      "source_id": "SYNTHETIC-WIDE-TRAINING",
+      "article_path": "제1조",
+      "title": "교육훈련 . 목적",
+      "text": "이 법은 교육훈련을 통하여 지방자치단체에 근무하는 공무원에게 주민에 대한 봉사자로서 지녀야 할 바람직한 공직윤리와 직무를 효율적으로 수행할 수 있는 기술과 능력을 함양하게 함을 목적으로 한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "training",
+        "wide_evidence",
+        "supplementary"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "1bf15fffcd77593e1c111cd5ebb9052bed6c19253af570ad599aa8fb8bbf2002"
+    },
+    {
+      "provision_id": "REAL-W-TRAINING-01-OLD",
+      "source_id": "SYNTHETIC-WIDE-TRAINING",
+      "article_path": "제25조",
+      "title": "교육훈련 . 임용의 기준 (구버전)",
+      "text": "공무원의 임용은 시험성적, 근무성적, 경력평정, 그 밖의 능력의 실증(實證)에 따라 한다. 다만, 지방자치단체의 장과 지방의회의 의장은 대통령령으로 정하는 바에 따라 장애인, 이공계 전공자, 저소득층 등에 대한 임용ㆍ승진ㆍ전보 등 인사관리상의 우대와 실질적 양성평등을 실현하기 위한 적극적인 정책을 실시할 수 있다. <개정 2021. 10. 8.>",
+      "valid_time": {
+        "start": "2022-12-27",
+        "end": "2024-09-20"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "training",
+        "wide_evidence",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "be99a77dfedeed910b4d29268ec554c2e7a7f9aeda2e36c098a5ac1287afea72"
+    },
+    {
+      "provision_id": "REAL-W-TRAINING-02-OLD",
+      "source_id": "SYNTHETIC-WIDE-TRAINING",
+      "article_path": "제28조 제1항",
+      "title": "교육훈련 . 시보임용 (구버전)",
+      "text": "5급 공무원(제4조제2항에 따라 같은 조 제1항의 계급 구분이나 직군 및 직렬의 분류를 적용하지 아니하는 공무원 중 5급에 상당하는 공무원을 포함한다. 이하 같다)을 신규임용하는 경우에는 1년, 6급 이하 공무원(제4조제2항에 따라 같은 조 제1항의 계급 구분이나 직군 및 직렬의 분류를 적용하지 아니하는 공무원 중 6급 이하에 상당하는 공무원을 포함한다. 이하 같다)을 신규임용하는 경우에는 6개월간 시보로 임용하고, 그 기간의 근무성적ㆍ교육훈련성적과 공무원으로서의 자질을 고려하여 정규 공무원으로 임용한다. 다만, 대통령령으로 정하는 경우에는 시보임용을 면제하거나 그 기간을 단축할 수 있다. <개정 2012. 12. 11., 2015. 5. 18.>",
+      "valid_time": {
+        "start": "2022-12-27",
+        "end": "2024-09-20"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "training",
+        "wide_evidence",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "be99a77dfedeed910b4d29268ec554c2e7a7f9aeda2e36c098a5ac1287afea72"
+    },
+    {
+      "provision_id": "REAL-W-TRAINING-FUT",
+      "source_id": "SYNTHETIC-WIDE-TRAINING",
+      "article_path": "제6조",
+      "title": "교육훈련 . 개정 예정",
+      "text": "호봉획정 및 승급은 법령의 규정에 의한 임용권자(승급에 관한 권한이 법령의 규정에 의하여 위임 또는 위탁된 경우에는 위임 또는 위탁을 받은 자를 말한다)가 이를 시행한다.",
+      "valid_time": {
+        "start": "2027-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "training",
+        "wide_evidence",
+        "not_yet_effective"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "201d81a81456333b81c3e28d3ced3f57c9788f93fdc322be78a08844477f3444"
+    },
+    {
+      "provision_id": "REAL-W-TRAINING-ADJ",
+      "source_id": "SYNTHETIC-WIDE-TRAINING",
+      "article_path": "제2조 제1항",
+      "title": "교육훈련.복무.연가 구분",
+      "text": "공무원의 1주간 근무시간은 점심시간을 제외하고 40시간으로 하며, 토요일은 휴무함을 원칙으로 한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "training",
+        "service_and_leave",
+        "wide_evidence",
+        "adjacent_confusable"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "7911eaf86786e22c62fc3630b9bba7875e9a0412896638f6696d3c78e2bb8761"
+    },
+    {
+      "provision_id": "REAL-W-TRAINING-SUBJ",
+      "source_id": "SYNTHETIC-WIDE-TRAINING",
+      "article_path": "제24조",
+      "title": "교육훈련 . 다른 직군",
+      "text": "징계처분을 받고 그 처분기간이 만료된 날부터 2년이 지나지 아니한 사람이나 직위해제처분이 끝난 날부터 1년이 지나지 아니한 사람은 교육훈련기관의 교수요원으로 임용될 수 없다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "training",
+        "wide_evidence",
+        "subject_mismatch"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "7abf1a80714b510efdb9e9d1ea9b7c9771b6a63d06ddf11756fff386395803dd"
+    },
+    {
+      "provision_id": "REAL-W-PERSONNEL-RECORDS-01",
+      "source_id": "SYNTHETIC-WIDE-PERSONNEL-RECORDS",
+      "article_path": "제10조 제1항",
+      "title": "인사기록 . 인사기록",
+      "text": "임용권자는 소속 공무원의 인사기록을 작성하여 갖춰 놓아야 한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "personnel_records",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-PERSONNEL-RECORDS-SUP"
+      ],
+      "source_hash": "7b25189d399566ff89f2e99f37132f075ec43be00f105e6451ad3210ad652217"
+    },
+    {
+      "provision_id": "REAL-W-PERSONNEL-RECORDS-02",
+      "source_id": "SYNTHETIC-WIDE-PERSONNEL-RECORDS",
+      "article_path": "제4조",
+      "title": "인사기록 . 인사기록의 종류",
+      "text": "공무원의 인사기록은 개인별 인사기록과 인사관리서류로 구분하며 그 종류는 별표 1과 같다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "personnel_records",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-PERSONNEL-RECORDS-SUP"
+      ],
+      "source_hash": "c8a7c8a6efb5755e2069f6f8a786aedbbb662c9893cf33a71b6b18009905e376"
+    },
+    {
+      "provision_id": "REAL-W-PERSONNEL-RECORDS-03",
+      "source_id": "SYNTHETIC-WIDE-PERSONNEL-RECORDS",
+      "article_path": "제5조의2 제1항",
+      "title": "인사기록 . 인사기록의 전자적 관리 등",
+      "text": "임용권자는 제5조에도 불구하고 소속 공무원에 대한 인사기록을 전자인사관리시스템으로 작성ㆍ유지ㆍ보관할 수 있다. 다만, 별지 제2호서식의 인사기록카드는 전자인사관리시스템으로 기록ㆍ유지ㆍ보관하여야 한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "personnel_records",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-PERSONNEL-RECORDS-SUP"
+      ],
+      "source_hash": "c8a7c8a6efb5755e2069f6f8a786aedbbb662c9893cf33a71b6b18009905e376"
+    },
+    {
+      "provision_id": "REAL-W-PERSONNEL-RECORDS-04",
+      "source_id": "SYNTHETIC-WIDE-PERSONNEL-RECORDS",
+      "article_path": "제6조 제1항",
+      "title": "인사기록 . 인사기록카드의 정리 및 변경",
+      "text": "공무원이 신규임용, 승진, 전직, 전보, 강임, 면직, 징계, 휴직, 직위해제, 복직, 국내외 훈련, 국외 출장, 겸임, 파견, 직무대리, 승급, 전출, 전입되었거나 포상을 받았을 때에는 임용권자는 지체 없이 그 사실을 별지 제2호서식의 인사기록카드에 기록하여야 한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "personnel_records",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-PERSONNEL-RECORDS-SUP"
+      ],
+      "source_hash": "c8a7c8a6efb5755e2069f6f8a786aedbbb662c9893cf33a71b6b18009905e376"
+    },
+    {
+      "provision_id": "REAL-W-PERSONNEL-RECORDS-05",
+      "source_id": "SYNTHETIC-WIDE-PERSONNEL-RECORDS",
+      "article_path": "제7조 제1항",
+      "title": "인사기록 . 징계등 처분기록의 말소",
+      "text": "임용권자는 징계처분을 받은 공무원이 다음 각 호의 어느 하나에 해당하는 경우에는 그 공무원의 인사기록카드에 올라 있는 징계처분의 기록을 말소해야 한다. <개정 2020. 1. 14.>",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "personnel_records",
+        "wide_evidence"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [
+        "REAL-W-PERSONNEL-RECORDS-SUP"
+      ],
+      "source_hash": "c8a7c8a6efb5755e2069f6f8a786aedbbb662c9893cf33a71b6b18009905e376"
+    },
+    {
+      "provision_id": "REAL-W-PERSONNEL-RECORDS-PROV",
+      "source_id": "SYNTHETIC-WIDE-PERSONNEL-RECORDS",
+      "article_path": "제23조 제1항",
+      "title": "인사기록 . 재직증명서 및 경력증명서의 발급",
+      "text": "임용권자는 재직 중인 공무원이 재직증명서의 발급을 청구할 때에는 별지 제2호서식의 인사기록카드에 따라 별지 제28호서식의 재직증명서를 발급하여야 한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "personnel_records",
+        "wide_evidence",
+        "proviso"
+      ],
+      "parent_provision_id": "REAL-W-PERSONNEL-RECORDS-01",
+      "relation_ids": [],
+      "source_hash": "c8a7c8a6efb5755e2069f6f8a786aedbbb662c9893cf33a71b6b18009905e376"
+    },
+    {
+      "provision_id": "REAL-W-PERSONNEL-RECORDS-SUP",
+      "source_id": "SYNTHETIC-WIDE-PERSONNEL-RECORDS",
+      "article_path": "제1조",
+      "title": "인사기록 . 목적",
+      "text": "이 규칙은 「지방공무원법」 제6조제3항과 「지방공무원 임용령」 제10조제2항 및 제10조의2에 따라 지방자치단체 소속 지방공무원의 인사기록과 인사통계 보고 및 인사사무 처리에 관한 통일적인 서식과 절차를 규정하여 인사관리를 합리화함을 목적으로 한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "personnel_records",
+        "wide_evidence",
+        "supplementary"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "c8a7c8a6efb5755e2069f6f8a786aedbbb662c9893cf33a71b6b18009905e376"
+    },
+    {
+      "provision_id": "REAL-W-PERSONNEL-RECORDS-01-OLD",
+      "source_id": "SYNTHETIC-WIDE-PERSONNEL-RECORDS",
+      "article_path": "제25조",
+      "title": "인사기록 . 임용의 기준 (구버전)",
+      "text": "공무원의 임용은 시험성적, 근무성적, 경력평정, 그 밖의 능력의 실증(實證)에 따라 한다. 다만, 지방자치단체의 장과 지방의회의 의장은 대통령령으로 정하는 바에 따라 장애인, 이공계 전공자, 저소득층 등에 대한 임용ㆍ승진ㆍ전보 등 인사관리상의 우대와 실질적 양성평등을 실현하기 위한 적극적인 정책을 실시할 수 있다. <개정 2021. 10. 8.>",
+      "valid_time": {
+        "start": "2022-12-27",
+        "end": "2024-09-20"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "personnel_records",
+        "wide_evidence",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "be99a77dfedeed910b4d29268ec554c2e7a7f9aeda2e36c098a5ac1287afea72"
+    },
+    {
+      "provision_id": "REAL-W-PERSONNEL-RECORDS-02-OLD",
+      "source_id": "SYNTHETIC-WIDE-PERSONNEL-RECORDS",
+      "article_path": "제10조 제1항",
+      "title": "인사기록 . 인사기록 (구버전)",
+      "text": "임용권자는 소속 공무원의 인사기록을 작성하여 갖춰 놓아야 한다.",
+      "valid_time": {
+        "start": "2023-06-13",
+        "end": "2024-06-27"
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "personnel_records",
+        "wide_evidence",
+        "superseded"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "edaf5736b61fbf51197f768513322f447226a9e5347b60ce120b28d6e271f5de"
+    },
+    {
+      "provision_id": "REAL-W-PERSONNEL-RECORDS-FUT",
+      "source_id": "SYNTHETIC-WIDE-PERSONNEL-RECORDS",
+      "article_path": "제3조 제3호",
+      "title": "인사기록 . 개정 예정",
+      "text": "“수당”이라 함은 직무여건 및 생활여건등에 따라 지급되는 부가급여를 말한다.",
+      "valid_time": {
+        "start": "2027-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "personnel_records",
+        "wide_evidence",
+        "not_yet_effective"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "201d81a81456333b81c3e28d3ced3f57c9788f93fdc322be78a08844477f3444"
+    },
+    {
+      "provision_id": "REAL-W-PERSONNEL-RECORDS-ADJ",
+      "source_id": "SYNTHETIC-WIDE-PERSONNEL-RECORDS",
+      "article_path": "제70조",
+      "title": "인사기록.징계.소청 구분",
+      "text": "징계는 파면ㆍ해임ㆍ강등ㆍ정직ㆍ감봉 및 견책으로 구분한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "personnel_records",
+        "discipline_and_appeal",
+        "wide_evidence",
+        "adjacent_confusable"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266"
+    },
+    {
+      "provision_id": "REAL-W-PERSONNEL-RECORDS-SUBJ",
+      "source_id": "SYNTHETIC-WIDE-PERSONNEL-RECORDS",
+      "article_path": "제12조의3",
+      "title": "인사기록 . 다른 직군",
+      "text": "임용권자는 영 제3조의6제2항에 따른 업무 분야에 공무원을 임용하려는 경우 임용예정자가 같은 항에 따라 임용이 제한되는 복수국적자에 해당하는지 여부를 법무부장관에게 조회해야 한다.",
+      "valid_time": {
+        "start": "2024-01-01",
+        "end": null
+      },
+      "applies_to": [
+        "local_general_service"
+      ],
+      "topic_tags": [
+        "personnel_records",
+        "wide_evidence",
+        "subject_mismatch"
+      ],
+      "parent_provision_id": null,
+      "relation_ids": [],
+      "source_hash": "c8a7c8a6efb5755e2069f6f8a786aedbbb662c9893cf33a71b6b18009905e376"
+    }
+  ]
+}

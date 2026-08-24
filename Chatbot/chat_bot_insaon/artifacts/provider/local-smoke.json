@@ -1,0 +1,123 @@
+{
+  "schema_version": "0.2.0",
+  "profile": "local-model-smoke",
+  "status": "passed",
+  "created_at": "2026-08-08T17:21:11.409121+00:00",
+  "case_id": "CASE-B",
+  "input_kind": "private_official_candidate_pending_human_approval",
+  "runtime": {
+    "runtime_profile": "local",
+    "generation": {
+      "provider": "ollama-local",
+      "model": "qwen3:4b-instruct",
+      "prompt_version": "answer-v7-derived-allowance"
+    },
+    "embedding": {
+      "provider": "ollama-local",
+      "model": "bge-m3:latest",
+      "dimensions": 1024,
+      "version": "embedding-v2-local"
+    },
+    "reranker": {
+      "provider": "ollama-local",
+      "model": "qwen3:4b-instruct",
+      "version": "reranker-v2-local"
+    },
+    "network": {
+      "base_url": "http://127.0.0.1:11434/api",
+      "timeout_seconds": 120.0,
+      "max_retries": 1,
+      "model_keep_alive": "20m",
+      "egress_allowlist": [
+        "127.0.0.1"
+      ],
+      "api_key_required": false
+    },
+    "http_boundary": {
+      "cors_allowed_origins": [],
+      "trusted_hosts": [
+        "localhost",
+        "127.0.0.1",
+        "test",
+        "testserver"
+      ],
+      "request_max_bytes": 16384,
+      "rate_limit_per_minute": 30,
+      "raw_request_logging": false,
+      "legal_release_status": "hold",
+      "approved_index_manifest_configured": false,
+      "candidate_corpus_configured": true
+    },
+    "product_scope": {
+      "extended_evidence_topics_enabled": false
+    }
+  },
+  "components": {
+    "embedding": {
+      "component": "embedding",
+      "model": "bge-m3:latest",
+      "contract_version": "embedding-v2-local",
+      "latency_ms": 148.056,
+      "input_tokens": 18,
+      "output_tokens": null,
+      "total_tokens": 18,
+      "cost_status": "local_no_api_charge"
+    },
+    "reranker": {
+      "component": "reranker",
+      "model": "qwen3:4b-instruct",
+      "contract_version": "reranker-v2-local",
+      "latency_ms": 26163.446,
+      "input_tokens": 2097,
+      "output_tokens": 426,
+      "total_tokens": 2523,
+      "cost_status": "local_no_api_charge"
+    },
+    "generation": {
+      "component": "generation",
+      "model": "qwen3:4b-instruct",
+      "contract_version": "answer-v7-derived-allowance",
+      "latency_ms": 22072.195,
+      "input_tokens": 1197,
+      "output_tokens": 498,
+      "total_tokens": 1695,
+      "cost_status": "local_no_api_charge"
+    }
+  },
+  "model_artifacts": {
+    "generation": "sha256:0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0",
+    "embedding": "sha256:7907646426070047a77226ac3e684fbbe8410524f7b4a74d02837e43f2146bab",
+    "reranker": "sha256:0edcdef34593eac1aa2be9c7d06c432dcf81945adca5eca2f27662c18f168ba0"
+  },
+  "index_manifest": {
+    "index_version": "local-vector-b24e658eb431d868",
+    "embedding_model": "bge-m3:latest",
+    "embedding_version": "embedding-v2-local",
+    "embedding_artifact_digest": "sha256:7907646426070047a77226ac3e684fbbe8410524f7b4a74d02837e43f2146bab",
+    "dimensions": 1024,
+    "source_snapshot_hash": "d57a0138db67a2e53efa922ab521dcdcff25a7747127b0aab78da750423d6edb",
+    "document_count": 353,
+    "created_at": "2026-08-08T17:20:17.268961+00:00"
+  },
+  "scenario": {
+    "answer_status": "REVIEW_REQUIRED",
+    "review_reasons": [
+      "candidate_corpus_unapproved"
+    ],
+    "citation_count": 2,
+    "official_citation_count": 2,
+    "synthetic_citation_count": 0,
+    "reference_date": "2024-01-01",
+    "human_approval": "pending_human_approval"
+  },
+  "dataset": null,
+  "api_key_required": false,
+  "external_inference_egress": false,
+  "legal_accuracy_status": "unmeasured",
+  "operational_effect_status": "unmeasured",
+  "limitations": [
+    "Full pipeline smoke used the private official candidate; component-only smokes remain explicitly synthetic adapter checks.",
+    "Model installation and pull require separate network access; inference used loopback.",
+    "The official candidate is pending human approval; this smoke checks integration and safety boundaries, not legal accuracy."
+  ]
+}

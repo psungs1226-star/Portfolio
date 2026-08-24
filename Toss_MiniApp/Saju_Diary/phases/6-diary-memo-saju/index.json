@@ -1,0 +1,8 @@
+{
+  "project": "Evry Times (evrytimes)",
+  "phase": "6-diary-memo-saju",
+  "steps": [
+    { "step": 0, "name": "completed-todo-logic", "status": "completed", "summary": "Memo.completedDate?: DateString 추가; toggleMemo(memos,id,opts?:ToggleMemoOptions{completedDate?}) 하위호환 확장(false→true시 부여, true→false시 키 삭제); 신규 setMemoCompletedDate(memos,id,date)·completedTodosForDate(memos,date); FortuneSnapshot.basisLine?:string 추가 + buildFortuneSnapshot이 result.basis로 buildBasisLine 호출해 채움. build/test(409)/lint 모두 통과." },
+    { "step": 1, "name": "diary-memo-ui", "status": "completed", "summary": "MemoWidget: handleToggle이 toggleMemo(...,{completedDate:today})로 완료 시 오늘 디폴트 부여; 완료된 할 일 행 아래 네이티브 <input type=date>(value=completedDate??today, max=today, aria-label) 완료일 재지정 + '완료일 M/D · 바꾸기' 라벨 + '완료한 할 일은 그날 일기에 모여요' 힌트. DiaryScreen: loadMemos를 Promise.all에 추가(memos 라이브 조회만, 변형/저장 X), completedTodosForDate(memos,viewDate)로 '그날 완료한 일' 읽기전용 카드(0건이면 생략), SnapshotHeader 운세영역에 fortune.basisLine 한 줄(textTertiary 12px). 스모크 2건 추가(완료 todo→date input, 완료한 일 섹션). build/test(411)/lint 모두 통과." }
+  ]
+}

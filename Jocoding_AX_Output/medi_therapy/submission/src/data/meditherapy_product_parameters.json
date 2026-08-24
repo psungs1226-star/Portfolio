@@ -1,0 +1,462 @@
+{
+  "schema_version": "0.1.0",
+  "purpose": "Meditherapy influencer seeding product-fit parameters for a Codex plugin",
+  "principles": [
+    "Recommend by observable skin concern and content/audience fit, not by gender stereotypes.",
+    "Separate influencer self-fit from audience commercial-fit.",
+    "Treat sales impact as a hypothesis unless campaign conversion data is provided.",
+    "Flag cosmetic efficacy, medical, before/after, and sensitive-skin claims as compliance risks when evidence is missing."
+  ],
+  "global_parameters": {
+    "influencer_profile": {
+      "identity": ["handle", "platform", "country", "language", "gender_presentation_optional", "age_band_optional"],
+      "skin_profile": [
+        "skin_type_dry",
+        "skin_type_oily",
+        "skin_type_combination",
+        "skin_type_sensitive",
+        "skin_type_acne_prone",
+        "skin_type_dehydrated",
+        "skin_tone_uneven",
+        "visible_pores_texture",
+        "post_acne_marks",
+        "pigmentation_spots",
+        "wrinkle_elasticity_concern",
+        "barrier_damage_redness",
+        "makeup_adherence_issue"
+      ],
+      "content_profile": [
+        "skincare_routine",
+        "makeup_base",
+        "acne_trouble_care",
+        "anti_aging",
+        "brightening_tone",
+        "device_demo",
+        "shortform_tiktok",
+        "amazon_review_style",
+        "before_after_possible",
+        "educational_ingredient_content"
+      ],
+      "audience_profile": [
+        "audience_country",
+        "audience_age_distribution",
+        "audience_gender_distribution",
+        "audience_skin_concerns",
+        "audience_price_sensitivity",
+        "audience_platform_purchase_path"
+      ],
+      "risk_profile": [
+        "pregnancy_or_lactation_disclosed",
+        "currently_using_retinoids_or_acids",
+        "recent_procedure_or_wounded_skin",
+        "history_of_irritation",
+        "claim_compliance_risk"
+      ]
+    },
+    "matching_weights": {
+      "influencer_self_fit": 0.35,
+      "audience_fit": 0.25,
+      "content_fit": 0.2,
+      "market_channel_fit": 0.1,
+      "risk_penalty": 0.1
+    },
+    "age_bands": ["13-18", "19-24", "25-34", "35-44", "45-54", "55+"],
+    "skin_types": ["dry", "oily", "combination", "sensitive", "acne_prone", "dehydrated", "normal"],
+    "gender_policy": "Use gender only for audience/channel context. Product matching should primarily use skin concern, skin type, content category, and country."
+  },
+  "product_families": [
+    {
+      "family_id": "hydration_barrier_basic",
+      "family_name": "수분·장벽 기본 루틴",
+      "products": [
+        {
+          "product_id": "hyaluronic_first_serum",
+          "name": "히알루론산 스킨부스터 퍼스트 세럼",
+          "format": "first_serum",
+          "official_positioning": "세번 뿌려 속까지 채우는 첫단계 세럼 / 모든 피부 타입",
+          "best_for_concerns": ["dehydration", "dryness", "tightness_after_cleansing", "routine_entry"],
+          "skin_type_fit": ["dry", "dehydrated", "combination", "normal", "sensitive_possible"],
+          "skin_type_caution": ["very_oily_if_heavy_layering"],
+          "age_fit": ["13-18", "19-24", "25-34", "35-44", "45-54", "55+"],
+          "content_fit": ["skincare_routine", "morning_routine", "sensitive_skin_intro", "skin_prep"],
+          "influencer_fit": ["routine_educator", "dry_skin_creator", "makeup_prep_creator", "beginner_skincare_creator"],
+          "audience_fit": ["broad_entry_product", "low_barrier_trial", "dry_or_dehydrated_audience"],
+          "recommendation_notes": "First recommendation when influencer data is sparse or sensitivity risk is high.",
+          "measurement_kpis": [
+            "routine_save_rate",
+            "dryness_question_count",
+            "beginner_routine_question_count",
+            "makeup_prep_comment_count",
+            "creator_self_reported_tolerance"
+          ],
+          "risk_flags": ["avoid_overclaim_deep_skin_effect_without_evidence"]
+        },
+        {
+          "product_id": "squalane_moisturizer",
+          "name": "스쿠알란 스킨부스터 모이스처라이저",
+          "format": "moisturizer_sleeping_pack",
+          "official_positioning": "보호막으로 부드럽게 감싸, 유수분 밸런스 케어 / #수부지크림 #수면팩",
+          "best_for_concerns": ["dehydrated_oily", "oil_water_imbalance", "dryness", "night_moisture"],
+          "skin_type_fit": ["combination", "dehydrated", "dry", "normal"],
+          "skin_type_caution": ["very_oily", "fungal_acne_prone_unknown"],
+          "age_fit": ["19-24", "25-34", "35-44", "45-54", "55+"],
+          "content_fit": ["night_routine", "skin_barrier", "sleeping_pack", "makeup_next_day"],
+          "influencer_fit": ["combination_skin_creator", "night_routine_creator", "skin_barrier_creator"],
+          "audience_fit": ["dehydrated_oily_audience", "office_worker_skin_audience"],
+          "recommendation_notes": "Good for influencers who complain about both oiliness and inner dryness.",
+          "risk_flags": ["texture_preference_risk_for_oily_skin"]
+        }
+      ]
+    },
+    {
+      "family_id": "trouble_barrier_repair",
+      "family_name": "트러블·진정·장벽",
+      "products": [
+        {
+          "product_id": "pdrn_serum",
+          "name": "PDRN 스킨부스터 세럼",
+          "format": "serum",
+          "official_positioning": "시카-PDRN이 스며들어 속까지 건강하게 / #압출세럼 #트러블·진정",
+          "best_for_concerns": ["redness", "barrier_damage", "post_extraction_care", "trouble_prone"],
+          "skin_type_fit": ["sensitive", "acne_prone", "combination", "oily", "dehydrated"],
+          "skin_type_caution": ["wounded_skin", "active_severe_irritation"],
+          "age_fit": ["13-18", "19-24", "25-34", "35-44"],
+          "content_fit": ["trouble_care", "skin_barrier", "post_breakout_routine", "calming_routine"],
+          "influencer_fit": ["acne_prone_creator", "sensitive_skin_creator", "teen_young_adult_skincare_creator"],
+          "audience_fit": ["trouble_concern_audience", "sensitive_skin_audience"],
+          "recommendation_notes": "Strong candidate when the creator has visible redness/trouble concerns and wants lower-irritation content.",
+          "measurement_kpis": [
+            "save_rate",
+            "sensitive_skin_question_count",
+            "routine_question_count",
+            "creator_self_reported_tolerance",
+            "comment_intent_quality"
+          ],
+          "risk_flags": ["do_not_claim_medical_acne_treatment", "avoid_use_on_wounds"]
+        },
+        {
+          "product_id": "panthenol_core_booster_cream",
+          "name": "판테놀 코어 부스터 크림",
+          "format": "cream",
+          "official_positioning": "D-판테놀 10%로, 트러블 피부 장벽 강화 / #7일장벽강화 #논코메도제닉",
+          "best_for_concerns": ["barrier_damage", "redness", "trouble_prone", "dry_sensitive"],
+          "skin_type_fit": ["sensitive", "acne_prone", "dry", "combination", "dehydrated"],
+          "skin_type_caution": ["very_oily_if_occlusive_feel_disliked"],
+          "age_fit": ["13-18", "19-24", "25-34", "35-44", "45-54"],
+          "content_fit": ["barrier_repair", "trouble_care", "low_irritation_routine"],
+          "influencer_fit": ["skin_barrier_creator", "sensitive_skin_creator", "acne_prone_creator"],
+          "audience_fit": ["trouble_or_sensitive_audience", "retinal_intolerant_audience"],
+          "recommendation_notes": "Use as fallback when retinoid/acid products are too risky for the influencer.",
+          "measurement_kpis": [
+            "save_rate",
+            "barrier_routine_question_count",
+            "sensitive_skin_question_count",
+            "creator_self_reported_tolerance",
+            "repeat_content_rate"
+          ],
+          "risk_flags": ["avoid_guaranteed_repair_timeline_without_test_data"]
+        },
+        {
+          "product_id": "pdrn_2week_program",
+          "name": "2주 PDRN 스킨부스터 프로그램",
+          "format": "device_serum_program",
+          "official_positioning": "상처·통증 걱정 없이, 붉어진 손상 장벽 강화 / #노니들스킨부스터",
+          "best_for_concerns": ["barrier_damage", "redness", "sensitive_dullness", "home_esthetic_experience"],
+          "skin_type_fit": ["sensitive", "dehydrated", "dry", "combination"],
+          "skin_type_caution": ["wounded_skin", "device_sensitive_user", "low_tolerance_to_new_tools"],
+          "age_fit": ["25-34", "35-44", "45-54", "55+"],
+          "content_fit": ["device_demo", "two_week_challenge", "home_esthetic", "routine_transformation"],
+          "influencer_fit": ["device_demo_creator", "home_esthetic_creator", "skin_journey_creator"],
+          "audience_fit": ["higher_intent_skincare_audience", "home_care_device_audience"],
+          "recommendation_notes": "High-content-value product when creator can document a 2-week routine safely.",
+          "risk_flags": ["patch_test_required", "avoid_medical_procedure_comparison"]
+        }
+      ]
+    },
+    {
+      "family_id": "texture_pore_retinal",
+      "family_name": "피부결·요철·흔적",
+      "products": [
+        {
+          "product_id": "retinal_skin_booster_serum",
+          "name": "레티날 스킨부스터 세럼",
+          "format": "serum",
+          "official_positioning": "레티날 한 병으로 다시 찾은 매끈한 피부 / #트러블흔적 #화잘먹",
+          "best_for_concerns": ["texture", "post_acne_marks", "roughness", "makeup_adherence", "early_aging"],
+          "skin_type_fit": ["oily", "combination", "normal", "post_acne_marks"],
+          "skin_type_caution": ["sensitive", "very_dry", "pregnancy_or_lactation_disclosed", "retinoid_beginner", "active_irritation"],
+          "age_fit": ["19-24", "25-34", "35-44", "45-54"],
+          "content_fit": ["texture_care", "makeup_before_after", "night_routine", "ingredient_education"],
+          "influencer_fit": ["makeup_creator_with_texture_concern", "acne_mark_creator", "skincare_ingredient_creator"],
+          "audience_fit": ["20s_30s_texture_concern", "makeup_adherence_audience"],
+          "recommendation_notes": "Recommend only when the influencer can follow gradual use and sun-care guidance.",
+          "measurement_kpis": [
+            "night_routine_save_rate",
+            "usage_question_count",
+            "sunscreen_question_count",
+            "irritation_report_count",
+            "makeup_adherence_comment_count"
+          ],
+          "risk_flags": ["retinoid_irritation", "sun_sensitivity", "avoid_pregnancy_lactation_recommendation_without_professional_advice"]
+        },
+        {
+          "product_id": "retinal_skin_booster_cream",
+          "name": "레티날 스킨부스터 크림",
+          "format": "night_cream",
+          "official_positioning": "오돌토돌 요철 정리 / 밤 사용 권장 / 아침 자외선 차단 권장",
+          "best_for_concerns": ["bumpy_texture", "roughness", "visible_pores", "night_texture_care"],
+          "skin_type_fit": ["combination", "oily", "normal"],
+          "skin_type_caution": ["sensitive", "very_dry", "retinoid_beginner", "pregnancy_or_lactation_disclosed"],
+          "age_fit": ["19-24", "25-34", "35-44"],
+          "content_fit": ["night_routine", "texture_closeup", "makeup_adherence_followup"],
+          "influencer_fit": ["texture_concern_creator", "makeup_creator", "night_routine_creator"],
+          "audience_fit": ["texture_pore_concern_audience"],
+          "recommendation_notes": "Use for creators who can clearly explain night-only usage and sunscreen requirement.",
+          "risk_flags": ["retinoid_irritation", "must_disclose_night_use_and_sunscreen"]
+        },
+        {
+          "product_id": "aha_bha_routine_cleanser",
+          "name": "아하 바하 루틴 클렌저",
+          "format": "cleanser",
+          "official_positioning": "물리적 필링이 필요없는 데일리 각질 클렌저",
+          "best_for_concerns": ["dead_skin_cells", "roughness", "oily_texture", "clogged_pores"],
+          "skin_type_fit": ["oily", "combination", "normal"],
+          "skin_type_caution": ["sensitive", "very_dry", "over_exfoliation_prone"],
+          "age_fit": ["13-18", "19-24", "25-34", "35-44"],
+          "content_fit": ["cleansing_routine", "pore_texture", "beginner_exfoliation"],
+          "influencer_fit": ["oily_skin_creator", "cleansing_routine_creator"],
+          "audience_fit": ["teen_20s_oily_texture_audience"],
+          "recommendation_notes": "Low-cost routine anchor, but avoid pairing aggressively with retinal/acids for sensitive users.",
+          "measurement_kpis": [
+            "cleansing_routine_save_rate",
+            "pore_texture_question_count",
+            "usage_frequency_question_count",
+            "over_exfoliation_risk_comment_count",
+            "repeat_view_rate"
+          ],
+          "risk_flags": ["over_exfoliation", "barrier_damage_if_overused"]
+        },
+        {
+          "product_id": "bha_pha_toner",
+          "name": "바하 파하 루틴 토너",
+          "format": "toner",
+          "official_positioning": "닦지 않고 녹여내는 각질 수분필 토너",
+          "best_for_concerns": ["dead_skin_cells", "texture", "clogged_pores", "hydrating_exfoliation"],
+          "skin_type_fit": ["oily", "combination", "normal"],
+          "skin_type_caution": ["sensitive", "very_dry", "over_exfoliation_prone"],
+          "age_fit": ["13-18", "19-24", "25-34", "35-44"],
+          "content_fit": ["toner_routine", "texture_care", "pore_care"],
+          "influencer_fit": ["texture_concern_creator", "oily_skin_creator"],
+          "audience_fit": ["pore_texture_audience"],
+          "recommendation_notes": "Use when influencer needs mild exfoliation narrative rather than strong active ingredient story.",
+          "risk_flags": ["acid_irritation", "avoid_combining_with_multiple_actives_without_guidance"]
+        }
+      ]
+    },
+    {
+      "family_id": "tone_spot_brightening",
+      "family_name": "톤·잡티·흔적·광채",
+      "products": [
+        {
+          "product_id": "vitamin_bubble_serum",
+          "name": "비타민 스킨부스터 버블세럼",
+          "format": "serum",
+          "official_positioning": "미세 버블이 깊이 스며들어, 톤부터 잡티까지 환하게 / #바르는비타민C #생기안색",
+          "best_for_concerns": ["dullness", "uneven_tone", "spot_appearance", "glow"],
+          "skin_type_fit": ["normal", "combination", "dry", "dehydrated"],
+          "skin_type_caution": ["sensitive_to_vitamin_c", "active_irritation"],
+          "age_fit": ["19-24", "25-34", "35-44", "45-54"],
+          "content_fit": ["glow_routine", "morning_routine", "dull_skin", "ingredient_education"],
+          "influencer_fit": ["brightening_creator", "makeup_base_creator", "dull_skin_creator"],
+          "audience_fit": ["tone_glow_audience", "office_worker_dullness_audience"],
+          "recommendation_notes": "Good for visual short-form content because bubble texture can be demonstrated.",
+          "measurement_kpis": [
+            "view_completion_rate",
+            "glow_tone_comment_count",
+            "texture_demo_engagement",
+            "save_rate",
+            "irritation_report_count"
+          ],
+          "risk_flags": ["avoid_whitening_medical_claims", "irritation_possible"]
+        },
+        {
+          "product_id": "arbutin_serum",
+          "name": "알부틴 스킨부스터 세럼",
+          "format": "serum",
+          "official_positioning": "알부틴 2%로 잡티부터 광채 톤업까지",
+          "best_for_concerns": ["dark_spots", "dullness", "uneven_tone", "glow"],
+          "skin_type_fit": ["normal", "combination", "dry", "dehydrated"],
+          "skin_type_caution": ["very_sensitive", "active_irritation"],
+          "age_fit": ["25-34", "35-44", "45-54", "55+"],
+          "content_fit": ["brightening_routine", "spot_care", "tone_care"],
+          "influencer_fit": ["hyperpigmentation_concern_creator", "brightening_creator"],
+          "audience_fit": ["spot_concern_audience", "30s_plus_tone_audience"],
+          "recommendation_notes": "Use for influencers whose content already discusses tone/spot concerns.",
+          "risk_flags": ["avoid_guaranteed_spot_removal_claims"]
+        },
+        {
+          "product_id": "tranexamic_cream",
+          "name": "트라넥삼산 스킨부스터 크림",
+          "format": "cream",
+          "official_positioning": "트라넥삼산 3%로 흔적부터 색소침착까지 / #흔적크림 #색소침착방지",
+          "best_for_concerns": ["post_acne_marks", "pigmentation", "dark_spots", "uneven_tone"],
+          "skin_type_fit": ["normal", "dry", "combination", "dehydrated"],
+          "skin_type_caution": ["very_sensitive", "active_irritation"],
+          "age_fit": ["25-34", "35-44", "45-54", "55+"],
+          "content_fit": ["spot_care", "post_acne_mark_care", "night_routine"],
+          "influencer_fit": ["spot_concern_creator", "post_acne_mark_creator"],
+          "audience_fit": ["pigmentation_concern_audience", "post_breakout_audience"],
+          "recommendation_notes": "Prefer when creator can show consistent routine rather than instant result.",
+          "measurement_kpis": [
+            "spot_routine_question_count",
+            "sunscreen_question_count",
+            "tone_spot_comment_count",
+            "routine_completion_signal",
+            "overclaim_risk_comment_count"
+          ],
+          "risk_flags": ["avoid_medical_melasma_claims", "requires_sunscreen_context"]
+        },
+        {
+          "product_id": "tranexamic_2week_program",
+          "name": "2주 트라넥삼산 스킨부스터 프로그램",
+          "format": "device_cream_program",
+          "official_positioning": "상처·통증 걱정 없이, 속 멜라닌까지 분해",
+          "best_for_concerns": ["pigmentation", "dark_spots", "intensive_tone_program"],
+          "skin_type_fit": ["normal", "dry", "combination"],
+          "skin_type_caution": ["very_sensitive", "device_sensitive_user", "active_irritation"],
+          "age_fit": ["30s", "35-44", "45-54", "55+"],
+          "content_fit": ["two_week_challenge", "device_demo", "spot_care_journey"],
+          "influencer_fit": ["home_esthetic_creator", "spot_concern_creator"],
+          "audience_fit": ["higher_intent_spot_care_audience"],
+          "recommendation_notes": "High-value seeding for creators with credible long-form explanation ability.",
+          "risk_flags": ["avoid_guaranteed_pigmentation_result", "patch_test_required"]
+        },
+        {
+          "product_id": "possera_bifida_blur_cream",
+          "name": "포쎄라 리얼 비피다 블러 크림",
+          "format": "tone_up_blur_cream",
+          "official_positioning": "유산균 함유 환절기 톤업크림 / #바르고자는톤업크림 #모공미백",
+          "best_for_concerns": ["makeup_base", "tone_correction", "visible_pores", "skin_texture_appearance"],
+          "skin_type_fit": ["normal", "combination", "dry"],
+          "skin_type_caution": ["deep_skin_tone_mismatch", "very_oily_if_heavy_finish"],
+          "age_fit": ["19-24", "25-34", "35-44"],
+          "content_fit": ["makeup_base", "no_makeup_makeup", "tone_up_demo", "pore_blur_demo"],
+          "influencer_fit": ["makeup_creator", "daily_beauty_creator", "base_makeup_creator"],
+          "audience_fit": ["makeup_base_audience", "quick_beauty_audience"],
+          "recommendation_notes": "Best when creator's content can visually demonstrate finish and tone compatibility.",
+          "risk_flags": ["shade_fit_risk", "avoid_true_skin_improvement_claim_if_only_cosmetic_finish"]
+        },
+        {
+          "product_id": "possera_bifida_blur_serum",
+          "name": "포쎄라 리얼 비피다 블러 세럼",
+          "format": "serum",
+          "official_positioning": "포쎄라/비피다 블러 계열 세럼",
+          "best_for_concerns": ["texture_appearance", "pores", "makeup_adherence"],
+          "skin_type_fit": ["normal", "combination", "dry"],
+          "skin_type_caution": ["very_oily_unknown_finish"],
+          "age_fit": ["19-24", "25-34", "35-44"],
+          "content_fit": ["makeup_prep", "pore_blur", "skin_texture"],
+          "influencer_fit": ["makeup_creator", "texture_concern_creator"],
+          "audience_fit": ["makeup_base_audience"],
+          "recommendation_notes": "Use when influencer is stronger in makeup prep than treatment skincare.",
+          "risk_flags": ["needs_more_product_page_evidence"]
+        }
+      ]
+    },
+    {
+      "family_id": "lifting_wrinkle_home_esthetic",
+      "family_name": "리프팅·주름·홈에스테틱",
+      "products": [
+        {
+          "product_id": "tension_up_mask",
+          "name": "텐션 업 마스크",
+          "format": "lifting_mask",
+          "official_positioning": "집에서 하는 신개념 3중 리프팅",
+          "best_for_concerns": ["firmness", "lifting_appearance", "jawline", "special_care"],
+          "skin_type_fit": ["normal", "dry", "combination"],
+          "skin_type_caution": ["very_sensitive", "adhesive_or_tension_sensitive_skin"],
+          "age_fit": ["25-34", "35-44", "45-54", "55+"],
+          "content_fit": ["visual_demo", "home_esthetic", "event_care", "lifting_routine"],
+          "influencer_fit": ["home_esthetic_creator", "30s_plus_beauty_creator", "visual_demo_creator"],
+          "audience_fit": ["anti_aging_audience", "home_care_audience"],
+          "recommendation_notes": "Strong visual product for short-form, but claim must stay cosmetic/appearance-level.",
+          "measurement_kpis": [
+            "view_completion_rate",
+            "share_rate",
+            "visual_demo_comment_count",
+            "home_esthetic_interest_count",
+            "tension_irritation_report_count"
+          ],
+          "risk_flags": ["avoid_medical_lifting_claims", "skin_tension_irritation"]
+        },
+        {
+          "product_id": "wrinklefit_mask",
+          "name": "링클핏 마스크",
+          "format": "collagen_mesh_mask",
+          "official_positioning": "깊은주름 개선하는 콜라겐 함유 그물 마스크",
+          "best_for_concerns": ["wrinkles", "firmness", "special_care", "elasticity"],
+          "skin_type_fit": ["dry", "normal", "combination", "mature_skin"],
+          "skin_type_caution": ["very_sensitive"],
+          "age_fit": ["35-44", "45-54", "55+"],
+          "content_fit": ["anti_aging", "mask_routine", "home_esthetic"],
+          "influencer_fit": ["mature_beauty_creator", "anti_aging_creator"],
+          "audience_fit": ["35plus_anti_aging_audience"],
+          "recommendation_notes": "Better fit for creators with older audience or anti-aging editorial credibility.",
+          "risk_flags": ["avoid_permanent_wrinkle_removal_claims"]
+        },
+        {
+          "product_id": "wrinklefit_eye_patch",
+          "name": "링클핏 탱글 아이패치",
+          "format": "eye_patch",
+          "official_positioning": "저분자 콜라겐, 특허받은 눈밑고랑 패치",
+          "best_for_concerns": ["under_eye_dryness", "fine_lines", "tired_look", "special_care"],
+          "skin_type_fit": ["dry", "normal", "combination", "mature_skin"],
+          "skin_type_caution": ["eye_area_sensitive", "adhesive_sensitive"],
+          "age_fit": ["25-34", "35-44", "45-54", "55+"],
+          "content_fit": ["morning_de_puff_style", "anti_aging", "quick_care", "makeup_prep"],
+          "influencer_fit": ["makeup_creator", "mature_beauty_creator", "routine_creator"],
+          "audience_fit": ["eye_care_audience", "office_worker_tired_look_audience"],
+          "recommendation_notes": "Low-friction seeding product for creators who frequently show GRWM routines.",
+          "measurement_kpis": [
+            "grwm_inclusion_rate",
+            "eye_care_question_count",
+            "save_rate",
+            "quick_care_comment_count",
+            "irritation_report_count"
+          ],
+          "risk_flags": ["eye_area_irritation", "avoid_medical_under_eye_claims"]
+        }
+      ]
+    }
+  ],
+  "recommendation_algorithm": {
+    "step_1_extract_influencer": "Extract influencer skin profile, disclosed concerns, platform, country, content style, and audience demographics from provided data.",
+    "step_2_filter_safety": "Remove products with hard conflicts such as retinoid products for disclosed pregnancy/lactation, wounded skin, severe sensitivity, or inability to follow sun-care guidance.",
+    "step_3_score_self_fit": "Score how well the product addresses the influencer's own visible/disclosed skin concern.",
+    "step_4_score_audience_fit": "Score how well the product concern and price/format fit the audience's dominant concern and purchase path.",
+    "step_5_score_content_fit": "Score whether the product can create credible content in the influencer's format: routine, demo, ingredient education, before/after journey, or GRWM.",
+    "step_6_generate_output": "Return top 3 products with rationale, risks, suggested content angle, measurement KPI, and missing data questions."
+  },
+  "output_contract": {
+    "recommended_products": [
+      "rank",
+      "product_id",
+      "why_self_fit",
+      "why_audience_fit",
+      "content_angle",
+      "risk_flags",
+      "missing_data",
+      "measurement_kpis"
+    ],
+    "measurement_kpis": [
+      "posting_rate",
+      "view_count",
+      "save_rate",
+      "comment_intent_quality",
+      "link_clicks",
+      "coupon_usage",
+      "creator_self_reported_tolerance",
+      "audience_question_themes"
+    ]
+  }
+}

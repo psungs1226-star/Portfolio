@@ -1,0 +1,28 @@
+{
+  "project": "인사ON",
+  "phase": "07-official-legal-corpus",
+  "steps": [
+    {
+      "step": 0,
+      "name": "official-source-contract",
+      "status": "completed",
+      "completed_at": "2026-07-29T20:13:50+09:00",
+      "summary": "API 키 없이 exact HTTPS allowlist로 공식 본문 3종과 실무자료 메타데이터 source contract 및 실제 endpoint probe를 구현했다."
+    },
+    {
+      "step": 1,
+      "name": "immutable-ingestion",
+      "status": "completed",
+      "completed_at": "2026-07-29T20:13:50+09:00",
+      "summary": "공식 원문을 비제출 private/legal/raw에 불변 hash snapshot으로 수집하고 8개 version manifest의 멱등성·경계를 검증했다."
+    },
+    {
+      "step": 2,
+      "name": "semantic-promotion",
+      "status": "blocked",
+      "blocked_at": "2026-07-29T20:13:50+09:00",
+      "blocked_reason": "자동 구조 품질감사 12/12와 16개 핵심 조문 review packet, approval hash validator까지 준비했다. 그러나 본문·단서·부칙을 직접 대조하고 attestation을 남길 독립 사람 승인자가 없어 검색 version으로 승격할 수 없다."
+    },
+    {"step": 3, "name": "versioned-legal-index", "status": "pending", "pending_reason": "승인 후에만 실행되는 다중 source index builder와 manifest validator는 구현했으나 유효한 사람 승인·공식 corpus embedding artifact가 없다."}
+  ]
+}

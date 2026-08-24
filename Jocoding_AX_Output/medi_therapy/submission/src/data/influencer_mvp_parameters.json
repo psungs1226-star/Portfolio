@@ -1,0 +1,121 @@
+{
+  "schema_version": "0.1.0",
+  "purpose": "MVP parameters for Meditherapy influencer seeding candidate collection, classification, recommendation, and review",
+  "mvp_scope": {
+    "primary_market": "North America",
+    "primary_platform": "TikTok",
+    "secondary_platforms": ["Instagram Reels", "Amazon review or live"],
+    "candidate_count": 30,
+    "shortlist_count": 12,
+    "recommended_seed_count": 6,
+    "control_group_count": 3,
+    "content_samples_per_candidate": 10,
+    "observation_window_days": 14
+  },
+  "candidate_segments": [
+    {
+      "segment_id": "acne_trouble_barrier",
+      "target_count": 8,
+      "search_terms": ["acne prone skincare routine", "skin barrier repair routine", "sensitive skin k beauty"]
+    },
+    {
+      "segment_id": "texture_pore_makeup_prep",
+      "target_count": 7,
+      "search_terms": ["texture skincare routine", "pore care routine", "makeup prep skincare"]
+    },
+    {
+      "segment_id": "tone_spot_glow",
+      "target_count": 5,
+      "search_terms": ["hyperpigmentation skincare", "glow skincare routine", "dark spot routine"]
+    },
+    {
+      "segment_id": "anti_aging_home_esthetic",
+      "target_count": 5,
+      "search_terms": ["home facial skincare", "anti aging skincare routine", "lifting mask review"]
+    },
+    {
+      "segment_id": "grwm_lifestyle_beauty",
+      "target_count": 5,
+      "search_terms": ["grwm skincare", "k beauty review", "morning skincare routine"]
+    }
+  ],
+  "influencer_profile_fields": {
+    "identity": ["handle", "platform", "profile_url", "country", "language", "follower_band"],
+    "skin_concerns": ["dryness", "dehydration", "acne_prone", "redness", "barrier_damage", "texture", "pores", "post_acne_marks", "pigmentation", "dullness", "wrinkles", "under_eye_dryness"],
+    "content_domains": ["skincare_routine", "grwm", "makeup_prep", "ingredient_education", "product_review", "before_after_journey", "home_esthetic_demo", "amazon_review_style"],
+    "audience_signals": ["audience_country", "age_band_signal", "where_to_buy_questions", "routine_questions", "sensitive_skin_questions", "price_questions", "dupe_questions"],
+    "commercial_signals": ["past_sponsored_content", "affiliate_link_present", "coupon_usage_present", "tiktok_shop_fit", "amazon_path_fit"],
+    "risk_signals": ["medical_claims", "filter_heavy_skin_review", "retinoid_conflict", "acid_overuse_risk", "pregnancy_or_lactation_disclosed", "wounded_or_procedure_skin", "claim_compliance_risk"]
+  },
+  "scoring": {
+    "weights": {
+      "influencer_self_fit": 0.35,
+      "audience_fit": 0.25,
+      "content_fit": 0.2,
+      "market_channel_fit": 0.1,
+      "risk_penalty": 0.1
+    },
+    "hard_exclusions": [
+      "retinal_product_for_pregnancy_or_lactation_disclosure",
+      "acid_or_retinal_product_for_active_irritation_or_wounded_skin",
+      "eye_patch_for_eye_area_irritation_disclosure",
+      "creator_requires_medical_or_guaranteed_result_claim",
+      "insufficient_public_data_for_any_causal_hypothesis"
+    ],
+    "tie_breakers": [
+      "clearer_content_angle",
+      "lower_claim_risk",
+      "higher_audience_purchase_intent",
+      "better_repeat_observation_potential"
+    ]
+  },
+  "mvp_products": [
+    "hyaluronic_first_serum",
+    "pdrn_serum",
+    "panthenol_core_booster_cream",
+    "retinal_skin_booster_serum",
+    "aha_bha_routine_cleanser",
+    "vitamin_bubble_serum",
+    "tranexamic_cream",
+    "tension_up_mask",
+    "wrinklefit_eye_patch"
+  ],
+  "pipeline_outputs": [
+    "influencer_candidates.jsonl",
+    "content_observations.jsonl",
+    "seed_recommendations.json",
+    "reviewer_report.json",
+    "experiment_results.json"
+  ],
+  "display_priority_policy": {
+    "sort_order": [
+      "ready_for_matching",
+      "review_required_before_matching",
+      "needs_more_data"
+    ],
+    "display_priority_values": {
+      "ready_for_matching": 1,
+      "review_required_before_matching": 2,
+      "needs_more_data": 3
+    },
+    "rule": "Use display priority before product-fit score. Product-fit score only sorts candidates inside the same display group.",
+    "guardrail": "needs_more_data candidates must not appear as high-confidence top recommendations."
+  },
+  "reviewer": {
+    "name": "5.4 mini reviewer",
+    "purpose": "Independently check whether code outputs match the Meditherapy seeding planning intent",
+    "review_status_values": ["pass", "revise", "fail"],
+    "checklist": [
+      "Product recommendation does not use gender as the first-order criterion.",
+      "Sales impact is presented as a hypothesis unless conversion data is provided.",
+      "Hard safety and claim conflicts are excluded or clearly flagged.",
+      "Recommendation rationale separates self fit, audience fit, content fit, market fit, and risk.",
+      "Output includes missing data questions and measurement KPIs.",
+      "Recommendation can return no_seed when data quality or risk is unacceptable."
+    ]
+  },
+  "validation": {
+    "mvp_validation_methods": ["schema_validation", "heuristic_score_tests", "representative_case_tests", "risk_block_tests", "independent_reviewer_check"],
+    "business_validation_methods": ["seed_vs_control_comparison", "posting_rate", "save_rate", "comment_intent_quality", "link_clicks", "coupon_usage", "orders_if_internal_data_available"]
+  }
+}

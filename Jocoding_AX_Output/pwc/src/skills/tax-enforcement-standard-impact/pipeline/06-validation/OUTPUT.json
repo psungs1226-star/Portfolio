@@ -1,0 +1,45 @@
+{
+  "phase": "Phase 6",
+  "status": "completed_with_scope_flags",
+  "status_note": "MINI_VALIDATION_SET.json(11건) 기준으로 Phase 3~5 결과를 채점. positive recall 3/3, evidence rate 1/1. 다만 negative/hold(해석정비 사례)는 이번 단일 개정 pass에서 후보 문서로 투입되지 않아 precision이 완전히 행사되지 않음 → 다중 개정 확장으로 보강 필요(정직 표기).",
+  "validation_basis": {
+    "mini_set": "src/skills/tax-enforcement-standard-impact/pipeline/06-validation/MINI_VALIDATION_SET.json",
+    "pipeline_result": "Phase 3 matching / Phase 4 classification / Phase 5 review list",
+    "ground_truth_source": "집행기준 26-41-1 본문 verbatim(2024-09 기준 발간)에 토지임대부 미반영 확인"
+  },
+  "case_results": [
+    {"case_id": "P1-standard-26-41-housing-lease", "expected": "positive", "actual": "surfaced (Phase5 rank1, 26-41-1, review, high)", "pass": true, "note": "주택 부수토지 면세 집행기준을 Direct Link로 정확히 surface."},
+    {"case_id": "P2-standard-41-area-threshold", "expected": "positive", "actual": "surfaced (26-41-1 ①·② 면적기준 문단 포함)", "pass": true, "note": "제41조 제2항 면적기준이 26-41-1 본문에 대응."},
+    {"case_id": "P3-new-topic-land-lease-housing", "expected": "positive", "actual": "surfaced (Phase5 section3 new review topic)", "pass": true, "note": "신설 대상을 new review topic 분기로 정확히 분류. ground truth = 미반영 확정."},
+    {"case_id": "N1-btl-facility-lease", "expected": "negative", "actual": "not surfaced", "pass": true, "note": "단일 개정 pass에서 후보 미투입. 축(국가 시설임대료)이 달라 surface되지 않음. precision 행사는 부분적."},
+    {"case_id": "N2-lupin-seed-exemption", "expected": "negative", "actual": "not surfaced", "pass": true, "note": "면세 키워드만 공유, 농산물 축. 미투입."},
+    {"case_id": "N3-education-lecture-exemption", "expected": "negative", "actual": "not surfaced", "pass": true, "note": "교육용역 축. 미투입."},
+    {"case_id": "N4-finance-similar-service-exemption", "expected": "negative", "actual": "not surfaced", "pass": true, "note": "부수 키워드 트랩. 미투입."},
+    {"case_id": "N5-transfer-agent-payment-invoice", "expected": "negative", "actual": "not surfaced", "pass": true, "note": "세금계산서 축. 미투입."},
+    {"case_id": "H1-officetel-exempt-conversion", "expected": "hold", "actual": "not surfaced as positive", "pass": true, "note": "주택·면세 인접이나 간주공급 timing 축. positive 승격 안 됨(정상). 후보 직접투입은 아님."},
+    {"case_id": "H2-mixed-business-tax-base", "expected": "hold", "actual": "not surfaced as positive", "pass": true, "note": "과세표준 축. positive 승격 안 됨."},
+    {"case_id": "H3-concession-exempt-conversion", "expected": "hold", "actual": "not surfaced as positive", "pass": true, "note": "관리운영권 면세전용 축. positive 승격 안 됨."}
+  ],
+  "metrics": {
+    "recall_positive": "3/3 (26-41-1 + 면적기준 문단 + 신규주제 모두 surface)",
+    "precision_enforcement_standard_set": "false positive 0 (29-65 exclude, 26-0-2 hold로 정확히 분리)",
+    "evidence_rate": "1/1 (surface된 26-41-1은 개정 조문·집행기준 번호·rule 문단·미반영 근거 모두 보유)",
+    "reason_quality": "high (Target impact 근거가 개정 조문·본문 대조로 설명됨)",
+    "hold_quality": "positive 오승격 없음"
+  },
+  "failure_analysis": {
+    "critical_failures": [],
+    "scope_limitations": [
+      "n=1: 단일 개정(제41조)만 입력이라 통계적 recall/precision은 성립하지 않음.",
+      "negative/hold(해석정비 11건 중 8건)는 이번 pass에서 후보 문서로 투입되지 않아 precision 트랩 방어가 실전으로 행사되지 않음. Phase 3의 조문·논리 배제 규칙 수준에서 방어가 확인될 뿐.",
+      "positive 3건이 모두 동일 집행기준(26-41-1) 축이라 recall의 다양성 검증이 제한적."
+    ],
+    "failure_labels_triggered": []
+  },
+  "improvement_pointer": {
+    "decision": "로직(가류) 오류는 발견되지 않음 → 게이트 통과. 남은 것은 커버리지(나류) 문제로, 데이터/이벤트 확장으로 해소.",
+    "next": "다중 개정 이벤트 확장 phase 신설(옵션 1). 여러 부가가치세 시행령/법 개정건을 열거해 각각 Phase1~5에 태워 positive/negative를 다수 확보하고, negative를 후보로 실제 투입해 precision을 행사.",
+    "carry_to": "신규 Phase (scope expansion / batch amendments)"
+  },
+  "gate_result": "PASS (로직 오류 없음). 재실행형 패키징으로 진행 가능하나, 통계적 검증은 다중 개정 확장 후 수행."
+}

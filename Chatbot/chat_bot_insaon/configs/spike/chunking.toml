@@ -1,0 +1,4 @@
+corpus = "data/sample/distractor-corpus.json"
+queries = "data/sample/chunking-spike.json"
+output = "artifacts/spikes/chunking/manifest.json"
+top_k = 5

@@ -1,0 +1,77 @@
+schema_version = "0.1.0"
+
+[[sources]]
+source_id = "LAW-LOCAL-OFFICIAL"
+source_name = "지방공무원법"
+source_type = "law"
+issuer = "법제처 국가법령정보센터"
+official_source_id = "lsiSeq:286499"
+url = "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=286499&efYd=20260602&ancYnChk=0"
+allowed_host = "www.law.go.kr"
+content_types = ["text/html"]
+max_bytes = 2000000
+timeout_seconds = 20
+retries = 1
+auth_mode = "none"
+expected_marker = "제63조(휴직)"
+promulgation_date = "2026-06-02"
+effective_from = "2026-06-02"
+redistribution = "private_snapshot_public_metadata_only"
+collector_format = "html"
+
+[[sources]]
+source_id = "DECREE-LOCAL-APPOINTMENT-OFFICIAL"
+source_name = "지방공무원 임용령"
+source_type = "presidential_decree"
+issuer = "법제처 국가법령정보센터"
+official_source_id = "lsId:005050"
+url = "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=287515&efYd=20260630&ancYnChk=0"
+allowed_host = "www.law.go.kr"
+content_types = ["text/html"]
+max_bytes = 2000000
+timeout_seconds = 20
+retries = 1
+auth_mode = "none"
+expected_marker = "지방공무원 임용령"
+promulgation_date = "2026-06-30"
+effective_from = "2026-06-30"
+redistribution = "private_snapshot_public_metadata_only"
+collector_format = "html"
+
+[[sources]]
+source_id = "RULE-LOCAL-HR-GUIDE-OFFICIAL"
+source_name = "지방공무원 인사제도 운영지침"
+source_type = "admin_rule"
+issuer = "행정안전부"
+official_source_id = "admRulSeq:2100000277056"
+url = "https://www.law.go.kr/LSW/admRulInfoR.do?admRulSeq=2100000277056"
+allowed_host = "www.law.go.kr"
+content_types = ["text/html"]
+max_bytes = 2000000
+timeout_seconds = 20
+retries = 1
+auth_mode = "none"
+expected_marker = "지방공무원 인사제도 운영지침"
+promulgation_date = "2026-04-07"
+effective_from = "2026-04-07"
+redistribution = "private_snapshot_public_metadata_only"
+collector_format = "html"
+
+[[sources]]
+source_id = "MANUAL-LOCAL-HR-OFFICIAL"
+source_name = "행정안전부 지방공무원 인사실무"
+source_type = "manual"
+issuer = "행정안전부"
+official_source_id = "data.go.kr:15038527"
+url = "https://www.data.go.kr/data/15038527/fileData.do"
+allowed_host = "www.data.go.kr"
+content_types = ["text/html"]
+max_bytes = 2000000
+timeout_seconds = 20
+retries = 1
+auth_mode = "none"
+expected_marker = "행정안전부_지방공무원 인사실무_20251111"
+promulgation_date = "2025-11-11"
+effective_from = "2025-11-11"
+redistribution = "metadata_page_unrestricted_pdf_review_required"
+collector_format = "html"

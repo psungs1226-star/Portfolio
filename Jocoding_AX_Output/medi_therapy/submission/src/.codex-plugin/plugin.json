@@ -1,0 +1,36 @@
+{
+  "name": "meditherapy-influencer-seeding",
+  "version": "0.1.0",
+  "description": "Codex plugin for designing Meditherapy influencer seeding decisions with product ontology, causal hypotheses, risk gates, and iteration loops.",
+  "author": {
+    "name": "AX Hackathon Meditherapy Team"
+  },
+  "license": "MIT",
+  "keywords": [
+    "meditherapy",
+    "influencer-seeding",
+    "beauty-marketing",
+    "tiktok",
+    "ontology",
+    "causal-hypothesis"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Meditherapy Influencer Seeding",
+    "shortDescription": "Rank beauty creators for product seeding with explainable fit, risk, and KPI loops.",
+    "longDescription": "Helps global beauty marketers structure influencer seeding decisions for Meditherapy products. The plugin uses product ontology, public creator profiles, content fit, risk gates, seeded/control groups, and result collection loops. It does not claim sales or ROAS without internal conversion data.",
+    "developerName": "AX Hackathon Meditherapy Team",
+    "category": "Productivity",
+    "capabilities": [
+      "Write",
+      "Analyze",
+      "Review"
+    ],
+    "defaultPrompt": [
+      "Rank creators for a new Meditherapy product.",
+      "Generate seeding briefs from the current shortlist.",
+      "Review seeding results without overstating sales."
+    ],
+    "brandColor": "#0F766E"
+  }
+}

@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://insaon.example/schemas/legal-annotation-record.schema.json",
+  "title": "InsaON Independent Legal Annotation Record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "case_id",
+    "group_id",
+    "split",
+    "source_manifest_hash",
+    "index_version",
+    "referenced_provision_ids",
+    "author_judgment",
+    "review_judgment",
+    "disagreement_fields",
+    "adjudication"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "case_id": {"type": "string", "pattern": "^CASE-[A-Z0-9][A-Z0-9_-]*$"},
+    "group_id": {"type": "string", "pattern": "^GROUP-[A-Z0-9][A-Z0-9_-]*$"},
+    "split": {"enum": ["dev", "test_mvp_locked", "test_extended_locked"]},
+    "source_manifest_hash": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "index_version": {"type": "string", "pattern": "^LEGAL-IDX-[a-f0-9]{16}$"},
+    "referenced_provision_ids": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "author_judgment": {"$ref": "#/$defs/judgment"},
+    "review_judgment": {"$ref": "#/$defs/judgment"},
+    "disagreement_fields": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "adjudication": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "actor_id",
+        "decided_at",
+        "final_expected",
+        "exclusion_reason"
+      ],
+      "properties": {
+        "status": {"enum": ["pending", "accepted", "excluded"]},
+        "actor_id": {"type": ["string", "null"]},
+        "decided_at": {"type": ["string", "null"], "format": "date-time"},
+        "final_expected": {
+          "oneOf": [{"$ref": "#/$defs/expected"}, {"type": "null"}]
+        },
+        "exclusion_reason": {"type": ["string", "null"]}
+      }
+    }
+  },
+  "$defs": {
+    "judgment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["actor_id", "submitted_at", "expected"],
+      "properties": {
+        "actor_id": {"type": "string", "minLength": 1},
+        "submitted_at": {"type": "string", "format": "date-time"},
+        "expected": {"$ref": "#/$defs/expected"}
+      }
+    },
+    "expected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action",
+        "answer_status",
+        "required_condition_fields",
+        "required_evidence_ids",
+        "required_exception_ids",
+        "forbidden_evidence_ids"
+      ],
+      "properties": {
+        "action": {"enum": ["answer", "ask", "abstain"]},
+        "answer_status": {
+          "enum": ["ANSWERABLE", "REVIEW_REQUIRED", "INSUFFICIENT_EVIDENCE"]
+        },
+        "required_condition_fields": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "required_evidence_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "required_exception_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "forbidden_evidence_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    }
+  }
+}

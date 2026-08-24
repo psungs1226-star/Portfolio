@@ -1,0 +1,119 @@
+{
+  "schema_version": "0.1.0",
+  "phase_id": "phase_6b_new_product_research_gap",
+  "generated_at": "2026-07-09T02:35:50.953111Z",
+  "input_files": [
+    "submission/src/data/new_product_rankings.json",
+    "submission/src/data/influencer_profiles.jsonl"
+  ],
+  "preserved_phase6a_ranking_file": "submission/src/data/new_product_rankings.json",
+  "new_product": {
+    "product_id": "possera_real_bifida_pink_blur_cream",
+    "name": "포쎄라 리얼 비피다 핑크 블러 크림",
+    "best_for_concerns": [
+      "acne_prone",
+      "pores",
+      "texture",
+      "redness",
+      "makeup_adherence_issue"
+    ],
+    "content_fit": [
+      "skincare_routine",
+      "grwm",
+      "makeup_prep",
+      "product_review",
+      "before_after_journey"
+    ],
+    "market_priority": [
+      "north_america"
+    ]
+  },
+  "decision": "existing_db_sufficient",
+  "decision_detail": "기존 DB 랭킹은 충분하지만 `last_researched_at` 필드가 없어 freshness는 보수적으로 한계로 남긴다.",
+  "triggers": [],
+  "quantitative_evidence": {
+    "ready_eligible_count": 11,
+    "core_segments": [
+      "acne_trouble_barrier",
+      "texture_pore_makeup_prep"
+    ],
+    "core_ready_eligible_count": 6,
+    "top_6_segment_distribution": {
+      "acne_trouble_barrier": 4,
+      "texture_pore_makeup_prep": 1,
+      "tone_spot_glow": 1
+    },
+    "top_6_same_segment_share": 0.67,
+    "top_half_review_or_no_seed_count": 4,
+    "top_half_count": 15,
+    "freshness_counts": {
+      "unknown_no_last_researched_at": 30
+    },
+    "unknown_freshness_ratio": 1.0,
+    "freshness_note": "freshness_not_evaluable_no_last_researched_at_field",
+    "segment_coverage": {
+      "acne_trouble_barrier": {
+        "total": 8,
+        "ready_eligible": 4,
+        "review_or_no_seed": 4,
+        "needs_more_data": 1
+      },
+      "texture_pore_makeup_prep": {
+        "total": 7,
+        "ready_eligible": 2,
+        "review_or_no_seed": 5,
+        "needs_more_data": 4
+      },
+      "tone_spot_glow": {
+        "total": 5,
+        "ready_eligible": 1,
+        "review_or_no_seed": 4,
+        "needs_more_data": 3
+      },
+      "anti_aging_home_esthetic": {
+        "total": 5,
+        "ready_eligible": 1,
+        "review_or_no_seed": 4,
+        "needs_more_data": 0
+      },
+      "grwm_lifestyle_beauty": {
+        "total": 5,
+        "ready_eligible": 3,
+        "review_or_no_seed": 2,
+        "needs_more_data": 1
+      }
+    }
+  },
+  "proposed_queries": [],
+  "optional_monitoring_queries": [
+    "north america TikTok acne prone skincare routine",
+    "north america TikTok post breakout skincare routine",
+    "north america TikTok skin texture skincare routine",
+    "north america TikTok makeup prep texture skincare",
+    "north america TikTok redness skincare routine",
+    "north america TikTok sensitive redness skincare",
+    "north america TikTok skincare routine creator",
+    "north america TikTok grwm skincare creator"
+  ],
+  "collection_targets": {
+    "execute_phase6c": false,
+    "target_segments": [],
+    "target_new_candidates": 0,
+    "content_samples_per_candidate": 0,
+    "stop_conditions": [
+      "Do not run Phase 6C unless user requests broader market exploration or product positioning changes.",
+      "Keep Phase 6A ranking as the current recommendation source."
+    ]
+  },
+  "risks": [
+    "public_data_access_instability",
+    "creator_profile_metadata_can_change_after_collection",
+    "existing_db_has_no_last_researched_at_field",
+    "sales_or_roas_cannot_be_inferred_without_internal_conversion_data"
+  ],
+  "recommendation": {
+    "use_existing_phase6a_ranking": true,
+    "run_phase6c_now": false,
+    "reason": "기존 DB만으로 ready 추천 후보 6명을 확보했고 추가 리서치 트리거가 발생하지 않았다."
+  }
+}

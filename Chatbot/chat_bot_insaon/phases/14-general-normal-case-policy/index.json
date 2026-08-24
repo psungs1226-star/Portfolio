@@ -1,0 +1,27 @@
+{
+  "project": "인사ON",
+  "phase": "14-general-normal-case-policy",
+  "steps": [
+    {
+      "step": 0,
+      "name": "core-assumption-override-contract",
+      "status": "completed",
+      "completed_at": "2026-08-04T15:30:00+09:00",
+      "summary": "모든 지원 질문의 조건을 필수 사실·승인된 통상 가정·명시 예외로 분리하는 기본 거부형 정책을 구현했다. PAY-01만 최초 프로필로 등록하고 명시값 우선과 가정값 세션 비저장을 검증했다."
+    },
+    {
+      "step": 1,
+      "name": "cross-topic-product-and-regression",
+      "status": "completed",
+      "completed_at": "2026-08-04T15:31:00+09:00",
+      "summary": "휴직 4종의 후속 상세 core 보존, 8개 인사 주제·범위 밖 질문의 무가정 경계, 상·하반기 지급경계 조문 분리를 회귀로 고정하고, 챗봇이 가정을 확인값과 구분해 실제 누락 조건만 묻도록 통일했다."
+    },
+    {
+      "step": 2,
+      "name": "evaluation-docs-and-handoff",
+      "status": "completed",
+      "completed_at": "2026-08-04T15:33:00+09:00",
+      "summary": "PRD·아키텍처·평가계약·추적표·ADR·README·제출 HTML과 Harness를 공통 정상가정 정책에 맞춰 동기화하고 전체 회귀와 공개 경계 검증을 완료했다."
+    }
+  ]
+}

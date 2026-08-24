@@ -1,0 +1,79 @@
+{
+  "schema_version": "0.1.0",
+  "check_type": "official_metadata_probe",
+  "source_count": 4,
+  "sources": [
+    {
+      "snapshot_id": "SNAP-LAW-LOCAL-OFFICIAL-b610461b6e51",
+      "source_id": "LAW-LOCAL-OFFICIAL",
+      "source_name": "지방공무원법",
+      "source_type": "law",
+      "issuer": "법제처 국가법령정보센터",
+      "official_source_id": "lsiSeq:286499",
+      "source_url": "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=286499&efYd=20260602&ancYnChk=0",
+      "retrieved_at": "2026-07-29T11:07:38.134424+00:00",
+      "content_type": "text/html",
+      "content_hash": "b610461b6e51bdb399391e2b5a918b63efa2d4ab19c188119cb56f5ad4bc4266",
+      "byte_count": 503386,
+      "promulgation_date": "2026-06-02",
+      "effective_from": "2026-06-02",
+      "collector_version": "official-public-page-v0.1.0",
+      "redistribution": "private_snapshot_public_metadata_only"
+    },
+    {
+      "snapshot_id": "SNAP-DECREE-LOCAL-APPOINTMENT-OFFICIAL-7b25189d3995",
+      "source_id": "DECREE-LOCAL-APPOINTMENT-OFFICIAL",
+      "source_name": "지방공무원 임용령",
+      "source_type": "presidential_decree",
+      "issuer": "법제처 국가법령정보센터",
+      "official_source_id": "lsId:005050",
+      "source_url": "https://www.law.go.kr/LSW/lsInfoR.do?lsiSeq=287515&efYd=20260630&ancYnChk=0",
+      "retrieved_at": "2026-07-29T11:07:38.781139+00:00",
+      "content_type": "text/html",
+      "content_hash": "7b25189d399566ff89f2e99f37132f075ec43be00f105e6451ad3210ad652217",
+      "byte_count": 1069225,
+      "promulgation_date": "2026-06-30",
+      "effective_from": "2026-06-30",
+      "collector_version": "official-public-page-v0.1.0",
+      "redistribution": "private_snapshot_public_metadata_only"
+    },
+    {
+      "snapshot_id": "SNAP-RULE-LOCAL-HR-GUIDE-OFFICIAL-ac6f5373a804",
+      "source_id": "RULE-LOCAL-HR-GUIDE-OFFICIAL",
+      "source_name": "지방공무원 인사제도 운영지침",
+      "source_type": "admin_rule",
+      "issuer": "행정안전부",
+      "official_source_id": "admRulSeq:2100000277056",
+      "source_url": "https://www.law.go.kr/LSW/admRulInfoR.do?admRulSeq=2100000277056",
+      "retrieved_at": "2026-07-29T11:07:39.447170+00:00",
+      "content_type": "text/html",
+      "content_hash": "ac6f5373a80463c8cb0ee7cb4fb1f5c5fcebd3ba3f431e6f642b80b30162a9ee",
+      "byte_count": 413987,
+      "promulgation_date": "2026-04-07",
+      "effective_from": "2026-04-07",
+      "collector_version": "official-public-page-v0.1.0",
+      "redistribution": "private_snapshot_public_metadata_only"
+    },
+    {
+      "snapshot_id": "SNAP-MANUAL-LOCAL-HR-OFFICIAL-1e2758913c93",
+      "source_id": "MANUAL-LOCAL-HR-OFFICIAL",
+      "source_name": "행정안전부 지방공무원 인사실무",
+      "source_type": "manual",
+      "issuer": "행정안전부",
+      "official_source_id": "data.go.kr:15038527",
+      "source_url": "https://www.data.go.kr/data/15038527/fileData.do",
+      "retrieved_at": "2026-07-29T11:07:39.958378+00:00",
+      "content_type": "text/html",
+      "content_hash": "1e2758913c93f9615b9d051fab3a9f78fb46db1fc7bb3e83b2cf24dbd9fc7c54",
+      "byte_count": 152134,
+      "promulgation_date": "2025-11-11",
+      "effective_from": "2025-11-11",
+      "collector_version": "official-public-page-v0.1.0",
+      "redistribution": "metadata_page_unrestricted_pdf_review_required"
+    }
+  ],
+  "limitations": [
+    "Public metadata/body pages only; semantic provision parsing and approval are separate gates.",
+    "No API key was used or required."
+  ]
+}

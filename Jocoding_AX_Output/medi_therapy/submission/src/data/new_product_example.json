@@ -1,0 +1,94 @@
+{
+  "schema_version": "0.1.0",
+  "product_id": "possera_real_bifida_pink_blur_cream",
+  "name": "포쎄라 리얼 비피다 핑크 블러 크림",
+  "format": "tone_up_cream",
+  "best_for_concerns": [
+    "acne_prone",
+    "pores",
+    "texture",
+    "redness",
+    "makeup_adherence_issue"
+  ],
+  "skin_type_fit": [
+    "combination",
+    "oily",
+    "acne_prone",
+    "sensitive"
+  ],
+  "skin_type_caution": [
+    "active_wounded_skin",
+    "post_procedure_skin_without_professional_advice",
+    "shade_mismatch_or_tone_up_finish_preference"
+  ],
+  "content_fit": [
+    "skincare_routine",
+    "grwm",
+    "makeup_prep",
+    "product_review",
+    "before_after_journey"
+  ],
+  "audience_fit": [
+    "makeup_base_questions",
+    "pore_blur_questions",
+    "routine_questions",
+    "where_to_buy_questions"
+  ],
+  "risk_flags": [
+    "do_not_claim_medical_acne_treatment",
+    "avoid_use_on_wounds",
+    "avoid_guaranteed_tone_correction_or_pore_reduction_without_test_data",
+    "avoid_foundation_replacement_claim_for_all_skin_tones",
+    "patch_test_required"
+  ],
+  "measurement_kpis": [
+    "save_rate",
+    "makeup_base_question_count",
+    "pore_blur_question_count",
+    "routine_question_count",
+    "shade_or_finish_question_count",
+    "comment_intent_quality"
+  ],
+  "market_priority": [
+    "north_america"
+  ],
+  "expected_purchase_path": [
+    "tiktok_profile_link",
+    "coupon_code",
+    "owned_shop_landing_page"
+  ],
+  "claim_guardrails": [
+    "Do not claim acne treatment, medical pore reduction, guaranteed tone correction, or universal foundation replacement.",
+    "Use cosmetic appearance, makeup-prep, and routine language only."
+  ],
+  "source_evidence": [
+    {
+      "source": "meditherapy_official_product_page",
+      "url": "https://meditherapy.co.kr/product/%ED%8F%AC%EC%8E%84%EB%9D%BC-%EB%A6%AC%EC%96%BC-%EB%B9%84%ED%94%BC%EB%8B%A4-%ED%95%91%ED%81%AC-%EB%B8%94%EB%9F%AC-%ED%81%AC%EB%A6%BC/2206/",
+      "used_fields": [
+        "product_name",
+        "product_summary",
+        "volume",
+        "price",
+        "options"
+      ]
+    },
+    {
+      "source": "official_all_product_listing",
+      "url": "https://meditherapy.co.kr/category/all-product/93/",
+      "used_fields": [
+        "new_tag",
+        "listing_order"
+      ]
+    },
+    {
+      "source": "media_campaign_article",
+      "url": "https://www.donga.com/news/Economy/article/all/20260706/134243075/1",
+      "used_fields": [
+        "new_product_pair",
+        "campaign_context",
+        "tone_up_and_pore_cover_positioning"
+      ]
+    }
+  ]
+}

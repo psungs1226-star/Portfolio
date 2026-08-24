@@ -1,0 +1,75 @@
+{
+  "schema": "action-brief/v1",
+  "status_label": "completed",
+  "purpose": "Phase 5/7 OUTPUT.json → 선제 대응 실행 브리프 HTML의 필드 계약. 손으로 문장을 쓰지 않고 이 스키마를 채워 render_brief.py로 재생성한다. 매 개정마다 재현 가능.",
+  "decision_axes": {
+    "severity_tier": {
+      "field": "item.tier",
+      "values": {"1": "분류 변동(면세↔과세 flip) — 최우선", "2": "분류 유지·효과/과표 변동", "3": "단순 정리(기존 관행 성문화) — 낮음"},
+      "role": "지금 손대야 하나 (moat priority)"
+    },
+    "verification_verdict": {
+      "field": "item.verdict",
+      "values": {"confirmed": "본문/정비 검증 완료", "review_worthy": "결론 흔들림 가능·확정 아님(검토 큐)", "hold": "근거 부족·확인 필요", "exclude": "영향 없음에 근접"},
+      "role": "얼마나 믿나 — 절대 review_worthy를 '확정 변경'으로 승격 금지"
+    },
+    "confidence": {"field": "item.confidence", "values": {"high": "높음", "med": "보통", "low": "낮음"}},
+    "hop": {"field": "item.hop", "values": {"0": "직접 근거(조문번호/키워드 일치) — 자명·저가치", "1": "≥1단계 추론(유추·연쇄·외부참조) — 비자명·고가치"}, "role": "판단의 비자명성 신호"}
+  },
+  "sort": {
+    "keys": ["tier asc", "verdict_rank asc(confirmed<review_worthy<hold<exclude)", "confidence_rank asc(high<med<low)"],
+    "effect": "상단 = 먼저 전화할 클라이언트"
+  },
+  "top_level": {
+    "meta": {"title": "str", "tag": "str", "h1_line1": "str", "h1_line2": "str", "intro": "str(inline b 허용)", "status_label": "str", "footer": "str"},
+    "value_props": "[{h:str, d:str}] — 3개 실익 카드",
+    "why_now": "str — 선제성 근거 callout",
+    "legend": "축 설명(자동 렌더, 데이터 불필요)",
+    "items": "[item] — 아래 item 스키마",
+    "monitoring": "monitoring 스키마 — 자동 감시/실패 범위(D)"
+  },
+  "item": {
+    "id": "str — anchor 용 slug",
+    "title": "str",
+    "tier": "1|2|3",
+    "tier_label": "str — 짧은 서술(예: '면세 신설')",
+    "verdict": "confirmed|review_worthy|hold|exclude",
+    "confidence": "high|med|low",
+    "hop": "0|1",
+    "action_kind": "position_recheck|counterparty_notify — 포지션 재점검 vs 거래상대방 알림",
+    "prior": {
+      "$comment": "① 기존 해석 — 개정 전 예규/집행기준. 문서번호만 X, 요지(결론+근거) 인라인 필수(CLAUDE.md).",
+      "source_no": "str", "source_title": "str", "gist": "str(inline b 허용)"
+    },
+    "amendment": {
+      "$comment": "② 개정 — 무엇이 바뀌었나 + 키워드 변경 요약.",
+      "article_path": "str", "effective_date": "YYYY-MM-DD", "change_type": "str", "text": "str",
+      "keyword_diff": "[{op: 신설|삭제|불변|치환, old: str, new: str, note?: str}]"
+    },
+    "inference": {
+      "$comment": "③ 변경 해석 유추 — AI는 단정하지 않고 질문을 세운다.",
+      "delta": "str — 결론이 어떻게 바뀔 여지",
+      "risk": {"label": "str", "detail": "str"},
+      "counter_args": "[str] — 반대논거(적대검증)",
+      "direct_check": {"source_no": "str", "gist": "str"},
+      "verification": {"lenses": "int", "refuted": "int", "note": "str", "miss_scope": "str"}
+    },
+    "action": {
+      "$comment": "④ 선제 대응 — 누가·무엇을·확인질문.",
+      "who": "str", "do": "str(inline b 허용)", "review_question": "str"
+    }
+  },
+  "monitoring": {
+    "title": "str",
+    "works_on": "[str] — 자동으로 잘 잡히는 개정 유형(근거 포함)",
+    "misses": "[str] — 아직 놓치는 범위(은폐 금지)",
+    "fix_levers": "[str] — 알려진 개선 레버",
+    "metric": "str — 블라인드 백테스트 수치"
+  },
+  "render_rules": [
+    "inference.risk / direct_check / verification / counter_args 는 optional — 있으면 렌더, 없으면 생략.",
+    "verdict 문구는 '확정' 대신 '검토 후보·확인 필요' 계열 강제.",
+    "모든 참조 source 는 gist(결론 면세/과세 + 근거) 인라인 — 문서번호 단독 금지.",
+    "정렬 후 상단에 Tier×verdict 개요 매트릭스 렌더(act-now vs 검토 큐 가시화)."
+  ]
+}

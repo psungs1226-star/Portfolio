@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>부가가치세 면세 — 개정이 흔드는 '과거 판정' 선제 검토 (판정 레이어)</title>
+<style>
+  :root{
+    --navy:#1a2b4a; --navy2:#243a5e; --orange:#eb6f00; --orange-l:#ff9d3f;
+    --ink:#20242b; --muted:#6b7482; --line:#e3e7ee; --bg:#f5f7fa;
+    --green:#1e9e6a; --amber:#d99100; --red:#c8492e; --gray:#8a94a3;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:"Apple SD Gothic Neo","Malgun Gothic","Segoe UI",sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.62;font-size:15px;}
+  .wrap{max-width:1000px;margin:0 auto;padding:0 20px 60px;}
+  header{background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff;
+    padding:34px 0 30px;margin-bottom:26px;}
+  header .wrap{padding-top:0;padding-bottom:0;}
+  header .tag{display:inline-block;background:var(--orange);color:#fff;font-size:12px;
+    font-weight:700;padding:4px 11px;border-radius:20px;letter-spacing:.3px;margin-bottom:12px;}
+  header h1{margin:0 0 10px;font-size:25px;line-height:1.35;}
+  header p{margin:0;color:#c7d2e4;font-size:14px;max-width:900px;}
+  h2{font-size:18px;color:var(--navy);margin:34px 0 14px;padding-bottom:7px;border-bottom:2px solid var(--line);}
+  h2 .n{color:var(--orange);font-weight:800;margin-right:7px;}
+  .lead{font-size:14px;color:#3a4453;margin:-4px 0 16px;}
+  .kpi{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:8px;}
+  .kpi .box{flex:1;min-width:150px;background:#fff;border:1px solid var(--line);
+    border-radius:12px;padding:15px 16px;box-shadow:0 1px 3px rgba(20,30,50,.04);}
+  .kpi .box .v{font-size:26px;font-weight:800;color:var(--navy);line-height:1;}
+  .kpi .box .v small{font-size:14px;color:var(--muted);font-weight:700;}
+  .kpi .box .l{font-size:12.5px;color:var(--muted);margin-top:7px;}
+  .kpi .box.hi .v{color:var(--orange);}
+  .callout{background:linear-gradient(135deg,#fbe9e2,#fdf1ec);border:1px solid #e8a48f;
+    border-radius:12px;padding:16px 18px;margin:18px 0;font-size:14px;color:#5a3527;}
+  .callout b{color:var(--red);}
+  .card{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin-bottom:14px;
+    box-shadow:0 1px 3px rgba(20,30,50,.04);}
+  /* funnel */
+  .funnel{background:#fff;border:1px solid var(--line);border-radius:12px;padding:18px;}
+  .fr{display:flex;align-items:center;gap:12px;margin:7px 0;}
+  .fr .lab{width:230px;font-size:13px;color:#374151;text-align:right;flex-shrink:0;}
+  .fr .lab small{color:var(--muted);}
+  .fr .bar{height:26px;border-radius:5px;background:linear-gradient(90deg,var(--navy),var(--navy2));
+    display:flex;align-items:center;justify-content:flex-end;padding-right:9px;color:#fff;font-weight:700;font-size:12.5px;min-width:34px;}
+  .fr.ent .bar{background:linear-gradient(90deg,var(--orange),var(--orange-l));}
+  .fr.mid .bar{background:linear-gradient(90deg,#39527d,#4a6da0);}
+  /* table */
+  table{width:100%;border-collapse:collapse;font-size:13px;background:#fff;border:1px solid var(--line);
+    border-radius:10px;overflow:hidden;margin-bottom:6px;}
+  th,td{padding:10px 11px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;}
+  th{background:#f0f3f8;color:var(--navy);font-weight:700;font-size:12px;}
+  tr:last-child td{border-bottom:none;}
+  td .rl{font-size:12px;color:var(--muted);margin-top:3px;}
+  td .gist{font-size:12px;color:#4b5563;margin-top:6px;padding:6px 9px;background:#f7f9fc;border-left:3px solid var(--line);border-radius:0 5px 5px 0;line-height:1.5;}
+  td .gist b{color:var(--navy2);}
+  .badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 9px;border-radius:20px;white-space:nowrap;}
+  .b-hold{background:#fff1e0;color:var(--orange);}
+  .b-excl{background:#eef1f5;color:var(--gray);}
+  .b-low{background:#eef1f5;color:var(--gray);}
+  .b-conf{background:#fbe6e0;color:var(--red);}
+  .b-rw{background:#eaf0fb;color:#2b5fb0;}
+  .b-stab{background:#e6f7ef;color:var(--green);}
+  .b-me{background:#e6f7ef;color:var(--green);}
+  .b-tx{background:#fdece6;color:var(--red);}
+  .tier{display:inline-block;font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:20px;white-space:nowrap;letter-spacing:.2px;margin-top:5px;}
+  .t1{background:var(--red);color:#fff;}
+  .t2{background:var(--orange);color:#fff;}
+  .t3{background:#e7eaf0;color:var(--gray);}
+  .tn{background:#f2f4f7;color:#b3bac6;border:1px solid var(--line);}
+  .tierlegend{display:flex;gap:10px;flex-wrap:wrap;margin:2px 0 14px;}
+  .tierlegend .ti{flex:1;min-width:210px;border:1px solid var(--line);border-radius:10px;padding:11px 13px;background:#fff;font-size:12.5px;color:#3a4453;}
+  .tierlegend .ti .h{font-weight:800;font-size:12.5px;margin-bottom:3px;display:flex;align-items:center;gap:7px;}
+  .tierlegend .ti.a .h{color:var(--red);} .tierlegend .ti.b .h{color:var(--orange);} .tierlegend .ti.c .h{color:var(--gray);}
+  .tierlegend .ti .sw{width:10px;height:10px;border-radius:50%;display:inline-block;}
+  .ba{display:flex;gap:12px;flex-wrap:wrap;margin-top:8px;}
+  .ba-box{flex:1;min-width:220px;border:1px solid var(--line);border-radius:9px;padding:11px 13px;font-size:13px;}
+  .ba-box.before{background:#f7f8fa;}
+  .ba-box.after{background:#fff8f0;border-color:var(--orange-l);}
+  .ba-box h4{margin:0 0 5px;font-size:12px;color:var(--navy2);letter-spacing:.3px;}
+  .ba-box .dn{font-size:11.5px;color:var(--muted);margin-top:4px;}
+  .arrow{display:flex;align-items:center;font-size:20px;color:var(--orange);font-weight:800;}
+  ul.cl{margin:6px 0 0;padding-left:20px;font-size:13.5px;color:#374151;}
+  ul.cl li{margin-bottom:6px;}
+  .split{display:flex;gap:12px;flex-wrap:wrap;}
+  .split>div{flex:1;min-width:240px;}
+  .col-me{border-left:3px solid var(--green);padding-left:12px;}
+  .col-tx{border-left:3px solid var(--red);padding-left:12px;}
+  .col-me h4,.col-tx h4{margin:0 0 6px;font-size:13px;}
+  .reasons{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;}
+  .rz{font-size:11.5px;background:#f2f5f9;border:1px solid var(--line);border-radius:6px;padding:4px 8px;color:#3a4453;}
+  .rz.hot{background:#fbe6e0;border-color:#e8a48f;color:var(--red);font-weight:700;}
+  .note{font-size:12.5px;color:var(--navy2);background:#f4f7fb;border-radius:6px;padding:8px 11px;margin-top:8px;}
+  .cap{font-size:12.5px;color:#4b5563;}
+  footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);}
+  code{background:#eef1f5;border-radius:4px;padding:1px 5px;font-size:12px;color:var(--navy2);}
+</style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <span class="tag">Phase 7 · 판정 레이어 (Judgment-Case)</span>
+    <h1>세법 개정이 흔드는 '과거 판정'을 선제 탐지하다<br>— 부가가치세 시행령 제40조 금융 면세 파일럿</h1>
+    <p>규칙형 집행기준의 명문 자구 변경(26-41-1 stale)과 별개로, <b style="color:#ffd9b0">글자는 안 바뀌어도 결론이 흔들리는</b> 옛 법 아래 판정 사례를 잡는 레이어. 개정 시행일 기준 과거 ~10년 예규·해석사례를 '날짜'가 아니라 '바뀐 법리(대상·요건·효과)'로 매칭한다.</p>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="kpi">
+    <div class="box"><div class="v">923</div><div class="l">제26조 면세 해석사례<br>(등록 2015~2025, 10년 · 생산기준 hold)</div></div>
+    <div class="box"><div class="v">197</div><div class="l">+ 포함어 '금융'<br>1차 필터</div></div>
+    <div class="box hi"><div class="v">13</div><div class="l">개정 대상 엔티티<br>VAT 후보(법인세 부수히트 제거)</div></div>
+    <div class="box hi"><div class="v">2</div><div class="l"><b style="color:var(--red)">Tier 1</b> 면세→과세 잠재<br>(hold 2 · exclude 1 · Tier3 1)</div></div>
+    <div class="box hi"><div class="v">2<small> / 183</small></div><div class="l">세법해석정비 中<br>개정 주도(코드10)</div></div>
+  </div>
+
+  <div class="callout">
+    <b>핵심.</b> 부가세 세법해석정비 183건 중 '개정이 과거 해석을 흔들어 정비한' 경우는 <b>단 2건</b>뿐이고, 4개 파일럿 개정(2023~2026)에 대응하는 정비 레코드는 <b>0건</b> — 국세청조차 개정 주도 flip을 드물게·늦게 반영한다. 바로 그 공백이 이 레이어의 존재 이유다: <b>정비 DB가 놓치는 개정 주도 불안정을 사람이 놓치기 전에 리스트업</b>.
+  </div>
+
+  <h2><span class="n">1</span>볼륨 funnel — "10년 깊게, 주제는 좁게"</h2>
+  <p class="lead">국세법령정보시스템 세법해석례 DB(<code>ASIPDI002PR01</code>)를 법 제26조(면세)·기간 2015~2025로 스코프. 개정 대상 엔티티 키워드로 좁히면 리뷰 가능한 소수로 수렴 — 10년×전체 폭발 없음.</p>
+  <div class="funnel">
+    <div class="fr"><div class="lab">제26조 면세 전체 <small>(10년)</small></div><div class="bar" style="width:100%">923</div></div>
+    <div class="fr mid"><div class="lab">+ 포함어 '금융'</div><div class="bar" style="width:21.3%">197</div></div>
+    <div class="fr ent"><div class="lab">기술보증기금 <small>(2025 신설 축)</small></div><div class="bar" style="width:6%">8</div></div>
+    <div class="fr ent"><div class="lab">신용보증 <small>(인접 축)</small></div><div class="bar" style="width:6%">33</div></div>
+    <div class="fr ent"><div class="lab">유동화 <small>(2023 삭제 축)</small></div><div class="bar" style="width:5%">10</div></div>
+    <div class="fr ent"><div class="lab">새마을금고 <small>(2026 신설 축)</small></div><div class="bar" style="width:4%">4</div></div>
+    <div class="fr ent"><div class="lab">주택저당채권 <small>(2023 삭제 축)</small></div><div class="bar" style="width:3.5%">2</div></div>
+    <div class="fr ent"><div class="lab">벤처투자조합 <small>(2023 신설 축)</small></div><div class="bar" style="width:3.5%">2</div></div>
+  </div>
+  <div class="note">막대는 후보 건수(비율 아님, 소수 강조). 제26조 스코프에서도 세법 분류가 '법인세'인 부수히트가 섞여(기술보증기금 8건 中 3건) → <code>NTST_TLAW_CL_NM=부가가치세</code> 필터로 13건만 채택.</div>
+
+  <h2><span class="n">2</span>Flip 분석 — 4개 제40조 개정 × 옛 법 아래 판정</h2>
+  <p class="lead">엔티티 키워드는 후보를 좁히지만, flip 확정에는 <b>대상 + 요건 + 효과</b> 3축 정렬이 필요하다. 키워드만으론 '새마을금고 vs 새마을금고자산관리회사'처럼 주체가 어긋난 오탐이 생긴다.</p>
+  <div class="tierlegend">
+    <div class="ti a"><div class="h"><span class="sw" style="background:var(--red)"></span>Tier 1 · 메인 해자</div>과거 판정의 <b>분류가 뒤집힘</b> — 면세→과세 / 과세→면세. 검토 큐 최우선.</div>
+    <div class="ti b"><div class="h"><span class="sw" style="background:var(--orange)"></span>Tier 2 · 효과 변화</div>분류는 유지되나 <b>세율·과세표준 적용금액·안분 계산</b>이 바뀜. 별도 체크. (부가세는 세율 단일→실질은 과표·안분)</div>
+    <div class="ti c"><div class="h"><span class="sw" style="background:var(--gray)"></span>Tier 3 · 저중요</div>분류·효과 모두 무변동(실무 관습 명문화 등). 낮은 우선순위/제외.</div>
+  </div>
+  <table>
+    <thead><tr><th style="width:24%">개정 (시행일)</th><th style="width:30%">온포인트 과거 판정</th><th style="width:8%">결론</th><th style="width:11%">flip · tier</th><th>판정 근거</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>기술보증기금 <b>보증업무 면세 신설</b><div class="rl">2025-02-28 · 신설</div></td>
+        <td>기술보증기금 기술신용평가사 <b>교육용역</b> 면세 여부<div class="rl">부가가치세과-151 · 생산 2017-01</div><div class="gist"><b>요지(면세):</b> 「기술보증기금법」 제12조에 따라 설립된 기술보증기금이 금융위원회 승인을 받아 <b>그 승인된 업무 범위 내</b>에서 제공하는 기술신용평가사 교육용역은 부가가치세가 면제된다.</div></td>
+        <td><span class="badge b-me">면세</span></td>
+        <td><span class="badge b-hold">hold</span><br><span class="tier t1">TIER 1 · flip</span></td>
+        <td>개정이 '보증업무'를 명문 신설 = 열거주의 강화 → 포괄 '승인 업무범위' 면세논리가 약화될 여지. 단 교육용역은 개정 대상(보증업무)과 다른 서비스 → 대상 근접·요건 불일치. <b>면세→과세 전환 가능 = Tier 1.</b></td>
+      </tr>
+      <tr>
+        <td>새마을금고<b>자산관리회사</b> 관련 용역<div class="rl">2026-02-27 · 신설</div></td>
+        <td>새마을금고 CD/ATM <b>수수료</b> 면제 여부<div class="rl">법령해석과-1582 · 생산 2018-06</div><div class="gist"><b>요지(면세):</b> 회원금고가 본회·VAN사와 제휴해 CD/ATM으로 고객에게 예금인출 등 서비스를 제공하고, 본회가 수수료를 일괄 수취해 일부를 회원금고에 지급한 경우 — 회원금고가 <b>금융용역을 제공하고 받은 대가</b>로서 면제.</div></td>
+        <td><span class="badge b-me">면세</span></td>
+        <td><span class="badge b-excl">exclude</span><br><span class="tier tn">미해당 —</span></td>
+        <td>개정 대상은 <b>새마을금고자산관리회사</b>(부실자산 관리 별도 법인). 판정 대상은 새마을금고 본체 금융용역 → 주체 불일치. 엔티티 키워드만 걸린 오탐 → precision 배제(개정 영향 없음).</td>
+      </tr>
+      <tr>
+        <td>주택저당채권유동화회사 <b>면세 삭제</b><div class="rl">2023-05-16 · 삭제</div></td>
+        <td>자산관리자의 유동화전문회사 <b>업무수탁용역</b> 면세 여부<div class="rl">법령해석과-2261 · 생산 2015-09</div><div class="gist"><b>요지(면세):</b> 자산관리자가 <b>유동화자산관리와 함께</b> 업무수탁용역을 공급하고 그 대가를 받는 경우 부가가치세가 면제된다.</div></td>
+        <td><span class="badge b-me">면세</span></td>
+        <td><span class="badge b-hold">hold</span><br><span class="tier t1">TIER 1 · flip</span></td>
+        <td>삭제가 유동화 면세범위 축소 방향이나, 유동화전문회사(자산유동화법)와 주택저당채권유동화회사는 시행령 제40조의 <b>별개 호</b> — 한 항목 삭제가 다른 항목 면세를 직접 흔들지 않음. 항목(호) 기준 exclude 근접, 판정이 의존한 호 확인까지 보수적 hold. <b>성립 시 면세→과세 = Tier 1.</b></td>
+      </tr>
+      <tr>
+        <td>민간재간접벤처투자조합 자산 관리·운용 <b>면세 신설</b><div class="rl">2023-10-19 · 신설</div></td>
+        <td>창업투자회사 <b>정보시스템</b> 대여·매각 부가세 면제 여부<div class="rl">법령해석과-249 · 생산 2016-01</div><div class="gist"><b>요지(과세):</b> 중소기업창업투자회사가 정보시스템을 <b>자산관리운용에 사용함 없이</b> 창업투자조합에 독립적으로 대여하거나 매각하는 경우에는 부가가치세가 과세된다.</div></td>
+        <td><span class="badge b-tx">과세</span></td>
+        <td><span class="badge b-low">low</span><br><span class="tier t3">TIER 3 · 무변동</span></td>
+        <td>과세 결론의 근거가 '정보시스템을 자산관리운용에 사용하지 않고 독립 대여·매각'이라, 신설 면세대상(자산관리·운용용역)과 무관 → 개정이 이 판정을 뒤집지 않음. 분류·효과 무변동 = Tier 3.</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="note">검토 큐는 <b>tier 순</b>으로 정렬한다: <b>Tier 1 (면세→과세 잠재) 2건</b>(기술보증기금 교육용역·유동화 업무수탁)이 최우선, Tier 3 1건은 후순위, exclude 1건은 제외. confirmed flip 0건은 실패가 아니다 — 4개 파일럿은 모두 <b>최근</b> 신설·삭제라 '아직 정비되지 않은' 상태, 즉 선제 탐지 대상 그 자체다. 이번 축엔 Tier 2(과세 유지+과표·안분 변경)가 없다 — 제40조가 대상 신설·삭제형이라 효과축을 안 건드림. Tier 2는 안분·과표를 바꾸는 개정축(공통매입세액 안분 등)에서 별도로 산다. <b>중요(섹션 7 연결):</b> 위 표의 "Tier 1 · flip" 표기는 <b>1차 가설(반사효과 hold)</b>이다. 섹션 7의 깊은 판단 스캐폴드가 이 반사효과를 <b>적대적으로 검증</b>한 결과, 면세근거가 자기 조문·성문 부수법리에 정박한 사례는 <b>flip이 아니라 REVIEW_WORTHY</b>로 내려간다 — 단정 대신 캘리브레이션.</div>
+
+  <h2><span class="n">3</span>Tier 2 시연 — 분류는 그대로, 과표·안분이 흔들리는 축</h2>
+  <p class="lead">Tier 1(면세↔과세 flip)과 별개로, <b>분류는 유지(과세→과세·면세→면세)되나 과세표준·안분 금액이 개정으로 바뀌는</b> 경우도 중요하다. 부가세는 세율이 단일(10%)이라 Tier 2의 실질은 <b>과표·안분 계산</b>이다. 면세/과세구분 MVP에서 가장 정확한 Tier 2 축은 <b>면세·과세 겸영자의 공통매입세액 안분</b>(면세관련 매입세액 불공제)이다.</p>
+  <div class="kpi">
+    <div class="box hi"><div class="v">75</div><div class="l">공통매입세액 안분 판정<br>법 제40조 · 생산 2015~2025</div></div>
+    <div class="box"><div class="v">제40·41조</div><div class="l">트리거 조문<br>안분 / 재계산 (+시행령 81~83)</div></div>
+    <div class="box"><div class="v">0</div><div class="l">현 15개 sweep 내<br>효과·안분 조문 개정</div></div>
+  </div>
+  <div class="card">
+    <div style="font-weight:700;color:var(--navy);margin-bottom:2px">대표 Tier 2 사례 <span class="tier t2">TIER 2 · 효과</span></div>
+    <div class="cc-sum" style="font-size:13px;color:#374151;margin:4px 0 6px">과·면세 겸영사업자가 과세사업으로 전환하는 경우 당초 안분계산한 공통매입세액의 <b>재계산방법</b> <span style="color:var(--muted)">· 생산 2023-05</span></div>
+    <div class="gist" style="border-left-color:var(--orange)"><b>요지(재계산·분류 무변동):</b> 감가상각자산 공통매입세액을 안분계산한 뒤 과세사업으로 전환할 때, 재계산 과세기간의 <b>면세공급가액 비율</b>과 취득 과세기간 비율의 차이가 <b>5% 이상</b>이면 「부가가치세법」 제41조·시행령 제83조에 따라 납부세액을 재계산한다.</div>
+    <div class="note"><b>왜 Tier 2인가:</b> 겸영 매입세액 공제 프레임(분류)은 그대로다. 그러나 재계산 <b>금액</b>은 <b>5% 임계값·면세공급가액 비율·재계산 공식</b>이라는 법 제41조·시행령 제83조의 파라미터에 좌우된다 → 이 파라미터를 바꾸는 개정은 <b>분류 flip 없이 세액을 흔든다</b>. 이런 판정 75건이 안분 축에 쌓여 있다.</div>
+  </div>
+  <div class="card">
+    <div style="font-weight:700;color:var(--navy);margin-bottom:2px">Tier 2 발화 — 과세표준(에누리) 축 <span class="tier t2">TIER 2 · 메커니즘 확인</span></div>
+    <div class="cc-sum" style="font-size:13px;color:#374151;margin:4px 0 6px">세법해석정비 996건 中 개정주도(코드10) VAT 레코드에서 실제 발화 확인 · <b>"포인트를 포인트몰에서 사용하는 경우 에누리에 해당"</b></div>
+    <div class="ba">
+      <div class="ba-box before"><h4>삭제사례 (옛 판정)</h4>서면-2016-부가-3636<div class="dn">2016-05 · 요지: 단통법상 공시·추가지원금을 초과한 초과지원금은 <b>매출에누리 아님</b> → 과세표준 공제 불가. 개정으로 실효·삭제</div></div>
+      <div class="arrow">→</div>
+      <div class="ba-box after"><h4>유지사례 (현 판정)</h4>서면-2016-법령해석부가-5983<div class="dn">2017-02 · 포인트 사용액 = 에누리(과표 차감)</div></div>
+    </div>
+    <div class="note"><b>왜 Tier 2인가:</b> 재화 공급은 <b>과세 그대로(분류 무변동)</b>. 그러나 에누리 인정 범위가 바뀌며 <b>과세표준 차감액</b>이 달라진다. 세율이 아닌 과표 변화 = Tier 2. <b>검수 정정:</b> 근거는 정비 code-10 라벨이고 유발 개정은 미특정(유지사례 시점상 2017-02 시행령 과세표준·마일리지 개정 추정, 원문 대조 pending), 시점(2016~17)도 파일럿 window 밖 — '확정 실증'이 아니라 <b>정비 기록 기반 메커니즘 확인</b>.</div>
+  </div>
+  <div class="callout" style="background:linear-gradient(135deg,#fff3e6,#fff8f0);border-color:var(--orange-l);color:#6a4a24">
+    <b style="color:var(--orange)">핵심 gap & 결과.</b> Tier 2는 <b>과세표준 축에서 실제 발화 확정</b>(위 에누리 사례). 다만 현재 Phase 7 개정 sweep 15건은 면세 <b>'대상' 조문</b>(법 제26·27, 시행령 34~47)만 훑어 <b>안분·재계산·과표 조문</b>(법 제29·40·41, 시행령 81~83)은 창 밖이라, <b>안분 축(75건 풀)의 Tier 2는 아직 자동 발화하지 않는다.</b> Tier 2를 전면 가동하려면 개정 감지 범위를 효과·안분·과표 조문으로 넓혀야 한다. (안분 조문 연혁 확정 대조는 법령 연혁 화면 미완료로 pending.)
+  </div>
+
+  <h2><span class="n">4</span>세법해석정비 교차검증 — 183 → 전체 996 확장</h2>
+  <p class="lead">부가세 183건에서 본 패턴을 <b>전 세목 996건 전수</b>로 확장해 논리를 강화했다. 개정이 직접 흔든 경우(코드 09/10)는 어느 세목에서도 극소수다.</p>
+  <div class="kpi">
+    <div class="box hi"><div class="v">11<small> / 996</small></div><div class="l"><b style="color:var(--red)">개정 주도</b> 정비(코드10)<br>= 1.1% · 코드09 = 0</div></div>
+    <div class="box"><div class="v">994<small> / 996</small></div><div class="l">유지↔삭제 <b>flip 쌍</b><br>정비 DB=구조적 flip 레지스트리</div></div>
+    <div class="box"><div class="v">20<small> / 31</small></div><div class="l">'개정' 언급인데<br>비개정 코드로 <b>오분류</b></div></div>
+  </div>
+  <div class="callout" style="background:linear-gradient(135deg,#eef3fb,#f4f8fd);border-color:#b9c8e0;color:#2b3b57">
+    <b style="color:var(--navy2)">논리 강화(전세목).</b> 996건 중 98.9%가 비개정 사유(국세청·기재부 해석변경 336, 상충정비 158, 판례수용 37, 심의위 64, 해당없음 321). 개정 주도는 11건뿐이고 그마저 5개 세목에 흩어져 있으며(양도3·국조3·부가2·종소2·상증1), '개정'을 언급한 31건 중 20건은 비개정 코드로 분류된다. <b>즉 정비 DB는 '해석 관리' 도구이지 '개정영향 추적기'가 아니다</b> — 개정영향을 추적하는 장치가 없음이 전세목에서 정량 확인됐다(판정 레이어의 <b>필요조건</b>). 단, 이는 레이어가 실제로 포착할 수 있다는 입증(충분조건)이 아니며 능력 입증은 blind 백테스트(code-10 flip 11건 재현)로 수행한다. 1.1%는 '정비가 놓친다'와 '개정주도 flip이 원래 드물다' 둘 다와 부합 — 방어 프레이밍은 "드물지만 고심각도이고, 추적 장치가 없다". 정비 DB는 verifier가 아니라 flip <b>패턴/anchor</b> 소스로 쓰고, 개정주도 여부는 코드가 아니라 개정 이벤트에서 역산한다.
+  </div>
+  <p class="lead" style="margin-top:16px">참고 — 부가세 183건 사유 분포:</p>
+  <div class="reasons">
+    <span class="rz hot">10 개정으로 기존해석 오도 · 2</span>
+    <span class="rz">06 국세청 해석변경 · 37</span>
+    <span class="rz">01 상충 2개 중 정비 · 36</span>
+    <span class="rz">05 심의위 변경 · 16</span>
+    <span class="rz">02 사실/법령오류 · 8</span>
+    <span class="rz">08 기재부 해석변경 · 6</span>
+    <span class="rz">03 기존→새 변경 · 3</span>
+    <span class="rz">04 대법원 수용 · 2</span>
+    <span class="rz">07 판례수용·국세청변경 · 1</span>
+    <span class="rz">ZZ 해당없음 · 72</span>
+  </div>
+
+  <div class="card" style="margin-top:14px">
+    <div style="font-weight:700;color:var(--navy)">금융 면세 축 개정 주도 flip 실증 (코드 10)</div>
+    <div class="cc-sum" style="font-size:13px;color:#374151;margin:4px 0 2px">정비 제목: <b>"은행이 제공하는 연금계리용역은 과세대상임"</b> — 사유 "세법령·기본통칙 개정 등으로 실효된 사례"</div>
+    <div class="ba">
+      <div class="ba-box before">
+        <h4>삭제사례 (옛 판정)</h4>
+        서면-2014-부가-21284<div class="dn">생산 2015-01 · 면세로 판정(추정) → 개정으로 실효·삭제</div>
+      </div>
+      <div class="arrow">→</div>
+      <div class="ba-box after">
+        <h4>유지사례 (현 판정)</h4>
+        서면-2015-법령해석부가-0789<div class="dn">생산 2015-06 · <b>과세</b>로 정리</div>
+      </div>
+    </div>
+    <div class="note">이 연금계리 축은 판정 레이어 후보군에도 등장한다 — "퇴직연금사업자 연금계리용역 면세 여부"(생산 <b>2015-06-26</b>, 유지사례와 날짜 일치). <b>주의(검수 정정):</b> 날짜 일치는 이 pool 히트가 개정 '후' 정정된 판정 자체일 가능성을 시사한다 — 정비에서 flip을 알고 pool에서 재발견한 순환이라 <b>실증으로 쓰지 않는다</b>. 진짜 검증은 개정 전문만으로 삭제사례(서면-2014-부가-21284)를 찾아내는 blind 백테스트.</div>
+  </div>
+
+  <h2><span class="n">5</span>Blind 백테스트 — 사전등록·실패는 실패로 집계</h2>
+  <p class="lead">검수가 지정한 반증가능 검증을 실행했다. 알려진 개정주도 flip 11건(code-10, 전세목)에 대해 <b>개정 전후 조문 텍스트만으로</b> 키워드를 유도(사전 기록)해 레이어의 검색 recipe를 돌리고, 사전등록 metric(유지사례 rank≤10)으로 자동 채점. 프로토콜·전 결과: <code>BLIND_BACKTEST.json</code></p>
+  <div class="kpi">
+    <div class="box hi"><div class="v">2<small> / 7</small></div><div class="l"><b>HIT@10</b> (testable 7건 기준)<br>MISS 5 · UNTESTABLE 4</div></div>
+    <div class="box"><div class="v">10<small> / 11</small></div><div class="l">유발 개정 특정 성공<br>(1건은 driver가 기본통칙=비법령)</div></div>
+    <div class="box"><div class="v">~9<small> / 11</small></div><div class="l">축 도달성(on-axis 검색)<br>2개 flip은 top10 중 8건이 개정 전 문서</div></div>
+    <div class="box hi"><div class="v">0</div><div class="l">검색 인덱스 내 <b>삭제사례</b><br>(11건 전 에이전트 일관 확인)</div></div>
+  </div>
+  <table>
+    <thead><tr><th style="width:8%">결과</th><th style="width:30%">flip 축 (세목)</th><th>특정된 개정 · blind 키워드 · 비고</th></tr></thead>
+    <tbody>
+      <tr><td><span class="badge b-refl" style="background:#e2f5ec;color:var(--green)">HIT 2위</span></td><td>제한세율 적용신청서 (국조)</td><td>법인세법 §98의6 신설(2012-07) · '제한세율 적용신청서' — 정밀 신설 조문은 즉시 top-rank</td></tr>
+      <tr><td><span class="badge b-refl" style="background:#e2f5ec;color:var(--green)">HIT 4위</span></td><td>한·스위스 사용료 (국조)</td><td>개정의정서 제한세율 10→5%(2013 적용) · '스위스·사용료' — top10 중 8건이 개정 전 판정(과거 판정 도달 직접 확인)</td></tr>
+      <tr><td><span class="badge b-miss" style="background:#fbe6e0;color:var(--red)">MISS</span></td><td>에누리/포인트 (부가)</td><td>부가령 §61 자기적립마일리지등(2018-02) · '마일리지' — <b>동의어 gap 실증</b>: 개정 어휘로는 '포인트' 사례가 top-50 밖</td></tr>
+      <tr><td><span class="badge b-miss" style="background:#fbe6e0;color:var(--red)">MISS ×2</span></td><td>국외이민·일부출국 1세대1주택 (양도)</td><td>소득령 §154①2 출국 2년 제한(2006-02) · '해외이주·세대전원·출국' — 전건 on-axis이나 유지사례 부재</td></tr>
+      <tr><td><span class="badge b-miss" style="background:#fbe6e0;color:var(--red)">MISS 29위</span></td><td>외국법인 설계용역 (국조)</td><td>1998 법인세법 전문개정만 특정 가능 → 일반어 키워드 한계(특정 해상도 실패형)</td></tr>
+      <tr><td><span class="badge b-miss" style="background:#fbe6e0;color:var(--red)">MISS 27위</span></td><td>일부임대 건물 평가 (상증)</td><td>상증령 §50⑦ 임대료 환산가액(2012-02) · '임대료 환산가액' — 축 도달, top-10 밖</td></tr>
+      <tr><td><span class="badge b-check">UNT ×3</span></td><td>조정금(양도)·월세 확정일자(종소)·명예퇴직수당(종소)</td><td>정비의 유지 슬롯이 사례가 아닌 법조문 → 채점 타깃 부재. 단 축 도달은 완전(월세 4/4·명퇴 8/10이 개정 전 문서, rank-9는 정확히 flip 주제)</td></tr>
+      <tr><td><span class="badge b-check">UNT</span></td><td>은행 연금계리 (부가)</td><td>'연금계리'는 시행령 전 스냅샷에 부재 → driver가 기본통칙(비법령) = 레이어 입력 도메인 밖. <b>code-10 라벨이 비법령 driver 포함</b> 발견</td></tr>
+    </tbody>
+  </table>
+  <div class="callout">
+    <b>정직한 판독.</b> 측정된 성능 한계: 단일 blind 키워드로 HIT@10 <b>2/7</b>. 정밀 개정(신설 조문·조약)에서 작동, 광역 개정·동의어 어긋남에서 실패 — 개선 레버는 동의어 사전·항호 해상도·다중 키워드로 명확. <b>전략적 부수 발견:</b> 국세청은 flip된 판정을 정비 후 검색 인덱스에서 제거한다(삭제사례 11건 전부 검색 불가, 상세 링크로만 접근). 즉 <b>소급 분석은 구조적으로 불가능하고, 개정 시점의 선제 탐지만이 이 문서들을 잡을 수 있는 유일한 시점</b> — 선제 레이어의 시점 가치를 백테스트가 독립적으로 강화했다.
+  </div>
+
+  <h2><span class="n">6</span>Q&amp;A형 집행기준 26-40-2 대조</h2>
+  <p class="lead">규칙형 26-41-1이 제41조 신설을 미반영(stale)했던 것과 대칭적으로, 판정형 26-40-2도 개정 대상 엔티티를 판정 사례로 갖고 있지 않다.</p>
+  <div class="card">
+    <div style="font-weight:700;color:var(--navy);margin-bottom:6px">26-40-2 금융·보험용역 과세 또는 면세 판정 사례 <span style="font-weight:400;color:var(--muted);font-size:12.5px">— 부가가치세 집행기준(2024), 6개 일반 시나리오</span></div>
+    <div class="split">
+      <div class="col-me">
+        <h4 style="color:var(--green)">면세로 판정</h4>
+        <ul class="cl">
+          <li>금융상품 판매대행 일괄수행 대행수수료</li>
+          <li>보험대리점 소속 고용관계 없는 사용인의 보험모집용역</li>
+        </ul>
+      </div>
+      <div class="col-tx">
+        <h4 style="color:var(--red)">과세로 판정 (면세 제외)</h4>
+        <ul class="cl">
+          <li>금융보험 외 사업자의 여신전문 금융상품 판매대행 전업</li>
+          <li>유사투자자문업자의 증권 ARS 라이브방송 정보제공</li>
+          <li>인·허가 없는 자의 금전 대부 이자 대가 사업</li>
+          <li>여신전문금융업자가 별도로 제공하는 자문용역</li>
+        </ul>
+      </div>
+    </div>
+    <div class="note"><b>발견:</b> 26-40-2 판정 사례에 기술보증기금·새마을금고자산관리회사·주택저당채권유동화회사·민간재간접벤처투자조합 관련 사례가 <b>전무</b>. 다만 6개 일반 사례로 매우 성긴(coarse) 목록이라 엔티티 수준 개정 flip을 잡기엔 부적합 → 판정 레이어가 <b>예규 DB(13개 후보)를 1차 소스</b>로 쓰는 설계가 옳음을 재확인.</div>
+  </div>
+
+  <h2><span class="n">7</span>깊은 판단 스캐폴드 (①축) &amp; 3-신호계층 — 적대적 검증·검수 반영</h2>
+  <p class="lead">얕은 매칭(조문번호·키워드 겹침 = 0홉)에서 <b>깊은 판단</b>(유추·해석카논 연쇄 = ≥1홉)으로 전환한다. 핵심 산출물은 verdict가 아니라 <b>"깊은 질문 스캐폴드"</b> — 개정 요건을 과거 예규 사실관계에 대입하고, 요건 원문 인용 + 반대논거 + 신뢰도까지 낸 뒤 <b>AI는 단정하지 않는다</b>. 그리고 <b>적대적 검증(독립 3렌즈)으로 flip 가설을 반증 시도</b>한다 — 신뢰 못 할 깊이는 마이너스이므로.</p>
+
+  <div class="card">
+    <div style="font-weight:700;color:var(--navy);margin-bottom:2px">①축 유추·열거주의 반사효과 <span class="tier t1">가설: TIER 1 flip</span> → <span class="badge b-rw">판정: REVIEW_WORTHY</span></div>
+    <div class="cc-sum" style="font-size:13px;color:#374151;margin:6px 0 8px">개정이 <b>기술보증기금 보증업무</b>만 명문 열거 → 반대해석(비열거=과세)이 개정문에 없는 <b>신용보증기금 발명평가용역 예규</b>를 흔드는가?</div>
+    <div class="ba">
+      <div class="ba-box before"><h4>개정 전 (시행령 제40조①)</h4>제3호에 기술보증기금 <b>미열거</b> · 제6호 「신용보증기금법」 신용보증기금업<div class="dn">신구조문 직접 대조: ASISTA002MR03</div></div>
+      <div class="arrow">→</div>
+      <div class="ba-box after"><h4>개정 후 (2025-02-28)</h4><b>제3호 신설</b> "기술보증기금이 수행하는 보증 업무" · <b>제6호(신용보증기금업)는 문언 불변</b><div class="dn">대령 35353</div></div>
+    </div>
+    <div class="gist" style="margin-top:8px"><b>대상 예규(서면-2019-법령해석부가-2169, 2020-02):</b> 신용보증기금이 신용보증·보증연계투자업무에 <b>통상적으로 부수</b>하여 발명 평가·수수료 수취 시 <b>면세</b>, <b>보증업무와 별도로 공급하는 평가용역은 과세</b>. → 면세근거는 (제6호 신용보증기금업, 불변) + (성문 부수법리, 부가법 제14조).</div>
+    <div class="note" style="background:#eef3fb;border-left:3px solid #2b5fb0"><b>검수 발견 — 0홉 먼저 확인.</b> 개정 대상 기관 자신에 대한 <b>0홉 직접 예규가 이미 존재</b>: <b>서면-2022-부가-2828</b>(2024-12) "「기술보증기금법」에 따라 설립된 법인이 보증업무와 <b>별도로 공급하는 평가용역은 과세</b>". 즉 실질 쟁점(기술보증기금류 독립 평가용역 과세)엔 키워드로 도달 가능한 답이 있었다 → ≥1홉 reach의 값어치는 "신용보증기금 sibling 예규까지 확장 도달"로 <b>좁게</b> 봐야 하며, 0홉 직접 예규를 먼저 확인하는 순서가 규율이다.</div>
+  </div>
+
+  <div class="card">
+    <div style="font-weight:700;color:var(--navy);margin-bottom:6px">적대적 검증 — 독립 3렌즈가 flip 가설을 반증 시도</div>
+    <table>
+      <thead><tr><th style="width:22%">렌즈</th><th style="width:15%">판정</th><th style="width:12%">불안정 확률</th><th>핵심 반증논거</th></tr></thead>
+      <tbody>
+        <tr><td>A · 근거 독립성</td><td><span class="badge b-stab">STABLE</span></td><td>0.08 <small>(high)</small></td><td>제6호(신용보증기금업) 문언 불변 + 부수법리는 열거목록과 <b>독립된 성문 귀속규칙</b> → 반사효과 성립 기반 없음.</td></tr>
+        <tr><td>B · 카논 사정거리</td><td><span class="badge b-stab">STABLE</span></td><td>0.15 <small>(med)</small></td><td>반대해석 카논은 <b>열거목록 해석에만</b> 작동, 별개 성문 제14조를 무력화 못함. 잔여=개정이유서 원문 미조회(창설/확인 불명, 최대화해도 not-flip).</td></tr>
+        <tr><td>C · 사실관계 방향</td><td><span class="badge b-rw">REVIEW_WORTHY</span></td><td>0.10 <small>(high)</small></td><td>개정 대상(기술보증기금)과 예규 주체(신용보증기금)가 다른 entity. 면세 절반 무영향·과세 절반 정합. flip 아니되 같은 조문군이라 검토가치.</td></tr>
+      </tbody>
+    </table>
+    <div class="note"><b>수렴 판정: flip 아님(REVIEW_WORTHY).</b> 이는 실패가 아니라 레이어의 정상 작동 — 비자명(≥1홉) 후보에 도달→요건 대입→반대논거·신뢰도까지 내고→"면세→과세 단정" 대신 "재확인/검토가치"로 정확히 캘리브레이션. 얕은 파이프라인은 이 후보를 놓치거나 키워드로 걸리면 오탐했을 것. <b>검수 정정:</b> 3렌즈가 결국 같은 두 사실(제6호 불변+제14조 독립성)로 수렴(groupthink 측면) — 가장 강한 잔여경로(과세관청이 열거강화를 '통상 부수'의 <b>사실인정</b> 축소로 원용)는 별도 소스로 독립 stress-test 필요(미수행). n=1 능력 시연이지 통계 재현율 아님.</div>
+  </div>
+
+  <div class="card">
+    <div style="font-weight:700;color:var(--navy);margin-bottom:6px">3-신호계층 & L2 심판례 파일럿 <span style="font-weight:400;color:var(--muted);font-size:12.5px">— 판례 타이밍 문제 해결</span></div>
+    <div class="cc-sum" style="font-size:13px;color:#374151;margin:4px 0 8px">대법원까지 수년 지연되는 문제는 심급별 계층화로 해소: <b>L1 개정(leading)</b> → <b>L2 심판례(coincident, 과세후~1년)</b> → <b>L3 판례(lagging 검증자)</b>. 신호원 계층(L1/L2/L3)은 영향 심각도 Tier와 별개 축.</div>
+    <ul class="cl">
+      <li><b>L2 recipe(검증됨):</b> 세법해석례와 동일 액션(<code>ASIPDI002PR01</code>)에 <code>collectionName=precedent,precedent_gr</code> + <code>dcmClCdCtl=001_05~10</code>만 교체 → 판례/심판(조세심판원)/심사/적부/이의. 세목은 <code>NTST_TLAW_CL_NM</code> '부가' 필터.</li>
+      <li><b>플래그십 축 결과:</b> 신용보증기금·기술보증기금·발명평가·부수용역·보증업무 전건에서 <b>온포인트 심판례 0건</b>(전부 세금계산서 부정·가공거래 노이즈) → STABLE 무모순. <b>단 부재는 약한 신호로만 계상</b>('안정이라 다툼 없음'과 '아직 소송화 안 됨' 양쪽과 부합 — 정비-부재 무정보화와 동일 규율).</li>
+      <li><b>L2 비공허(인접 축):</b> 2025 심사 '지원금=매출에누리 해당 여부' 등 Tier2 과표 신호가 현재진행. <b>검수 정정:</b> 앞서 2021-04-07 심판을 '제40조 <b>부수</b> 면세 실례'로 적었으나, 제40조 원문 대조 결과 <b>제2항이 부수 법리, 제3항은 기관의제</b>(은행법 외 설립 은행 등을 은행업으로 의제)이고 해당 심판은 <b>제3항 제1호 기관의제</b> 사안 → 부수와 무관. '부수 절반 보강' 주장 철회, L2는 '제40조 면세를 다루는 non-vacuous 신호'로만 축소.</li>
+    </ul>
+  </div>
+
+  <h2><span class="n">8</span>방법론 결론 &amp; coverage cap</h2>
+  <div class="card">
+    <ul class="cl">
+      <li><b>3축 정렬 필수.</b> 엔티티 키워드는 후보를 소수로 좁히나, flip 확정엔 대상+요건+효과가 모두 맞아야 한다. 키워드만으론 주체 오탐(새마을금고 exclude).</li>
+      <li><b>정비 DB는 약한 verifier.</b> 개정 주도는 2/183. 판정 레이어의 정당성이 여기서 나온다 — 국세청이 정비로 남기지 않는(또는 지연되는) 개정 주도 불안정을 선제 포착.</li>
+      <li><b>날짜는 생산일자 기준.</b> 후보의 등록일자와 생산일자가 최대 ~1년 차이(예: 생산 2022-07 · 등록 2023-02). '옛 법 아래 판정'은 생산일자 문제. 파일럿은 등록일자를 임시 사용 → 확장 시 생산일자 코드 확정(hold).</li>
+      <li><b>Tier 2는 sweep 확장이 전제.</b> Tier 1(면세↔과세)은 면세 대상 조문 sweep으로 잡히지만, Tier 2(과표·안분)는 효과·안분·과표 조문(법 제29·40·41, 시행령 81~83)까지 개정 감지 범위를 넓혀야 발화한다. 안분 판정 풀(75건)과 트리거 레버(5% 기준·면세공급가액 비율)는 확인됨.</li>
+      <li><b>반증가능 기준(검수 반영 → 실행 완료).</b> 후보 13건 중 온포인트 4건만 판정 완료(9건 pending). 0 confirmed는 정비 지연과 flip 희소성 양쪽과 부합하므로 단독으론 성공도 실패도 아님. 레이어 포착 능력은 blind 백테스트로 측정 완료(섹션 5): <b>HIT@10 2/7</b>, 실패는 실패로 집계했고 실패 모드 3종(동의어 gap·특정 해상도·프록시 잡음)을 확보.</li>
+    </ul>
+    <div class="note cap" style="margin-top:10px"><b>Coverage cap:</b> 관련법령 필터가 '법' 조문 단위만 제공해 시행령 제40조 정밀 스코프 불가(법 제26조 면세 전체로 근사) · 포함어 문자열 매칭이라 엔티티 동의어(예: '기보') 누락 가능 · 1개 면세 하위축(제40조 금융)만 · "10년 깊게, 주제는 좁게" 유지. silent truncation 없음.</div>
+  </div>
+
+  <footer>
+    출처: 국세법령정보시스템 — 세법해석례 <code>USEQTJ001M.do</code> / <code>ASIPDI002PR01</code>, 세법해석정비 <code>USEQTE001M.do</code> / <code>ASIQTF001MR01</code>, 세법집행기준 <code>USESTE001M.do</code>(PDF.js). 재현 레시피·전체 후보표·flip 판정 근거: <code>JUDGMENT_LAYER_PILOT.json</code>. 깊은 판단 스캐폴드(①축 적대검증): <code>JUDGMENT_SCAFFOLD_AXIS1.json</code>. L2 심판례 파일럿: <code>SIMPANLYE_L2_PILOT.json</code>. 본 리스트는 내부 검토용이며 "변경 가능/재검토 필요" 표현만 사용 — 최종 세무자문 아님.
+  </footer>
+
+</div>
+</body>
+</html>

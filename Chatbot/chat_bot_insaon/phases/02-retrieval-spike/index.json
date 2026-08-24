@@ -1,0 +1,27 @@
+{
+  "project": "인사ON",
+  "phase": "02-retrieval-spike",
+  "steps": [
+    {
+      "step": 0,
+      "name": "lexical-spike",
+      "status": "completed",
+      "completed_at": "2026-07-29T15:17:00+09:00",
+      "summary": "합성 개발 corpus에서 FTS5와 문자 2-gram을 동일 조건 비교해 char-ngram-v1을 선택하고 manifest와 ADR-0004에 한계를 기록했다."
+    },
+    {
+      "step": 1,
+      "name": "baseline-hybrid",
+      "status": "completed",
+      "completed_at": "2026-07-29T15:17:00+09:00",
+      "summary": "B0 lexical, 결정적 B1 vector와 stable-ID RRF H1을 독립 adapter로 구현했다."
+    },
+    {
+      "step": 2,
+      "name": "temporal-context",
+      "status": "completed",
+      "completed_at": "2026-07-29T15:17:00+09:00",
+      "summary": "생성 전 valid_time·대상 H2 필터와 독립 rerank/context toggle을 갖는 H3 파이프라인을 구현했다."
+    }
+  ]
+}

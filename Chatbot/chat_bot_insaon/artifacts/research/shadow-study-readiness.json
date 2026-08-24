@@ -1,0 +1,11 @@
+{
+  "schema_version": "0.1.0",
+  "profile": "shadow-study-readiness",
+  "status": "protocol_ready_sessions_missing",
+  "protocol_version": "shadow-synthetic-v0.1.0",
+  "task_count": 3,
+  "completed_sessions": 0,
+  "participant_count": 0,
+  "actual_employee_data_allowed": false,
+  "release_status": "hold"
+}

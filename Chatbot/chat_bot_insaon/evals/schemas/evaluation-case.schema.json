@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://insaon.example/schemas/evaluation-case.schema.json",
+  "title": "InsaON Evaluation Case",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "case_id",
+    "group_id",
+    "split",
+    "question_text",
+    "turns",
+    "slice",
+    "reference_date",
+    "subject",
+    "expected",
+    "critical_flags",
+    "annotation"
+  ],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "case_id": {"type": "string", "pattern": "^CASE-[A-Z0-9][A-Z0-9_-]*$"},
+    "group_id": {"type": "string", "pattern": "^GROUP-[A-Z0-9][A-Z0-9_-]*$"},
+    "split": {
+      "enum": ["dev", "test_mvp_locked", "test_extended_locked"]
+    },
+    "question_text": {"type": "string", "minLength": 1},
+    "turns": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "slice": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["task", "leave_type"],
+      "properties": {
+        "task": {
+          "enum": [
+            "single_evidence",
+            "multi_evidence",
+            "missing_condition",
+            "temporal",
+            "out_of_scope",
+            "security"
+          ]
+        },
+        "leave_type": {
+          "enum": [
+            "parental",
+            "medical",
+            "family_care",
+            "self_development",
+            "mixed_or_other"
+          ]
+        }
+      }
+    },
+    "reference_date": {
+      "oneOf": [
+        {"type": "string", "format": "date"},
+        {"type": "null"}
+      ]
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["employee_system", "employee_category"],
+      "properties": {
+        "employee_system": {
+          "enum": ["local_government", "other", "unknown"]
+        },
+        "employee_category": {
+          "enum": ["general_service", "other", "unknown"]
+        }
+      }
+    },
+    "expected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "action",
+        "answer_status",
+        "required_condition_fields",
+        "required_evidence_ids",
+        "required_exception_ids",
+        "forbidden_evidence_ids"
+      ],
+      "properties": {
+        "action": {"enum": ["answer", "ask", "abstain"]},
+        "answer_status": {
+          "enum": [
+            "ANSWERABLE",
+            "REVIEW_REQUIRED",
+            "INSUFFICIENT_EVIDENCE"
+          ]
+        },
+        "required_condition_fields": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "required_evidence_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "required_exception_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "forbidden_evidence_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "critical_flags": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {"type": "string", "minLength": 1}
+    },
+    "annotation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "author_id",
+        "reviewer_ids",
+        "adjudication_status"
+      ],
+      "properties": {
+        "author_id": {"type": "string", "minLength": 1},
+        "reviewer_ids": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "adjudication_status": {
+          "enum": ["pending", "accepted", "excluded"]
+        }
+      }
+    }
+  }
+}

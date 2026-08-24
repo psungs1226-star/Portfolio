@@ -1,0 +1,60 @@
+{
+  "phase": "Phase 4",
+  "status": "completed",
+  "status_note": "Phase 3 매칭 결과에 main/secondary impact type과 confidence, 전문가 검토질문을 부여. 26-41-1은 Target impact(신규 대상 추가)로 high, 인접건은 low relevance/hold.",
+  "change_id": "vat-decree-41-2024-landlease",
+  "classification": [
+    {
+      "standard_id": "vat-exec-26-41-1",
+      "standard_no": "26-41-1",
+      "standard_title": "주택임대용역의 면세 범위",
+      "main_impact_type": "Target impact",
+      "secondary_impact_types": ["Direct article impact", "Effect impact", "Timing impact"],
+      "impact_reason": "개정이 면세 대상(target)에 '토지임대부 분양주택 부수토지 임대용역'을 신설 추가. 26-41-1은 바로 그 면세 범위를 정의하는 집행기준(제41조 직결)이라 대상 확장이 정면으로 걸림. 효과(면세 범위 확대)와 시점(2024-07-01)도 부수 영향.",
+      "confidence": "high",
+      "confidence_basis": "direct article match(26-41=법26조·영41조) + logic match(target·condition·effect·exception) + evidence(개정 조문·집행기준 본문 verbatim·미반영 확인) 모두 충족.",
+      "evidence_summary": "시행령 제41조 제1항 제2호(신설) ↔ 집행기준 26-41-1 면세 범위 문단. 26-41-1 본문(2024-09 기준 발간)에 토지임대부 미반영 = 개정 적용(2024-07-01) 이후에도 누락.",
+      "review_question": "시행령 제41조에 신설된 '토지임대부 분양주택(국민주택규모 한정) 부수토지 임대용역' 면세가 집행기준 26-41-1의 면세 범위(①~⑤)에 반영되어야 하는가? 특히 제41조 제2항 면적기준이 토지임대부 부수토지에도 적용됨을 26-41-1 ①·②에 명시할 필요가 있는가?",
+      "status": "review"
+    },
+    {
+      "standard_id": "vat-exec-26-0-2",
+      "standard_no": "26-0-2",
+      "standard_title": "부가가치세 면제 대상",
+      "main_impact_type": "Low relevance",
+      "secondary_impact_types": ["Effect impact"],
+      "impact_reason": "면제 대상 상위 열거. 주택임대는 이미 한 항목(26-41)으로 포함돼 있어, 신규 토지임대부는 하위 세부이지 상위 열거의 신규 항목이 아님. 상위 열거 수정 필요성은 낮음.",
+      "confidence": "low",
+      "confidence_basis": "direct link 없음, generic 키워드(면세)만, target/condition 불일치.",
+      "evidence_summary": "법 제26조 일반 면제 열거. 개정 조문(제41조)과 직접 연결 근거 없음.",
+      "review_question": "면제 대상 상위 열거(26-0-2)에서 주택임대 항목 서술이 토지임대부 신설로 갱신될 필요가 있는가? (낮은 우선순위)",
+      "status": "hold"
+    },
+    {
+      "standard_id": "vat-exec-29-65-1",
+      "standard_no": "29-65-1 / 29-65-2",
+      "standard_title": "부동산임대용역에 대한 공급가액 계산 / 전세금 등 세부담",
+      "main_impact_type": "Low relevance",
+      "secondary_impact_types": [],
+      "impact_reason": "부동산임대 표면 겹침뿐. 쟁점축이 과세표준/공급가액(제29조)이라 면세 범위 개정과 대상·효과가 다름.",
+      "confidence": "low",
+      "confidence_basis": "hard filter hold, direct link 없음, logic 전부 불일치, generic 키워드('임대')만.",
+      "evidence_summary": "제29조 과세표준 규정. 개정 조문과 불일치.",
+      "review_question": "해당 없음 — 면세 범위 개정과 무관.",
+      "status": "exclude"
+    }
+  ],
+  "new_review_topic": {
+    "topic": "토지임대부 분양주택 부수토지 임대용역 면세 (신설 대상)",
+    "reason": "제41조 제1항 제2호 신설분. 현행 집행기준에 대응 문단이 없어 26-41-1 개정 또는 신규 서술이 필요한 신규 검토 주제.",
+    "target_standard": "26-41-1 (개정 대상) / 신규 문단 후보",
+    "carry_to": "Phase 5 review list — 'New review topics' 섹션"
+  },
+  "summary": {
+    "review": ["26-41-1"],
+    "hold": ["26-0-2"],
+    "exclude": ["29-65-1/2"],
+    "high_confidence_count": 1
+  },
+  "phase5_ready": true
+}

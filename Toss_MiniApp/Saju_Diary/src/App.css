@@ -1,0 +1,145 @@
+/* 본문·UI 한글 산세리프(Pretendard, OFL) — 자체 호스팅 woff2 3-weight. Peach Milk 본문 기본.
+   외부 CDN 0(CRITICAL #2·#5). public/fonts → 빌드 시 /fonts/…로 서빙. */
+@font-face {
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/Pretendard-Regular.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url('/fonts/Pretendard-SemiBold.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Pretendard';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/Pretendard-Bold.woff2') format('woff2');
+}
+
+/* 귀여운 둥근 헤딩 글씨체(Jua) — 히어로·큰 제목 옵트인(.display-font). 자체 호스팅(번들 TTF). */
+@font-face {
+  font-family: 'Jua';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/Jua-Regular.ttf') format('truetype');
+}
+
+/* 동글동글 글씨체(Dongle, OFL) — 일기장 본문/기록 전용(사용자 요청 "동글동글하게").
+   둥근 획·통통한 형태로 가장 동글동글하다. 자체 호스팅(번들 TTF, 외부 CDN 0). 펜/개구체는 폴백. */
+@font-face {
+  font-family: 'Dongle';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/Dongle.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Gaegu';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/Gaegu.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'NanumPen';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/NanumPen.ttf') format('truetype');
+}
+/* Poor Story(OFL) — 둥글고 획 끝이 부드러운 손글씨(높낮이 차분). 일기 본문 기본. */
+@font-face {
+  font-family: 'PoorStory';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/PoorStory.ttf') format('truetype');
+}
+/* Hi Melody(OFL) — 더 가늘고 부드러운 둥근 손글씨(후보). */
+@font-face {
+  font-family: 'HiMelody';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/HiMelody.ttf') format('truetype');
+}
+
+/* 동글동글 영역 — 전역 Jua(#root *) !important를 이기려면 #root 특이도가 필요하다.
+   .handwriting을 단 요소와 그 자손을 동글동글 글씨로(일기 기록/제목/본문). UI 칩·버튼엔 안 단다. */
+#root .handwriting,
+#root .handwriting * {
+  /* 사용자가 고른 글씨체를 --diary-font로 덮어쓴다(미설정 시 PoorStory). 나머지는 폴백 체인. */
+  font-family: var(--diary-font, 'PoorStory'), 'HiMelody', 'Gaegu', 'Dongle', 'NanumPen', 'Jua',
+    'Apple SD Gothic Neo', 'Pretendard', system-ui, -apple-system, 'Malgun Gothic', sans-serif,
+    'Tossface', 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji' !important;
+}
+
+/* 전역 본문/UI = Pretendard(!important로 TDS 기본 폰트 덮어씀). 이모지/아이콘 폰트는 뒤에 남겨
+   글리프가 안 깨지게. 로드 실패 시 시스템 한글 폰트로 폴백(display=swap). */
+body,
+#root,
+#root * {
+  font-family: 'Pretendard', 'Apple SD Gothic Neo', system-ui, -apple-system,
+    'Malgun Gothic', sans-serif, 'Tossface', 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Noto Color Emoji' !important;
+}
+
+/* 헤딩 옵트인 — 친근한 둥근 Jua. 전역 !important를 이기려면 #root 특이도 필요(.handwriting과 동일 패턴). */
+#root .display-font,
+#root .display-font * {
+  font-family: 'Jua', 'Pretendard', 'Apple SD Gothic Neo', system-ui, sans-serif,
+    'Tossface', 'Apple Color Emoji', 'Segoe UI Emoji', 'Noto Color Emoji' !important;
+}
+
+/* 앱 캔버스 — 순백(배경은 무조건 흰색, 카드에만 연한 색). */
+body {
+  background-color: #ffffff;
+}
+
+/* 가로 스크롤 캐러셀 — 스크롤바 숨김. */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* 가로 오버플로 전역 차단 — 어떤 위젯도 화면 폭을 넘겨 "짤리거나" 가로 스크롤을 만들지 않게 한다.
+   (자식 min-content가 폭을 밀어내는 flex 케이스 방어. 콘텐츠는 폭에 맞춰 줄바꿈/말줄임.) */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+  margin: 0;
+}
+
+#root {
+  width: 100%;
+  max-width: 100%;
+  min-height: 100vh;
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+/* 모든 박스는 패딩 포함 폭 계산(테두리/패딩이 폭을 넘기지 않게). */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+@media (min-width: 481px) {
+  #root {
+    background-color: #ffffff !important;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+}

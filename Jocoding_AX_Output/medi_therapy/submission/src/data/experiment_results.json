@@ -1,0 +1,1158 @@
+{
+  "schema_version": "0.1.0",
+  "phase_id": "phase_6_result_collection_and_interpretation",
+  "generated_at": "2026-07-09T01:59:51.050296Z",
+  "source_brief_file": "data/seeding_briefs.json",
+  "interpretation_policy": {
+    "public_kpi_scope": "공개 지표는 관심과 의도 가설을 뒷받침하는 범위에서만 사용한다.",
+    "internal_kpi_scope": "클릭, 쿠폰, 장바구니, 주문, CPA, ROAS, 재구매는 메디테라피 내부 데이터가 필요하다.",
+    "sales_claim_policy": "공개 지표만으로 매출, ROAS, 주문, 재구매 영향을 주장하지 않는다.",
+    "comment_policy": "댓글 원문은 저장하지 않고 의도 테마와 개수만 저장한다.",
+    "failure_policy": "낮거나 누락된 결과도 다음 루프를 위한 판단 보류 또는 실패 사유로 남긴다."
+  },
+  "stage_definitions": [
+    {
+      "stage": 0,
+      "name": "게시 여부",
+      "data_type": "공개 데이터",
+      "fields": [
+        "posted",
+        "posted_url",
+        "posted_at"
+      ],
+      "interpretation_rule": "게시 URL이 없으면 성과 해석을 하지 않는다."
+    },
+    {
+      "stage": 1,
+      "name": "공개 참여",
+      "data_type": "공개 데이터",
+      "fields": [
+        "view_count",
+        "like_count",
+        "comment_count",
+        "save_count",
+        "share_count"
+      ],
+      "interpretation_rule": "참여 지표는 관심 신호일 뿐 매출 증거가 아니다."
+    },
+    {
+      "stage": 2,
+      "name": "댓글 의도",
+      "data_type": "공개 댓글 테마 집계",
+      "fields": [
+        "where_to_buy",
+        "routine_question",
+        "usage_question",
+        "price_question",
+        "sensitive_skin_question"
+      ],
+      "interpretation_rule": "댓글 원문은 저장하지 않고 의도 테마와 개수만 저장한다."
+    },
+    {
+      "stage": 3,
+      "name": "클릭/쿠폰/장바구니",
+      "data_type": "내부 데이터 선택",
+      "fields": [
+        "tracked_link_clicks",
+        "coupon_usage",
+        "add_to_cart"
+      ],
+      "interpretation_rule": "메디테라피 내부 어트리뷰션 필드가 있어야 해석할 수 있다."
+    },
+    {
+      "stage": 4,
+      "name": "주문/ROAS/재구매",
+      "data_type": "내부 데이터 선택",
+      "fields": [
+        "orders",
+        "CPA",
+        "ROAS",
+        "repurchase"
+      ],
+      "interpretation_rule": "매출 또는 ROAS 주장은 이 단계의 내부 데이터가 있을 때만 가능하다."
+    }
+  ],
+  "summary": {
+    "seed_result_count": 6,
+    "control_result_count": 3,
+    "public_observation_windows": [
+      "24h",
+      "72h",
+      "7d",
+      "14d"
+    ],
+    "seed_product_distribution": {
+      "pdrn_serum": 1,
+      "hyaluronic_first_serum": 2,
+      "vitamin_bubble_serum": 1,
+      "retinal_skin_booster_serum": 2
+    },
+    "outcome_status_distribution": {
+      "inconclusive_until_posted": 6
+    },
+    "internal_data_connected": false,
+    "sales_claim_count": 0
+  },
+  "seed_results": [
+    {
+      "experiment_unit_id": "seed_recommendation::cand_001::pdrn_serum",
+      "selection_role": "seed_recommendation",
+      "creator_handle": "@acneproneprincess",
+      "profile_url": "https://www.tiktok.com/@acneproneprincess",
+      "segment_id": "acne_trouble_barrier",
+      "seed_product": "pdrn_serum",
+      "seed_product_name": "PDRN 스킨부스터 세럼",
+      "causal_hypothesis": "@acneproneprincess는 acne_prone, barrier_damage 맥락과 skincare_routine 콘텐츠 근거가 있어 pdrn_serum 시딩 시 저장, 사용법 질문, 구매 의도 댓글이 증가할 수 있다는 가설을 검증한다.",
+      "pre_registered_kpis": {
+        "primary_kpi": "save_rate",
+        "secondary_kpis": [
+          "sensitive_skin_question_count",
+          "routine_question_count"
+        ],
+        "post_hoc_kpi_change": false,
+        "kpi_source": "phase5_seeding_brief"
+      },
+      "stage_status": {
+        "stage_0_posting": "pending",
+        "stage_1_public_engagement": "pending",
+        "stage_2_comment_intent": "pending",
+        "stage_3_internal_click_coupon_cart": "not_connected",
+        "stage_4_internal_order_roas_repurchase": "not_connected"
+      },
+      "public_observations": [
+        {
+          "window": "24h",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        },
+        {
+          "window": "72h",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        },
+        {
+          "window": "7d",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        },
+        {
+          "window": "14d",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        }
+      ],
+      "internal_metrics": {
+        "source": "internal_data_not_provided",
+        "availability": "not_connected_for_submission_mvp",
+        "metrics": {
+          "tracked_link_clicks": null,
+          "coupon_usage": null,
+          "add_to_cart": null,
+          "orders": null,
+          "CPA": null,
+          "ROAS": null,
+          "repurchase": null
+        },
+        "claim_rule": "이 내부 지표 없이는 매출, ROAS, CPA, 주문, 재구매 영향을 주장하지 않는다."
+      },
+      "comparison_group_rule": "같은 공개 KPI 수집 윈도우로 대조군과 비교하되, 해석 전에 세그먼트 차이를 반드시 기록한다.",
+      "outcome_status": "inconclusive_until_posted",
+      "failure_or_inconclusive_reason": {
+        "reason_tag": "data_not_collected_yet",
+        "reason_detail": "Phase 6는 결과 테이블과 수집 계약을 정의한 단계이며, 실제 게시 URL과 KPI 스냅샷은 아직 없다.",
+        "next_action": "게시 URL과 24h, 72h, 7d, 14d 공개 KPI 스냅샷을 수집한다."
+      },
+      "iteration_update": {
+        "update_allowed": false,
+        "rule": "최소한 게시 여부와 14일 의도 데이터가 수집되기 전에는 제품 적합 규칙을 업데이트하지 않는다."
+      }
+    },
+    {
+      "experiment_unit_id": "seed_recommendation::cand_036::hyaluronic_first_serum",
+      "selection_role": "seed_recommendation",
+      "creator_handle": "@sunny.tsao",
+      "profile_url": "https://www.tiktok.com/@sunny.tsao",
+      "segment_id": "texture_pore_makeup_prep",
+      "seed_product": "hyaluronic_first_serum",
+      "seed_product_name": "히알루론산 스킨부스터 퍼스트 세럼",
+      "causal_hypothesis": "@sunny.tsao는 dryness, makeup_adherence_issue 맥락과 makeup_prep, skincare_routine 콘텐츠 근거가 있어 hyaluronic_first_serum 시딩 시 저장, 사용법 질문, 구매 의도 댓글이 증가할 수 있다는 가설을 검증한다.",
+      "pre_registered_kpis": {
+        "primary_kpi": "routine_save_rate",
+        "secondary_kpis": [
+          "dryness_question_count",
+          "beginner_routine_question_count"
+        ],
+        "post_hoc_kpi_change": false,
+        "kpi_source": "phase5_seeding_brief"
+      },
+      "stage_status": {
+        "stage_0_posting": "pending",
+        "stage_1_public_engagement": "pending",
+        "stage_2_comment_intent": "pending",
+        "stage_3_internal_click_coupon_cart": "not_connected",
+        "stage_4_internal_order_roas_repurchase": "not_connected"
+      },
+      "public_observations": [
+        {
+          "window": "24h",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        },
+        {
+          "window": "72h",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        },
+        {
+          "window": "7d",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        },
+        {
+          "window": "14d",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        }
+      ],
+      "internal_metrics": {
+        "source": "internal_data_not_provided",
+        "availability": "not_connected_for_submission_mvp",
+        "metrics": {
+          "tracked_link_clicks": null,
+          "coupon_usage": null,
+          "add_to_cart": null,
+          "orders": null,
+          "CPA": null,
+          "ROAS": null,
+          "repurchase": null
+        },
+        "claim_rule": "이 내부 지표 없이는 매출, ROAS, CPA, 주문, 재구매 영향을 주장하지 않는다."
+      },
+      "comparison_group_rule": "같은 공개 KPI 수집 윈도우로 대조군과 비교하되, 해석 전에 세그먼트 차이를 반드시 기록한다.",
+      "outcome_status": "inconclusive_until_posted",
+      "failure_or_inconclusive_reason": {
+        "reason_tag": "data_not_collected_yet",
+        "reason_detail": "Phase 6는 결과 테이블과 수집 계약을 정의한 단계이며, 실제 게시 URL과 KPI 스냅샷은 아직 없다.",
+        "next_action": "게시 URL과 24h, 72h, 7d, 14d 공개 KPI 스냅샷을 수집한다."
+      },
+      "iteration_update": {
+        "update_allowed": false,
+        "rule": "최소한 게시 여부와 14일 의도 데이터가 수집되기 전에는 제품 적합 규칙을 업데이트하지 않는다."
+      }
+    },
+    {
+      "experiment_unit_id": "seed_recommendation::cand_032::hyaluronic_first_serum",
+      "selection_role": "seed_recommendation",
+      "creator_handle": "@leanne_page",
+      "profile_url": "https://www.tiktok.com/@leanne_page",
+      "segment_id": "acne_trouble_barrier",
+      "seed_product": "hyaluronic_first_serum",
+      "seed_product_name": "히알루론산 스킨부스터 퍼스트 세럼",
+      "causal_hypothesis": "@leanne_page는 dryness, makeup_adherence_issue 맥락과 skincare_routine, makeup_prep 콘텐츠 근거가 있어 hyaluronic_first_serum 시딩 시 저장, 사용법 질문, 구매 의도 댓글이 증가할 수 있다는 가설을 검증한다.",
+      "pre_registered_kpis": {
+        "primary_kpi": "routine_save_rate",
+        "secondary_kpis": [
+          "dryness_question_count",
+          "beginner_routine_question_count"
+        ],
+        "post_hoc_kpi_change": false,
+        "kpi_source": "phase5_seeding_brief"
+      },
+      "stage_status": {
+        "stage_0_posting": "pending",
+        "stage_1_public_engagement": "pending",
+        "stage_2_comment_intent": "pending",
+        "stage_3_internal_click_coupon_cart": "not_connected",
+        "stage_4_internal_order_roas_repurchase": "not_connected"
+      },
+      "public_observations": [
+        {
+          "window": "24h",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        },
+        {
+          "window": "72h",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        },
+        {
+          "window": "7d",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        },
+        {
+          "window": "14d",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        }
+      ],
+      "internal_metrics": {
+        "source": "internal_data_not_provided",
+        "availability": "not_connected_for_submission_mvp",
+        "metrics": {
+          "tracked_link_clicks": null,
+          "coupon_usage": null,
+          "add_to_cart": null,
+          "orders": null,
+          "CPA": null,
+          "ROAS": null,
+          "repurchase": null
+        },
+        "claim_rule": "이 내부 지표 없이는 매출, ROAS, CPA, 주문, 재구매 영향을 주장하지 않는다."
+      },
+      "comparison_group_rule": "같은 공개 KPI 수집 윈도우로 대조군과 비교하되, 해석 전에 세그먼트 차이를 반드시 기록한다.",
+      "outcome_status": "inconclusive_until_posted",
+      "failure_or_inconclusive_reason": {
+        "reason_tag": "data_not_collected_yet",
+        "reason_detail": "Phase 6는 결과 테이블과 수집 계약을 정의한 단계이며, 실제 게시 URL과 KPI 스냅샷은 아직 없다.",
+        "next_action": "게시 URL과 24h, 72h, 7d, 14d 공개 KPI 스냅샷을 수집한다."
+      },
+      "iteration_update": {
+        "update_allowed": false,
+        "rule": "최소한 게시 여부와 14일 의도 데이터가 수집되기 전에는 제품 적합 규칙을 업데이트하지 않는다."
+      }
+    },
+    {
+      "experiment_unit_id": "seed_recommendation::cand_016::vitamin_bubble_serum",
+      "selection_role": "seed_recommendation",
+      "creator_handle": "@asiyeekarakus",
+      "profile_url": "https://www.tiktok.com/@asiyeekarakus",
+      "segment_id": "tone_spot_glow",
+      "seed_product": "vitamin_bubble_serum",
+      "seed_product_name": "비타민 스킨부스터 버블세럼",
+      "causal_hypothesis": "@asiyeekarakus는 dullness, pigmentation 맥락과 product_review, skincare_routine 콘텐츠 근거가 있어 vitamin_bubble_serum 시딩 시 저장, 사용법 질문, 구매 의도 댓글이 증가할 수 있다는 가설을 검증한다.",
+      "pre_registered_kpis": {
+        "primary_kpi": "view_completion_rate",
+        "secondary_kpis": [
+          "glow_tone_comment_count",
+          "texture_demo_engagement"
+        ],
+        "post_hoc_kpi_change": false,
+        "kpi_source": "phase5_seeding_brief"
+      },
+      "stage_status": {
+        "stage_0_posting": "pending",
+        "stage_1_public_engagement": "pending",
+        "stage_2_comment_intent": "pending",
+        "stage_3_internal_click_coupon_cart": "not_connected",
+        "stage_4_internal_order_roas_repurchase": "not_connected"
+      },
+      "public_observations": [
+        {
+          "window": "24h",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        },
+        {
+          "window": "72h",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        },
+        {
+          "window": "7d",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        },
+        {
+          "window": "14d",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        }
+      ],
+      "internal_metrics": {
+        "source": "internal_data_not_provided",
+        "availability": "not_connected_for_submission_mvp",
+        "metrics": {
+          "tracked_link_clicks": null,
+          "coupon_usage": null,
+          "add_to_cart": null,
+          "orders": null,
+          "CPA": null,
+          "ROAS": null,
+          "repurchase": null
+        },
+        "claim_rule": "이 내부 지표 없이는 매출, ROAS, CPA, 주문, 재구매 영향을 주장하지 않는다."
+      },
+      "comparison_group_rule": "같은 공개 KPI 수집 윈도우로 대조군과 비교하되, 해석 전에 세그먼트 차이를 반드시 기록한다.",
+      "outcome_status": "inconclusive_until_posted",
+      "failure_or_inconclusive_reason": {
+        "reason_tag": "data_not_collected_yet",
+        "reason_detail": "Phase 6는 결과 테이블과 수집 계약을 정의한 단계이며, 실제 게시 URL과 KPI 스냅샷은 아직 없다.",
+        "next_action": "게시 URL과 24h, 72h, 7d, 14d 공개 KPI 스냅샷을 수집한다."
+      },
+      "iteration_update": {
+        "update_allowed": false,
+        "rule": "최소한 게시 여부와 14일 의도 데이터가 수집되기 전에는 제품 적합 규칙을 업데이트하지 않는다."
+      }
+    },
+    {
+      "experiment_unit_id": "seed_recommendation::cand_035::retinal_skin_booster_serum",
+      "selection_role": "seed_recommendation",
+      "creator_handle": "@cherryblossom216",
+      "profile_url": "https://www.tiktok.com/@cherryblossom216",
+      "segment_id": "acne_trouble_barrier",
+      "seed_product": "retinal_skin_booster_serum",
+      "seed_product_name": "레티날 스킨부스터 세럼",
+      "causal_hypothesis": "@cherryblossom216는 makeup_adherence_issue, wrinkles 맥락과 makeup_prep, product_review 콘텐츠 근거가 있어 retinal_skin_booster_serum 시딩 시 저장, 사용법 질문, 구매 의도 댓글이 증가할 수 있다는 가설을 검증한다.",
+      "pre_registered_kpis": {
+        "primary_kpi": "night_routine_save_rate",
+        "secondary_kpis": [
+          "usage_question_count",
+          "sunscreen_question_count"
+        ],
+        "post_hoc_kpi_change": false,
+        "kpi_source": "phase5_seeding_brief"
+      },
+      "stage_status": {
+        "stage_0_posting": "pending",
+        "stage_1_public_engagement": "pending",
+        "stage_2_comment_intent": "pending",
+        "stage_3_internal_click_coupon_cart": "not_connected",
+        "stage_4_internal_order_roas_repurchase": "not_connected"
+      },
+      "public_observations": [
+        {
+          "window": "24h",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        },
+        {
+          "window": "72h",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        },
+        {
+          "window": "7d",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        },
+        {
+          "window": "14d",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        }
+      ],
+      "internal_metrics": {
+        "source": "internal_data_not_provided",
+        "availability": "not_connected_for_submission_mvp",
+        "metrics": {
+          "tracked_link_clicks": null,
+          "coupon_usage": null,
+          "add_to_cart": null,
+          "orders": null,
+          "CPA": null,
+          "ROAS": null,
+          "repurchase": null
+        },
+        "claim_rule": "이 내부 지표 없이는 매출, ROAS, CPA, 주문, 재구매 영향을 주장하지 않는다."
+      },
+      "comparison_group_rule": "같은 공개 KPI 수집 윈도우로 대조군과 비교하되, 해석 전에 세그먼트 차이를 반드시 기록한다.",
+      "outcome_status": "inconclusive_until_posted",
+      "failure_or_inconclusive_reason": {
+        "reason_tag": "data_not_collected_yet",
+        "reason_detail": "Phase 6는 결과 테이블과 수집 계약을 정의한 단계이며, 실제 게시 URL과 KPI 스냅샷은 아직 없다.",
+        "next_action": "게시 URL과 24h, 72h, 7d, 14d 공개 KPI 스냅샷을 수집한다."
+      },
+      "iteration_update": {
+        "update_allowed": false,
+        "rule": "최소한 게시 여부와 14일 의도 데이터가 수집되기 전에는 제품 적합 규칙을 업데이트하지 않는다."
+      }
+    },
+    {
+      "experiment_unit_id": "seed_recommendation::cand_037::retinal_skin_booster_serum",
+      "selection_role": "seed_recommendation",
+      "creator_handle": "@ginamberx",
+      "profile_url": "https://www.tiktok.com/@ginamberx",
+      "segment_id": "anti_aging_home_esthetic",
+      "seed_product": "retinal_skin_booster_serum",
+      "seed_product_name": "레티날 스킨부스터 세럼",
+      "causal_hypothesis": "@ginamberx는 makeup_adherence_issue, texture 맥락과 makeup_prep, product_review 콘텐츠 근거가 있어 retinal_skin_booster_serum 시딩 시 저장, 사용법 질문, 구매 의도 댓글이 증가할 수 있다는 가설을 검증한다.",
+      "pre_registered_kpis": {
+        "primary_kpi": "night_routine_save_rate",
+        "secondary_kpis": [
+          "usage_question_count",
+          "sunscreen_question_count"
+        ],
+        "post_hoc_kpi_change": false,
+        "kpi_source": "phase5_seeding_brief"
+      },
+      "stage_status": {
+        "stage_0_posting": "pending",
+        "stage_1_public_engagement": "pending",
+        "stage_2_comment_intent": "pending",
+        "stage_3_internal_click_coupon_cart": "not_connected",
+        "stage_4_internal_order_roas_repurchase": "not_connected"
+      },
+      "public_observations": [
+        {
+          "window": "24h",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        },
+        {
+          "window": "72h",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        },
+        {
+          "window": "7d",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        },
+        {
+          "window": "14d",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        }
+      ],
+      "internal_metrics": {
+        "source": "internal_data_not_provided",
+        "availability": "not_connected_for_submission_mvp",
+        "metrics": {
+          "tracked_link_clicks": null,
+          "coupon_usage": null,
+          "add_to_cart": null,
+          "orders": null,
+          "CPA": null,
+          "ROAS": null,
+          "repurchase": null
+        },
+        "claim_rule": "이 내부 지표 없이는 매출, ROAS, CPA, 주문, 재구매 영향을 주장하지 않는다."
+      },
+      "comparison_group_rule": "같은 공개 KPI 수집 윈도우로 대조군과 비교하되, 해석 전에 세그먼트 차이를 반드시 기록한다.",
+      "outcome_status": "inconclusive_until_posted",
+      "failure_or_inconclusive_reason": {
+        "reason_tag": "data_not_collected_yet",
+        "reason_detail": "Phase 6는 결과 테이블과 수집 계약을 정의한 단계이며, 실제 게시 URL과 KPI 스냅샷은 아직 없다.",
+        "next_action": "게시 URL과 24h, 72h, 7d, 14d 공개 KPI 스냅샷을 수집한다."
+      },
+      "iteration_update": {
+        "update_allowed": false,
+        "rule": "최소한 게시 여부와 14일 의도 데이터가 수집되기 전에는 제품 적합 규칙을 업데이트하지 않는다."
+      }
+    }
+  ],
+  "control_results": [
+    {
+      "experiment_unit_id": "control_group::@milkydew::hyaluronic_first_serum",
+      "selection_role": "control_group",
+      "creator_handle": "@milkydew",
+      "profile_url": "https://www.tiktok.com/@milkydew",
+      "segment_id": "acne_trouble_barrier",
+      "held_out_product": "hyaluronic_first_serum",
+      "control_reason": "Qualified public-data candidate held out to compare posting, save, and comment-intent lift against seeded creators.",
+      "stage_status": {
+        "stage_0_posting": "pending",
+        "stage_1_public_engagement": "pending",
+        "stage_2_comment_intent": "pending",
+        "stage_3_internal_click_coupon_cart": "not_applicable",
+        "stage_4_internal_order_roas_repurchase": "not_applicable"
+      },
+      "public_observations": [
+        {
+          "window": "24h",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        },
+        {
+          "window": "72h",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        },
+        {
+          "window": "7d",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        },
+        {
+          "window": "14d",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        }
+      ],
+      "comparison_rule": "Compare public posting and intent quality against seeded creators by segment; do not infer sales without internal conversion data.",
+      "outcome_status": "control_pending_observation",
+      "failure_or_inconclusive_reason": {
+        "reason_tag": "data_not_collected_yet",
+        "reason_detail": "대조군의 공개 KPI 스냅샷은 아직 수집되지 않았다.",
+        "next_action": "제품을 보내지 않은 상태에서 공개 게시 여부와 의도 지표를 수집한다."
+      }
+    },
+    {
+      "experiment_unit_id": "control_group::@atx_genie199::hyaluronic_first_serum",
+      "selection_role": "control_group",
+      "creator_handle": "@atx_genie199",
+      "profile_url": "https://www.tiktok.com/@atx_genie199",
+      "segment_id": "grwm_lifestyle_beauty",
+      "held_out_product": "hyaluronic_first_serum",
+      "control_reason": "Qualified public-data candidate held out to compare posting, save, and comment-intent lift against seeded creators.",
+      "stage_status": {
+        "stage_0_posting": "pending",
+        "stage_1_public_engagement": "pending",
+        "stage_2_comment_intent": "pending",
+        "stage_3_internal_click_coupon_cart": "not_applicable",
+        "stage_4_internal_order_roas_repurchase": "not_applicable"
+      },
+      "public_observations": [
+        {
+          "window": "24h",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        },
+        {
+          "window": "72h",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        },
+        {
+          "window": "7d",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        },
+        {
+          "window": "14d",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        }
+      ],
+      "comparison_rule": "Compare public posting and intent quality against seeded creators by segment; do not infer sales without internal conversion data.",
+      "outcome_status": "control_pending_observation",
+      "failure_or_inconclusive_reason": {
+        "reason_tag": "data_not_collected_yet",
+        "reason_detail": "대조군의 공개 KPI 스냅샷은 아직 수집되지 않았다.",
+        "next_action": "제품을 보내지 않은 상태에서 공개 게시 여부와 의도 지표를 수집한다."
+      }
+    },
+    {
+      "experiment_unit_id": "control_group::@evangepetrakis::hyaluronic_first_serum",
+      "selection_role": "control_group",
+      "creator_handle": "@evangepetrakis",
+      "profile_url": "https://www.tiktok.com/@evangepetrakis",
+      "segment_id": "grwm_lifestyle_beauty",
+      "held_out_product": "hyaluronic_first_serum",
+      "control_reason": "Qualified public-data candidate held out to compare posting, save, and comment-intent lift against seeded creators.",
+      "stage_status": {
+        "stage_0_posting": "pending",
+        "stage_1_public_engagement": "pending",
+        "stage_2_comment_intent": "pending",
+        "stage_3_internal_click_coupon_cart": "not_applicable",
+        "stage_4_internal_order_roas_repurchase": "not_applicable"
+      },
+      "public_observations": [
+        {
+          "window": "24h",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        },
+        {
+          "window": "72h",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        },
+        {
+          "window": "7d",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        },
+        {
+          "window": "14d",
+          "source": "public_platform_or_manual_observation",
+          "status": "pending_post",
+          "metrics": {
+            "posted": null,
+            "posted_url": null,
+            "view_count": null,
+            "like_count": null,
+            "comment_count": null,
+            "save_count": null,
+            "share_count": null,
+            "comment_intent_themes": {},
+            "risk_comment_count": null
+          },
+          "raw_comment_text_stored": false,
+          "collector_note": "게시 후 공개 KPI는 아직 수집되지 않았다."
+        }
+      ],
+      "comparison_rule": "Compare public posting and intent quality against seeded creators by segment; do not infer sales without internal conversion data.",
+      "outcome_status": "control_pending_observation",
+      "failure_or_inconclusive_reason": {
+        "reason_tag": "data_not_collected_yet",
+        "reason_detail": "대조군의 공개 KPI 스냅샷은 아직 수집되지 않았다.",
+        "next_action": "제품을 보내지 않은 상태에서 공개 게시 여부와 의도 지표를 수집한다."
+      }
+    }
+  ],
+  "submission_examples": {
+    "normal_case_template": {
+      "use_when": "시딩 크리에이터가 게시했고 14일 공개 KPI 스냅샷이 있을 때 사용한다.",
+      "safe_claim": "해당 크리에이터가 제품-콘텐츠 가설에 대해 공개 관심과 의도 신호를 만들었다고 표현할 수 있다.",
+      "requires_internal_data_for": [
+        "orders",
+        "CPA",
+        "ROAS",
+        "repurchase"
+      ]
+    },
+    "exception_case_template": {
+      "use_when": "크리에이터가 게시하지 않았거나 KPI 데이터가 없거나 리스크 댓글이 늘었을 때 사용한다.",
+      "safe_claim": "결과를 판단 보류 또는 다음 반복을 위한 실패 사유로 표현한다.",
+      "do_not_do": "한 번의 약한 관찰만으로 케이스를 삭제하거나 크리에이터를 영구 부적합으로 표시하지 않는다."
+    }
+  }
+}

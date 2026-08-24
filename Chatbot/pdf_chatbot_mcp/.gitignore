@@ -1,0 +1,14 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.egg-info/
+documents/*.pdf
+!documents/.gitkeep
+.env
+.env.*
+!.env.example
+*.log
+.DS_Store
+__MACOSX/
+*.zip

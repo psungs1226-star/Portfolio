@@ -1,0 +1,27 @@
+{
+  "project": "인사ON",
+  "phase": "04-answer-product",
+  "steps": [
+    {
+      "step": 0,
+      "name": "answer-validation",
+      "status": "completed",
+      "completed_at": "2026-07-29T15:34:00+09:00",
+      "summary": "privacy→조건→H3 검색→rule→제한된 draft→citation 검증 순서를 강제하고 허위·무효·예외 누락 초안을 폐기한다."
+    },
+    {
+      "step": 1,
+      "name": "review-api",
+      "status": "completed",
+      "completed_at": "2026-07-29T15:34:00+09:00",
+      "summary": "idempotency와 다중 turn을 지원하는 review API를 구현하고 세션에는 합성 ID·구조화 조건·구조화 답변만 보존한다."
+    },
+    {
+      "step": 2,
+      "name": "review-ui",
+      "status": "completed",
+      "completed_at": "2026-07-29T15:34:00+09:00",
+      "summary": "실제 다중 turn 채팅, 조건·근거·사람 검토 경계와 공개 품질 상태를 결합한 반응형 Jinja2 대시보드 및 동일 CASE-A/B/C E2E를 구현했다."
+    }
+  ]
+}

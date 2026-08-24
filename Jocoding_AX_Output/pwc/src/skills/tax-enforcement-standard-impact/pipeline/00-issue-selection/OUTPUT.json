@@ -1,0 +1,186 @@
+{
+  "phase": "Phase 0",
+  "status": "completed",
+  "source": {
+    "name": "국세법령정보시스템 세법해석정비",
+    "url": "https://taxlaw.nts.go.kr/qt/USEQTE001M.do"
+  },
+  "filter": {
+    "tax_type_field": "ntstTlawClNm",
+    "tax_type_value": "부가가치세",
+    "total_revision_count": 996,
+    "vat_revision_count": 183
+  },
+  "ranked_issue_candidates": [
+    {
+      "issue": "면세/과세구분",
+      "total_count": 73,
+      "usable_count": 56,
+      "law_linked_count": 73,
+      "non_trivial_count": 73,
+      "negative_candidate_count": 20,
+      "trivial_count": 0,
+      "issue_score": 609
+    },
+    {
+      "issue": "매입세액공제",
+      "total_count": 37,
+      "usable_count": 28,
+      "law_linked_count": 37,
+      "non_trivial_count": 37,
+      "negative_candidate_count": 20,
+      "trivial_count": 0,
+      "issue_score": 317
+    },
+    {
+      "issue": "영세율",
+      "total_count": 18,
+      "usable_count": 14,
+      "law_linked_count": 18,
+      "non_trivial_count": 18,
+      "negative_candidate_count": 20,
+      "trivial_count": 0,
+      "issue_score": 166
+    },
+    {
+      "issue": "세금계산서",
+      "total_count": 19,
+      "usable_count": 13,
+      "law_linked_count": 19,
+      "non_trivial_count": 18,
+      "negative_candidate_count": 20,
+      "trivial_count": 1,
+      "issue_score": 163
+    },
+    {
+      "issue": "과세표준",
+      "total_count": 13,
+      "usable_count": 10,
+      "law_linked_count": 13,
+      "non_trivial_count": 13,
+      "negative_candidate_count": 20,
+      "trivial_count": 0,
+      "issue_score": 125
+    },
+    {
+      "issue": "공급시기",
+      "total_count": 2,
+      "usable_count": 2,
+      "law_linked_count": 2,
+      "non_trivial_count": 2,
+      "negative_candidate_count": 20,
+      "trivial_count": 0,
+      "issue_score": 38
+    }
+  ],
+  "selected_issue": "면세/과세구분",
+  "issue_score": 609,
+  "usable_count": 56,
+  "law_linked_count": 73,
+  "negative_candidate_count": 20,
+  "selection_reason": "부가가치세 정비 사례 중 전후 문서쌍이 있는 usable case가 가장 많고, 면세·과세대상 아님·자가공급·사업양도·대리납부·부수용역 등 집행기준과 연결되는 법리 축이 넓어 positive/negative 검증셋을 만들기 좋다.",
+  "selected_cases": [
+    {
+      "revision_case_id": "200000000000000130",
+      "before_doc_id": ["010000000000071784"],
+      "after_doc_id": ["200000000000019876"],
+      "title": "임대형 민간투자방식(BTL)에서 사업시행자가 국가로부터 지급받는 시설임대료는 부가가치세 과세대상 아님"
+    },
+    {
+      "revision_case_id": "000000000000000929",
+      "before_doc_id": ["040000000000474709"],
+      "after_doc_id": ["010000000000585030"],
+      "title": "루핀종자를 정선 과정을 거쳐 껍질과 알곡으로 분리하여 판매하는 경우 부가가치세 면제 여부"
+    },
+    {
+      "revision_case_id": "000000000000000902",
+      "before_doc_id": ["040000000000474664", "040000000000474665"],
+      "after_doc_id": ["010000000000524919"],
+      "title": "해외지점은 인적·물적시설을 갖추고 독립적으로 사업을 영위하는 고정사업장으로 볼 수 있으므로 별도 사업장인 해외지점이 해외에서 공급한 용역이므로 과세대상 아님"
+    },
+    {
+      "revision_case_id": "000000000000000899",
+      "before_doc_id": ["040000000000444689", "040000000000444694", "040000000000444697"],
+      "after_doc_id": ["010000000000544676"],
+      "title": "국내지점이 제공한 용역이 외국본점의 일괄공급계약에 대한 부수용역으로 자가공급에 해당하는지"
+    },
+    {
+      "revision_case_id": "000000000000000871",
+      "before_doc_id": ["040000000000424709", "040000000000424710", "040000000000424708"],
+      "after_doc_id": ["010000000000524964"],
+      "title": "도시철도를 건설하여 기부채납하고 관리운영권을 얻어 면세사업에 사용하는 경우 영세율 적용"
+    },
+    {
+      "revision_case_id": "000000000000000860",
+      "before_doc_id": ["040000000000424672"],
+      "after_doc_id": ["010000000000524887"],
+      "title": "사업양수도 대가를 분할 지급하며 일부만 대리납부하는 경우 세금계산서 관련 가산세 적용여부"
+    },
+    {
+      "revision_case_id": "000000000000000858",
+      "before_doc_id": ["040000000000404704"],
+      "after_doc_id": ["010000000000184842", "010000000000505343"],
+      "title": "출장강의가 면세대상 교육용역에 포함되는지 여부"
+    },
+    {
+      "revision_case_id": "000000000000000837",
+      "before_doc_id": ["040000000000404670"],
+      "after_doc_id": ["010000000000034832"],
+      "title": "오피스텔 면세전용 시 과세시점 및 가산세 부과 여부"
+    },
+    {
+      "revision_case_id": "000000000000000836",
+      "before_doc_id": ["040000000000404669"],
+      "after_doc_id": ["010000000000009805", "010000000000010361", "010000000000142593"],
+      "title": "과면세 겸영사업자가 사업 개시 전 사업권 양도시 과세표준"
+    },
+    {
+      "revision_case_id": "000000000000000821",
+      "before_doc_id": ["040000000000384664"],
+      "after_doc_id": ["010000000000465230"],
+      "title": "기부채납으로 부여받은 시설관리운영권의 면세전용 간주공급 적용 여부"
+    }
+  ],
+  "held_cases": [
+    {
+      "revision_case_id": "200000000000000125",
+      "reason": "before document ID missing in list response",
+      "title": "정부업무대행단체가 지방자치단체와 체결한 위·수탁계약에 따라 사업대행용역을 제공하고 그 대가로 받은 사업비는 부가가치세가 면제되는 것임"
+    },
+    {
+      "revision_case_id": "200000000000000124",
+      "reason": "before document ID missing in list response",
+      "title": "산모·신생아 사회복지서비스 이용권 대가에 이용자의 본인부담금이 포함됨"
+    },
+    {
+      "revision_case_id": "000000000000000663",
+      "reason": "before document ID missing in list response",
+      "title": "금융보험업 외의 사업을 하는 사업자가 주된 사업에 부수하여 금융보험 용역과 유사한 용역을 제공하는 경우 부가가치세가 면제됨"
+    },
+    {
+      "revision_case_id": "000000000000000648",
+      "reason": "before document ID missing in list response",
+      "title": "토지,건물을 제외하고 사업을 양도하는 경우 사업의 양도에 해당하지 아니함"
+    },
+    {
+      "revision_case_id": "000000000000000634",
+      "reason": "before document ID missing in list response",
+      "title": "국내 사업자간의 임가공계약에 의하여 외국에서 임가공용역이 공급되는 경우 부가가치세 과세대상에 해당하지 아니함"
+    },
+    {
+      "revision_case_id": "000000000000000633",
+      "reason": "before document ID missing in list response",
+      "title": "해외 조선해양 기자재 수출 및 A/S 거점기지 구축사업을 영위하는 경우, 산업통상자원부로부터 지급받은 국고보조금은 부가가치세 과세대상임"
+    },
+    {
+      "revision_case_id": "000000000000000603",
+      "reason": "before document ID missing in list response",
+      "title": "BTL방식 민간투자사업에서 시설관리운영권 부여가 부동산임대용역 공급인지 여부"
+    },
+    {
+      "revision_case_id": "000000000000000581",
+      "reason": "before document ID missing in list response",
+      "title": "어린이 수영장에서 수상안전교육 등을 공급하는 경우 면세 여부"
+    }
+  ]
+}

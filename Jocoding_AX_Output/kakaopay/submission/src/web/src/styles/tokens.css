@@ -1,0 +1,40 @@
+:root {
+  color-scheme: dark;
+  --color-page: #101416;
+  --color-surface: #1b2023;
+  --color-surface-muted: #242a2e;
+  --color-text: #f5f5f5;
+  --color-text-muted: #8f9499;
+  --color-border: #2b3136;
+  --color-primary: #fee500;
+  --color-primary-pressed: #000000;
+  --color-primary-soft: rgba(254, 229, 0, 0.16);
+  --color-kakao-yellow: #ffeb22;
+  --color-pay-blue: #1688ff;
+  --color-caution: #ffcf4a;
+  --color-caution-soft: rgba(255, 207, 74, 0.13);
+  --color-risk: #ff6f79;
+  --color-risk-soft: rgba(255, 111, 121, 0.14);
+  --color-neutral-strong: #f5f5f5;
+  --shadow-panel: 0 18px 42px rgba(0, 0, 0, 0.28);
+  --radius-sm: 10px;
+  --radius-md: 22px;
+  --radius-lg: 34px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 14px;
+  --space-5: 18px;
+  --space-6: 22px;
+  --font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+    "Pretendard", "Noto Sans KR", "Segoe UI", sans-serif;
+  --font-size-xs: 12px;
+  --font-size-sm: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 22px;
+  --font-size-xl: 42px;
+  --line-height-tight: 1.25;
+  --line-height-base: 1.55;
+  --duration-fast: 160ms;
+  --easing-standard: cubic-bezier(0.2, 0, 0, 1);
+}

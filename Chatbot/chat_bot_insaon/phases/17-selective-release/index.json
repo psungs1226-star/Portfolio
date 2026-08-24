@@ -1,0 +1,10 @@
+{
+  "project": "인사ON",
+  "phase": "17-selective-release",
+  "steps": [
+    { "step": 0, "name": "public-file-selection", "status": "pending" },
+    { "step": 1, "name": "readme-rewrite", "status": "pending" },
+    { "step": 2, "name": "release-verification", "status": "pending" },
+    { "step": 3, "name": "repo-init-and-license", "status": "pending" }
+  ]
+}

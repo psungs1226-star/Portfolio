@@ -1,0 +1,887 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>삼일PwC Tax &amp; Tax Agent Deep Dive</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.css">
+  <style>
+    :root {
+      --surface: #f1fbff;
+      --surface-lowest: #ffffff;
+      --surface-low: #eaf5fa;
+      --surface-container: #e4f0f4;
+      --surface-high: #dfeaef;
+      --surface-highest: #d9e4e9;
+      --on-surface: #131d21;
+      --on-variant: #434749;
+      --outline: #747879;
+      --outline-variant: #c3c7c8;
+      --primary: #181f21;
+      --primary-container: #2d3436;
+      --secondary: #1d6296;
+      --secondary-container: #8cc6ff;
+      --teal: #00758f;
+      --emerald: #00b894;
+      --coral: #ff7675;
+      --gold: #ffd43b;
+      --shadow: 0 4px 12px rgba(45, 52, 70, 0.05);
+      --radius: 4px;
+      --radius-lg: 8px;
+      --container: 1120px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--surface);
+      color: var(--on-surface);
+      font-family: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Noto Sans KR", Inter, sans-serif;
+      font-size: 16px;
+      line-height: 1.55;
+      letter-spacing: 0;
+    }
+
+    a { color: var(--secondary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container {
+      width: min(100% - 48px, var(--container));
+      margin: 0 auto;
+    }
+
+    .mono,
+    .tag,
+    .eyebrow {
+      font-family: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+      letter-spacing: 0;
+    }
+
+    .hero {
+      background: var(--surface-lowest);
+      border-bottom: 1px solid var(--outline-variant);
+    }
+
+    .hero-inner {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, 0.9fr);
+      gap: 28px;
+      padding: 48px 0 36px;
+      align-items: stretch;
+    }
+
+    h1, h2, h3, p { margin-top: 0; }
+
+    h1 {
+      margin-bottom: 16px;
+      font-size: 32px;
+      line-height: 40px;
+      font-weight: 760;
+    }
+
+    h2 {
+      margin-bottom: 12px;
+      font-size: 24px;
+      line-height: 32px;
+      font-weight: 720;
+    }
+
+    h3 {
+      margin-bottom: 8px;
+      font-size: 18px;
+      line-height: 26px;
+      font-weight: 720;
+    }
+
+    .lead {
+      margin-bottom: 20px;
+      color: var(--on-variant);
+      font-size: 18px;
+      line-height: 28px;
+      max-width: 780px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      margin-bottom: 12px;
+      color: var(--secondary);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      min-height: 24px;
+      padding: 3px 7px;
+      border-radius: var(--radius);
+      background: var(--surface-container);
+      color: var(--on-variant);
+      font-size: 12px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .tag.dark { background: var(--primary-container); color: #ffffff; }
+    .tag.blue { background: rgba(55, 118, 171, 0.14); color: #3776ab; }
+    .tag.teal { background: rgba(0, 117, 143, 0.14); color: var(--teal); }
+    .tag.green { background: rgba(0, 184, 148, 0.14); color: #006a55; }
+    .tag.coral { background: rgba(255, 118, 117, 0.16); color: #9c2928; }
+
+    .quick-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 20px;
+    }
+
+    .quick-nav a {
+      display: inline-flex;
+      align-items: center;
+      min-height: 32px;
+      padding: 6px 10px;
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--radius);
+      background: var(--surface-low);
+      color: var(--on-surface);
+      font-size: 13px;
+      font-weight: 680;
+    }
+
+    .key-box {
+      padding: 16px;
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--radius-lg);
+      background: var(--primary);
+      color: #ffffff;
+      box-shadow: var(--shadow);
+    }
+
+    .key-box p {
+      margin-bottom: 10px;
+      color: #e7f3f7;
+    }
+
+    .key-box strong {
+      color: var(--secondary-container);
+    }
+
+    .hero-panel {
+      padding: 16px;
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--radius-lg);
+      background: var(--surface-low);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-panel svg {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin-top: 12px;
+      border-radius: var(--radius-lg);
+      background: #ffffff;
+    }
+
+    section.band {
+      padding: 46px 0;
+      border-bottom: 1px solid var(--outline-variant);
+    }
+
+    section.band:nth-of-type(even) { background: var(--surface-low); }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.72fr) minmax(260px, 0.28fr);
+      gap: 24px;
+      align-items: end;
+      margin-bottom: 24px;
+    }
+
+    .section-head p { margin-bottom: 0; color: var(--on-variant); }
+
+    .note {
+      padding: 12px 14px;
+      border-left: 4px solid var(--teal);
+      border-radius: var(--radius);
+      background: rgba(0, 117, 143, 0.08);
+      color: var(--on-variant);
+      font-size: 14px;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .metric {
+      min-height: 150px;
+      padding: 14px;
+      border: 1px solid var(--outline-variant);
+      border-top: 4px solid var(--secondary);
+      border-radius: var(--radius-lg);
+      background: var(--surface-lowest);
+      box-shadow: var(--shadow);
+    }
+
+    .metric strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 30px;
+      line-height: 36px;
+      color: var(--primary);
+    }
+
+    .metric p {
+      margin-bottom: 0;
+      color: var(--on-variant);
+      font-size: 14px;
+    }
+
+    .metric:nth-child(2) { border-top-color: var(--teal); }
+    .metric:nth-child(3) { border-top-color: var(--emerald); }
+    .metric:nth-child(4) { border-top-color: var(--coral); }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 16px;
+      align-items: start;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .card {
+      padding: 16px;
+      border: 1px solid var(--outline-variant);
+      border-top: 4px solid var(--primary-container);
+      border-radius: var(--radius-lg);
+      background: var(--surface-lowest);
+      box-shadow: var(--shadow);
+    }
+
+    .card.blue { border-top-color: #3776ab; }
+    .card.teal { border-top-color: var(--teal); }
+    .card.green { border-top-color: var(--emerald); }
+    .card.coral { border-top-color: var(--coral); }
+    .card.gold { border-top-color: var(--gold); }
+
+    .card p,
+    .card li,
+    .table p {
+      color: var(--on-variant);
+    }
+
+    ul.clean {
+      display: grid;
+      gap: 8px;
+      margin: 10px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    ul.clean li {
+      position: relative;
+      padding-left: 14px;
+    }
+
+    ul.clean li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0.72em;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--secondary);
+    }
+
+    .table {
+      display: grid;
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      background: var(--surface-lowest);
+      box-shadow: var(--shadow);
+    }
+
+    .row {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr 0.9fr 0.9fr 1.1fr;
+      border-bottom: 1px solid var(--outline-variant);
+    }
+
+    .row:last-child { border-bottom: 0; }
+
+    .cell {
+      padding: 12px;
+      border-right: 1px solid var(--outline-variant);
+      color: var(--on-variant);
+      font-size: 14px;
+    }
+
+    .cell:last-child { border-right: 0; }
+
+    .head .cell {
+      background: var(--primary);
+      color: #ffffff;
+      font-weight: 750;
+    }
+
+    .cell.company {
+      color: var(--on-surface);
+      font-weight: 760;
+    }
+
+    .bar-list {
+      display: grid;
+      gap: 11px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 110px 1fr 76px;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .bar-row label {
+      font-size: 14px;
+      font-weight: 760;
+      color: var(--on-variant);
+    }
+
+    .bar-track {
+      height: 12px;
+      border-radius: var(--radius);
+      background: var(--surface-highest);
+      overflow: hidden;
+    }
+
+    .bar-track span {
+      display: block;
+      height: 100%;
+      border-radius: var(--radius);
+      background: var(--secondary);
+    }
+
+    .bar-track.teal span { background: var(--teal); }
+    .bar-track.green span { background: var(--emerald); }
+    .bar-track.coral span { background: var(--coral); }
+    .bar-track.gold span { background: var(--gold); }
+
+    .disclosure-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .pill-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .timeline {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .timeline .card {
+      min-height: 190px;
+    }
+
+    .source-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .source-list a {
+      display: block;
+      padding: 12px;
+      border: 1px solid var(--outline-variant);
+      border-radius: var(--radius);
+      background: var(--surface-lowest);
+      color: var(--on-surface);
+      font-size: 14px;
+    }
+
+    footer {
+      padding: 24px 0 40px;
+      background: var(--primary-container);
+      color: #e7f3f7;
+    }
+
+    footer p { margin: 0; font-size: 13px; color: #e7f3f7; }
+
+    @media (max-width: 980px) {
+      .hero-inner,
+      .section-head,
+      .two-col,
+      .disclosure-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .metric-grid,
+      .card-grid,
+      .timeline,
+      .source-list {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .table { overflow-x: auto; }
+      .row { grid-template-columns: 180px 140px 140px 140px 220px; min-width: 820px; }
+    }
+
+    @media (max-width: 640px) {
+      .container { width: min(100% - 32px, var(--container)); }
+      .hero-inner { padding-top: 32px; }
+      h1 { font-size: 24px; line-height: 32px; }
+      h2 { font-size: 20px; line-height: 28px; }
+      .lead { font-size: 16px; line-height: 24px; }
+      .metric-grid,
+      .card-grid,
+      .timeline,
+      .source-list {
+        grid-template-columns: 1fr;
+      }
+      .bar-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="container hero-inner">
+      <div>
+        <p class="eyebrow">Tax Deep Dive · Samil PwC · 2026-07-01 기준</p>
+        <h1>삼일PwC 세무 부문은 매출 규모와 AI 전환 모두에서 “Big4 선두” 포지션이다.</h1>
+        <p class="lead">
+          공개자료 기준으로 삼일회계법인은 2025년 전체 매출 1조1094억원 수준을 기록했고, 2023년 공개된 세무자문 매출에서도 2516억원, 전체 매출 대비 26%로 Big4 중 가장 높은 세무 비중을 보였다. 최신 2025년 기사에서는 삼일 세무자문 매출이 전년 대비 6.2% 성장한 것으로 확인된다.
+        </p>
+        <div class="key-box">
+          <p><strong>핵심 판단:</strong> 세무 부문은 삼일PwC의 전통적 강점이면서 Tax Agent를 통해 AX 상품화가 가장 빠르게 진행되는 영역이다.</p>
+          <p><strong>중요 한계:</strong> 세무 하위항목별 매출 비중, 예컨대 국제조세·이전가격·조세불복·상속증여·지방세·Tax Tech별 매출은 공개자료에서 확인되지 않는다.</p>
+        </div>
+        <nav class="quick-nav" aria-label="문서 내 이동">
+          <a href="#numbers">매출 비중</a>
+          <a href="#competitors">경쟁사 비교</a>
+          <a href="#subsegments">세무 하위항목</a>
+          <a href="#tax-agent">Tax Agent</a>
+          <a href="#swot">강점·약점</a>
+          <a href="#sources">출처</a>
+        </nav>
+      </div>
+      <aside class="hero-panel">
+        <span class="tag dark">Tax Revenue Logic</span>
+        <h3>확정 수치와 최신 신호를 분리해야 한다</h3>
+        <p>서비스별 매출은 모든 연도·모든 하위항목이 공개되는 구조가 아니다. 따라서 이 보고서는 “최신 전체 매출”, “최신 세무 성장률”, “세부 세무 매출이 확인되는 과거 공개자료”를 분리했다.</p>
+        <svg viewBox="0 0 420 220" role="img" aria-label="공개자료 신뢰도 구조">
+          <rect x="0" y="0" width="420" height="220" rx="8" fill="#ffffff" stroke="#c3c7c8"/>
+          <g font-family="Pretendard, sans-serif" font-size="13" font-weight="700">
+            <rect x="28" y="28" width="112" height="46" rx="4" fill="#cfe5ff" stroke="#1d6296"/>
+            <text x="50" y="57" fill="#131d21">2025 전체 매출</text>
+            <rect x="154" y="28" width="112" height="46" rx="4" fill="#b5ebff" stroke="#00758f"/>
+            <text x="174" y="57" fill="#131d21">세무 성장률</text>
+            <rect x="280" y="28" width="112" height="46" rx="4" fill="#ffdad6" stroke="#ff7675"/>
+            <text x="300" y="57" fill="#131d21">하위항목 매출</text>
+            <path d="M84 86 L84 118 L210 118" stroke="#1d6296" stroke-width="2" fill="none"/>
+            <path d="M210 86 L210 118" stroke="#00758f" stroke-width="2" fill="none"/>
+            <path d="M336 86 L336 118 L210 118" stroke="#ff7675" stroke-width="2" fill="none"/>
+            <rect x="76" y="118" width="268" height="58" rx="4" fill="#2d3436"/>
+            <text x="123" y="151" fill="#ffffff">보고서는 공개 한계를 표시</text>
+            <rect x="96" y="184" width="228" height="22" rx="4" fill="#d9e4e9"/>
+            <text x="132" y="200" fill="#131d21">확정 · 신호 · 비공개 분리</text>
+          </g>
+        </svg>
+      </aside>
+    </div>
+  </header>
+
+  <main>
+    <section class="band" id="numbers">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">01 · Revenue Ratio</p>
+            <h2>세무 매출비율: 최신 세부 금액은 비공개, 확인 가능한 Big4 기준은 26%</h2>
+            <p>삼일PwC의 제55기 공식 사업보고서는 총 영업수익을 공개하지만, 세무 하위항목별 매출은 공개하지 않는다. 세무자문 금액과 비중이 확인되는 공개자료는 Taxwatch의 DART 기반 2023년 집계다.</p>
+          </div>
+          <p class="note">2025년 수치와 2023년 세무자문 세부 수치는 기준연도가 다르다. 하나의 비율로 섞어 계산하지 않는 것이 안전하다.</p>
+        </div>
+        <div class="metric-grid">
+          <article class="metric">
+            <strong>1조1094억</strong>
+            <p>2025년 삼일회계법인 매출. 공식 사업보고서 영업수익은 1,109,361,403,899원이다.</p>
+          </article>
+          <article class="metric">
+            <strong>2516억</strong>
+            <p>2023년 공개자료 기준 삼일 세무자문 매출. 회계법인 중 1위로 집계됐다.</p>
+          </article>
+          <article class="metric">
+            <strong>26%</strong>
+            <p>2023년 삼일 전체 매출 대비 세무자문 비중. Big4 중 가장 높았다.</p>
+          </article>
+          <article class="metric">
+            <strong>+6.2%</strong>
+            <p>2025년 기사 기준 삼일 세무자문 매출 전년 대비 성장률. 최신 방향성 지표다.</p>
+          </article>
+        </div>
+        <div style="height:16px"></div>
+        <div class="two-col">
+          <article class="card teal">
+            <span class="tag teal">Disclosure</span>
+            <h3>확인 가능한 것</h3>
+            <ul class="clean">
+              <li>2025년 총 매출: 삼일 공식 제55기 사업보고서 및 뉴시스 기사에서 확인.</li>
+              <li>2025년 사업별 성장률: 회계감사 +4.3%, 세무자문 +6.2%, 경영자문 +13.8%로 기사 확인.</li>
+              <li>2023년 세무자문 매출과 비중: Taxwatch의 DART 사업보고서 기반 집계 확인.</li>
+              <li>세무 조직 규모: 제55기 사업보고서에서 세무 부문 등록공인회계사 172명, 기타 직원 877명, 합계 1054명 확인.</li>
+            </ul>
+          </article>
+          <article class="card coral">
+            <span class="tag coral">Not Public</span>
+            <h3>확인 불가능한 것</h3>
+            <ul class="clean">
+              <li>2025년 삼일 세무자문 금액 자체.</li>
+              <li>세무 안에서 조세불복, 세무진단, 국제조세, 이전가격, 지방세, 상속증여, Tax Tech가 각각 차지하는 매출 비중.</li>
+              <li>Tax Agent의 유료 사용자 수, 매출, ARR, 고객사별 도입 규모.</li>
+              <li>경쟁사별 세무 AI 제품 매출 또는 사용량의 직접 비교 수치.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="competitors">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">02 · Competitor Gap</p>
+            <h2>전체 매출은 2025년에도 삼일 1위, 세무자문은 공개 세부자료 기준 2위의 약 1.9배</h2>
+            <p>삼정은 별도 컨설팅 법인을 두지 않아 단순 비교가 어렵다는 점을 함께 봐야 한다. 그래도 별도 매출 기준 삼일의 규모 우위는 분명하다.</p>
+          </div>
+          <p class="note">2025년 전체 매출 비교는 뉴시스 기사 기준. 2023년 세무자문 비교는 Taxwatch 기사 기준.</p>
+        </div>
+
+        <div class="table" role="table" aria-label="Big4 매출 비교">
+          <div class="row head" role="row">
+            <div class="cell">회사</div>
+            <div class="cell">2025 전체 매출</div>
+            <div class="cell">전년 대비</div>
+            <div class="cell">삼일과 차이</div>
+            <div class="cell">해석</div>
+          </div>
+          <div class="row" role="row">
+            <div class="cell company">삼일PwC</div>
+            <div class="cell">1조1094억원</div>
+            <div class="cell">+8.4%</div>
+            <div class="cell">기준</div>
+            <div class="cell">Big4 합산 매출의 약 37.5%.</div>
+          </div>
+          <div class="row" role="row">
+            <div class="cell company">삼정KPMG</div>
+            <div class="cell">8755억원</div>
+            <div class="cell">+2.7%</div>
+            <div class="cell">-2339억원</div>
+            <div class="cell">삼일이 약 1.27배. 단, 삼정은 컨설팅 매출 포함 구조.</div>
+          </div>
+          <div class="row" role="row">
+            <div class="cell company">딜로이트 안진</div>
+            <div class="cell">5074억원</div>
+            <div class="cell">-1.5%</div>
+            <div class="cell">-6020억원</div>
+            <div class="cell">삼일이 약 2.19배.</div>
+          </div>
+          <div class="row" role="row">
+            <div class="cell company">EY한영</div>
+            <div class="cell">4645억원</div>
+            <div class="cell">-3.3%</div>
+            <div class="cell">-6449억원</div>
+            <div class="cell">삼일이 약 2.39배.</div>
+          </div>
+        </div>
+
+        <div style="height:16px"></div>
+
+        <div class="two-col">
+          <article class="card blue">
+            <span class="tag blue">2025 Total Revenue</span>
+            <h3>전체 매출 스케일</h3>
+            <div class="bar-list">
+              <div class="bar-row">
+                <label>삼일</label>
+                <div class="bar-track"><span style="width:100%"></span></div>
+                <strong>11094억</strong>
+              </div>
+              <div class="bar-row">
+                <label>삼정</label>
+                <div class="bar-track teal"><span style="width:79%"></span></div>
+                <strong>8755억</strong>
+              </div>
+              <div class="bar-row">
+                <label>안진</label>
+                <div class="bar-track green"><span style="width:46%"></span></div>
+                <strong>5074억</strong>
+              </div>
+              <div class="bar-row">
+                <label>한영</label>
+                <div class="bar-track coral"><span style="width:42%"></span></div>
+                <strong>4645억</strong>
+              </div>
+            </div>
+          </article>
+          <article class="card green">
+            <span class="tag green">2023 Tax Advisory</span>
+            <h3>세무자문 매출 스케일</h3>
+            <div class="bar-list">
+              <div class="bar-row">
+                <label>삼일</label>
+                <div class="bar-track"><span style="width:100%"></span></div>
+                <strong>2516억</strong>
+              </div>
+              <div class="bar-row">
+                <label>삼정</label>
+                <div class="bar-track teal"><span style="width:52%"></span></div>
+                <strong>1301억</strong>
+              </div>
+              <div class="bar-row">
+                <label>안진</label>
+                <div class="bar-track green"><span style="width:38%"></span></div>
+                <strong>944억</strong>
+              </div>
+              <div class="bar-row">
+                <label>한영</label>
+                <div class="bar-track coral"><span style="width:24%"></span></div>
+                <strong>594억</strong>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="subsegments">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">03 · Tax Subsegments</p>
+            <h2>세무 하위항목별 매출 비중은 공개되지 않는다. 대신 서비스 구조는 명확하다</h2>
+            <p>공식 Tax Services 페이지는 세무 하위서비스를 제시하지만, 각 서비스가 세무 매출에서 차지하는 비율은 공개하지 않는다. 따라서 제출용 보고서에는 “비중 없음”을 숨기지 말고, 어떤 항목을 측정해야 하는지 제안하는 편이 낫다.</p>
+          </div>
+          <p class="note">매출 비중을 임의 추정하면 신뢰도가 떨어진다. 공개 서비스 항목과 향후 확인 질문을 분리했다.</p>
+        </div>
+
+        <div class="card-grid">
+          <article class="card teal">
+            <span class="tag teal">M&A · 구조</span>
+            <h3>구조조정 세무자문</h3>
+            <p>M&amp;A, 지배구조 전환, 구조조정, 거래세무 이슈에 연결되는 고부가 자문 영역.</p>
+          </article>
+          <article class="card blue">
+            <span class="tag blue">Audit Defense</span>
+            <h3>세무진단 및 조사지원</h3>
+            <p>세무조사 대응, 리스크 진단, 조세불복 논리 구성과 연결되는 삼일의 전통 강점 영역.</p>
+          </article>
+          <article class="card green">
+            <span class="tag green">Global</span>
+            <h3>이전가격 및 국제통상</h3>
+            <p>다국적 기업, 해외법인, 공급망, 관세·국제조세 환경 변화에 대응하는 영역.</p>
+          </article>
+          <article class="card gold">
+            <span class="tag">PE · Wealth</span>
+            <h3>PE·상속증여·고액자산가</h3>
+            <p>투자구조, 자산 이전, 승계, 고액자산가 세무 이슈를 다루는 개인·법인 복합 영역.</p>
+          </article>
+          <article class="card teal">
+            <span class="tag teal">Local · P&O</span>
+            <h3>지방세·People &amp; Organisation</h3>
+            <p>지방세, 보상, 주식보상, 임직원 세무, 글로벌 이동성 등 HR·세무 교차 영역.</p>
+          </article>
+          <article class="card coral">
+            <span class="tag coral">Tax Tech</span>
+            <h3>Tax Managed Services · Tax Technology</h3>
+            <p>Tax Agent, Easy View for Tax, GloBE Tax Simulator처럼 세무 서비스를 디지털 상품으로 바꾸는 축.</p>
+          </article>
+        </div>
+
+        <div style="height:16px"></div>
+
+        <div class="disclosure-grid">
+          <article class="card green">
+            <span class="tag green">Reporting Gap</span>
+            <h3>하위항목 비중을 보려면 필요한 데이터</h3>
+            <ul class="clean">
+              <li>세무자문 전체 매출에서 서비스 라인별 매출.</li>
+              <li>Tax Digital Solutions 매출과 기존 조세자문 매출 분리.</li>
+              <li>고객군별 매출: 대기업, 중견기업, 금융, PE, 고액자산가, 해외법인.</li>
+              <li>반복 구독형 매출과 프로젝트형 자문 매출의 구분.</li>
+            </ul>
+          </article>
+          <article class="card coral">
+            <span class="tag coral">Submission Note</span>
+            <h3>지원서에 쓰기 좋은 표현</h3>
+            <p>“삼일PwC의 세무 하위항목별 매출 비중은 공개자료에서 확인되지 않지만, 공식 서비스 구조상 구조조정 세무, 세무진단·조사지원, 이전가격·국제통상, PE·상속증여, 지방세, Tax Technology가 주요 세무 포트폴리오다. 저는 이 중 반복 검색·검토 비용이 큰 Tax Technology 영역에서 AX 문제정의를 잡겠다.”</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="tax-agent">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">04 · Tax Agent</p>
+            <h2>Tax Agent는 “세법 검색”을 “검토 가능한 세무 AI”로 바꾸려는 제품이다</h2>
+            <p>공식 페이지와 인터뷰를 합치면 현재 상태는 정식 출시 후 시장 검증 단계, 추진 방향은 신뢰성·원문근거·업무 코치 기능 고도화로 정리된다.</p>
+          </div>
+          <p class="note">Tax Agent 매출, 유료 사용자 수, 고객사 도입 수는 공개되지 않았다.</p>
+        </div>
+
+        <div class="timeline">
+          <article class="card blue">
+            <span class="tag blue">2024.03</span>
+            <h3>개발 시작</h3>
+            <p>Taxwatch 인터뷰 기준, 개발은 2024년 3월부터 시작됐다. 조기 오픈보다 내부 테스트와 안정화를 우선했다.</p>
+          </article>
+          <article class="card teal">
+            <span class="tag teal">2025.09</span>
+            <h3>정식 출시</h3>
+            <p>정민수 부대표 인터뷰에서 2025년 9월 15일 출시 예정으로 언급됐고, 여러 기사에서 정식 출시가 보도됐다.</p>
+          </article>
+          <article class="card green">
+            <span class="tag green">Current</span>
+            <h3>공식 기능</h3>
+            <p>자연어 질의, 매주 최신 세법자료, 부족한 질문 보완, 웹 검색, AI 인용 원문 제공, 무료 체험을 제시한다.</p>
+          </article>
+          <article class="card coral">
+            <span class="tag coral">Next</span>
+            <h3>향후 방향</h3>
+            <p>계속 업그레이드하면서 자료 분석, 저연차 리서치 보조, 신입 코치 역할을 강화하는 방향으로 읽힌다.</p>
+          </article>
+        </div>
+
+        <div style="height:16px"></div>
+
+        <div class="two-col">
+          <article class="card green">
+            <span class="tag green">Strength</span>
+            <h3>Tax Agent의 강점</h3>
+            <ul class="clean">
+              <li>삼일PwC가 보유한 세법 관련 데이터와 전문가 검증을 기반으로 한다는 공식 포지션.</li>
+              <li>범용 챗봇이 아니라 세무 도메인 특화 vertical LLM으로 포지셔닝.</li>
+              <li>관련 법령 요지, 예규·판례, 검토 결론을 함께 제시하고, 참조 자료와 비참조 자료를 구분하는 방향.</li>
+              <li>할루시네이션 문제를 의식해 인용 자료 원문 제공과 웹 검색을 기능으로 내세움.</li>
+              <li>전문가의 단순 자료 탐색 시간을 줄여 더 고급 판단과 고객 커뮤니케이션에 집중하게 할 수 있음.</li>
+            </ul>
+          </article>
+          <article class="card coral">
+            <span class="tag coral">Weakness</span>
+            <h3>Tax Agent의 약점·리스크</h3>
+            <ul class="clean">
+              <li>인터뷰에서 전문가 검토 결론과 완전히 일치하지는 않아 더 발전시켜야 한다고 언급됨.</li>
+              <li>세무 AI는 오류가 곧 세금·가산세·분쟁 리스크로 이어질 수 있어 브랜드 리스크가 크다.</li>
+              <li>유료 상품이므로 일반 사용자 확산보다 전문가·기업 세무팀 중심으로 adoption이 제한될 수 있다.</li>
+              <li>더존 등 세무 소프트웨어 사업자, 범용 LLM, 로컬 세무 플랫폼과 사용 시간 경쟁을 해야 한다.</li>
+              <li>최신 법령·예규·판례 업데이트와 데이터 품질 관리가 제품 신뢰도의 핵심 병목이다.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="band" id="swot">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">05 · Strategic Read</p>
+            <h2>경쟁사 대비 삼일 세무 부문의 강점은 “규모 + 고위험 세무 경험 + AI 제품화”다</h2>
+            <p>지원 관점에서는 단순히 세무 지식이 많다는 메시지보다, 세무 업무에서 반복 탐색과 근거 검증을 AI로 바꾸는 AX 문제정의가 더 적합하다.</p>
+          </div>
+          <p class="note">경쟁사 내부 전략과 세부 제품 매출은 공개되지 않았으므로, 공개 매출·서비스·인터뷰 근거 기반 분석이다.</p>
+        </div>
+
+        <div class="card-grid">
+          <article class="card green">
+            <span class="tag green">Samil Edge</span>
+            <h3>경쟁 우위</h3>
+            <ul class="clean">
+              <li>2025년 Big4 전체 매출 1위.</li>
+              <li>2023년 세무자문 매출 1위, 2위 삼정의 약 1.93배.</li>
+              <li>Big4 중 세무자문 매출 비중 26%로 가장 높음.</li>
+              <li>조세불복 전문팀, 세제실·국세청·조세심판원 출신 포함 인력 구성.</li>
+              <li>Tax Digital Solutions Lab을 통해 세무 AI를 직접 제품화.</li>
+            </ul>
+          </article>
+          <article class="card blue">
+            <span class="tag blue">Customer Value</span>
+            <h3>고객 가치</h3>
+            <ul class="clean">
+              <li>세무조사, 조세불복, 국제조세, 이전가격처럼 금액 영향이 큰 문제 대응.</li>
+              <li>예규·판례 검색 시간을 줄이고, 원문 근거를 남기는 검토 흐름 제공.</li>
+              <li>대기업 세무팀의 반복 문의와 기초 리서치 부담 완화.</li>
+              <li>AI를 통해 신입·저연차의 시행착오를 줄이는 교육 효과.</li>
+            </ul>
+          </article>
+          <article class="card coral">
+            <span class="tag coral">Watch Point</span>
+            <h3>주의점</h3>
+            <ul class="clean">
+              <li>하위 매출 비공개로 세부 성장축을 정량 검증하기 어렵다.</li>
+              <li>AI 답변은 전문가 검토 없이 최종 세무 판단으로 쓰기 어렵다.</li>
+              <li>전문가 생산성을 높이는 만큼 junior training 모델을 다시 설계해야 한다.</li>
+              <li>세무 AI 경쟁이 범용 LLM과 세무 SaaS로 넓어지고 있다.</li>
+            </ul>
+          </article>
+        </div>
+
+        <div style="height:16px"></div>
+
+        <article class="card gold">
+          <span class="tag">Problem Definition</span>
+          <h3>지원용 문제정의</h3>
+          <p>기업 세무팀과 회계법인 주니어는 복잡한 세법·예규·판례를 찾고 비교하는 데 많은 시간을 쓰지만, 생성형 AI 답변은 환각과 근거 부족 때문에 그대로 쓸 수 없다. 삼일PwC는 Tax Agent처럼 원문 근거와 전문가 검증을 결합한 세무 AI를 통해 “검색 시간 단축”이 아니라 “검토 가능한 세무 판단 보조”를 만드는 방향으로 갈 수 있다.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="band" id="sources">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <p class="eyebrow">06 · Sources</p>
+            <h2>출처와 수치 기준</h2>
+            <p>HTML에 넣은 수치는 공개자료 기준이며, 기준연도가 다른 수치는 섞어 계산하지 않았다.</p>
+          </div>
+          <p class="note">비공개 항목은 “확인 불가”로 처리했다.</p>
+        </div>
+        <div class="source-list">
+          <a href="https://www.pwc.com/kr/ko/about-us/business-report.html" target="_blank" rel="noreferrer">삼일PwC 사업보고서·투명성보고서</a>
+          <a href="https://www.pwc.com/kr/ko/aboutus/samilpwc_business-report_55th.pdf" target="_blank" rel="noreferrer">삼일PwC 제55기 사업보고서 PDF</a>
+          <a href="https://www.newsis.com/view/NISX20251001_0003352936" target="_blank" rel="noreferrer">뉴시스, 2025년 Big4 회계법인 매출 기사</a>
+          <a href="https://www.taxwatch.co.kr/article/tax/2023/10/06/0001" target="_blank" rel="noreferrer">Taxwatch, 세무자문에 강한 회계법인 TOP100</a>
+          <a href="https://www.pwc.com/kr/ko/tax.html" target="_blank" rel="noreferrer">삼일PwC Tax Services</a>
+          <a href="https://www.pwc.com/kr/ko/digital-solutions/tax-agent.html" target="_blank" rel="noreferrer">삼일PwC Tax Agent 공식 페이지</a>
+          <a href="https://www.taxwatch.co.kr/article/tax/2025/09/30/0003" target="_blank" rel="noreferrer">Taxwatch, 삼일PwC Tax Agent 인터뷰</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>Prepared for AX hackathon workspace. Public-source analysis, not an official Samil PwC document.</p>
+    </div>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,80 @@
+{
+  "dataset_id": "insaon-synthetic-chunking-spike-v0.1",
+  "version": "0.1.0",
+  "notice": "공개 가능한 합성 질의다. 실제 담당자 질문이 아니며 청킹 전략 비교 외의 용도로 쓰지 않는다. 근거 문서는 data/sample/distractor-corpus.json이다.",
+  "corpus_path": "data/sample/distractor-corpus.json",
+  "queries": [
+    {
+      "query_id": "CHUNK-Q-01",
+      "slice": "core_evidence",
+      "query": "질병휴직과 복직의 공개 근거를 질문 기준일 원문으로 검토하는 조문",
+      "gold": ["SYNTHETIC-EVIDENCE-B-001"]
+    },
+    {
+      "query_id": "CHUNK-Q-02",
+      "slice": "core_evidence",
+      "query": "육아휴직 검토에 자녀와 기존 기간 조건을 확인하라는 조문",
+      "gold": ["SYNTH-PARENTAL-001"]
+    },
+    {
+      "query_id": "CHUNK-Q-03",
+      "slice": "core_evidence",
+      "query": "가족돌봄휴직 검토에 돌봄 관계를 확인하라는 조문",
+      "gold": ["SYNTH-FAMILY-001"]
+    },
+    {
+      "query_id": "CHUNK-Q-04",
+      "slice": "core_evidence",
+      "query": "자기개발휴직 검토에 신청 목적을 확인하라는 조문",
+      "gold": ["SYNTH-DEVELOP-001"]
+    },
+    {
+      "query_id": "CHUNK-Q-05",
+      "slice": "proviso",
+      "query": "기관 규정이 필요한 경우 최종 판단을 보류한다는 단서",
+      "gold": ["SYNTHETIC-EXCEPTION-B-001"]
+    },
+    {
+      "query_id": "CHUNK-Q-06",
+      "slice": "proviso",
+      "query": "동일 사유로 이미 사용한 기간을 육아휴직 한도에 합산한다는 단서",
+      "gold": ["SYNTH-D-PARENTAL-EXC-02"]
+    },
+    {
+      "query_id": "CHUNK-Q-07",
+      "slice": "proviso",
+      "query": "기관 규정이 상위 규정과 다르게 정한 경우 질병휴직 검토를 보류한다는 단서",
+      "gold": ["SYNTH-D-MEDICAL-EXC-01"]
+    },
+    {
+      "query_id": "CHUNK-Q-08",
+      "slice": "supplementary",
+      "query": "부칙과 시행일을 질문 기준일과 함께 검토한다는 조문",
+      "gold": ["SYNTH-SUPPLEMENT-001"]
+    },
+    {
+      "query_id": "CHUNK-Q-09",
+      "slice": "supplementary",
+      "query": "제1차 개정 당시 이미 사용 중이던 기간에 관한 경과조치",
+      "gold": ["SYNTH-D-SUP-01"]
+    },
+    {
+      "query_id": "CHUNK-Q-10",
+      "slice": "multi_evidence",
+      "query": "육아휴직 검토 근거와 그 합산 한도 단서를 함께",
+      "gold": ["SYNTH-PARENTAL-001", "SYNTH-D-PARENTAL-EXC-02"]
+    },
+    {
+      "query_id": "CHUNK-Q-11",
+      "slice": "multi_evidence",
+      "query": "질병휴직 복직 근거와 기관 규정 확인 단서를 함께",
+      "gold": ["SYNTHETIC-EVIDENCE-B-001", "SYNTHETIC-EXCEPTION-B-001"]
+    },
+    {
+      "query_id": "CHUNK-Q-12",
+      "slice": "adjacent_confusable",
+      "query": "가족돌봄휴직과 육아휴직을 혼동하지 않도록 돌봄 대상을 구분하는 조문",
+      "gold": ["SYNTH-D-ADJ-01-1", "SYNTH-D-ADJ-01-2", "SYNTH-D-ADJ-03-1", "SYNTH-D-ADJ-03-2"]
+    }
+  ]
+}

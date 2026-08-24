@@ -1,0 +1,1818 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="인사ON 로컬 RAG 검토 지원 챗봇의 계획, 구현 변경, 검증 결과와 한계를 정리한 포트폴리오 케이스 스터디">
+  <title>인사ON · 계획에서 검증 가능한 프로토타입까지</title>
+  <style>
+    @font-face {
+      font-family: "LINE Seed Sans KR";
+      font-style: normal;
+      font-weight: 350 649;
+      font-display: swap;
+      src: url("../src/insaon/web/static/fonts/LINESeedKR-Rg.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "LINE Seed Sans KR";
+      font-style: normal;
+      font-weight: 650 900;
+      font-display: swap;
+      src: url("../src/insaon/web/static/fonts/LINESeedKR-Bd.woff2") format("woff2");
+    }
+    :root {
+      --ink: #202522;
+      --ink-2: #303832;
+      --muted: #69716c;
+      --faint: #929893;
+      --paper: #efede6;
+      --surface: #fbfaf5;
+      --surface-2: #e7e3d9;
+      --line: #d6d2c8;
+      --line-dark: #bbb8ae;
+      --violet: #184f3a;
+      --violet-dark: #123d2e;
+      --violet-soft: #dce9df;
+      --green: #176548;
+      --green-soft: #dceadf;
+      --amber: #765219;
+      --amber-soft: #f2e6bd;
+      --red: #9d4434;
+      --red-soft: #f4dfd8;
+      --content: 1180px;
+      --radius: 22px;
+      --shadow: 0 20px 60px rgb(63 55 40 / 12%);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-width: 320px;
+      background: var(--paper);
+      scroll-behavior: smooth;
+    }
+
+    body {
+      min-width: 320px;
+      margin: 0;
+      background:
+        linear-gradient(90deg, transparent 0, transparent calc(50% - 590px), rgb(24 79 58 / 5%) calc(50% - 590px), rgb(24 79 58 / 5%) calc(50% - 589px), transparent calc(50% - 589px)),
+        var(--paper);
+      color: var(--ink);
+      font-family: "LINE Seed Sans KR", "Apple SD Gothic Neo", system-ui, sans-serif;
+      font-synthesis: none;
+      -webkit-font-smoothing: antialiased;
+      hyphens: none;
+      line-break: strict;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    p,
+    h1,
+    h2,
+    h3,
+    h4,
+    ol,
+    ul,
+    dl,
+    dd,
+    figure,
+    blockquote {
+      margin: 0;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+    }
+
+    a:focus-visible {
+      outline: 3px solid rgb(24 79 58 / 40%);
+      outline-offset: 3px;
+    }
+
+    .skip-link {
+      position: fixed;
+      top: 10px;
+      left: 10px;
+      z-index: 100;
+      padding: 10px 14px;
+      border-radius: 8px;
+      background: var(--ink);
+      color: white;
+      transform: translateY(-160%);
+    }
+
+    .skip-link:focus {
+      transform: translateY(0);
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      border-bottom: 1px solid rgb(222 220 228 / 86%);
+      background: rgb(248 247 250 / 90%);
+      backdrop-filter: blur(18px);
+    }
+
+    .header-inner {
+      display: flex;
+      width: min(var(--content), calc(100% - 40px));
+      min-height: 68px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      margin: 0 auto;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: -.025em;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 32px;
+      height: 32px;
+      place-items: center;
+      border-radius: 50% 50% 50% 12px;
+      background: var(--violet);
+      color: white;
+      font-size: 13px;
+    }
+
+    .header-nav {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 680;
+    }
+
+    .header-nav a:hover {
+      color: var(--ink);
+    }
+
+    .header-nav .primary-link {
+      display: inline-flex;
+      min-height: 38px;
+      align-items: center;
+      padding: 0 13px;
+      border-radius: 999px;
+      background: var(--ink);
+      color: white;
+    }
+
+    main {
+      overflow: hidden;
+    }
+
+    .wrap {
+      width: min(var(--content), calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .hero {
+      position: relative;
+      padding: 92px 0 76px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      top: 66px;
+      left: calc(50% + 310px);
+      width: 260px;
+      height: 260px;
+      border: 1px solid rgb(24 79 58 / 13%);
+      border-radius: 50%;
+      box-shadow:
+        0 0 0 44px rgb(24 79 58 / 3%),
+        0 0 0 88px rgb(24 79 58 / 2%);
+      pointer-events: none;
+    }
+
+    .hero-grid {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      align-items: end;
+      grid-template-columns: minmax(0, 1.45fr) minmax(320px, .55fr);
+      gap: 70px;
+    }
+
+    .kicker,
+    .section-kicker {
+      color: var(--violet);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .hero h1 {
+      max-width: 790px;
+      margin-top: 18px;
+      font-size: clamp(44px, 6.2vw, 76px);
+      font-weight: 850;
+      line-height: 1.05;
+      letter-spacing: -.065em;
+    }
+
+    .hero h1 span {
+      color: var(--violet);
+    }
+
+    .hero-copy {
+      max-width: 720px;
+      margin-top: 24px;
+      color: var(--ink-2);
+      font-size: 18px;
+      line-height: 1.75;
+      letter-spacing: -.02em;
+    }
+
+    .hero-note {
+      margin-top: 19px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.65;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 9px;
+      margin-top: 30px;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 44px;
+      align-items: center;
+      gap: 9px;
+      padding: 0 15px;
+      border: 1px solid var(--line-dark);
+      border-radius: 999px;
+      background: var(--surface);
+      font-size: 12px;
+      font-weight: 740;
+    }
+
+    .button.primary {
+      border-color: var(--violet);
+      background: var(--violet);
+      color: white;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+    }
+
+    .hero-evidence {
+      display: grid;
+      gap: 1px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--line);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .hero-evidence > div {
+      display: grid;
+      min-height: 92px;
+      align-content: center;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 16px;
+      padding: 18px 20px;
+      background: var(--surface);
+    }
+
+    .hero-evidence dt {
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .hero-evidence dd {
+      font-size: 27px;
+      font-weight: 820;
+      letter-spacing: -.04em;
+    }
+
+    .hero-evidence small {
+      grid-column: 1 / -1;
+      color: var(--faint);
+      font-size: 10px;
+    }
+
+    .reading-map {
+      padding: 20px 0;
+      border-bottom: 1px solid var(--line);
+      background: var(--surface);
+    }
+
+    .reading-map ol {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 8px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .reading-map li {
+      display: flex;
+      min-height: 52px;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .reading-map span {
+      display: grid;
+      width: 24px;
+      height: 24px;
+      place-items: center;
+      flex: 0 0 auto;
+      border-radius: 7px;
+      background: var(--violet-soft);
+      color: var(--violet);
+      font-size: 10px;
+    }
+
+    .section {
+      padding: 108px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: 170px minmax(0, 1fr);
+      gap: 40px;
+      margin-bottom: 52px;
+    }
+
+    .section-number {
+      color: var(--faint);
+      font-size: 12px;
+      font-weight: 760;
+      letter-spacing: .08em;
+    }
+
+    .section-title h2 {
+      max-width: 850px;
+      margin-top: 10px;
+      font-size: clamp(32px, 4.2vw, 52px);
+      font-weight: 830;
+      line-height: 1.14;
+      letter-spacing: -.055em;
+    }
+
+    .section-title > p:last-child {
+      max-width: 780px;
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    .problem-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .problem-card {
+      min-height: 240px;
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+
+    .problem-card.accent {
+      background: var(--ink);
+      color: white;
+    }
+
+    .card-label {
+      color: var(--violet);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+    }
+
+    .problem-card.accent .card-label {
+      color: #a9a4ff;
+    }
+
+    .problem-card h3 {
+      max-width: 440px;
+      margin-top: 18px;
+      font-size: 25px;
+      line-height: 1.3;
+      letter-spacing: -.035em;
+    }
+
+    .problem-card p {
+      margin-top: 18px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.75;
+    }
+
+    .problem-card.accent p {
+      color: #c9c5d0;
+    }
+
+    .scope-strip {
+      display: grid;
+      margin-top: 16px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      overflow: hidden;
+    }
+
+    .scope-strip > div {
+      min-height: 126px;
+      padding: 22px;
+    }
+
+    .scope-strip > div + div {
+      border-left: 1px solid var(--line);
+    }
+
+    .scope-strip strong {
+      display: block;
+      font-size: 14px;
+    }
+
+    .scope-strip span {
+      display: block;
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.55;
+    }
+
+    .decision-list {
+      border-top: 1px solid var(--line-dark);
+    }
+
+    .decision-row {
+      display: grid;
+      min-height: 146px;
+      align-items: start;
+      grid-template-columns: 56px minmax(0, .9fr) 52px minmax(0, 1.1fr);
+      gap: 24px;
+      padding: 26px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .decision-index {
+      color: var(--violet);
+      font-size: 12px;
+      font-weight: 820;
+    }
+
+    .decision-cell span {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--faint);
+      font-size: 10px;
+      font-weight: 750;
+      letter-spacing: .05em;
+    }
+
+    .decision-cell strong {
+      display: block;
+      font-size: 17px;
+      line-height: 1.45;
+    }
+
+    .decision-cell p {
+      margin-top: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.65;
+    }
+
+    .decision-arrow {
+      color: var(--violet);
+      font-size: 24px;
+    }
+
+    .architecture {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(300px, .65fr);
+      gap: 18px;
+    }
+
+    .pipeline {
+      padding: 28px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+
+    .pipeline-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .pipeline-step {
+      position: relative;
+      min-height: 116px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--paper);
+    }
+
+    .pipeline-step:not(:nth-child(4n))::after {
+      content: "→";
+      position: absolute;
+      top: 45px;
+      right: -17px;
+      z-index: 2;
+      color: var(--violet);
+      font-size: 15px;
+      font-weight: 800;
+    }
+
+    .pipeline-step span {
+      color: var(--violet);
+      font-size: 10px;
+      font-weight: 800;
+    }
+
+    .pipeline-step strong {
+      display: block;
+      margin-top: 13px;
+      font-size: 13px;
+    }
+
+    .pipeline-step p {
+      margin-top: 7px;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.5;
+    }
+
+    .role-stack {
+      display: grid;
+      gap: 10px;
+    }
+
+    .role-card {
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+    }
+
+    .role-card h3 {
+      font-size: 15px;
+    }
+
+    .role-card ul {
+      display: grid;
+      gap: 7px;
+      margin-top: 13px;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.55;
+    }
+
+    .role-card.deterministic {
+      border-color: #cac6ff;
+      background: var(--violet-soft);
+    }
+
+    .role-card.human {
+      border-color: #e4cba5;
+      background: var(--amber-soft);
+    }
+
+    .product-frame {
+      padding: 12px;
+      border: 1px solid var(--line-dark);
+      border-radius: 20px;
+      background: #e9e8ee;
+      box-shadow: var(--shadow);
+    }
+
+    .frame-bar {
+      display: flex;
+      height: 34px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 9px;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    .frame-dots {
+      display: flex;
+      gap: 5px;
+    }
+
+    .frame-dots span {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #bbb7c3;
+    }
+
+    .product-frame img {
+      width: 100%;
+      border: 1px solid #d1ced8;
+      border-radius: 12px;
+      background: var(--surface);
+    }
+
+    .product-caption {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 30px;
+      margin-top: 22px;
+    }
+
+    .product-caption strong {
+      font-size: 16px;
+    }
+
+    .product-caption p {
+      max-width: 720px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.65;
+    }
+
+    .case-grid {
+      display: grid;
+      margin-top: 54px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .case-card {
+      min-height: 230px;
+      padding: 23px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+    }
+
+    .status {
+      display: inline-flex;
+      min-height: 27px;
+      align-items: center;
+      padding: 0 8px;
+      border-radius: 7px;
+      font-size: 9px;
+      font-weight: 780;
+    }
+
+    .status.review {
+      background: var(--amber-soft);
+      color: var(--amber);
+    }
+
+    .status.answer {
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .status.hold {
+      background: var(--red-soft);
+      color: var(--red);
+    }
+
+    .case-card h3 {
+      margin-top: 18px;
+      font-size: 20px;
+      letter-spacing: -.03em;
+    }
+
+    .case-card p {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.65;
+    }
+
+    .case-card strong:last-child {
+      display: block;
+      margin-top: 18px;
+      color: var(--ink-2);
+      font-size: 11px;
+    }
+
+    .split-visual {
+      display: grid;
+      align-items: start;
+      grid-template-columns: minmax(0, 1fr) 320px;
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .split-visual .product-frame {
+      min-width: 0;
+    }
+
+    .mobile-frame {
+      padding: 10px;
+      border: 1px solid var(--line-dark);
+      border-radius: 24px;
+      background: #e9e8ee;
+      box-shadow: var(--shadow);
+    }
+
+    .mobile-frame img {
+      width: 100%;
+      border-radius: 17px;
+    }
+
+    .evaluation-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(280px, .75fr);
+      gap: 18px;
+    }
+
+    .eval-table-wrap {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 11px;
+    }
+
+    th,
+    td {
+      height: 50px;
+      padding: 0 14px;
+      border-bottom: 1px solid var(--line);
+      text-align: right;
+      white-space: nowrap;
+    }
+
+    th:first-child,
+    td:first-child {
+      text-align: left;
+    }
+
+    th {
+      background: var(--surface-2);
+      color: var(--muted);
+      font-size: 10px;
+      font-weight: 760;
+    }
+
+    tbody tr:last-child td {
+      border-bottom: 0;
+    }
+
+    tbody tr.is-selected {
+      background: var(--violet-soft);
+      color: var(--violet-dark);
+      font-weight: 760;
+    }
+
+    .eval-notes {
+      display: grid;
+      gap: 10px;
+    }
+
+    .eval-note {
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--surface);
+    }
+
+    .eval-note strong {
+      display: block;
+      font-size: 15px;
+    }
+
+    .eval-note p {
+      margin-top: 9px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.65;
+    }
+
+    .eval-note.danger {
+      border-color: #e3b8b8;
+      background: var(--red-soft);
+    }
+
+    .eval-note.safe {
+      border-color: #b7dac8;
+      background: var(--green-soft);
+    }
+
+    .truth-boundary {
+      display: grid;
+      margin-top: 18px;
+      grid-template-columns: 1fr 1fr;
+      border: 1px solid var(--line-dark);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .truth-boundary > div {
+      min-height: 160px;
+      padding: 24px;
+      background: var(--surface);
+    }
+
+    .truth-boundary > div + div {
+      border-left: 1px solid var(--line);
+      background: var(--ink);
+      color: white;
+    }
+
+    .truth-boundary h3 {
+      font-size: 17px;
+    }
+
+    .truth-boundary ul {
+      display: grid;
+      gap: 7px;
+      margin-top: 13px;
+      padding-left: 18px;
+      color: var(--muted);
+      font-size: 11px;
+      line-height: 1.55;
+    }
+
+    .truth-boundary > div + div ul {
+      color: #c8c4cf;
+    }
+
+    .phase-board {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .phase {
+      position: relative;
+      min-height: 150px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      background: var(--surface);
+    }
+
+    .phase::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 3px;
+      border-radius: 13px 13px 0 0;
+      background: var(--line-dark);
+    }
+
+    .phase.completed::before {
+      background: var(--green);
+    }
+
+    .phase.blocked::before {
+      background: var(--amber);
+    }
+
+    .phase span {
+      color: var(--faint);
+      font-size: 10px;
+      font-weight: 780;
+    }
+
+    .phase h3 {
+      margin-top: 16px;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+
+    .phase p {
+      margin-top: 11px;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.55;
+    }
+
+    .phase-status {
+      display: inline-flex;
+      margin-top: 14px;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .04em;
+    }
+
+    .completed .phase-status {
+      color: var(--green);
+    }
+
+    .blocked .phase-status {
+      color: var(--amber);
+    }
+
+    .limit-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+    }
+
+    .limit-card {
+      padding: 26px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+
+    .limit-card h3 {
+      font-size: 18px;
+    }
+
+    .limit-card p {
+      margin-top: 11px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .limit-card strong {
+      display: inline-flex;
+      margin-top: 17px;
+      color: var(--violet);
+      font-size: 11px;
+    }
+
+    .closing {
+      padding: 110px 0 120px;
+      background: var(--ink);
+      color: white;
+    }
+
+    .closing-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 340px;
+      gap: 70px;
+    }
+
+    .closing h2 {
+      max-width: 780px;
+      font-size: clamp(38px, 5vw, 64px);
+      line-height: 1.12;
+      letter-spacing: -.055em;
+    }
+
+    .closing h2 span {
+      color: #9d97ff;
+    }
+
+    .closing-copy {
+      max-width: 700px;
+      margin-top: 24px;
+      color: #c9c5d0;
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .evidence-links {
+      display: grid;
+      align-content: start;
+      gap: 1px;
+      border: 1px solid #48434f;
+      border-radius: 14px;
+      background: #48434f;
+      overflow: hidden;
+    }
+
+    .evidence-links a {
+      display: flex;
+      min-height: 54px;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 0 15px;
+      background: #2b2830;
+      color: #d7d3dc;
+      font-size: 11px;
+    }
+
+    .evidence-links a:hover {
+      background: #35313a;
+      color: white;
+    }
+
+    .footer {
+      padding: 24px 0;
+      border-top: 1px solid #39353f;
+      background: var(--ink);
+      color: #9f9aa5;
+      font-size: 10px;
+    }
+
+    .footer .wrap {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+    }
+
+    @media (max-width: 980px) {
+      .header-nav a:not(.primary-link) {
+        display: none;
+      }
+
+      .hero-grid,
+      .architecture,
+      .evaluation-grid,
+      .closing-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-evidence {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .hero-evidence > div {
+        min-height: 110px;
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .reading-map ol {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .section-head {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 12px;
+      }
+
+      .scope-strip,
+      .phase-board {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .scope-strip > div + div {
+        border-left: 0;
+      }
+
+      .scope-strip > div:nth-child(even) {
+        border-left: 1px solid var(--line);
+      }
+
+      .scope-strip > div:nth-child(n + 3) {
+        border-top: 1px solid var(--line);
+      }
+
+      .pipeline-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .pipeline-step::after {
+        display: none;
+      }
+
+      .split-visual {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .mobile-frame {
+        width: min(380px, 100%);
+        margin: 0 auto;
+      }
+    }
+
+    @media (max-width: 680px) {
+      .header-inner,
+      .wrap {
+        width: min(100% - 28px, var(--content));
+      }
+
+      .site-header {
+        position: static;
+      }
+
+      .header-inner {
+        min-height: 62px;
+      }
+
+      .header-nav .primary-link {
+        min-height: 36px;
+        padding: 0 10px;
+      }
+
+      .hero {
+        padding: 64px 0 54px;
+      }
+
+      .hero::after {
+        display: none;
+      }
+
+      .hero h1 {
+        font-size: 43px;
+      }
+
+      .hero-copy {
+        font-size: 16px;
+      }
+
+      .hero-evidence {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-evidence > div {
+        min-height: 82px;
+        grid-template-columns: minmax(0, 1fr) auto;
+      }
+
+      .reading-map ol {
+        display: flex;
+        overflow-x: auto;
+      }
+
+      .reading-map li {
+        min-width: 142px;
+        flex: 0 0 auto;
+      }
+
+      .section {
+        padding: 76px 0;
+      }
+
+      .section-head {
+        margin-bottom: 34px;
+      }
+
+      .problem-grid,
+      .scope-strip,
+      .case-grid,
+      .truth-boundary,
+      .phase-board,
+      .limit-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .scope-strip > div:nth-child(even) {
+        border-left: 0;
+      }
+
+      .scope-strip > div + div,
+      .scope-strip > div:nth-child(n + 3) {
+        border-top: 1px solid var(--line);
+      }
+
+      .decision-row {
+        grid-template-columns: 34px minmax(0, 1fr);
+        gap: 14px;
+      }
+
+      .decision-arrow {
+        display: none;
+      }
+
+      .decision-cell:last-child {
+        grid-column: 2;
+      }
+
+      .pipeline {
+        padding: 15px;
+      }
+
+      .pipeline-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .product-frame {
+        padding: 7px;
+        border-radius: 13px;
+      }
+
+      .frame-bar {
+        height: 28px;
+      }
+
+      .product-caption {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .case-grid {
+        margin-top: 36px;
+      }
+
+      .eval-table-wrap {
+        overflow-x: auto;
+      }
+
+      table {
+        min-width: 650px;
+      }
+
+      .truth-boundary > div + div {
+        border-top: 1px solid var(--line);
+        border-left: 0;
+      }
+
+      .closing {
+        padding: 80px 0;
+      }
+
+      .footer .wrap {
+        flex-direction: column;
+        gap: 8px;
+      }
+    }
+
+    @media print {
+      .site-header,
+      .reading-map,
+      .hero-actions {
+        display: none;
+      }
+
+      body {
+        background: white;
+      }
+
+      .section,
+      .hero,
+      .closing {
+        break-inside: avoid;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html {
+        scroll-behavior: auto;
+      }
+
+      *,
+      *::before,
+      *::after {
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">본문으로 바로가기</a>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="#top" aria-label="인사ON 케이스 스터디 처음으로">
+        <span class="brand-mark" aria-hidden="true">인</span>
+        <span>인사ON · Case Study</span>
+      </a>
+      <nav class="header-nav" aria-label="자료 탐색">
+        <a href="#change">변경 과정</a>
+        <a href="#build">구현</a>
+        <a href="#verify">검증</a>
+        <a href="#limits">한계</a>
+        <a href="planning-report.html">초기 계획서</a>
+        <a class="primary-link" href="https://insaon-local-rag.psungs1226.chatgpt.site">공개 데모 보기 ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <div class="wrap hero-grid">
+        <div>
+          <p class="kicker">Local RAG · Human-reviewed HR support</p>
+          <h1>답을 내리는 챗봇이 아니라,<br><span>답해도 되는지를 검증했다.</span></h1>
+          <p class="hero-copy">
+            인사ON은 지방공무원 휴직·복직 질문에서 누락 조건을 먼저 확인하고,
+            질문 기준일에 유효한 공개 근거를 연결하는 인사담당자용 검토 지원 프로토타입이다.
+          </p>
+          <p class="hero-note">
+            포트폴리오 공개 범위는 합성 사례와 공개 가능한 집계 자료로 제한한다.
+            최종 인사처분·법률해석·실제 개인정보 처리는 제품 범위가 아니다.
+          </p>
+          <div class="hero-actions">
+            <a class="button primary" href="https://insaon-local-rag.psungs1226.chatgpt.site">41초 챗봇 데모 확인 <span aria-hidden="true">↗</span></a>
+            <a class="button" href="planning-report.html">처음 세운 10장 계획서</a>
+            <a class="button" href="../README.md">기술 README</a>
+          </div>
+        </div>
+        <dl class="hero-evidence" aria-label="현재 공개 증거">
+          <div>
+            <dt>Core MVP</dt>
+            <dd>7 / 7</dd>
+            <small>phase 00~06 · 로컬 모델 통합 완료</small>
+          </div>
+          <div>
+            <dt>자동화 테스트</dt>
+            <dd>171</dd>
+            <small>오프라인·결정적 회귀 기준</small>
+          </div>
+          <div>
+            <dt>H3 합성 회귀</dt>
+            <dd>60 / 60</dd>
+            <small>인용·예외 처리 계약 통과 · 법률 정확도 아님</small>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+    <nav class="reading-map" aria-label="케이스 스터디 순서">
+      <ol class="wrap">
+        <li><span>01</span>처음 계획</li>
+        <li><span>02</span>결정 변경</li>
+        <li><span>03</span>구현 구조</li>
+        <li><span>04</span>검증 결과</li>
+        <li><span>05</span>한계와 다음 단계</li>
+      </ol>
+    </nav>
+
+    <section class="section" id="plan">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="section-number">01 · PLAN</p>
+          <div class="section-title">
+            <p class="section-kicker">처음 세운 계획</p>
+            <h2>2주 안에 “인사 전 분야”가 아닌<br>휴직·복직의 검토 구조를 증명한다.</h2>
+            <p>
+              기존 계획 HTML은 Persona → Problem → Solution → Technology → Validation → Outcome 순으로
+              문제와 구현 가설을 정리했다. 일정이 부족해도 기준일 검색, 인용 검증, 답변 보류와
+              평가 재현성은 줄이지 않는다는 원칙을 먼저 고정했다.
+            </p>
+          </div>
+        </header>
+
+        <div class="problem-grid">
+          <article class="problem-card">
+            <p class="card-label">Problem</p>
+            <h3>짧은 업무 질문만으로는 적용 규정이 결정되지 않는다.</h3>
+            <p>
+              휴직 유형, 대상자 조건, 질문 기준일, 과거 사용 기간과 기관 규정 확인 여부가 달라지면
+              검토 근거도 달라진다. 단순 검색이나 자유 생성형 챗봇은 이 누락을 감춘 채 결론부터
+              만들 위험이 있다.
+            </p>
+          </article>
+          <article class="problem-card accent">
+            <p class="card-label">Product principle</p>
+            <h3>충분하지 않으면 답하지 않고, 사람이 확인할 근거를 남긴다.</h3>
+            <p>
+              모든 요청은 ANSWERABLE, REVIEW_REQUIRED, INSUFFICIENT_EVIDENCE 중 하나로 종료한다.
+              ANSWERABLE도 최종 판단이 아니라 공개 근거를 갖춘 검토 재료다.
+            </p>
+          </article>
+        </div>
+
+        <div class="scope-strip" aria-label="MVP 범위">
+          <div><strong>1차 사용자</strong><span>지방자치단체 인사담당자</span></div>
+          <div><strong>심층 구현</strong><span>육아·질병휴직 · 파생 정근수당</span></div>
+          <div><strong>확장 구현</strong><span>가족돌봄 · 자기개발휴직</span></div>
+          <div><strong>범위 밖</strong><span>최종 처분, 기관 규정 자동수집, 실제 직원정보</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="change">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="section-number">02 · CHANGE</p>
+          <div class="section-title">
+            <p class="section-kicker">구현 중 바뀐 결정</p>
+            <h2>계획을 지킨 부분보다,<br>근거를 보고 바꾼 부분이 더 중요했다.</h2>
+            <p>
+              구현 과정에서 편의보다 재현성과 안전 경계를 우선했다. 아래 변경은 회고가 아니라
+              ADR, phase 상태와 실행 artifact에 남아 있는 실제 결정이다.
+            </p>
+          </div>
+        </header>
+
+        <div class="decision-list">
+          <article class="decision-row">
+            <span class="decision-index">01</span>
+            <div class="decision-cell">
+              <span>계획</span>
+              <strong>BM25를 기본 lexical 검색으로 사용</strong>
+              <p>일반적인 RAG 기준선을 먼저 가정했다.</p>
+            </div>
+            <span class="decision-arrow" aria-hidden="true">→</span>
+            <div class="decision-cell">
+              <span>실제 결정</span>
+              <strong>동일 합성 slice에서 spike 후 char-ngram-v1 선택</strong>
+              <p>FTS5 기본 tokenizer보다 띄어쓰기 변형과 법령 표현 회수가 안정적이었다. 결과는 기술 선택용 개발 spike로만 사용했다.</p>
+            </div>
+          </article>
+
+          <article class="decision-row">
+            <span class="decision-index">02</span>
+            <div class="decision-cell">
+              <span>초기 후속 구상</span>
+              <strong>외부 모델 provider 연결 가능성 검토</strong>
+              <p>생성·임베딩·재랭킹을 빠르게 붙일 수 있지만 계정과 비용, 데이터 경계가 남았다.</p>
+            </div>
+            <span class="decision-arrow" aria-hidden="true">→</span>
+            <div class="decision-cell">
+              <span>실제 결정</span>
+              <strong>Qwen3 4B + BGE-M3를 Ollama loopback에서 실행</strong>
+              <p>Ollama loopback에서 generation·embedding·reranking을 연결하고, 정근수당은 answer-v7 제약 출력과 결정적 계산·인용 검증을 함께 기록했다.</p>
+            </div>
+          </article>
+
+          <article class="decision-row">
+            <span class="decision-index">03</span>
+            <div class="decision-cell">
+              <span>계획</span>
+              <strong>공식 Open API를 법령 수집 경로로 가정</strong>
+              <p>연혁·구조화 데이터에 유리하지만 인증키가 재현성의 필수조건이 될 수 있었다.</p>
+            </div>
+            <span class="decision-arrow" aria-hidden="true">→</span>
+            <div class="decision-cell">
+              <span>실제 결정</span>
+              <strong>공식 공개 본문을 keyless candidate로 수집</strong>
+              <p>current 자료 13종과 기준일 재현용 과거 버전 4종을 keyless exact allowlist로 수집했다. metadata-only 1종을 제외한 본문 16종·12,640개 조문을 파싱했지만 사람 원문 대조 전에는 승인 index로 승격하지 않는다.</p>
+            </div>
+          </article>
+
+          <article class="decision-row">
+            <span class="decision-index">04</span>
+            <div class="decision-cell">
+              <span>계획</span>
+              <strong>구조화 답변과 근거를 보여주는 Web UI</strong>
+              <p>답변 결과를 중심으로 한 화면이었다.</p>
+            </div>
+            <span class="decision-arrow" aria-hidden="true">→</span>
+            <div class="decision-cell">
+              <span>실제 결정</span>
+              <strong>대화 + 조건 + 근거 + 사람 검토 경계를 한 작업대로 통합</strong>
+              <p>design-agent로 세 방향을 비교한 뒤 선택한 Case Workbench를 기준으로 CASE 목록, 대화, 조건, 근거와 검토 노트를 한 흐름에 결합했다.</p>
+            </div>
+          </article>
+
+          <article class="decision-row">
+            <span class="decision-index">05</span>
+            <div class="decision-cell">
+              <span>계획</span>
+              <strong>기술 평가와 실무 검증을 순차 완료</strong>
+              <p>공식 corpus, 독립 정답셋, pilot, 넓은 근거 검색, 디자인 검증과 휴직 파생 정근수당까지 14 phase로 관리했다.</p>
+            </div>
+            <span class="decision-arrow" aria-hidden="true">→</span>
+            <div class="decision-cell">
+              <span>현재 상태</span>
+              <strong>자동화 가능한 41 step 완료, 사람 검토 이후 단계는 blocked</strong>
+              <p>승인자·독립 평가자·실제 배포 증거가 없으므로 phase 07~09의 미완료 gate를 그대로 남겼다.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="build">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="section-number">03 · BUILD</p>
+          <div class="section-title">
+            <p class="section-kicker">어떻게 구현했는가</p>
+            <h2>LLM에게 설명을 맡기고,<br>판정을 바꿀 검증은 코드에 남겼다.</h2>
+            <p>
+              FastAPI 기반 모듈러 모놀리스에서 domain, application, adapter, API, Web UI와
+              evaluation을 분리했다. 로컬 모델을 교체해도 조건·시간·인용 검증 계약은 바뀌지 않는다.
+            </p>
+          </div>
+        </header>
+
+        <div class="architecture">
+          <div class="pipeline">
+            <div class="pipeline-grid" aria-label="질문 처리 파이프라인">
+              <article class="pipeline-step"><span>01</span><strong>입력 차단</strong><p>개인정보·범위 밖 요청을 모델 전에 종료</p></article>
+              <article class="pipeline-step"><span>02</span><strong>질문 분류</strong><p>휴직 유형·복직·지원 범위 판별</p></article>
+              <article class="pipeline-step"><span>03</span><strong>조건 추출</strong><p>출처와 충돌 상태가 있는 구조화 조건</p></article>
+              <article class="pipeline-step"><span>04</span><strong>재질문</strong><p>필수 조건이 없으면 결론 생성 금지</p></article>
+              <article class="pipeline-step"><span>05</span><strong>시간 필터</strong><p>기준일·대상에 맞는 valid_time 후보만 통과</p></article>
+              <article class="pipeline-step"><span>06</span><strong>Hybrid 검색</strong><p>문자 2-gram·BGE-M3·RRF·재랭킹</p></article>
+              <article class="pipeline-step"><span>07</span><strong>검토 판단</strong><p>Qwen3가 판단·권고 상태·근거 역할을 구조화</p></article>
+              <article class="pipeline-step"><span>08</span><strong>인용 검증</strong><p>source ID·효력·예외·schema 재검사 후 공개</p></article>
+            </div>
+          </div>
+
+          <div class="role-stack">
+            <article class="role-card">
+              <h3>LLM</h3>
+              <ul>
+                <li>의도와 조건 후보 추출</li>
+                <li>검색 질의와 재질문 문구 생성</li>
+                <li>질문에 직접 답하는 검토 판단과 권고 상태</li>
+                <li>적용 근거·예외·담당자 확인사항 분리</li>
+              </ul>
+            </article>
+            <article class="role-card deterministic">
+              <h3>결정적 로직</h3>
+              <ul>
+                <li>날짜·기간·효력 계산</li>
+                <li>필수 조건·source ID·인용 존재 검사</li>
+                <li>출력 schema와 citation allowlist 검증</li>
+                <li>모델 권고는 더 보수적일 때만 상태에 반영</li>
+              </ul>
+            </article>
+            <article class="role-card human">
+              <h3>사람 검토</h3>
+              <ul>
+                <li>기관 규정과 원문 대조</li>
+                <li>모호한 법률개념·충돌 해석</li>
+                <li>최종 인사판단과 처분</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="product">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="section-number">04 · PRODUCT</p>
+          <div class="section-title">
+            <p class="section-kicker">결과물</p>
+            <h2>챗봇을 답변창이 아니라<br>검토 작업대로 만들었다.</h2>
+            <p>
+              첫 화면은 질문 입력을 우선하고, 답변 뒤에는 확인 조건·유효 근거·기관 규정 상태와
+              한계를 같은 시야에서 확인한다. 합성 원문은 실제 링크처럼 위장하지 않는다.
+            </p>
+          </div>
+        </header>
+
+        <figure class="product-frame">
+          <div class="frame-bar">
+            <span class="frame-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+            <span>인사ON · 새 검토</span>
+            <span>1440 × 1000</span>
+          </div>
+          <img src="assets/app-home.png" alt="인사ON 데스크톱 첫 화면. 좌측에는 검토 사례, 중앙에는 검토 원칙과 질문 입력, 예시 질문이 배치되어 있다.">
+        </figure>
+        <div class="product-caption">
+          <strong>첫 행동은 하나: 질문 입력</strong>
+          <p>
+            시스템 품질 수치와 근거 rail은 첫 질문 전에는 숨긴다. 사용자는 범위를 이해하고 질문을 시작하며,
+            CASE-A/B/C와 PAY-01은 재질문·근거 연결·답변 보류·결정 계산을 빠르게 검증하는 보조 탐색이다.
+          </p>
+        </div>
+
+        <div class="case-grid" aria-label="대표 검토 사례">
+          <article class="case-card">
+            <span class="status review">REVIEW_REQUIRED</span>
+            <h3>CASE-A · 조건 누락</h3>
+            <p>휴직 유형이나 질문 기준일이 없으면 가능·불가능을 생성하지 않고 필요한 조건부터 묻는다.</p>
+            <strong>검증 포인트 · 누락 조건 → 재질문</strong>
+          </article>
+          <article class="case-card">
+            <span class="status review">REVIEW_REQUIRED</span>
+            <h3>CASE-B · 과거 기준일</h3>
+            <p>2024년 1월 1일에 유효한 공식 과거 조문·단서·부칙을 연결하고 미시행 후보는 제외한다. candidate 승인 전이므로 최종 상태는 REVIEW_REQUIRED다.</p>
+            <strong>검증 포인트 · valid_time → 인용</strong>
+          </article>
+          <article class="case-card">
+            <span class="status hold">INSUFFICIENT_EVIDENCE</span>
+            <h3>CASE-C · 범위 밖</h3>
+            <p>지원하지 않는 직군·기관 내부 규정으로 최종 처분을 요구하면 근거 부족 사유와 함께 보류한다.</p>
+            <strong>검증 포인트 · 안전한 abstention</strong>
+          </article>
+          <article class="case-card">
+            <span class="status review">REVIEW_REQUIRED</span>
+            <h3>공통 조건 정책<br>PAY-01 · 정근수당 예시</h3>
+            <p>모든 질문을 필수 사실·승인된 통상 가정·명시 예외로 나눈다. 정근수당은 첫 등록 사례이며, 날짜·기간은 직접 확인하고 예외 없음만 가정해 6개월·100% 조건부 계산과 공식 교차 근거 4건을 연결한다.</p>
+            <strong>검증 포인트 · 필수 사실 → 가정 공개 → 예외 우선</strong>
+          </article>
+        </div>
+
+        <div class="split-visual">
+          <figure class="product-frame">
+            <div class="frame-bar">
+              <span class="frame-dots" aria-hidden="true"><span></span><span></span><span></span></span>
+              <span>CASE-B · 근거 연결</span>
+              <span>Desktop</span>
+            </div>
+            <img src="assets/app-evidence.png" alt="CASE-B 데스크톱 화면. 중앙 대화에 공식 근거 후보 승인 대기 결과가 있고 우측 패널에 2024년 유효 공식 조문 카드가 표시되어 있다.">
+          </figure>
+          <figure class="mobile-frame">
+            <img src="assets/app-mobile.png" alt="CASE-B 모바일 화면. 검토 대화와 질문 입력이 한 열로 배치되고 검토 정보 패널이 아래로 이어진다.">
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="verify">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="section-number">05 · VERIFY</p>
+          <div class="section-title">
+            <p class="section-kicker">어떻게 검증했는가</p>
+            <h2>검색 점수 하나가 아니라,<br>실패가 어디서 사라졌는지를 비교했다.</h2>
+            <p>
+              B0 lexical, B1 vector, H1 hybrid, H2 시간·대상 필터, H3 재랭킹·문맥 확장을
+              동일한 60건 합성 시스템 회귀셋에서 비교했다. 아래 값은 법률 정확도가 아니다.
+            </p>
+          </div>
+        </header>
+
+        <div class="evaluation-grid">
+          <div class="eval-table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>구성</th>
+                  <th>Set Recall@5</th>
+                  <th>상태 정확도</th>
+                  <th>인용 완전성</th>
+                  <th>위험 답변률</th>
+                  <th>치명적 오류</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>B0</td><td>0.333</td><td>0.314</td><td>0.000</td><td>0.000</td><td>0</td></tr>
+                <tr><td>B1</td><td>0.139</td><td>0.314</td><td>0.000</td><td>0.000</td><td>0</td></tr>
+                <tr><td>H1</td><td>0.250</td><td>0.314</td><td>0.000</td><td>0.000</td><td>0</td></tr>
+                <tr><td>H2</td><td>1.000</td><td>0.943</td><td>0.759</td><td>0.000</td><td>8</td></tr>
+                <tr class="is-selected"><td>H3</td><td>0.944</td><td>0.943</td><td>0.931</td><td>0.000</td><td>0</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="eval-notes">
+            <article class="eval-note danger">
+              <strong>H2에서 남은 오류 8건</strong>
+              <p>시간·대상 필터만으로는 결론을 바꿀 단서·부칙 문맥을 모두 회수하지 못했다. 실패 사례는 공개 오류 분석에 보존했다.</p>
+            </article>
+            <article class="eval-note safe">
+              <strong>H3 합성 회귀에서 0건</strong>
+              <p>재랭킹과 문맥 확장 뒤 합성 fixture의 결정적 예외를 회수했다. 실제 법령 전체에 대한 일반화는 주장하지 않는다.</p>
+            </article>
+            <article class="eval-note danger">
+              <strong>H3 회수율이 H2보다 낮은 이유</strong>
+              <p>인사 전 영역으로 corpus를 넓히며 주제마다 부칙 조문이 생겼다. 부칙이 8건이 되자 &quot;부칙과 예외를 함께&quot; 찾는 질문에서 그 단어의 변별력이 사라졌고, 재랭커가 육아휴직 본문 대신 보수·수당 부칙을 올린다. 수치를 맞추려 corpus에서 부칙을 빼지 않았다.</p>
+            </article>
+            <article class="eval-note danger">
+              <strong>H3 상태 정확도가 1.000이 아닌 이유</strong>
+              <p>평가를 대화 단위로 바꾸자 4건이 드러났다. "질병휴직은요?" 같은 생략형 후속 발화에서 앞 턴의 과업이 유지되지 않아 조건을 처음부터 다시 묻는다. B0부터 H4까지 0/4이며 검색 구성과 무관하다. 틀린 답을 만드는 대신 더 묻는 방향이라 게이트를 푸는 식으로 고치지 않았다.</p>
+            </article>
+          </div>
+        </div>
+
+        <div class="truth-boundary">
+          <div>
+            <h3>현재 증명한 것</h3>
+            <ul>
+              <li>조건 누락·과거 기준일·범위 밖 요청의 안전한 분기</li>
+              <li>로컬 generation·embedding·reranking 통합 smoke</li>
+              <li>합성 회귀에서 H3 인용·예외 처리 계약</li>
+              <li>공식 원문 candidate의 자동 구조 감사 12/12</li>
+            </ul>
+          </div>
+          <div>
+            <h3>아직 증명하지 않은 것</h3>
+            <ul>
+              <li>법률적으로 정확한 최종 답변</li>
+              <li>실제 업무시간 절감이나 처분 정확도 향상</li>
+              <li>독립 법령 holdout 성능</li>
+              <li>운영 배포·실무자 사용성 결과</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="phases">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="section-number">06 · HARNESS</p>
+          <div class="section-title">
+            <p class="section-kicker">계획 대비 현재 상태</p>
+            <h2>완료된 코드와<br>완료되지 않은 증거를 분리했다.</h2>
+            <p>
+              자동화로 끝낼 수 있는 phase 00~06, phase 07의 수집 단계, 넓은 근거 검색과
+              디자인 검증과 official-only local 제품 경로는 완료했다. 사람 승인과 독립 검토가 필요한 단계는 mock으로
+              채우지 않고 blocked로 남겼다.
+            </p>
+          </div>
+        </header>
+
+        <div class="phase-board" aria-label="Harness 15개 phase 상태">
+          <article class="phase completed"><span>PHASE 00</span><h3>기반·평가 계약</h3><p>패키지, 도메인 타입, 평가 schema</p><strong class="phase-status">COMPLETED</strong></article>
+          <article class="phase completed"><span>PHASE 01</span><h3>법령 데이터</h3><p>수집·계층 파서·시간 저장소</p><strong class="phase-status">COMPLETED</strong></article>
+          <article class="phase completed"><span>PHASE 02</span><h3>검색 spike</h3><p>lexical 선택·B0~H3 구조</p><strong class="phase-status">COMPLETED</strong></article>
+          <article class="phase completed"><span>PHASE 03</span><h3>안전 판단</h3><p>개인정보·조건·결정적 규칙</p><strong class="phase-status">COMPLETED</strong></article>
+          <article class="phase completed"><span>PHASE 04</span><h3>답변 제품</h3><p>orchestrator·API·챗봇 UI</p><strong class="phase-status">COMPLETED</strong></article>
+          <article class="phase completed"><span>PHASE 05</span><h3>고정 평가</h3><p>60건 합성 회귀·release gate</p><strong class="phase-status">COMPLETED</strong></article>
+          <article class="phase completed"><span>PHASE 06</span><h3>로컬 모델 통합</h3><p>Qwen3·BGE-M3·local E2E</p><strong class="phase-status">COMPLETED</strong></article>
+          <article class="phase blocked"><span>PHASE 07</span><h3>공식 법령 corpus</h3><p>수집 완료 · 사람 원문 승인 필요</p><strong class="phase-status">BLOCKED</strong></article>
+          <article class="phase blocked"><span>PHASE 08</span><h3>독립 법령 평가</h3><p>승인 index·독립 검토자 필요</p><strong class="phase-status">BLOCKED</strong></article>
+          <article class="phase blocked"><span>PHASE 09</span><h3>제한적 pilot</h3><p>legal release·배포·참여자 필요</p><strong class="phase-status">BLOCKED</strong></article>
+          <article class="phase completed"><span>PHASE 10</span><h3>넓은 인사규정 근거</h3><p>공식 source·8개 topic 안전 routing</p><strong class="phase-status">COMPLETED</strong></article>
+          <article class="phase completed"><span>PHASE 11</span><h3>디자인 검증</h3><p>3개 방향·B 선택·반응형 rollout</p><strong class="phase-status">COMPLETED</strong></article>
+          <article class="phase completed"><span>PHASE 12</span><h3>공식 local RAG</h3><p>공식 candidate·과거 CASE-B</p><strong class="phase-status">COMPLETED</strong></article>
+          <article class="phase completed"><span>PHASE 13</span><h3>휴직 파생 정근수당</h3><p>전체 vector·6개월/100%·교차 인용 4건</p><strong class="phase-status">COMPLETED</strong></article>
+          <article class="phase completed"><span>PHASE 14</span><h3>공통 정상가정 정책</h3><p>필수 사실·승인 가정·명시 예외 분리</p><strong class="phase-status">COMPLETED</strong></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="limits">
+      <div class="wrap">
+        <header class="section-head">
+          <p class="section-number">07 · LIMITS</p>
+          <div class="section-title">
+            <p class="section-kicker">한계와 다음 단계</p>
+            <h2>프로토타입의 완성은<br>주장을 더 크게 만드는 일이 아니다.</h2>
+            <p>
+              현재 코드가 준비되었다고 해서 법령 corpus, 정답셋, 사람 승인과 운영 효과까지
+              완료된 것은 아니다. 다음 단계는 모델 튜닝보다 증거 수준을 높이는 일이다.
+            </p>
+          </div>
+        </header>
+
+        <div class="limit-grid">
+          <article class="limit-card">
+            <h3>공식 corpus 승인</h3>
+            <p>4,106 provision candidate와 자동 구조 감사는 준비됐지만 독립 reviewer의 원문 대조·승인 hash가 없다.</p>
+            <strong>다음 · Phase 07 semantic promotion</strong>
+          </article>
+          <article class="limit-card">
+            <h3>독립 법령 정답셋</h3>
+            <p>합성 회귀는 안전 파이프라인을 검증할 뿐 법률 정답을 대신하지 않는다. 작성자·검토자·adjudicator를 분리해야 한다.</p>
+            <strong>다음 · Phase 08 locked legal set</strong>
+          </article>
+          <article class="limit-card">
+            <h3>실무 사용성</h3>
+            <p>페르소나는 역할 가설이며 실제 인터뷰·동일 과제 관찰 결과가 없다. 사용성 결과를 법률 정확도로 해석해서도 안 된다.</p>
+            <strong>다음 · 합성 과제 기반 shadow session</strong>
+          </article>
+          <article class="limit-card">
+            <h3>운영 배포</h3>
+            <p>단일 VM·Caddy·Ollama loopback 계약은 있지만 legal release 전 production 시작을 차단한다.</p>
+            <strong>다음 · 승인 index와 deployment smoke</strong>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="closing">
+      <div class="wrap closing-grid">
+        <div>
+          <h2>결과적으로 만든 것은<br><span>“잘 답하는 AI”보다 안전한 검토 순서다.</span></h2>
+          <p class="closing-copy">
+            인사ON은 질문을 분류하고, 조건을 확인하고, 기준일의 근거를 찾고,
+            결정적 검증을 통과한 내용만 설명한다. 근거가 부족하면 보류하고 최종 판단은 담당자에게 남긴다.
+            이 경계를 제품·코드·평가·UI에서 같은 방식으로 구현한 것이 이 프로젝트의 결과다.
+          </p>
+        </div>
+        <nav class="evidence-links" aria-label="프로젝트 근거 문서">
+          <a href="planning-report.html"><span>초기 사업기획·기술구현 보고서</span><span>↗</span></a>
+          <a href="../docs/ARCHITECTURE.md"><span>시스템 아키텍처</span><span>↗</span></a>
+          <a href="../docs/IMPLEMENTATION_PLAN.md"><span>Harness 구현 계획</span><span>↗</span></a>
+          <a href="../evals/reports/comparison.md"><span>B0~H3 비교 결과</span><span>↗</span></a>
+          <a href="../evals/reports/failure_analysis.md"><span>실패 사례 분석</span><span>↗</span></a>
+          <a href="../docs/adr/0006-local-model-runtime.md"><span>로컬 모델 결정 ADR</span><span>↗</span></a>
+        </nav>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <span>인사ON · 지방공무원 휴직·복직 검토 지원 프로토타입</span>
+      <span>공개 법령·합성 사례만 사용 · 법률 정확도와 운영 효과 미측정</span>
+    </div>
+  </footer>
+</body>
+</html>

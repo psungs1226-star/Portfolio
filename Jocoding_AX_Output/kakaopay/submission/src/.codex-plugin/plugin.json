@@ -1,0 +1,35 @@
+{
+  "name": "kakaopaysec-etf-risk-explainer",
+  "version": "0.1.0",
+  "description": "카카오페이증권 해외 ETF 모으기 설명 화면을 과거 수익률 분포 기반 참고 범위 UX로 점검하고 개선하는 Codex 플러그인입니다.",
+  "author": {
+    "name": "AX 인재전쟁 참가자"
+  },
+  "license": "UNLICENSED",
+  "keywords": [
+    "kakaopaysec",
+    "etf",
+    "risk-explainer",
+    "financial-consumer-protection",
+    "mobile-ux"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "카카오페이증권 ETF 리스크 설명 UX",
+    "shortDescription": "해외 ETF 모으기 화면을 리스크 우선 설명 UX로 점검합니다.",
+    "longDescription": "카카오페이증권의 해외 ETF 모으기 확장 맥락에서, 과거 3년·5년·10년 일별 시작점 수익률 분포가 미래 성과처럼 읽히지 않도록 과거 최저치, 평균, 최고치의 참고 범위와 환율, 배당 재투자 가정을 먼저 설명하는 화면 구조와 문구를 점검합니다.",
+    "developerName": "AX 인재전쟁 참가자",
+    "category": "Finance",
+    "capabilities": [
+      "Analysis",
+      "Planning",
+      "Writing"
+    ],
+    "defaultPrompt": [
+      "해외 ETF 모으기 결과 화면 문구를 점검해줘.",
+      "리스크 우선 설명 UX 구조로 바꿔줘.",
+      "README와 웹 MVP 검증 항목을 맞춰줘."
+    ],
+    "brandColor": "#FFCD00"
+  }
+}

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>retry 정책 — API 레퍼런스</title>
+<style>
+/* plan
+   판돈: 신뢰 | 어조: 단정형 | 밀도: 고밀도 | 장르: 문서
+   톤: 절제
+   스타일: material
+   레이아웃: sidebar / editorial / table
+   모션: 없음 — 문서 레퍼런스
+*/
+/* 일반화 프로브 ② — 문서 장르(레퍼런스). 이 장르의 관용을 그대로 따랐다:
+   흰 페이지 배경 + 옅은 회색 코드면 · 좁은 measure · 액센트는 링크와 콜아웃에만 · 본문이 대부분 */
+  :root{
+    --bg:#FFFFFF;
+    --surface:#F6F7F9;      /* 코드블록·콜아웃 — 흰 배경 위 옅은 면이 이 장르의 관용 */
+    --ink:#1B1F24;
+    --ink-2:#464C54;
+    --ink-3:#697077;
+    --line:#D6DAE0;
+
+    --acc:#0A5FB4;
+    --acc-cont:#E4EEF9;
+    --acc-on:#0A3D73;
+
+    --warn:#8A5200; --warn-bg:#FEF6E4; --warn-line:#E2C489;
+
+    --fs-cap:12px; --fs-ctl:13px; --fs-body:16px; --fs-lead:18px;
+    --fs-h3:20px; --fs-h2:24px; --fs-h1:32px;
+
+    --sp-1:4px; --sp-2:8px; --sp-3:16px; --sp-4:28px; --sp-5:48px; --sp-6:80px;
+    --r:6px;
+    --measure:74ch;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    font-size:var(--fs-body); line-height:1.75;
+    word-break:keep-all; overflow-wrap:break-word;
+  }
+  h1,h2,h3{margin:0; font-weight:700; letter-spacing:-0.01em; line-height:1.3; text-wrap:balance;}
+  p{margin:0 0 var(--sp-3);}
+  code{font-family:ui-monospace,'SF Mono',Menlo,monospace; font-size:var(--fs-ctl);
+       background:var(--surface); padding:2px 6px; border-radius:4px;}
+  a{color:var(--acc);}
+  .doc{display:grid; grid-template-columns:240px 1fr; gap:var(--sp-5); max-width:1160px; margin:0 auto; padding:var(--sp-5) var(--sp-4);}
+  /* 그리드 아이템은 min-width:auto라 안쪽 min-content(코드블록·nowrap 셀) 밑으로 안 줄어든다 */
+  .doc > *{min-width:0;}
+  .toc{position:sticky; top:var(--sp-4); align-self:start;}
+  .toc strong{display:block; font-size:var(--fs-cap); letter-spacing:0.06em; color:var(--ink-3); margin-bottom:var(--sp-2);}
+  .toc a{display:block; min-height:32px; padding:var(--sp-1) var(--sp-2); font-size:var(--fs-ctl);
+         color:var(--ink-2); text-decoration:none; border-left:2px solid var(--line);}
+  .toc a[aria-current]{color:var(--acc-on); border-left-color:var(--acc); background:var(--acc-cont); font-weight:700;}
+  article{max-width:var(--measure);}
+  .crumb{font-size:var(--fs-cap); color:var(--ink-3); margin-bottom:var(--sp-2);}
+  article h1{font-size:var(--fs-h1); margin-bottom:var(--sp-3);}
+  article h2{font-size:var(--fs-h2); margin:var(--sp-5) 0 var(--sp-3); padding-top:var(--sp-3); border-top:1px solid var(--line);}
+  article h3{font-size:var(--fs-h3); margin:var(--sp-4) 0 var(--sp-2);}
+  .lead{font-size:var(--fs-lead); color:var(--ink-2); text-wrap:pretty;}
+  pre{background:var(--surface); border:1px solid var(--line); border-radius:var(--r);
+      padding:var(--sp-3); overflow-x:auto; font-size:var(--fs-ctl); line-height:1.7; margin:0 0 var(--sp-3);}
+  pre code{background:none; padding:0;}
+  .note{background:var(--acc-cont); border-left:3px solid var(--acc); border-radius:var(--r);
+        padding:var(--sp-3); margin:0 0 var(--sp-3); font-size:var(--fs-ctl); color:var(--acc-on);}
+  .caution{background:var(--warn-bg); border-left:3px solid var(--warn-line); border-radius:var(--r);
+           padding:var(--sp-3); margin:0 0 var(--sp-3); font-size:var(--fs-ctl); color:var(--warn);}
+  table{width:100%; border-collapse:collapse; font-size:var(--fs-ctl); margin:0 0 var(--sp-3); display:block; overflow-x:auto;}
+  th,td{text-align:left; padding:var(--sp-2) var(--sp-3); border-bottom:1px solid var(--line); vertical-align:top;}
+  th{font-size:var(--fs-cap); color:var(--ink-3); letter-spacing:0.03em;}
+  td code{white-space:nowrap;}
+  @media (max-width:900px){ .doc{grid-template-columns:1fr;} .toc{position:static;} }
+</style>
+</head>
+<body>
+<div class="doc">
+  <nav class="toc">
+    <strong>재시도</strong>
+    <a href="#policy" aria-current="page">retry 정책</a>
+    <a href="#backoff">백오프 계산</a>
+    <a href="#idempotency">멱등키</a>
+    <a href="#limits">한도</a>
+  </nav>
+  <article>
+    <div class="crumb">API 레퍼런스 / 재시도</div>
+    <h1 id="policy">retry 정책</h1>
+    <p class="lead">요청이 일시적 오류로 실패하면 클라이언트가 재시도합니다. 서버는 재시도 가능 여부를 응답 헤더로 알려주고, 클라이언트는 아래 규칙에 따라 간격을 계산합니다.</p>
+
+    <div class="note">재시도는 <code>5xx</code>와 <code>429</code>에만 적용합니다. <code>4xx</code>는 요청 자체가 잘못된 것이라 재시도해도 같은 결과가 나옵니다.</div>
+
+    <h2 id="backoff">백오프 계산</h2>
+    <p>기본은 지터를 섞은 지수 백오프입니다. <code>attempt</code>는 0부터 시작합니다.</p>
+    <pre><code>delay = min(cap, base * 2 ** attempt)
+delay = random.uniform(0, delay)   # full jitter</code></pre>
+    <p><code>base</code>는 200ms, <code>cap</code>은 20s가 기본값입니다. 지터를 빼면 여러 클라이언트가 같은 시점에 몰려 서버가 다시 넘어집니다.</p>
+
+    <table>
+      <thead><tr><th>파라미터</th><th>기본값</th><th>설명</th></tr></thead>
+      <tbody>
+        <tr><td><code>base</code></td><td><code>200ms</code></td><td>첫 재시도까지의 기준 간격</td></tr>
+        <tr><td><code>cap</code></td><td><code>20s</code></td><td>간격 상한. 넘어서면 더 늘리지 않습니다</td></tr>
+        <tr><td><code>max_attempts</code></td><td><code>5</code></td><td>초과하면 마지막 오류를 그대로 올립니다</td></tr>
+        <tr><td><code>respect_retry_after</code></td><td><code>true</code></td><td>서버가 <code>Retry-After</code>를 주면 계산값 대신 사용</td></tr>
+      </tbody>
+    </table>
+
+    <h2 id="idempotency">멱등키</h2>
+    <p>쓰기 요청을 재시도하려면 <code>Idempotency-Key</code> 헤더가 필요합니다. 같은 키로 들어온 요청은 최초 결과를 그대로 돌려줍니다.</p>
+    <pre><code>POST /v1/transfers
+Idempotency-Key: 7f3a1c2e-9b40-4d11-8a5f-2c1e6b0d9a33</code></pre>
+    <div class="caution">키를 재사용하면서 <strong>본문을 바꾸면</strong> <code>409 Conflict</code>가 반환됩니다. 키는 요청 본문과 함께 저장됩니다.</div>
+
+    <h2 id="limits">한도</h2>
+    <p>멱등키는 24시간 보관합니다. 그 이후 같은 키로 요청하면 새 요청으로 처리됩니다.</p>
+  </article>
+</div>
+</body>
+</html>

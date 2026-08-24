@@ -1,0 +1,101 @@
+{
+  "dataset_id": "insaon-synthetic-vocabulary-gap-probe-v0.1",
+  "version": "0.1.0",
+  "notice": "공개 가능한 합성 질의다. 실제 담당자 질문이 아니다. 회귀셋의 질문은 이미 법령 용어를 쓰고 있어 어휘 간극을 측정할 수 없다. 이 probe는 같은 근거 조문을 실무 표현으로만 물어 그 간극을 드러내려고 만들었다.",
+  "corpus_path": "data/sample/distractor-corpus.json",
+  "reference_date": "2024-01-01",
+  "subject": "local_general_service",
+  "authoring_rule": "질문은 담당자가 쓸 법한 표현으로 먼저 쓰고, 어떤 구성이 통과하는지 보기 전에 확정했다. 결과를 보고 문구를 고치지 않는다.",
+  "queries": [
+    {
+      "query_id": "GAP-Q-01",
+      "surface_style": "practitioner",
+      "query": "직원이 애 키우느라 쉬겠다는데 뭘 확인해야 하나요",
+      "gold": ["SYNTH-PARENTAL-001"]
+    },
+    {
+      "query_id": "GAP-Q-02",
+      "surface_style": "practitioner",
+      "query": "출산 후 언제부터 쉴 수 있나요",
+      "gold": ["SYNTH-PARENTAL-001"]
+    },
+    {
+      "query_id": "GAP-Q-03",
+      "surface_style": "practitioner",
+      "query": "직원이 아파서 한동안 못 나온다는데 다시 나올 때 뭘 봐야 하죠",
+      "gold": ["SYNTHETIC-EVIDENCE-B-001"]
+    },
+    {
+      "query_id": "GAP-Q-04",
+      "surface_style": "practitioner",
+      "query": "다쳐서 수술받는다는데 쉴 수 있나요",
+      "gold": ["SYNTHETIC-EVIDENCE-B-001"]
+    },
+    {
+      "query_id": "GAP-Q-05",
+      "surface_style": "practitioner",
+      "query": "부모님 모시느라 쉬겠다는데 확인할 게 뭔가요",
+      "gold": ["SYNTH-FAMILY-001"]
+    },
+    {
+      "query_id": "GAP-Q-06",
+      "surface_style": "practitioner",
+      "query": "어머니 간병 때문에 쉬어야 한다는데요",
+      "gold": ["SYNTH-FAMILY-001"]
+    },
+    {
+      "query_id": "GAP-Q-07",
+      "surface_style": "practitioner",
+      "query": "공부하러 간다는데 뭘 보고 판단하나요",
+      "gold": ["SYNTH-DEVELOP-001"]
+    },
+    {
+      "query_id": "GAP-Q-08",
+      "surface_style": "practitioner",
+      "query": "학위 받으러 유학 간다는 직원은 어떻게 하나요",
+      "gold": ["SYNTH-DEVELOP-001"]
+    },
+    {
+      "query_id": "GAP-Q-09",
+      "surface_style": "practitioner",
+      "query": "우리 기관 내규가 다르게 정해져 있으면 어떻게 하나요",
+      "gold": ["SYNTHETIC-EXCEPTION-B-001"]
+    },
+    {
+      "query_id": "GAP-Q-10",
+      "surface_style": "practitioner",
+      "query": "이거 언제부터 적용되는 건가요",
+      "gold": ["SYNTH-SUPPLEMENT-001"]
+    },
+    {
+      "query_id": "GAP-Q-11",
+      "surface_style": "practitioner",
+      "query": "예전에 쉰 기간도 얼마나 쉴 수 있는지에 들어가나요",
+      "gold": ["SYNTH-D-PARENTAL-EXC-02"]
+    },
+    {
+      "query_id": "GAP-Q-12",
+      "surface_style": "statutory_control",
+      "query": "육아휴직 검토에 자녀와 기존 기간 조건을 확인하는 조문",
+      "gold": ["SYNTH-PARENTAL-001"]
+    },
+    {
+      "query_id": "GAP-Q-13",
+      "surface_style": "statutory_control",
+      "query": "질병휴직과 복직의 공개 근거 조문",
+      "gold": ["SYNTHETIC-EVIDENCE-B-001"]
+    },
+    {
+      "query_id": "GAP-Q-14",
+      "surface_style": "statutory_control",
+      "query": "가족돌봄휴직 검토에 돌봄 관계를 확인하는 조문",
+      "gold": ["SYNTH-FAMILY-001"]
+    },
+    {
+      "query_id": "GAP-Q-15",
+      "surface_style": "statutory_control",
+      "query": "자기개발휴직 검토에 신청 목적을 확인하는 조문",
+      "gold": ["SYNTH-DEVELOP-001"]
+    }
+  ]
+}

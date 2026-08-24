@@ -1,0 +1,4 @@
+dataset = "data/sample/retrieval-spike.json"
+output = "artifacts/spikes/lexical/manifest.json"
+top_k = 5
+char_ngram_size = 2

@@ -1,0 +1,64 @@
+{
+  "schema_version": "0.1.0",
+  "probe_id": "insaon-quantity-grounding-probe",
+  "purpose": "locked regression set asks no question that invites a quantity, so claim.invented_quantity_rate cannot move there; this probe measures the path directly by running each question with the grounding check off and on",
+  "created_at": "2026-08-09T04:35:52.443662+00:00",
+  "runtime": {
+    "runtime_profile": "local",
+    "generation": "qwen3:4b-instruct",
+    "embedding": "bge-m3:latest",
+    "reranker": "qwen3:4b-instruct",
+    "base_url": "http://127.0.0.1:11434/api",
+    "corpus": "insaon-synthetic-distractor-corpus",
+    "generation_repeats": 1
+  },
+  "data": {
+    "probe_hash": "2e293aa681456725bb3df8890625761a6a63b78458133b9762915c4fbbaf36c7",
+    "question_count": 6
+  },
+  "results": {
+    "answerable_with_check_off": {
+      "numerator": 3,
+      "denominator": 6
+    },
+    "answerable_with_check_on": {
+      "numerator": 0,
+      "denominator": 6
+    },
+    "blocked_by_grounding": {
+      "numerator": 3,
+      "denominator": 6
+    },
+    "status_unchanged": {
+      "numerator": 3,
+      "denominator": 6
+    },
+    "false_blocks": {
+      "numerator": 0,
+      "denominator": 6
+    }
+  },
+  "blocked_case_ids": [
+    "QTY-01",
+    "QTY-02",
+    "QTY-03"
+  ],
+  "locked_set_cross_check": {
+    "questions_inviting_a_quantity": 0,
+    "case_count": 59,
+    "invented_quantity_rate": {
+      "numerator": 0,
+      "denominator": 36
+    },
+    "note": "zero here measures the locked set, not the failure mode: none of its questions ask for a duration, a count or a rate"
+  },
+  "environment": {
+    "python": "3.14.6",
+    "platform": "macOS-26.5.2-arm64-arm-64bit-Mach-O"
+  },
+  "limitations": [
+    "Six questions, one repetition each. Generation is not deterministic.",
+    "Synthetic corpus; the probe does not score whether a stated period is legally correct.",
+    "Only quantities are checked. A sentence with no number is not examined."
+  ]
+}

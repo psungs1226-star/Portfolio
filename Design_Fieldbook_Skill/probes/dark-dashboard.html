@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>배치 모니터</title>
+<style>
+/* plan
+   판돈: 신뢰 | 어조: 단정형 | 밀도: 고밀도 | 장르: 앱
+   톤: 절제
+   스타일: material
+   레이아웃: sidebar / dashboard / table
+   모션: 없음 — 고밀도 앱 UI, 반복 조작이라 모션 생략(§2.3)
+*/
+/* 일반화 점검용 프로브 — 다른 장르(다크 대시보드)에서 게이트가 오탐을 내는지 본다.
+   의도적으로 '이 장르에서는 올바른' 선택들로 채웠다:
+   다크 우선 · 시맨틱 4색 · radius 10px(중간) · 보더 기반 구분 · 조밀한 타입 스케일 */
+  :root{
+    --bg:#101418;
+    --surface:#171C21;
+    --surface-2:#1E252B;
+    --ink:#E6EBF0;
+    --ink-2:#A7B2BD;
+    --ink-3:#7C8894;
+    --line:#2C353D;
+
+    --acc:#4C9AFF;
+    --acc-cont:#16324F;
+    --acc-on:#BBD9FF;
+
+    --ok:#3FB950;   --ok-bg:#132B18;
+    --warn:#D29922; --warn-bg:#2B2110;
+    --err:#F85149;  --err-bg:#31161A;
+    --info:#79C0FF; --info-bg:#122436;
+
+    --fs-10:10px; --fs-11:11px; --fs-12:12px; --fs-13:13px; --fs-14:14px;
+    --fs-16:16px; --fs-18:18px; --fs-20:20px; --fs-24:24px; --fs-28:28px;
+    --fs-32:32px; --fs-40:40px;
+
+    --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:20px; --sp-5:32px; --sp-6:56px;
+    --r:10px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--bg); color:var(--ink);
+    font-family:-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    font-size:var(--fs-13); line-height:1.55;
+    word-break:keep-all; overflow-wrap:break-word;
+  }
+  h1,h2,h3{margin:0; font-weight:700; letter-spacing:-0.01em;}
+  .app{display:grid; grid-template-columns:220px 1fr; min-height:100vh;}
+  .side{background:var(--surface); border-right:1px solid var(--line); padding:var(--sp-4);}
+  .side h1{font-size:var(--fs-16); margin-bottom:var(--sp-5);}
+  .side a{
+    display:flex; align-items:center; min-height:36px; padding:0 var(--sp-3);
+    border-radius:var(--r); color:var(--ink-2); text-decoration:none; font-size:var(--fs-13);
+  }
+  .side a[aria-current]{background:var(--acc-cont); color:var(--acc-on);}
+  main{padding:var(--sp-5);}
+  .head{display:flex; justify-content:space-between; align-items:center; margin-bottom:var(--sp-5);}
+  .head h2{font-size:var(--fs-24);}
+  .btn{
+    min-height:32px; padding:0 var(--sp-3); border-radius:var(--r); border:1px solid var(--line);
+    background:var(--surface-2); color:var(--ink); font-size:var(--fs-13); font-weight:600;
+    display:inline-flex; align-items:center;
+  }
+  .kpis{display:grid; grid-template-columns:repeat(4,1fr); gap:var(--sp-4); margin-bottom:var(--sp-5);}
+  .kpi{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:var(--sp-4);}
+  .kpi dt{font-size:var(--fs-12); color:var(--ink-3); margin-bottom:var(--sp-2);}
+  .kpi dd{margin:0; font-size:var(--fs-28); font-weight:700; letter-spacing:-0.02em;}
+  .kpi .d{font-size:var(--fs-12); margin-top:var(--sp-1);}
+  .up{color:var(--ok);} .down{color:var(--err);}
+  table{width:100%; border-collapse:collapse; font-size:var(--fs-13);
+        background:var(--surface); border:1px solid var(--line); border-radius:var(--r);}
+  th,td{text-align:left; padding:var(--sp-3) var(--sp-4); border-bottom:1px solid var(--line);}
+  th{font-size:var(--fs-11); color:var(--ink-3); text-transform:uppercase; letter-spacing:0.04em;}
+  tbody tr:last-child td{border-bottom:0;}
+  .tag{
+    display:inline-block; padding:2px var(--sp-2); border-radius:6px;
+    font-size:var(--fs-11); font-weight:700;
+  }
+  .t-ok{background:var(--ok-bg); color:var(--ok);}
+  .t-warn{background:var(--warn-bg); color:var(--warn);}
+  .t-err{background:var(--err-bg); color:var(--err);}
+  .t-info{background:var(--info-bg); color:var(--info);}
+  .mono{font-variant-numeric:tabular-nums; color:var(--ink-2); font-size:var(--fs-12);}
+  @media (max-width:900px){ .app{grid-template-columns:1fr;} .kpis{grid-template-columns:repeat(2,1fr);} }
+</style>
+</head>
+<body>
+<div class="app">
+  <nav class="side">
+    <h1>배치 모니터</h1>
+    <a href="#" aria-current="page">실행 현황</a>
+    <a href="#">스케줄</a>
+    <a href="#">알림 규칙</a>
+    <a href="#">감사 로그</a>
+  </nav>
+  <main>
+    <div class="head">
+      <h2>실행 현황</h2>
+      <button class="btn">최근 24시간</button>
+    </div>
+    <dl class="kpis">
+      <div class="kpi"><dt>총 실행</dt><dd>1,284</dd><div class="d up">+4.2% 전일 대비</div></div>
+      <div class="kpi"><dt>성공률</dt><dd>98.6%</dd><div class="d up">+0.3%p</div></div>
+      <div class="kpi"><dt>평균 소요</dt><dd>42s</dd><div class="d down">+6s</div></div>
+      <div class="kpi"><dt>실패</dt><dd>18</dd><div class="d down">+5건</div></div>
+    </dl>
+    <table>
+      <thead><tr><th>작업</th><th>상태</th><th>시작</th><th>소요</th></tr></thead>
+      <tbody>
+        <tr><td>daily-ingest</td><td><span class="tag t-ok">성공</span></td><td class="mono">04:00:12</td><td class="mono">38s</td></tr>
+        <tr><td>ledger-reconcile</td><td><span class="tag t-warn">재시도</span></td><td class="mono">04:12:40</td><td class="mono">2m 04s</td></tr>
+        <tr><td>notify-digest</td><td><span class="tag t-err">실패</span></td><td class="mono">05:00:03</td><td class="mono">11s</td></tr>
+        <tr><td>index-rebuild</td><td><span class="tag t-info">대기</span></td><td class="mono">—</td><td class="mono">—</td></tr>
+      </tbody>
+    </table>
+  </main>
+</div>
+</body>
+</html>

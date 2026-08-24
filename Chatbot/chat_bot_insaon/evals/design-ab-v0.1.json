@@ -1,0 +1,84 @@
+{
+  "schema_version": "0.1.0",
+  "protocol_id": "design-ab-v0.1",
+  "status": "protocol_ready_no_participants",
+  "scope": "interface_usability_only",
+  "legal_accuracy_inference_allowed": false,
+  "arms": [
+    {
+      "arm_id": "CONTROL",
+      "artifact": "current-production-dashboard",
+      "case_ids": ["CASE-A", "CASE-B", "CASE-C"]
+    },
+    {
+      "arm_id": "CANDIDATE",
+      "artifact": "b-case-workbench",
+      "selection_status": "selected_and_production_integrated",
+      "selection_record": "design/ab-exploration/selection.json",
+      "promotion_record": "design/production/promotion.json",
+      "eligible_variants": [
+        "a-evidence-ledger",
+        "b-case-workbench",
+        "c-regulation-map"
+      ],
+      "case_ids": ["CASE-A", "CASE-B", "CASE-C"]
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "CASE-A",
+      "task": "누락된 휴직 유형과 기준일을 찾아 다음 재질문 행동을 고른다.",
+      "success_criteria": [
+        "결론보다 누락 조건을 먼저 식별한다.",
+        "후속 조건을 입력할 위치를 찾는다."
+      ]
+    },
+    {
+      "case_id": "CASE-B",
+      "task": "과거 질문 기준일에 유효한 근거와 시행일을 찾는다.",
+      "success_criteria": [
+        "질문 기준일과 규정 시행일을 구분한다.",
+        "연결된 근거 원문 위치를 찾는다."
+      ]
+    },
+    {
+      "case_id": "CASE-C",
+      "task": "지원 범위 밖 또는 기관 규정 미확인 경계를 설명한다.",
+      "success_criteria": [
+        "답변 보류 이유를 찾는다.",
+        "사람이 다음에 확인할 항목을 설명한다."
+      ]
+    }
+  ],
+  "human_metrics": [
+    "task_completion",
+    "first_action_clarity",
+    "evidence_discovery_steps",
+    "error_recovery",
+    "preference"
+  ],
+  "technical_checks": [
+    "three_isolated_variant_contract",
+    "desktop_and_mobile_render_contract",
+    "keyboard_focus_contract",
+    "korean_word_break_contract",
+    "public_privacy_boundary",
+    "responsive_overflow_contract",
+    "launcher_and_report_visual_continuity"
+  ],
+  "human_results": {
+    "status": "unmeasured",
+    "participant_count": 0,
+    "task_completion": null,
+    "first_action_clarity": null,
+    "evidence_discovery_steps": null,
+    "error_recovery": null,
+    "preference": null
+  },
+  "selection_note": "포트폴리오 소유자가 B Case Workbench를 선택하고 soft rounded geometry, 기존 bone·charcoal·forest tone 유지, LINE Seed Sans KR 기반 굵은 한글 위계를 요청했다.",
+  "privacy": {
+    "raw_question_collection": false,
+    "actual_employee_data_allowed": false,
+    "allowed_inputs": "public_law_and_synthetic_CASE_A_B_C_only"
+  }
+}
