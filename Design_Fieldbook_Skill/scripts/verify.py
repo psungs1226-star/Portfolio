@@ -2,7 +2,14 @@
 """
 design-fieldbook 완료 전 정적 검증 스크립트.
 
-용법: python3 verify.py <생성한 HTML 파일 경로>
+용법: python3 verify.py <생성한 HTML 파일 경로> [--static-only]
+
+이 스크립트는 gate.py를 거치지 않고 직접 호출해도 SKILL.md "완료 전 — 게이트 루프"
+1단계(미적 독립 검토)가 먼저 통과했는지 스스로 확인한다 — `<html>.feel-review.json`이
+없거나 해시가 안 맞거나 findings가 비어있지 않으면 실행을 거부한다. gate.py 안에만 이
+검사가 있으면 verify.py를 직접 불러서 우회할 수 있기 때문이다. 토큰·`/* plan */`만 잡는
+초기 반복 단계라 1단계를 아직 안 거쳤다면 `--static-only`로 이 검사를 건너뛴다(SKILL.md
+"루프를 앞으로 당긴다").
 
 이 스크립트는 SKILL.md "완료 전 — 구별성 게이트"의 항목 중 소스 코드만으로
 기계적으로 판정 가능한 것들을 체크한다. FAIL이 하나라도 있으면 exit code 1을
@@ -30,9 +37,44 @@ e라운드 회고로 추가된 검사들 — 그 라운드 산출물은 16 PASS 
 - 타입 스케일·액센트 색 수·스타일 커밋 강도·반응형은 재는 검사 자체가 없었다
 """
 
+import hashlib
+import json
 import re
 import sys
 from pathlib import Path
+
+FEEL_REVIEW_SUFFIX = ".feel-review.json"
+
+
+def feel_review_path(html):
+    return html.parent / f"{html.stem}{FEEL_REVIEW_SUFFIX}"
+
+
+def check_feel_review(html):
+    """(ok, message) — gate.py의 동명 함수와 동일한 규칙. verify.py 단독 호출로
+    SKILL.md 1단계(미적 독립 검토)를 건너뛰는 걸 막으려고 여기에도 둔다."""
+    path = feel_review_path(html)
+    digest = hashlib.sha256(html.read_bytes()).hexdigest()
+    if not path.exists():
+        return False, (
+            f"`{path.name}`이 없다. SKILL.md \"완료 전 — 게이트 루프\" 1단계대로 별도 fresh\n"
+            "    에이전트를 띄워 코드 정합성은 무시하고 순수 미적 판단만 적대적으로 검토받은 뒤,\n"
+            f"    결과를 {{\"html_sha256\": \"...\", \"findings\": [...]}} 형태로 {path.name}에 저장한다."
+        )
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (ValueError, OSError):
+        return False, f"`{path.name}`을 읽을 수 없다 — 형식이 깨졌다. 다시 작성한다."
+    if data.get("html_sha256") != digest:
+        return False, (
+            f"`{path.name}`이 지금 파일 내용과 안 맞다(해시 불일치) — html을 고친 뒤\n"
+            "    1단계 재검토 없이 예전 통과 기록을 재사용하는 중이다. 다시 검토받는다."
+        )
+    findings = data.get("findings", [])
+    if findings:
+        lines = "\n".join(f"     · {f}" for f in findings)
+        return False, f"미적 결함 {len(findings)}건 — FAIL과 동급이다. 고치고 재검토한다:\n{lines}"
+    return True, ""
 
 PLACEHOLDER_NAMES = ["Jane Doe", "John Smith", "Acme", "홍길동", "김철수", "OOO"]
 GENERIC_CTA_TEXTS = {"더 알아보기", "자세히 보기", "더보기", "learn more", "see more", "read more"}
@@ -1544,15 +1586,308 @@ def check_single_child_space_between(src):
         ok("space-between 컨테이너에 자식 1개짜리 없음")
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# 레이아웃 구성 — layout.md "섹션 레이아웃 패밀리 반복 상한" · "동급 항목 비중 차등"
+#
+# 프로필 라운드 회고: 규범이 "토큰 값을 통일하라"까지만 있어서 통일이 구성 층위로
+# 번졌다. stat-tile·flow-step·timeline-card 세 블록이 연속으로 같은 흰 카드 그리드였고,
+# Featured Work 4개가 전부 같은 템플릿이라 636개 테스트짜리 대형 프로젝트와 단일 기능
+# 프로젝트가 같은 무게로 읽혔다 — 정보위계 12.0 vs 14.0 · 설득력 16.5 vs 18.5로 졌다.
+#
+# 정적 소스만으로 "이 섹션이 무슨 패밀리인가"를 확정할 수는 없다(시그니처 휴리스틱이다).
+# 그래서 기본 판정은 WARN이고, 정규화한 그리드 시그니처가 연속 4섹션 이상 같을 때만
+# FAIL로 올린다 — 그 경우는 값 자체가 같아서 오탐 여지가 없다.
+# 장르가 앱·문서면 통째로 스킵한다: 사이드바+콘텐츠와 표 반복이 그 장르의 정상 구조다.
+# ─────────────────────────────────────────────────────────────────────────────
+
+COMPOSITION_SKIP_GENRES = {"앱", "문서"}
+VOID_TAGS = {"br", "img", "input", "hr", "meta", "link", "source", "area",
+             "base", "col", "embed", "param", "track", "wbr"}
+
+
+def _split_tracks(value):
+    """grid-template-columns 값 → 트랙 리스트. `minmax(300px, 1fr)`는 한 트랙으로 센다."""
+    tracks, depth, buf = [], 0, ''
+    for ch in value.strip().rstrip(';'):
+        if ch == '(':
+            depth += 1
+        elif ch == ')':
+            depth -= 1
+        if ch.isspace() and depth == 0:
+            if buf:
+                tracks.append(buf)
+                buf = ''
+            continue
+        buf += ch
+    if buf:
+        tracks.append(buf)
+    return tracks
+
+
+def _class_rule_index(src):
+    """[(필요 클래스 집합, 선언 dict)] — 클래스 토큰만으로 이뤄진 비-미디어 규칙.
+
+    `.hero .wrap`은 {hero, wrap}이 그 섹션 안에 다 있을 때만 적용된 것으로 본다.
+    태그·id·의사 선택자가 섞인 규칙은 오탐 여지가 커서 제외한다.
+    """
+    index = []
+    for sel, block, media in parse_rules(src):
+        if media is not None:
+            continue
+        parts = re.split(r'[\s>+~]+', sel.strip())
+        if not parts or not all(re.fullmatch(r'(\.[\w-]+)+', p) for p in parts if p):
+            continue
+        need = set(re.findall(r'\.([\w-]+)', sel))
+        if need:
+            index.append((need, decls(block)))
+    return index
+
+
+def _classes_in(html):
+    names = set()
+    for m in re.finditer(r'class="([^"]*)"', html):
+        names.update(m.group(1).split())
+    return names
+
+
+def _top_level_children(html):
+    """html의 최상위 엘리먼트 자식 [(tag, attrs, inner)]."""
+    out, depth, start, cur = [], 0, None, None
+    for m in re.finditer(r'<(/?)([a-zA-Z][\w-]*)\b([^>]*)>', html):
+        closing, tag, attrs = m.group(1), m.group(2).lower(), m.group(3)
+        if closing:
+            depth = max(depth - 1, 0)
+            if depth == 0 and cur is not None:
+                out.append((cur[0], cur[1], html[start:m.start()]))
+                cur = None
+            continue
+        if tag in VOID_TAGS or attrs.rstrip().endswith('/'):
+            if depth == 0:
+                out.append((tag, attrs, ''))
+            continue
+        if depth == 0:
+            cur, start = (tag, attrs), m.end()
+        depth += 1
+    return out
+
+
+def _extract_tag_block(src, tag, open_tag_end):
+    """같은 태그의 중첩 depth를 세어 매칭되는 닫는 태그까지의 내부 HTML."""
+    depth = 1
+    for m in re.finditer(r'<(/?)' + tag + r'\b', src[open_tag_end:], re.I):
+        depth += -1 if m.group(1) else 1
+        if depth == 0:
+            return src[open_tag_end: open_tag_end + m.start()]
+    return src[open_tag_end:]
+
+
+def _content_sections(src):
+    """콘텐츠 섹션 [(attrs, inner)] — header/footer/nav는 세지 않는다.
+
+    `<section>`이 4개 미만이면 div로 섹션을 짠 페이지일 수 있어, body/main의 최상위
+    자식 중 제목(h1/h2)을 가진 div·article을 섹션으로 본다.
+    """
+    body = re.search(r'<body[^>]*>(.*)</body>', src, re.S | re.I)
+    html = body.group(1) if body else src
+    out, depth, start, attrs = [], 0, None, None
+    for m in re.finditer(r'<(/?)section\b([^>]*)>', html, re.I):
+        if m.group(1):
+            depth = max(depth - 1, 0)
+            if depth == 0 and start is not None:
+                out.append((attrs, html[start:m.start()]))
+                start = None
+        else:
+            if depth == 0:
+                start, attrs = m.end(), m.group(2)
+            depth += 1
+    if len(out) >= 4:
+        return out
+    main = re.search(r'<main[^>]*>(.*)</main>', html, re.S | re.I)
+    scope = main.group(1) if main else html
+    div_sections = [(a, inner) for tag, a, inner in _top_level_children(scope)
+                    if tag in ('div', 'article', 'section') and re.search(r'<h[12]\b', inner, re.I)]
+    return div_sections if len(div_sections) > len(out) else out
+
+
+def _section_family(attrs, inner, index):
+    """섹션 → (패밀리, 정규화 시그니처). layout.md '섹션 레이아웃 패밀리 반복 상한' 표."""
+    classes = _classes_in(attrs) | _classes_in(inner)
+    if re.search(r'<table\b', inner, re.I):
+        return ('표·지표', 'table')
+    if any(re.search(r'(^|-)(timeline|chrono|history)(-|$)', c, re.I) for c in classes):
+        return ('축 시퀀스', 'timeline')
+
+    applied = [d for need, d in index if need <= classes]
+    best, best_n = None, 0
+    for d in applied:
+        tpl = d.get('grid-template-columns')
+        if not tpl:
+            continue
+        rm = re.match(r'repeat\(\s*(\d+)\s*,', tpl.strip())
+        n = int(rm.group(1)) if rm else len(_split_tracks(tpl))
+        if n > best_n:
+            best, best_n = tpl.strip(), n
+
+    spans = {d['grid-column'] for d in applied
+             if 'grid-column' in d and re.search(r'span\s+\d+', d['grid-column'])}
+    if len(spans) >= 2:
+        return ('비균등 셀', f'bento-{best_n or len(spans)}')
+
+    if not best:
+        return ('풀폭 흐름', 'flow')
+    if re.search(r'auto-fit|auto-fill', best, re.I):
+        return ('카드 그리드', 'autofit')
+    rm = re.match(r'repeat\(\s*(\d+)\s*,', best)
+    if rm:
+        n = int(rm.group(1))
+        return ('카드 그리드' if n >= 3 else '분할', f'repeat-{n}')
+    toks = _split_tracks(best)
+    if len(toks) == 2:
+        return ('분할', 'split-2')
+    if len(toks) >= 3:
+        if len(set(toks)) == 1:
+            return ('카드 그리드', f'equal-{len(toks)}')
+        return ('비균등 셀', f'asym-{len(toks)}')
+    return ('풀폭 흐름', 'flow')
+
+
+def _max_run(seq):
+    """[(값, 최대 연속 길이)] 중 가장 긴 연속 구간 → (값, 길이)."""
+    best_val, best_len = (seq[0] if seq else None), 1 if seq else 0
+    cur_len = 1
+    for i in range(1, len(seq)):
+        cur_len = cur_len + 1 if seq[i] == seq[i - 1] else 1
+        if cur_len > best_len:
+            best_val, best_len = seq[i], cur_len
+    return best_val, best_len
+
+
+def check_section_layout_variety(src):
+    genre = genre_of(src)
+    if genre in COMPOSITION_SKIP_GENRES:
+        ok(f"'{genre}' 장르 — 섹션 패밀리 반복 상한 미적용(사이드바+콘텐츠·표 반복이 이 장르의 정상 구조)")
+        return
+
+    sections = _content_sections(src)
+    if len(sections) < 4:
+        ok(f"콘텐츠 섹션 {len(sections)}개 — 패밀리 반복 상한 판정 대상 아님(4섹션 이상부터)")
+        return
+
+    index = _class_rule_index(src)
+    pairs = [_section_family(a, inner, index) for a, inner in sections]
+    fams = [f for f, _s in pairs]
+    sigs = [s for _f, s in pairs]
+    n = len(pairs)
+
+    sig_val, sig_run = _max_run(sigs)
+    fam_val, fam_run = _max_run(fams)
+    distinct = sorted(set(fams))
+
+    reported = False
+    if sig_run >= 4:
+        fail(f"섹션 {n}개 중 {sig_run}개가 연속으로 같은 레이아웃 시그니처(`{sig_val}`)다 "
+             f"— 섹션이 바뀌어도 같은 화면이 이어진다. 최소 한 섹션을 다른 패밀리(분할·풀폭 흐름·비균등 셀)로 "
+             f"바꾼다(layout.md '섹션 레이아웃 패밀리 반복 상한': 동일 시그니처 연속 3섹션까지)")
+        reported = True
+    elif fam_run >= 3:
+        warn(f"'{fam_val}' 패밀리가 연속 {fam_run}섹션 반복된다(전체 {n}섹션, 시그니처 {sigs}) "
+             f"— 동일 패밀리는 연속 2섹션까지다. 렌더링해서 세 섹션이 서로 다른 화면으로 읽히는지 확인하고, "
+             f"같아 보이면 가운데 섹션을 다른 패밀리로 바꾼다(layout.md '섹션 레이아웃 패밀리 반복 상한')")
+        reported = True
+
+    if n >= 8 and len(distinct) < 4:
+        warn(f"콘텐츠 섹션 {n}개에 레이아웃 패밀리가 {len(distinct)}종({', '.join(distinct)})뿐 — 8섹션 이상은 4종 이상 쓴다(layout.md)")
+        reported = True
+    elif n >= 6 and len(distinct) < 3:
+        warn(f"콘텐츠 섹션 {n}개에 레이아웃 패밀리가 {len(distinct)}종({', '.join(distinct)})뿐 — 6섹션 이상은 3종 이상 쓴다(layout.md)")
+        reported = True
+    elif n >= 5:
+        top = max(distinct, key=fams.count)
+        share = fams.count(top) / n
+        if share > 0.6:
+            warn(f"'{top}' 패밀리가 콘텐츠 섹션 {fams.count(top)}/{n}개({share * 100:.0f}%)를 차지한다 — 한 패밀리 점유율 상한 60%(layout.md)")
+            reported = True
+
+    if not reported:
+        ok(f"섹션 {n}개 · 레이아웃 패밀리 {len(distinct)}종({', '.join(distinct)}) — 동일 패밀리 최대 연속 {fam_run}섹션")
+
+
+def check_item_weight_differentiation(src):
+    """동종 항목 4개 이상이 전부 같은 클래스·같은 구조인지 본다(비중 차등 부재).
+
+    확신이 낮은 검사다 — 가격표·비교표처럼 정말 동급인 항목도 같은 모양이 정답이라
+    전부 WARN으로 낸다. 항목이 짧으면(칩·스텝·KPI 타일) 애초에 차등 대상이 아니라
+    항목당 평균 12단어 이상일 때만 본다 — 한국어는 조사가 붙어 영어보다 단어 수가
+    적게 세지므로 영어 기준(20단어대)을 그대로 쓰면 실제 프로젝트 카드가 빠져나간다.
+    """
+    genre = genre_of(src)
+    if genre in COMPOSITION_SKIP_GENRES:
+        ok(f"'{genre}' 장르 — 동급 항목 비중 차등 미적용(균일한 목록·표가 이 장르의 정상 구조)")
+        return
+
+    grid_classes = set()
+    for sel, block, media in parse_rules(src):
+        if media is not None:
+            continue
+        if 'grid-template-columns' not in decls(block):
+            continue
+        last = re.split(r'[\s>+~]+', sel.strip())[-1]
+        m = re.fullmatch(r'\.([\w-]+)', last)
+        if m:
+            grid_classes.add(m.group(1))
+
+    flagged = []
+    for cls in sorted(grid_classes):
+        for om in re.finditer(r'<([a-z]+)[^>]*class="[^"]*\b' + re.escape(cls) + r'\b[^"]*"[^>]*>', src, re.I):
+            inner = _extract_tag_block(src, om.group(1), om.end())
+            children = _top_level_children(inner)
+            if len(children) < 4:
+                continue
+            class_keys, struct_keys, words = set(), set(), []
+            differentiated = False
+            for tag, attrs, body in children:
+                cm = re.search(r'class="([^"]*)"', attrs)
+                class_keys.add((tag, ' '.join(sorted(cm.group(1).split())) if cm else ''))
+                struct_keys.add(tuple(t.lower() for t in re.findall(r'<([a-zA-Z][\w-]*)\b', body)))
+                words.append(len(re.sub(r'<[^>]+>', ' ', body).split()))
+                if re.search(r'style="[^"]*grid-(column|row)', attrs, re.I):
+                    differentiated = True
+            if differentiated or len(class_keys) > 1 or len(struct_keys) > 1:
+                continue
+            if sum(words) / len(words) < 12:
+                continue
+            flagged.append(f".{cls} 안의 항목 {len(children)}개(평균 {sum(words) // len(words)}단어)가 전부 같은 클래스·같은 구조")
+            break
+
+    if not flagged:
+        ok("동종 항목 4개 이상을 한 템플릿으로 찍어낸 그리드 없음")
+        return
+    for msg in flagged[:3]:
+        warn(f"{msg} — 성과·비중이 다른 항목이 섞여 있으면 상대적 무게가 안 읽힌다. "
+             f"콘텐츠 근거(가장 큰 성과 수치·가장 최근·지정 대표작)로 고른 1개를 전폭(`grid-column: 1 / -1`)이나 "
+             f"다른 패밀리로 빼고 나머지는 압축한다(layout.md '동급 항목 비중 차등'). 항목들이 정말 동급이면(가격표·비교표) 그대로 둔다")
+
+
 def main():
-    if len(sys.argv) != 2:
-        print("용법: python3 verify.py <html 파일 경로>")
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    flags = {a for a in sys.argv[1:] if a.startswith("--")}
+    if len(args) != 1:
+        print("용법: python3 verify.py <html 파일 경로> [--static-only]")
         sys.exit(2)
 
-    path = Path(sys.argv[1])
+    path = Path(args[0]).resolve()
     if not path.exists():
         print(f"파일 없음: {path}")
         sys.exit(2)
+
+    if "--static-only" not in flags:
+        feel_ok, feel_msg = check_feel_review(path)
+        if not feel_ok:
+            print("\n=== verify.py: 1단계(미적 독립 검토) 미통과로 실행 차단 ===\n")
+            print(f"    {feel_msg}\n")
+            print("verify.py를 직접 불러서 1단계를 우회할 수 없다 — gate.py로 전체 순서를 돈다.")
+            print("토큰·plan만 잡는 초기 반복이면 --static-only로 이 검사를 건너뛴다.\n")
+            sys.exit(2)
 
     src = path.read_text(encoding="utf-8")
     vars_ = extract_root_vars(src)
@@ -1581,6 +1916,8 @@ def main():
     check_grid_column_balance(src)
     check_grid_span_arithmetic(src)
     check_single_child_space_between(src)
+    check_section_layout_variety(src)
+    check_item_weight_differentiation(src)
     check_card_decoration_budget(src)
     check_placeholder_names(src)
     check_duplicate_cta(src)

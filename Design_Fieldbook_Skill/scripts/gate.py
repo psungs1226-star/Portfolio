@@ -81,10 +81,10 @@ def check_feel_review(html):
     return True, ""
 
 
-def run(script, html):
+def run(script, html, extra_args=()):
     """검사 스크립트 하나를 돌려 (findings, pass_n, fail_n) 반환."""
     proc = subprocess.run(
-        [sys.executable, str(HERE / script), str(html)],
+        [sys.executable, str(HERE / script), str(html), *extra_args],
         capture_output=True, text=True, timeout=600,
     )
     out = proc.stdout + proc.stderr
@@ -159,7 +159,8 @@ def main():
 
     current, summary, total_fail = {}, [], 0
     for label, script in scripts:
-        findings, passes, fails, out = run(script, html)
+        extra_args = ("--static-only",) if static_only and script == "verify.py" else ()
+        findings, passes, fails, out = run(script, html, extra_args)
         total_fail += fails
         summary.append((label, passes, fails))
         for level, msg in findings:

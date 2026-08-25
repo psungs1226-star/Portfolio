@@ -3,6 +3,11 @@
 
 용법: python3 render_audit.py <생성한 HTML 경로> [--widths 1440,1100,768,500]
 
+gate.py를 거치지 않고 직접 호출해도 SKILL.md "완료 전 — 게이트 루프" 1단계(미적 독립
+검토)가 먼저 통과했는지 스스로 확인한다 — `<html>.feel-review.json`이 없거나 해시가
+안 맞거나 findings가 비어있지 않으면 실행을 거부한다(예외 없음. 렌더 검증은 정의상 1단계
+다음 단계다).
+
 `verify.py`는 소스 코드만 읽는다. 그래서 "렌더링해야만 보이는 결함"은 원리적으로 못 잡는다 —
 데드스페이스, 컬럼 높이 불균형, 고아줄, 가로 오버플로, 액센트 실제 면적, 상속된 배경 위의
 텍스트 대비 같은 것들이다. e라운드에서 이 구멍이 그대로 드러났다: verify.py는 통과했고,
@@ -32,6 +37,7 @@ h라운드의 `min-width:auto` 오버플로가 둘 다 이 구간에서만 나�
 
 import base64
 import functools
+import hashlib
 import http.server
 import json
 import re
@@ -43,6 +49,39 @@ import sys
 import tempfile
 import threading
 from pathlib import Path
+
+FEEL_REVIEW_SUFFIX = ".feel-review.json"
+
+
+def feel_review_path(html):
+    return html.parent / f"{html.stem}{FEEL_REVIEW_SUFFIX}"
+
+
+def check_feel_review(html):
+    """(ok, message) — gate.py·verify.py와 동일한 규칙. render_audit.py 단독 호출로
+    SKILL.md 1단계(미적 독립 검토)를 건너뛰는 걸 막으려고 여기에도 둔다."""
+    path = feel_review_path(html)
+    digest = hashlib.sha256(html.read_bytes()).hexdigest()
+    if not path.exists():
+        return False, (
+            f"`{path.name}`이 없다. SKILL.md \"완료 전 — 게이트 루프\" 1단계대로 별도 fresh\n"
+            "    에이전트를 띄워 코드 정합성은 무시하고 순수 미적 판단만 적대적으로 검토받은 뒤,\n"
+            f"    결과를 {{\"html_sha256\": \"...\", \"findings\": [...]}} 형태로 {path.name}에 저장한다."
+        )
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except (ValueError, OSError):
+        return False, f"`{path.name}`을 읽을 수 없다 — 형식이 깨졌다. 다시 작성한다."
+    if data.get("html_sha256") != digest:
+        return False, (
+            f"`{path.name}`이 지금 파일 내용과 안 맞다(해시 불일치) — html을 고친 뒤\n"
+            "    1단계 재검토 없이 예전 통과 기록을 재사용하는 중이다. 다시 검토받는다."
+        )
+    findings = data.get("findings", [])
+    if findings:
+        lines = "\n".join(f"     · {f}" for f in findings)
+        return False, f"미적 결함 {len(findings)}건 — FAIL과 동급이다. 고치고 재검토한다:\n{lines}"
+    return True, ""
 
 DEFAULT_WIDTHS = [1440, 1100, 768, 500, 390]
 VIEWPORT_FLOOR = 500      # CLI headless의 레이아웃 뷰포트 하한. 이 아래는 iframe으로 잰다
@@ -610,6 +649,13 @@ def main():
     path = Path(args[0]).resolve()
     if not path.exists():
         print(f"파일 없음: {path}")
+        sys.exit(2)
+
+    feel_ok, feel_msg = check_feel_review(path)
+    if not feel_ok:
+        print("\n=== render_audit.py: 1단계(미적 독립 검토) 미통과로 실행 차단 ===\n")
+        print(f"    {feel_msg}\n")
+        print("render_audit.py를 직접 불러서 1단계를 우회할 수 없다 — gate.py로 전체 순서를 돈다.\n")
         sys.exit(2)
 
     chrome = find_chrome()
