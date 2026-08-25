@@ -9,8 +9,10 @@
 | 구분 | 조건 | 결과물 |
 |---|---|---|
 | A | 스킬 미사용 | [`A-no-skill/index.html`](A-no-skill/index.html) |
-| B | GitHub `taste-skill` 사용 | [`B-taste-skill/index.html`](B-taste-skill/index.html) |
+| B | GitHub [`taste-skill`](https://github.com/leonxlnx/taste-skill) 사용<br>80.1k stars · 5.5k forks¹ | [`B-taste-skill/index.html`](B-taste-skill/index.html) |
 | C | `Design Fieldbook Skill` 사용 | [`C-fieldbook/index.html`](C-fieldbook/index.html) |
+
+¹ GitHub 공개 수치, 2026-08-25 확인.
 
 - 세 결과 모두 원샷으로 생성했습니다.
 - 비교가 성립하도록 콘텐츠와 입력 이미지는 동일하게 유지했습니다.

@@ -80,7 +80,9 @@ Design Fieldbook 웹사이트에서는 디자인 원칙과 스타일을 글로�
 
 | A | B | C |
 |---|---|---|
-| 스킬 미사용 | GitHub `taste-skill` | `Design Fieldbook Skill` |
+| 스킬 미사용 | GitHub [`taste-skill`](https://github.com/leonxlnx/taste-skill)<br>80.1k stars · 5.5k forks¹ | `Design Fieldbook Skill` |
+
+¹ GitHub 공개 수치, 2026-08-25 확인.
 
 <p align="center">
   <img src="docs/images/10-abc-prompt.png" width="900" alt="동일 프롬프트로 A B C 테스트를 동시에 진행한 화면">
@@ -105,7 +107,7 @@ Design Fieldbook 웹사이트에서는 디자인 원칙과 스타일을 글로�
 
 밝은 히어로·인물 이미지·칩·카드가 결합된 익숙한 포트폴리오 랜딩 구조입니다.
 
-### B — GitHub taste-skill
+### B — GitHub [taste-skill](https://github.com/leonxlnx/taste-skill)
 
 <p align="center">
   <img src="docs/images/12-abc-b-taste-skill.png" width="900" alt="B taste-skill 결과">

@@ -254,7 +254,7 @@ AX 인재전쟁과 같은 플랫폼에서 진행한 별도 AI 역량평가입니
 
 #### 동일 프롬프트 A/B/C 원샷 비교
 
-동일한 자기소개 콘텐츠·입력 이미지·프롬프트·모델·effort를 사용하고 적용 스킬만 바꿨습니다. **A는 스킬 미사용, B는 GitHub `taste-skill`, C는 Design Fieldbook Skill**입니다.
+동일한 자기소개 콘텐츠·입력 이미지·프롬프트·모델·effort를 사용하고 적용 스킬만 바꿨습니다. **A는 스킬 미사용, B는 GitHub [`taste-skill`](https://github.com/leonxlnx/taste-skill), C는 Design Fieldbook Skill**입니다. B의 비교 대상은 **80.1k stars · 5.5k forks**를 기록한 공개 디자인 스킬 저장소입니다(2026-08-25 확인).
 
 스킬 제작·개선과 A/B/C 생성은 Claude Code에서 진행하고, 완성된 결과는 **GPT-5.6 High와 Gemini 3.1 Pro**에 각각 제공해 별도로 검수했습니다.
 
@@ -273,7 +273,7 @@ AX 인재전쟁과 같은 플랫폼에서 진행한 별도 AI 역량평가입니
 
 익숙한 밝은 포트폴리오 랜딩 구조입니다.
 
-##### B — GitHub taste-skill
+##### B — GitHub [taste-skill](https://github.com/leonxlnx/taste-skill)
 
 <p align="center">
   <img src="Design_Fieldbook_Skill/docs/images/12-abc-b-taste-skill.png" width="900" alt="B taste-skill 결과">
