@@ -80,13 +80,29 @@ Design Fieldbook 웹사이트에서는 디자인 원칙과 스타일을 글로�
   <img src="docs/images/10-abc-prompt.png" width="900" alt="동일 프롬프트로 A B C 테스트를 동시에 진행한 화면">
 </p>
 
-| A — 스킬 미사용 | B — GitHub taste-skill | C — Design Fieldbook Skill |
-|---|---|---|
-| <img src="docs/images/11-abc-a-no-skill.png" alt="A 스킬 미사용 결과"> | <img src="docs/images/12-abc-b-taste-skill.png" alt="B taste-skill 결과"> | <img src="docs/images/13-abc-c-fieldbook.png" alt="C Design Fieldbook Skill 결과"> |
+### A — 스킬 미사용
 
-- **A:** 밝은 히어로·인물 이미지·칩·카드가 결합된 익숙한 포트폴리오 랜딩 구조
-- **B:** 넓은 여백과 절제된 타이포그래피를 사용하는 에디토리얼·문서형 구성
-- **C:** 대형 한글 헤드라인, 고대비 다크 표면, 성과 지표의 크기 차를 사용해 메시지와 증거의 위계를 강화한 구성
+<p align="center">
+  <img src="docs/images/11-abc-a-no-skill.png" width="900" alt="A 스킬 미사용 결과">
+</p>
+
+밝은 히어로·인물 이미지·칩·카드가 결합된 익숙한 포트폴리오 랜딩 구조입니다.
+
+### B — GitHub taste-skill
+
+<p align="center">
+  <img src="docs/images/12-abc-b-taste-skill.png" width="900" alt="B taste-skill 결과">
+</p>
+
+넓은 여백과 절제된 타이포그래피를 사용하는 에디토리얼·문서형 구성입니다.
+
+### C — Design Fieldbook Skill
+
+<p align="center">
+  <img src="docs/images/13-abc-c-fieldbook.png" width="900" alt="C Design Fieldbook Skill 결과">
+</p>
+
+대형 한글 헤드라인, 고대비 다크 표면, 성과 지표의 크기 차를 사용해 메시지와 증거의 위계를 강화한 구성입니다.
 
 한 번의 원샷 비교만으로 일반적인 우위를 확정할 수는 없습니다. 이 실험에서 확인한 핵심은 규칙을 더 많이 전달하는 것만으로 끝내지 않고, **이미지로 방향을 비교·선택한 뒤 그 레퍼런스를 토큰·코드·검증 루프에 연결하는 방식**이 결과의 시각적 의도를 더 분명하게 만들 수 있다는 점입니다.
 

@@ -256,11 +256,31 @@ AX 인재전쟁과 같은 플랫폼에서 진행한 별도 AI 역량평가입니
 
 동일한 자기소개 콘텐츠·입력 이미지·프롬프트·모델·effort를 사용하고 적용 스킬만 바꿨습니다. **A는 스킬 미사용, B는 GitHub `taste-skill`, C는 Design Fieldbook Skill**입니다.
 
-| A — 스킬 미사용 | B — GitHub taste-skill | C — Design Fieldbook Skill |
-|---|---|---|
-| <img src="Design_Fieldbook_Skill/docs/images/11-abc-a-no-skill.png" alt="A 스킬 미사용 결과"> | <img src="Design_Fieldbook_Skill/docs/images/12-abc-b-taste-skill.png" alt="B taste-skill 결과"> | <img src="Design_Fieldbook_Skill/docs/images/13-abc-c-fieldbook.png" alt="C Design Fieldbook Skill 결과"> |
+##### A — 스킬 미사용
 
-이번 원샷에서 A는 익숙한 포트폴리오 랜딩, B는 여백 중심의 에디토리얼 구성, C는 **대형 한글 헤드라인·고대비 다크 표면·성과 지표의 차등**이 두드러졌습니다. 단일 사례로 일반적인 우위를 주장하기보다, 이미지로 방향을 비교·선택하고 이를 코드와 검증 루프에 연결하는 방식의 가능성을 확인한 테스트입니다.
+<p align="center">
+  <img src="Design_Fieldbook_Skill/docs/images/11-abc-a-no-skill.png" width="900" alt="A 스킬 미사용 결과">
+</p>
+
+익숙한 밝은 포트폴리오 랜딩 구조입니다.
+
+##### B — GitHub taste-skill
+
+<p align="center">
+  <img src="Design_Fieldbook_Skill/docs/images/12-abc-b-taste-skill.png" width="900" alt="B taste-skill 결과">
+</p>
+
+넓은 여백과 절제된 타이포그래피를 사용한 에디토리얼 구성입니다.
+
+##### C — Design Fieldbook Skill
+
+<p align="center">
+  <img src="Design_Fieldbook_Skill/docs/images/13-abc-c-fieldbook.png" width="900" alt="C Design Fieldbook Skill 결과">
+</p>
+
+대형 한글 헤드라인·고대비 다크 표면·성과 지표의 차등으로 메시지와 증거의 위계를 강화했습니다.
+
+단일 사례로 일반적인 우위를 주장하기보다, 이미지로 방향을 비교·선택하고 이를 코드와 검증 루프에 연결하는 방식의 가능성을 확인한 테스트입니다.
 
 → [A/B/C 원본 HTML과 실험 조건](Design_Fieldbook_Skill/experiments/abc-test/)
 
