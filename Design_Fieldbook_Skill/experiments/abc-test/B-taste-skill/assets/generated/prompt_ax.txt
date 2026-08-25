@@ -1,0 +1,9 @@
+Create ONE flat editorial vector illustration, landscape, representing three distinct industries solved by one AI-native builder in a hackathon: (1) consumer finance / ETF investing, shown as a simple ascending line chart on a small card, (2) beauty / cosmetics matching, shown as a soft radial dot cluster or gradient swatch on a small card, (3) tax / legal review, shown as a small card with a balanced scale or a stacked-document icon.
+
+Composition: three vertical rounded-rectangle cards of equal size, slightly overlapping or fanned out in a row with slight rotation offset between them (like three cards fanned on a table), each card containing ONE simple abstract icon or minimal shape representing its domain, no text or letters anywhere in the image, no logos, no watermark.
+
+Style: flat modern editorial vector illustration, clean geometric shapes, generous negative space, NOT 3D render, NOT photorealistic, NOT glossy, NOT a screenshot, NOT a UI mockup, no gradients that look like AI-purple glow.
+
+Color palette: background is warm off-white / paper (#FAF9F6 approximate), the three cards and shapes use ONLY deep navy blue (#16233F approximate) and soft neutral gray, with the ascending chart line drawn as a thin single stroke, keep the whole image restrained and monochrome-navy-on-paper, no other hues, no red, no green, no purple, no yellow.
+
+Framing: the three cards are centered with even margin on all sides, plenty of breathing room, image reads clearly as a small supporting illustration at 700px wide.

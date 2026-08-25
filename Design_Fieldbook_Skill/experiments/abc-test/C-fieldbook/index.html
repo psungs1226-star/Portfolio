@@ -1,0 +1,859 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>피성환 — AI-Native Product Builder</title>
+<meta name="description" content="공직 5년 6개월 경험에 AI 에이전트를 결합해, 새로운 도메인의 문제를 조사·구조화·구현·검증까지 직접 수행하는 AI-Native Product Builder 피성환의 포트폴리오.">
+
+<!-- Pretendard (한글 산세리프, jsdelivr CDN) -->
+<link rel="stylesheet" as="style" crossorigin
+  href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@1.3.9/dist/web/static/pretendard.css">
+
+<!-- JetBrains Mono (수치·식별자 전용) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* plan
+   판돈: 신뢰 | 어조: 유보형 | 밀도: 고밀도 | 장르: 마케팅
+   톤: 절제
+   스타일: preset:refined-product
+   레이아웃: split(hero) / 축시퀀스(about·process) / 표·지표(domain table) / bento(featured work) / 표·지표(validation dashboard) / 풀폭흐름(closing)
+   모션: entrance=히어로 축약 초리오그래피(§7.1 절제형, ≤400ms, nav/mark/lead/cta/photo 5요소) / signature=Featured Work 대표 셀의 질문↔판단근거 탭 전환(반복 상호작용) / 나머지 상태 전이만(100ms 알파)
+   이미지: 히어로 우측 정체성 사진(실제 증명사진) 1곳, Featured Work 3곳(인사ON·Design Fieldbook·사주 다이어리 실제 스크린샷) — 그 외 생성 없음(README에 없는 지표는 만들지 않는다)
+   시안: draft-b(레이아웃 변주 — bento+dashboard) 채택, 히어로는 draft-a의 split+사진 패널을 결합 — draft-b는 밀도·타이포 커밋이 가장 정확했고 draft-a는 사진 패널로 신뢰 신호를 더함. draft-c는 Featured Work가 인사ON 1건만 다뤄 포트폴리오 커버리지가 부족해 부분 채택(도메인 표 구조만 참고)
+*/
+:root{
+  /* 액센트 — tokens.py 시드 #2563EB, 절제 톤, 크로마 0.67(상한 0.78 통과) */
+  --acc:#4278EE;
+  --acc-fill:#3A6BDB; /* 칠하는 면 전용 — 흰 텍스트 4.87:1 확보(painting vs reading) */
+  --acc-hi:#7199F2;
+  --acc-cont:#17294F;
+  --acc-cont-2:#14213D;
+  --acc-on:#A2B8E8;
+  --on-acc-2:#0F121A;
+
+  /* 중립 잉크 · 배경 */
+  --ink:#E9EAEC;
+  --ink-2:#A5A8AF;
+  --ink-3:#81858D;
+  --bg:#101114;
+  --band:#1A1D22;
+  --surface:#1B1C20;
+  --outline:#26282D;
+
+  /* refined-product 알파 표면 시스템 — 별도 hex 대신 흰색 알파 층 */
+  --sa-1: rgba(255,255,255,.03);
+  --sa-2: rgba(255,255,255,.06);
+  --sa-3: rgba(255,255,255,.10);
+  --la-1: rgba(255,255,255,.08);
+  --la-2: rgba(255,255,255,.14);
+
+  /* 시맨틱 4색 */
+  --ok:#30A758; --ok-bg:#12301C; --ok-bd:#2C5942;
+  --warn:#B08B33; --warn-bg:#302712; --warn-bd:#5A4826;
+  --err:#CF6858; --err-bg:#301612; --err-bd:#5E3330;
+  --info:#4C8CCB; --info-bg:#122130; --info-bd:#31456E;
+
+  /* 타입 스케일 8토큰(tokens.py 산출, 인접 최소 1.13배) */
+  --fs-cap:12px; --fs-ctl:14px; --fs-body:16px; --fs-lead:19px;
+  --fs-h3:23px; --fs-h2:29px; --fs-h1:39px; --fs-disp:55px;
+
+  /* 여백 6단 — refined-product 압축 리듬(섹션 64–88px 밴드, 2px 배수, 인접 1.5배 이상) */
+  --sp-1:4px; --sp-2:8px; --sp-3:12px;
+  --sp-4:20px; --sp-5:32px; --sp-6:72px;
+
+  /* 모션 토큰(MD3, 마케팅=expressive) */
+  --dur-short2:100ms; --dur-short3:150ms; --dur-short4:200ms;
+  --dur-medium2:300ms; --dur-long1:450ms;
+  --ease-standard:cubic-bezier(0.2, 0, 0, 1);
+  --ease-decel:cubic-bezier(0, 0, 0, 1);
+  --ease-accel:cubic-bezier(0.3, 0, 1, 1);
+  --ease-emphasized-decel:cubic-bezier(0.05, 0.7, 0.1, 1);
+
+  --r-s:6px; --r-m:8px; --r-l:12px;
+  --container:1200px; --pad-x:28px;
+
+  --mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+  --sans: 'Pretendard', -apple-system, 'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', sans-serif;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; overflow-x:hidden; }
+body{
+  margin:0; background:var(--bg); color:var(--ink); font-family:var(--sans);
+  font-size:var(--fs-body); line-height:1.6;
+  word-break:keep-all; overflow-wrap:break-word;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{ max-width:100%; display:block; }
+a{ color:inherit; }
+h1,h2,h3,p,ul,dl,dd,table{ margin:0; padding:0; }
+ul{ list-style:none; }
+table{ border-collapse:collapse; width:100%; }
+.mono{ font-family:var(--mono); font-variant-numeric:tabular-nums; }
+.container{ max-width:var(--container); margin:0 auto; padding-inline:var(--pad-x); }
+
+/* focus */
+:focus{ outline:none; }
+:focus-visible{
+  outline:2px solid var(--ink); outline-offset:2px;
+  box-shadow:0 0 0 4px var(--bg), 0 0 0 5px var(--acc-hi);
+  border-radius:var(--r-s);
+}
+
+/* skip link */
+.skip-link{
+  position:absolute; top:var(--sp-3); left:var(--sp-3); z-index:200;
+  background:var(--acc-fill); color:#fff; padding:var(--sp-2) var(--sp-3);
+  border-radius:var(--r-s); font-size:var(--fs-ctl); font-weight:600;
+  opacity:0; transform:translateY(-64px);
+  transition:transform var(--dur-short3) var(--ease-standard), opacity var(--dur-short3) var(--ease-standard);
+}
+.skip-link:focus{ opacity:1; transform:translateY(0); }
+
+/* ============ 헤더 ============ */
+.site-header{
+  position:sticky; top:0; z-index:100;
+  background:rgba(16,17,20,.82); backdrop-filter:blur(14px); -webkit-backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--la-1);
+}
+.site-header .container{
+  display:flex; align-items:center; justify-content:space-between;
+  height:64px;
+}
+.brand{ display:flex; align-items:center; gap:var(--sp-2); font-weight:700; font-size:var(--fs-lead); }
+.brand .dot{ width:8px; height:8px; border-radius:50%; background:var(--acc); }
+.brand-role{ font-size:var(--fs-cap); color:var(--ink-3); font-weight:400; }
+.nav-links{ display:flex; gap:var(--sp-5); align-items:center; }
+.nav-links a{
+  font-size:var(--fs-ctl); color:var(--ink-2); text-decoration:none;
+  padding:var(--sp-1) var(--sp-1);
+}
+.nav-links a:hover{ color:var(--ink); }
+.nav-cta{
+  font-size:var(--fs-ctl); font-weight:600; color:var(--acc-on)!important;
+  background:var(--acc-cont); border:1px solid var(--la-2); border-radius:999px; padding:10px 18px!important;
+  min-height:44px; display:inline-flex; align-items:center;
+}
+.nav-cta:hover{ background:var(--acc-cont-2); }
+.nav-toggle{
+  display:none; width:44px; height:44px; align-items:center; justify-content:center;
+  background:var(--sa-2); border:1px solid var(--la-1); border-radius:var(--r-m); color:var(--ink);
+}
+.nav-toggle span, .nav-toggle span::before, .nav-toggle span::after{
+  content:""; display:block; width:18px; height:2px; background:var(--ink); position:relative;
+  transition:transform var(--dur-short3) var(--ease-standard), opacity var(--dur-short2) var(--ease-standard);
+}
+.nav-toggle span::before{ position:absolute; top:-6px; }
+.nav-toggle span::after{ position:absolute; top:6px; }
+
+/* ============ 히어로(Split) ============ */
+.hero{ padding-block: var(--sp-6) var(--sp-6); position:relative; overflow:hidden; }
+.hero::before{
+  content:""; position:absolute; inset:-20% -10% auto -10%; height:560px; z-index:-1;
+  background: radial-gradient(60% 60% at 30% 20%, rgba(66,120,238,.16), transparent 70%);
+}
+.hero .container{
+  display:grid; grid-template-columns:1.15fr .85fr; gap:var(--sp-6); align-items:center;
+}
+.eyebrow{
+  font-family:var(--mono); font-size:var(--fs-cap); letter-spacing:.08em; color:var(--acc-on);
+  text-transform:uppercase; margin-bottom:var(--sp-3);
+}
+.hero__title{
+  font-size:clamp(30px, 3.6vw, var(--fs-disp)); line-height:1.28; font-weight:700; letter-spacing:-0.01em;
+  text-wrap:balance;
+}
+.mark{ position:relative; color:var(--ink); white-space:nowrap; }
+.mark::after{
+  content:""; position:absolute; inset:auto 0 -.1em 0; height:.16em; z-index:-1;
+  background:rgba(66,120,238,.32); transform-origin:left center;
+}
+.hero__lead{
+  margin-top:var(--sp-4); max-width:56ch; font-size:var(--fs-lead); line-height:1.7; color:var(--ink-2);
+}
+.hero__cta-row{ display:flex; gap:var(--sp-3); margin-top:var(--sp-5); flex-wrap:wrap; }
+.btn{
+  display:inline-flex; align-items:center; gap:var(--sp-2); min-height:44px; padding:0 var(--sp-4);
+  border-radius:var(--r-m); font-size:var(--fs-ctl); font-weight:600; text-decoration:none;
+  transition:background var(--dur-short2) var(--ease-standard), border-color var(--dur-short2) var(--ease-standard);
+}
+.btn-primary{ background:var(--acc-fill); color:#fff; }
+.btn-primary:hover{ background:var(--acc-hi); }
+.btn-ghost{ background:var(--sa-1); border:1px solid var(--la-1); color:var(--ink); }
+.btn-ghost:hover{ background:var(--sa-2); border-color:var(--la-2); }
+
+.hero__stats{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:var(--sp-3); margin-top:var(--sp-5);
+  max-width:640px;
+}
+.stat{ background:var(--acc-cont); border-radius:var(--r-m); padding:var(--sp-3); }
+.stat b{ display:block; font-family:var(--mono); font-size:var(--fs-h3); font-weight:700; color:var(--ink); }
+.stat span{ display:block; font-size:var(--fs-cap); color:var(--acc-on); margin-top:2px; line-height:1.5; }
+
+.hero__photo{
+  background:var(--sa-1); border:1px solid var(--la-1); border-radius:var(--r-l);
+  overflow:hidden; backdrop-filter:blur(6px); -webkit-backdrop-filter:blur(6px);
+}
+.photo-frame{ position:relative; }
+.hero__photo img{
+  width:100%; aspect-ratio:373/300; object-fit:cover; object-position:center 15%; display:block;
+  filter:grayscale(.7) contrast(1.08) brightness(.9);
+}
+.photo-frame::before{
+  content:""; position:absolute; inset:0; z-index:1;
+  background:var(--acc-cont-2); mix-blend-mode:multiply; opacity:.6;
+}
+.photo-frame::after{
+  content:""; position:absolute; inset:0; z-index:2;
+  background:linear-gradient(180deg, rgba(16,17,20,.12) 0%, rgba(16,17,20,0) 30%, rgba(16,17,20,.62) 100%);
+}
+.hero__photo-meta{ padding:var(--sp-4); border-top:1px solid var(--la-1); }
+.hero__photo-meta .name{ font-weight:700; font-size:var(--fs-h3); }
+.hero__photo-meta .role{ color:var(--ink-2); font-size:var(--fs-sm, var(--fs-ctl)); margin-top:2px; }
+.hero__photo-status{
+  display:flex; align-items:center; gap:var(--sp-2); margin-top:var(--sp-3);
+  font-size:var(--fs-cap); color:var(--ink-2);
+}
+.hero__photo-status .dot{ width:7px; height:7px; border-radius:50%; background:var(--acc); }
+
+/* entrance choreography — 히어로 1회, ≤400ms, 5요소 */
+@media (prefers-reduced-motion: no-preference){
+  .hero .site-header, .js-entrance .hero__nav-anchor{ opacity:1; }
+  .js-entrance .mark::after{ animation: mark-in var(--dur-medium2) var(--ease-standard) 60ms both; }
+  .js-entrance .hero__lead{ animation: fade-up var(--dur-short4) var(--ease-decel) 140ms both; }
+  .js-entrance .hero__cta-row{ animation: fade-up var(--dur-short4) var(--ease-decel) 220ms both; }
+  .js-entrance .hero__photo{ animation: fade-up-sm var(--dur-medium2) var(--ease-emphasized-decel) 280ms both; }
+}
+@keyframes mark-in{ from{ transform:scaleX(.04); } to{ transform:scaleX(1); } }
+@keyframes fade-up{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:translateY(0); } }
+@keyframes fade-up-sm{ from{ opacity:0; transform:translateY(10px); } to{ opacity:1; transform:translateY(0); } }
+
+/* ============ 섹션 공통 ============ */
+.section{ padding-block:var(--sp-6); border-top:1px solid var(--outline); }
+.section-head{ margin-bottom:var(--sp-5); }
+.section-num{ font-family:var(--mono); font-size:var(--fs-cap); color:var(--acc-on); letter-spacing:.06em; }
+.section-title{ font-size:var(--fs-h1); font-weight:700; margin-top:var(--sp-2); max-width:34ch; letter-spacing:-0.01em; text-wrap:balance; }
+.section-lead{ color:var(--ink-2); max-width:64ch; margin-top:var(--sp-3); font-size:var(--fs-lead); line-height:1.7; }
+
+/* ============ About / Process(축 시퀀스) ============ */
+.about-grid{
+  display:grid; grid-template-columns:.85fr 1.15fr; gap:var(--sp-6);
+  background:var(--sa-1); border:1px solid var(--la-1); border-radius:var(--r-l); padding:var(--sp-5);
+}
+.about-copy p{ font-size:var(--fs-lead); line-height:1.75; }
+.about-copy p + p{ margin-top:var(--sp-3); padding-top:var(--sp-3); border-top:1px solid var(--la-1); }
+.about-copy .hi{ color:var(--acc-on); font-weight:600; }
+
+.process-label{ font-family:var(--mono); font-size:var(--fs-cap); color:var(--ink-2); letter-spacing:.08em; margin-bottom:var(--sp-3); }
+.process-intro{ font-size:var(--fs-ctl); color:var(--ink-2); line-height:1.65; margin-bottom:var(--sp-4); max-width:48ch; }
+.process-summary{ margin-top:var(--sp-4); padding-top:var(--sp-4); border-top:1px solid var(--la-1); font-size:var(--fs-ctl); color:var(--ink-2); line-height:1.6; }
+.process-track{ display:grid; grid-template-columns:repeat(4,1fr); gap:var(--sp-4); }
+.process-step{ border-left:2px solid var(--la-2); padding-left:var(--sp-3); }
+.process-step .step-label{ font-size:var(--fs-cap); color:var(--acc-on); font-weight:700; letter-spacing:.02em; }
+.process-step .step-sub{ margin-top:2px; font-size:var(--fs-cap); color:var(--ink-2); line-height:1.55; }
+
+.career-strip{
+  display:flex; flex-wrap:wrap; gap:var(--sp-3); margin-top:var(--sp-5); padding-top:var(--sp-4);
+  border-top:1px solid var(--la-1);
+}
+.career-chip{
+  font-size:var(--fs-cap); color:var(--ink-2); background:transparent; border:none;
+  border-left:2px solid var(--la-2); padding:0 0 0 10px; display:inline-flex; gap:6px; align-items:center;
+}
+.career-chip .mono{ color:var(--ink); font-weight:600; }
+.career-chip[data-current] .mono{ color:var(--acc-on); }
+
+/* ============ Domain Table(표·지표) ============ */
+.domain-table-wrap{ overflow-x:auto; border:1px solid var(--outline); border-radius:var(--r-l); }
+.domain-table{ min-width:760px; }
+.domain-table th{
+  font-size:var(--fs-lead); font-weight:700; text-align:center; color:var(--ink);
+  background:var(--band); padding:var(--sp-3) var(--sp-4); border-bottom:1px solid var(--outline);
+}
+.domain-table td:first-child{ text-align:left; }
+.domain-table td{
+  font-size:var(--fs-body); padding:var(--sp-3) var(--sp-4); border-bottom:1px solid var(--outline);
+  vertical-align:top;
+}
+.domain-table tr:last-child td{ border-bottom:none; }
+.domain-table tbody tr:nth-child(even) td{ background:var(--sa-1); }
+.domain-table tr:hover td{ background:var(--sa-2); }
+.row-flagship td{ background:var(--acc-cont-2) !important; }
+.row-flagship .domain-idx, .row-flagship .proj{ color:var(--acc-on); }
+.domain-name{ display:flex; align-items:center; gap:var(--sp-2); font-weight:700; white-space:nowrap; }
+.domain-name .bar{ width:3px; height:16px; background:var(--acc); border-radius:2px; flex:none; }
+.domain-idx{ font-size:var(--fs-cap); color:var(--ink-2); font-weight:400; }
+.domain-row-label{ font-size:var(--fs-cap); color:var(--ink-2); display:block; margin-bottom:2px; }
+.domain-result{ color:var(--ink); font-weight:600; }
+
+/* ============ Featured Work(Bento) ============ */
+.bento{
+  display:grid; grid-template-columns:repeat(4, 1fr); grid-auto-rows:minmax(120px,auto); gap:var(--sp-3);
+  grid-template-areas:
+    "flag flag tint tint"
+    "flag flag wide wide"
+    "sm   sm   sm   sm";
+}
+.bcell{
+  position:relative; background:var(--sa-1); border:1px solid var(--la-1); border-radius:var(--r-l);
+  padding:var(--sp-4); overflow:hidden; display:flex; flex-direction:column;
+}
+.bcell-num{
+  font-family:var(--mono); font-size:var(--fs-cap); color:var(--ink-2);
+  border:1px solid var(--la-2); border-radius:var(--r-s); width:26px; height:22px;
+  display:inline-flex; align-items:center; justify-content:center; margin-bottom:var(--sp-3);
+}
+.bcell-status{
+  position:absolute; top:var(--sp-4); right:var(--sp-4); display:flex; align-items:center; gap:6px;
+  font-family:var(--mono); font-size:10px; letter-spacing:.06em; color:var(--ink-2);
+  background:rgba(16,17,20,.55); border:1px solid var(--la-1); border-radius:999px; padding:4px 10px;
+}
+.bcell-status .dot{ width:6px; height:6px; border-radius:50%; background:var(--acc); }
+.bcell h3{ font-size:var(--fs-h2); font-weight:700; text-wrap:balance; }
+.bcell h3 .accent{ color:var(--acc-on); }
+.bcell .sub{ color:var(--ink-2); margin-top:var(--sp-2); font-size:var(--fs-ctl); line-height:1.65; max-width:52ch; }
+.bcell .note{ margin-top:auto; padding-top:var(--sp-3); font-size:var(--fs-cap); color:var(--ink-2); line-height:1.6; }
+.bcell .metrics{ display:flex; gap:var(--sp-2); margin-top:var(--sp-4); flex-wrap:wrap; }
+.bcell .metrics > div{ background:var(--acc-cont-2); border-radius:var(--r-s); padding:8px 12px; }
+.bcell .metrics b{ font-family:var(--mono); font-size:var(--fs-h3); font-weight:700; display:block; color:var(--ink); }
+.bcell .metrics span{ font-size:var(--fs-cap); color:var(--acc-on); }
+.bcell-link{
+  display:inline-flex; align-items:center; gap:6px; margin-top:var(--sp-3);
+  font-size:var(--fs-ctl); font-weight:600; color:var(--acc-on); text-decoration:none;
+  min-height:32px;
+}
+.bcell-link:hover{ color:var(--acc-hi); }
+
+.ax-breakdown{ margin-top:var(--sp-4); border-top:1px solid var(--la-1); }
+.ax-breakdown li{
+  display:flex; justify-content:space-between; align-items:center; gap:var(--sp-3);
+  padding:var(--sp-2) 0; border-bottom:1px solid var(--la-1); font-size:var(--fs-ctl);
+}
+.ax-breakdown .domain-name{ font-weight:600; white-space:nowrap; }
+.ax-sys{ color:var(--ink-2); text-align:right; }
+
+/* 셀 크기 차등(대표 4단위 vs 나머지 2단위) + 배경 3종 — grid-template-areas로 배정해 중간 행 구멍을 원천 차단 */
+.bcell--flagship{ grid-area:flag; background-color:var(--sa-2); }
+.bcell--wide{ grid-area:wide; padding:0; }
+.bcell--tint{ grid-area:tint; }
+.bcell--sm{ grid-area:sm; }
+
+/* 실제 스크린샷은 텍스트와 겹치지 않는 별도 영역에 담는다(배경 블리드 뒤 텍스트 중첩 금지) */
+.bcell-media{
+  margin:calc(var(--sp-4) * -1) calc(var(--sp-4) * -1) var(--sp-4);
+  position:relative; flex:none;
+}
+.bcell-media img{ width:100%; height:210px; object-fit:cover; object-position:top; display:block; }
+.bcell-media .bcell-status{ position:absolute; top:var(--sp-3); right:var(--sp-3); }
+.bcell-media::after{
+  content:""; position:absolute; inset:auto 0 0 0; height:56px;
+  background:linear-gradient(180deg, transparent, var(--sa-2));
+}
+
+.bcell-wide-row{ display:flex; align-items:flex-start; }
+.bcell-wide-text{ padding:var(--sp-4); display:flex; flex-direction:column; flex:1; min-width:0; }
+.bcell-wide-media{ flex:0 0 40%; height:230px; position:relative; overflow:hidden; }
+.bcell-wide-media img{ width:100%; height:100%; object-fit:cover; object-position:left top; display:block; }
+.bcell-wide-media::after{
+  content:""; position:absolute; inset:0;
+  background:
+    linear-gradient(180deg, transparent 30%, rgba(16,17,20,.5) 62%, var(--sa-1) 92%),
+    linear-gradient(90deg, var(--sa-1) 0%, transparent 28%);
+}
+.bcell-wide-media::before{
+  content:""; position:absolute; inset:auto 0 0 0; height:56px; z-index:1;
+  background:linear-gradient(180deg, transparent, var(--sa-1));
+}
+@media (max-width:820px){
+  .bcell-wide-row{ flex-direction:column; }
+  .bcell-wide-media{ flex:0 0 160px; order:-1; }
+  .bcell-wide-media::after{ background:linear-gradient(180deg, transparent 45%, var(--sa-1)); }
+}
+
+/* Featured Work 대표 셀의 signature reveal — 반복 상호작용 탭 전환 */
+.demo{ margin-top:var(--sp-4); background:rgba(16,17,20,.72); border:1px solid var(--la-2); border-radius:var(--r-m); padding:var(--sp-3); backdrop-filter:blur(4px); }
+.demo-tabs{ display:flex; gap:var(--sp-2); }
+.demo-tab{
+  min-height:32px; padding:0 var(--sp-3); border-radius:999px; border:1px solid var(--la-1); background:transparent;
+  color:var(--ink-2); font-size:var(--fs-cap); font-weight:600; cursor:pointer; font-family:var(--sans);
+  transition:background var(--dur-short2) var(--ease-standard), color var(--dur-short2) var(--ease-standard), border-color var(--dur-short2) var(--ease-standard);
+}
+.demo-tab[aria-selected="true"]{ background:var(--acc-cont); color:var(--acc-on); border-color:var(--la-2); }
+.demo-panels{ margin-top:var(--sp-3); font-size:var(--fs-ctl); line-height:1.65; color:var(--ink); min-height:74px; }
+.demo-panel{ display:none; }
+.demo-panel[data-active]{ display:block; animation:fade-only var(--dur-short3) var(--ease-standard); }
+.demo-panel .q-label, .demo-panel .a-label{ font-family:var(--mono); font-size:10px; color:var(--ink-2); letter-spacing:.06em; display:block; margin-bottom:4px; }
+.demo-panel cite{ font-style:normal; color:var(--acc-on); font-weight:600; }
+@keyframes fade-only{ from{ opacity:0; } to{ opacity:1; } }
+
+/* Featured Work 하위 이미지 스트립(사주 다이어리) */
+.shot-strip{ display:flex; gap:var(--sp-2); margin-top:var(--sp-3); }
+.shot-strip img{ border-radius:var(--r-s); border:1px solid var(--la-1); width:33.33%; aspect-ratio:9/16; object-fit:cover; filter:saturate(.88) brightness(.96); }
+
+/* ============ Validation Dashboard(표·지표) ============ */
+.kpi-row{ display:grid; grid-template-columns:repeat(4,1fr); gap:var(--sp-3); margin-bottom:var(--sp-4); }
+.kpi{ background:var(--acc-cont); border-radius:var(--r-m); padding:var(--sp-4); }
+.kpi b{ font-family:var(--mono); font-size:var(--fs-h1); font-weight:700; display:block; line-height:1.1; color:var(--ink); }
+.kpi span{ display:block; margin-top:var(--sp-2); font-size:var(--fs-cap); color:var(--acc-on); line-height:1.55; }
+
+.val-table-wrap{ overflow-x:auto; border:1px solid var(--outline); border-radius:var(--r-l); }
+.val-table{ min-width:820px; }
+.val-table th{
+  font-size:var(--fs-body); font-weight:700; text-align:center; color:var(--ink);
+  background:var(--acc-cont-2); padding:var(--sp-3) var(--sp-4); border-bottom:1px solid var(--outline);
+}
+.val-table td:nth-child(1){ text-align:left; }
+.val-table td{
+  font-size:var(--fs-ctl); padding:var(--sp-3) var(--sp-4); border-bottom:1px solid var(--outline); vertical-align:top;
+}
+.val-table tr:last-child td{ border-bottom:none; }
+.val-table .proj{ font-weight:700; }
+.val-table .limit{ color:var(--warn); }
+.val-table .limit::before{ content:"▲ "; font-size:10px; }
+
+/* ============ Closing(풀폭 흐름) ============ */
+.closing{ text-align:center; }
+.closing-statement{
+  font-size:clamp(24px, 3vw, var(--fs-h1)); font-weight:700; line-height:1.5; max-width:26ch; margin:0 auto;
+  text-wrap:balance;
+}
+.closing-flow{
+  margin-top:var(--sp-4); font-family:var(--mono); color:var(--acc-on); font-size:var(--fs-ctl); letter-spacing:.03em;
+}
+.closing-actions{ display:flex; justify-content:center; gap:var(--sp-3); margin-top:var(--sp-5); flex-wrap:wrap; }
+.closing-links{
+  display:flex; justify-content:center; gap:var(--sp-5); margin-top:var(--sp-5); flex-wrap:wrap;
+  font-size:var(--fs-ctl); color:var(--ink-2);
+}
+.closing-links a{ text-decoration:none; color:var(--ink-2); display:inline-flex; align-items:center; min-height:24px; }
+.closing-links a:hover{ color:var(--ink); }
+.closing-note{ margin-top:var(--sp-4); font-size:var(--fs-cap); color:var(--ink-3); max-width:52ch; margin-inline:auto; }
+
+.site-footer{ border-top:1px solid var(--outline); padding-block:var(--sp-4); }
+.site-footer .container{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:var(--sp-2); }
+.site-footer p{ font-size:var(--fs-cap); color:var(--ink-3); }
+.site-footer a{ color:var(--ink-3); text-decoration:none; }
+.site-footer a:hover{ color:var(--ink); }
+
+/* hover capability — 실제 클릭 가능 요소에만, 이동 없이 100ms 알파 전이 */
+@media (hover:hover) and (pointer:fine){
+  .bcell{ transition:background-color var(--dur-short2) var(--ease-standard), border-color var(--dur-short2) var(--ease-standard); }
+  .bcell:hover{ background-color:var(--sa-2); border-color:var(--la-2); }
+  .demo-tab:hover{ background:var(--sa-2); color:var(--ink); }
+  .kpi{ transition:background-color var(--dur-short2) var(--ease-standard); }
+  .kpi:hover{ background-color:var(--acc-cont-2); }
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:.01ms!important; animation-iteration-count:1!important; transition-duration:.01ms!important; scroll-behavior:auto!important; }
+}
+
+/* ============ 반응형 ============ */
+@media (max-width:1100px){
+  .hero .container{ grid-template-columns:1fr; }
+  .hero__photo{ max-width:420px; }
+  .about-grid{ grid-template-columns:1fr; }
+  .bento{
+    grid-template-columns:repeat(2,1fr);
+    grid-template-areas:
+      "flag flag"
+      "tint wide"
+      "sm   sm";
+  }
+}
+@media (max-width:768px){
+  :root{ --pad-x:20px; --sp-6:56px; }
+  .nav-links{
+    position:absolute; top:64px; left:0; right:0; background:var(--bg); border-bottom:1px solid var(--outline);
+    flex-direction:column; align-items:flex-start; gap:0; padding:var(--sp-2) var(--pad-x) var(--sp-4);
+    display:none;
+  }
+  .nav-links.is-open{ display:flex; }
+  .nav-links a{ width:100%; padding:var(--sp-3) 0; border-bottom:1px solid var(--outline); }
+  .nav-cta{ margin-top:var(--sp-3); }
+  .nav-toggle{ display:inline-flex; }
+  .hero__stats{ grid-template-columns:repeat(2,1fr); }
+  .kpi-row{ grid-template-columns:repeat(2,1fr); }
+  .process-track{ grid-template-columns:repeat(2,1fr); }
+  .section-title{ font-size:var(--fs-h2); }
+  .closing-links{ gap:var(--sp-3); flex-direction:column; align-items:center; }
+}
+@media (max-width:500px){
+  .hero__stats{ grid-template-columns:repeat(2,1fr); gap:var(--sp-4) var(--sp-3); }
+  .bento{
+    grid-template-columns:1fr;
+    grid-template-areas: "flag" "tint" "wide" "sm";
+  }
+  .shot-strip{ flex-wrap:wrap; }
+  .shot-strip img{ width:calc(33.33% - 6px); }
+}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">본문으로 건너뛰기</a>
+
+<header class="site-header">
+  <div class="container">
+    <a class="brand" href="#top" aria-label="피성환 홈으로 이동">
+      <span class="dot" aria-hidden="true"></span>
+      피성환 <span class="brand-role">· AI-Native Product Builder</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primary-nav" id="nav-toggle-btn" aria-label="메뉴 열기">
+      <span></span>
+    </button>
+    <nav class="nav-links" id="primary-nav" aria-label="주요 메뉴">
+      <a href="#about">소개</a>
+      <a href="#domain">도메인</a>
+      <a href="#work">프로젝트</a>
+      <a href="#validation">검증 지표</a>
+      <a class="nav-cta" href="#contact">연락처 보기</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <section class="hero" id="top">
+    <div class="container">
+      <div class="hero__copy">
+        <p class="eyebrow">AI-Native Product Builder · Product Strategy</p>
+        <h1 class="hero__title">새로운 도메인을 배우고,<br><span class="mark">검증 가능한</span> 결과로 만듭니다</h1>
+        <p class="hero__lead">지방자치단체 공무원으로 5년 6개월간 사업기획·예산·계약·채용·감독 업무를 담당했습니다. 2026년 4월 퇴직 후 이 실무 역량에 AI 에이전트를 결합해, 새로운 도메인의 조사부터 구현·검증까지 직접 수행합니다.</p>
+        <div class="hero__cta-row">
+          <a class="btn btn-primary" href="#work">Featured Work 보기</a>
+          <a class="btn btn-ghost" href="#validation">검증 지표 보기</a>
+        </div>
+        <div class="hero__stats">
+          <div class="stat"><b class="mono">636+604</b><span>테스트 케이스</span></div>
+          <div class="stat"><b class="mono">상위 10%</b><span>조코딩 AX 인재전쟁 예선</span></div>
+          <div class="stat"><b class="mono">2건</b><span>Toss 미니앱 실출시</span></div>
+          <div class="stat"><b class="mono">3건</b><span>기업별 Codex 플러그인</span></div>
+        </div>
+      </div>
+      <figure class="hero__photo">
+        <div class="photo-frame">
+          <img src="assets/profile.jpg" alt="피성환 프로필 사진" width="373" height="300">
+        </div>
+        <figcaption class="hero__photo-meta">
+          <span class="name">피성환</span>
+          <span class="role">AI-Native Product Builder</span>
+          <div class="hero__photo-status">
+            <span class="dot" aria-hidden="true"></span>
+            인천광역시 중구청 주무관(5년 6개월) → 2026.04 AI-Native Builder 전환
+          </div>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="section-num">01 · ABOUT</p>
+          <h2 class="section-title">5년 6개월의 공직 경험을 AI-native 실행 방식으로</h2>
+        </div>
+      </div>
+      <div class="about-grid">
+        <div class="about-copy">
+          <p>인천광역시 중구청에서 사업기획, 예산·계약, 채용·급여, 공사·용역 감독과 유관기관 협의를 담당하며 <span class="hi">복잡한 규정과 요구사항을 실행 가능한 업무로 구조화하는 능력</span>을 길렀습니다.</p>
+          <p>2026년 4월 퇴직 이후, 이 역량에 AI 에이전트를 결합했습니다. 새로운 도메인의 자료를 빠르게 조사하고, 문제와 판단 기준을 정리해 제품·분석도구·자동화 시스템으로 구현하는 과정이 적성에 맞는다는 것을 확인했습니다.</p>
+          <div class="career-strip">
+            <span class="career-chip"><span class="mono">2017.02–11</span> 코반케미칼 사원</span>
+            <span class="career-chip"><span class="mono">2018.02–2019.10</span> 육군 병장 만기전역</span>
+            <span class="career-chip"><span class="mono">2020.10–2026.04</span> 중구청 주무관</span>
+            <span class="career-chip" data-current><span class="mono">2026.04–</span> AI-Native Builder 전환</span>
+          </div>
+        </div>
+        <div class="about-process">
+          <p class="process-label">PROBLEM-SOLVING PROCESS</p>
+          <p class="process-intro">이 4단계를 새로운 도메인마다 그대로 반복합니다. 산업 지식을 이미 안다고 가정하지 않고, 조사부터 검증까지 직접 수행합니다.</p>
+          <div class="process-track">
+            <div class="process-step">
+              <p class="step-label mono">01 · 학습</p>
+              <p class="step-sub">도메인 자료를 AI로 조사하고, 근거를 사실·가정·모르는 것으로 분류합니다.</p>
+            </div>
+            <div class="process-step">
+              <p class="step-label mono">02 · 구조화</p>
+              <p class="step-sub">문제를 분해하고 사용자·리스크·의사결정 기준을 정의합니다.</p>
+            </div>
+            <div class="process-step">
+              <p class="step-label mono">03 · 구현</p>
+              <p class="step-sub">제품·프로토타입·에이전트·분석 파이프라인을 직접 만듭니다.</p>
+            </div>
+            <div class="process-step">
+              <p class="step-label mono">04 · 검증</p>
+              <p class="step-sub">테스트와 적대적 검증을 거쳐 결과와 한계를 함께 공개합니다.</p>
+            </div>
+          </div>
+          <p class="process-summary">학습 → 구조화 → 구현 → 검증. 도메인이 바뀌어도 이 흐름은 동일하게 적용됩니다.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="domain">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="section-num">02 · DOMAIN IMPACT</p>
+          <h2 class="section-title">도메인이 달라져도 반복되는 문제 해결 구조</h2>
+          <p class="section-lead">특정 산업을 이미 안다고 가정하지 않습니다. 사실·가정·모르는 것을 분리하고, AI가 만든 결과를 다시 검증할 구조까지 설계하는 것이 여러 도메인에서 일할 수 있는 기반이라고 생각합니다.</p>
+        </div>
+      </div>
+      <div class="domain-table-wrap">
+        <table class="domain-table">
+          <thead>
+            <tr><th scope="col">도메인</th><th scope="col">해결한 문제 → 실행 결과</th></tr>
+          </thead>
+          <tbody>
+            <tr class="row-flagship">
+              <td><span class="domain-name"><span class="domain-idx mono">01</span><span class="bar" aria-hidden="true"></span>인사·규정</span></td>
+              <td><span class="domain-row-label">개정 시점과 조건에 따라 달라지는 규정 검토</span><span class="domain-result">Temporal RAG 기반 인사ON + PDF-to-Bot MCP 확장</span></td>
+            </tr>
+            <tr>
+              <td><span class="domain-name"><span class="domain-idx mono">02</span><span class="bar" aria-hidden="true"></span>소비자 금융</span></td>
+              <td><span class="domain-row-label">해외 ETF 적립의 직관성 부족과 판단 근거 부재</span><span class="domain-result">기간·주기별 ETF 모으기 백테스트 + 모바일 웹 MVP</span></td>
+            </tr>
+            <tr>
+              <td><span class="domain-name"><span class="domain-idx mono">03</span><span class="bar" aria-hidden="true"></span>글로벌 뷰티 마케팅</span></td>
+              <td><span class="domain-row-label">신제품과 진정성 있게 맞는 인플루언서 선정</span><span class="domain-result">제품·피부타입·콘텐츠 성향 기반 랭킹 시스템</span></td>
+            </tr>
+            <tr>
+              <td><span class="domain-name"><span class="domain-idx mono">04</span><span class="bar" aria-hidden="true"></span>세무</span></td>
+              <td><span class="domain-row-label">세법 개정 뒤 기존 판례·FAQ·해석례가 흔들릴 가능성</span><span class="domain-result">고객 전달 전 검토 대상을 찾는 선제탐지 Tax Agent</span></td>
+            </tr>
+            <tr>
+              <td><span class="domain-name"><span class="domain-idx mono">05</span><span class="bar" aria-hidden="true"></span>소비자 앱</span></td>
+              <td><span class="domain-row-label">운세·날씨·할 일·기록마다 다른 앱을 켜야 하는 불편</span><span class="domain-result">여러 사용 목적을 흡수한 Apps in Toss 앱</span></td>
+            </tr>
+            <tr>
+              <td><span class="domain-name"><span class="domain-idx mono">06</span><span class="bar" aria-hidden="true"></span>디자인</span></td>
+              <td><span class="domain-row-label">AI가 도메인 판단 없이 만드는 획일적 화면과 AI slop</span><span class="domain-result">29개 스타일 비교로 판단 기준을 만드는 Fieldbook</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="work">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="section-num">03 · FEATURED WORK</p>
+          <h2 class="section-title">네 도메인, 네 개의 실행 결과</h2>
+        </div>
+      </div>
+
+      <div class="bento">
+        <article class="bcell bcell--flagship">
+          <div class="bcell-media">
+            <img src="assets/insaon-screenshot.jpg" alt="인사ON 실제 화면 — 육아휴직 복직자의 정근수당 지급률 질의응답" loading="lazy">
+            <span class="bcell-status"><span class="dot" aria-hidden="true"></span>PRODUCTION</span>
+          </div>
+          <span class="bcell-num">01</span>
+          <h3>인사<span class="accent">ON</span> → PDF-to-Bot MCP</h3>
+          <p class="sub">공무원 인사 법령 RAG 챗봇 — 사내 데이터 챗봇의 검색·근거·안전 구조를, 실제 내부자료 없이 공개 법령 corpus로 먼저 검증했습니다. 검증한 검색 계층은 PDF-to-Bot MCP로 범용화했습니다.</p>
+          <div class="metrics">
+            <div><b class="mono">636</b><span>tests</span></div>
+            <div><b class="mono">B0→H3</b><span>ablation</span></div>
+            <div><b class="mono">70건</b><span>합성 회귀셋</span></div>
+          </div>
+          <div class="demo">
+            <div class="demo-tabs" role="tablist" aria-label="인사ON 질의응답 예시">
+              <button class="demo-tab" id="tab-q" role="tab" aria-selected="true" aria-controls="panel-q" type="button">질문</button>
+              <button class="demo-tab" id="tab-a" role="tab" aria-selected="false" aria-controls="panel-a" type="button" tabindex="-1">판단 근거</button>
+            </div>
+            <div class="demo-panels">
+              <div class="demo-panel" id="panel-q" role="tabpanel" aria-labelledby="tab-q" data-active>
+                <span class="q-label">USER</span>
+                “2025년 5월 말부터 육아휴직을 사용하고 2026년 4월 1일 복직했습니다. 2026년 상반기 정근수당은 100% 지급되나요, 50% 지급되나요?”
+              </div>
+              <div class="demo-panel" id="panel-a" role="tabpanel" aria-labelledby="tab-a" hidden>
+                <span class="a-label">인사ON</span>
+                실제 근무 6개월로 <cite>100% 지급</cite> — 근거: 제6조·제14조. 조건이 부족하면 재질문하고, 근거가 부족하면 답변을 중단합니다.
+              </div>
+            </div>
+          </div>
+          <p class="note">한계 공개: 법률 정답성·실사용자 효과는 아직 측정하지 않았습니다. 로컬 추론 p50 62.9초.</p>
+        </article>
+
+        <article class="bcell bcell--tint">
+          <span class="bcell-status"><span class="dot" aria-hidden="true"></span>예선 통과</span>
+          <span class="bcell-num">02</span>
+          <h3>AX 인재전쟁</h3>
+          <p class="sub">카카오페이증권·메디테라피·삼일PwC의 공개 문제를 각각 Codex 플러그인으로 해결했습니다.</p>
+          <div class="metrics"><div><b class="mono">상위 10%</b><span>예선 결과</span></div></div>
+          <ul class="ax-breakdown">
+            <li><span class="domain-name"><span class="bar" aria-hidden="true"></span>카카오페이증권</span><span class="ax-sys">ETF 모으기 백테스트</span></li>
+            <li><span class="domain-name"><span class="bar" aria-hidden="true"></span>메디테라피</span><span class="ax-sys">인플루언서 랭킹 시스템</span></li>
+            <li><span class="domain-name"><span class="bar" aria-hidden="true"></span>삼일PwC</span><span class="ax-sys">세법 개정 선제탐지 Tax Agent</span></li>
+          </ul>
+          <p class="note">하나의 아이디어를 기업명만 바꿔 제출하지 않고, 세 기업의 실제 문제를 각각 조사해 세 시스템을 설계했습니다.</p>
+        </article>
+
+        <article class="bcell bcell--wide">
+          <div class="bcell-wide-row">
+            <div class="bcell-wide-text">
+              <span class="bcell-num">03</span>
+              <h3>Design Fieldbook</h3>
+              <p class="sub">AI slop을 줄이는 디자인 판단 시스템. 스타일 29종·레이아웃 14종·UI 패턴 18종을 예시 이미지 없이 실제 DOM·CSS로 구현했습니다.</p>
+              <div class="metrics">
+                <div><b class="mono">174</b><span>조합 전수 검증(29×6)</span></div>
+              </div>
+              <a class="bcell-link" href="https://design-study-three.vercel.app/" target="_blank" rel="noopener">Design Fieldbook 배포 사이트 열기 ↗</a>
+            </div>
+            <div class="bcell-wide-media">
+              <img src="assets/fieldbook-screenshot.png" alt="Design Fieldbook 실제 화면 — 스타일 비교 홈" loading="lazy">
+            </div>
+          </div>
+        </article>
+
+        <article class="bcell bcell--sm">
+          <span class="bcell-status"><span class="dot" aria-hidden="true"></span>LIVE</span>
+          <span class="bcell-num">04</span>
+          <h3>사주 다이어리</h3>
+          <p class="sub">운세·날씨·할 일·일기를 한 앱에 흡수한 Apps in Toss 데일리 앱. 생년월일·일기는 서버 없이 기기 로컬에만 저장합니다.</p>
+          <div class="metrics">
+            <div><b class="mono">604</b><span>tests</span></div>
+            <div><b class="mono">Phase 0–14</b><span>개선 사이클</span></div>
+          </div>
+          <div class="shot-strip">
+            <img src="assets/saju-01-home.png" alt="사주 다이어리 홈 화면" loading="lazy">
+            <img src="assets/saju-02-fortune.png" alt="사주 다이어리 오늘의 운세 상세 화면" loading="lazy">
+            <img src="assets/saju-03-time.png" alt="사주 다이어리 시간대별 기운 화면" loading="lazy">
+          </div>
+          <p class="note">한계 공개: 아직 실제 AU 성과보다 사용 루프 구현 단계입니다. 실제 앱은 모바일 환경 전용입니다.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="validation">
+    <div class="container">
+      <div class="section-head">
+        <div>
+          <p class="section-num">04 · VALIDATION</p>
+          <h2 class="section-title">주장이 아니라 검증 가능한 수치</h2>
+        </div>
+      </div>
+
+      <div class="kpi-row">
+        <div class="kpi"><b class="mono">상위 10%</b><span>조코딩 AX 인재전쟁 예선(3개 기업·3개 시스템)</span></div>
+        <div class="kpi"><b class="mono">Expert</b><span>APEX AI 역량분석 결과</span></div>
+        <div class="kpi"><b class="mono">636+604</b><span>테스트 케이스(인사ON · 사주 다이어리)</span></div>
+        <div class="kpi"><b class="mono">3+2</b><span>기업별 Codex 플러그인 · Toss 미니앱 출시</span></div>
+      </div>
+
+      <div class="val-table-wrap">
+        <table class="val-table">
+          <thead>
+            <tr><th scope="col">프로젝트</th><th scope="col">검증 방법</th><th scope="col">결과 및 한계</th></tr>
+          </thead>
+          <tbody>
+            <tr class="row-flagship">
+              <td class="proj">인사ON</td>
+              <td>636 tests · B0→H3 ablation · distractor corpus · 합성 회귀셋 70건</td>
+              <td><span class="limit">법률 정답성·실사용자 효과 미측정</span>, 로컬 추론 p50 62.9초</td>
+            </tr>
+            <tr>
+              <td class="proj">AX 인재전쟁</td>
+              <td>조코딩 플랫폼 예선 심사(공개 산출물 기준)</td>
+              <td>3개 기업 예선 상위 10%</td>
+            </tr>
+            <tr>
+              <td class="proj">사주 다이어리</td>
+              <td>Phase 0~14 개선 사이클, 테스트 파일 30개 · 604 tests</td>
+              <td><span class="limit">실사용 AU·재방문 성과는 아직 검증 전</span></td>
+            </tr>
+            <tr>
+              <td class="proj">Design Fieldbook</td>
+              <td>29 스타일 × 필터 6개, 174개 조합 전수 검증</td>
+              <td>접근성·타이포그래피·컬러·디자인 시스템 감사 도구 포함</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section class="section closing" id="contact">
+    <div class="container">
+      <p class="section-num" style="text-align:center;">05 · CONTACT</p>
+      <p class="closing-statement">새로운 도메인을 배우고, 문제를 구조화하고, 검증 가능한 결과로 만듭니다.</p>
+      <p class="closing-flow">Problem → Judgment → Build → Validate</p>
+      <div class="closing-actions">
+        <a class="btn btn-primary" href="mailto:psungs1226@gmail.com">이메일로 연락하기</a>
+        <a class="btn btn-ghost" href="#work">프로젝트 다시 보기</a>
+      </div>
+      <div class="closing-links">
+        <a href="https://design-study-three.vercel.app/" target="_blank" rel="noopener">Design Fieldbook 배포 사이트 ↗</a>
+        <a href="https://minion.toss.im/jHGd3tmC" target="_blank" rel="noopener">사주 다이어리 실제 앱(모바일 전용) ↗</a>
+      </div>
+      <p class="closing-note">사주 다이어리 링크는 모바일 환경에서만 정상적으로 열립니다.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <p>© 2026 피성환. 실제 스크린샷과 검증 지표로 구성된 포트폴리오입니다.</p>
+    <p><a href="#top">맨 위로 ↑</a></p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduce){ document.documentElement.classList.add('js-entrance'); }
+
+  var toggleBtn = document.getElementById('nav-toggle-btn');
+  var navLinks = document.getElementById('primary-nav');
+  if(toggleBtn && navLinks){
+    toggleBtn.addEventListener('click', function(){
+      var open = navLinks.classList.toggle('is-open');
+      toggleBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+    navLinks.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click', function(){
+        navLinks.classList.remove('is-open');
+        toggleBtn.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+
+  var tabQ = document.getElementById('tab-q');
+  var tabA = document.getElementById('tab-a');
+  var panelQ = document.getElementById('panel-q');
+  var panelA = document.getElementById('panel-a');
+  function selectTab(active, inactive, activePanel, inactivePanel){
+    active.setAttribute('aria-selected','true'); active.removeAttribute('tabindex');
+    inactive.setAttribute('aria-selected','false'); inactive.setAttribute('tabindex','-1');
+    activePanel.setAttribute('data-active',''); activePanel.hidden = false;
+    inactivePanel.removeAttribute('data-active'); inactivePanel.hidden = true;
+  }
+  if(tabQ && tabA){
+    tabQ.addEventListener('click', function(){ selectTab(tabQ, tabA, panelQ, panelA); });
+    tabA.addEventListener('click', function(){ selectTab(tabA, tabQ, panelA, panelQ); });
+    [tabQ, tabA].forEach(function(tab, i){
+      tab.addEventListener('keydown', function(e){
+        if(e.key === 'ArrowRight' || e.key === 'ArrowLeft'){
+          e.preventDefault();
+          (i === 0 ? tabA : tabQ).focus();
+          (i === 0 ? tabA : tabQ).click();
+        }
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>

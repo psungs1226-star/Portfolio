@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>피성환 · AI-Native Product Builder</title>
+<meta name="description" content="피성환 - AI-Native Product Builder 자기소개. 공직 5년 6개월의 실행력과 AI 에이전트 활용 역량을 결합해 여러 도메인의 문제를 조사·구조화·구현·검증까지 수행합니다.">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
+<style>
+  /* ============ Design tokens ============ */
+  :root{
+    --paper:#faf9f6;
+    --paper-alt:#f2efe8;
+    --ink:#14181f;
+    --navy:#16233f;
+    --navy-soft:rgba(22,35,63,.07);
+    --navy-line:rgba(22,35,63,.16);
+    --navy-line-strong:rgba(22,35,63,.28);
+    --muted:#5b6472;
+    --on-navy:#faf9f6;
+    --radius-card:14px;
+    --radius-pill:999px;
+    --maxw:1180px;
+    --shadow: 0 1px 2px rgba(22,35,63,.04), 0 10px 24px -14px rgba(22,35,63,.18);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#12151b;
+      --paper-alt:#181c24;
+      --ink:#eceef1;
+      --navy:#9db4dd;
+      --navy-soft:rgba(157,180,221,.10);
+      --navy-line:rgba(236,238,241,.14);
+      --navy-line-strong:rgba(236,238,241,.26);
+      --muted:#9aa3b2;
+      --on-navy:#12151b;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 10px 28px -14px rgba(0,0,0,.55);
+    }
+  }
+  *{box-sizing:border-box;}
+  html{-webkit-text-size-adjust:100%;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'Pretendard Variable','Pretendard',-apple-system,BlinkMacSystemFont,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  img{max-width:100%;display:block;}
+  a{color:inherit;}
+  .mono{font-family:ui-monospace,'SF Mono','JetBrains Mono',Menlo,Consolas,monospace;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+
+  /* ============ Top bar ============ */
+  .topbar{
+    position:sticky;top:0;z-index:40;
+    height:64px;display:flex;align-items:center;justify-content:space-between;
+    padding:0 28px;
+    background:color-mix(in srgb, var(--paper) 88%, transparent);
+    backdrop-filter:blur(10px) saturate(140%);
+    -webkit-backdrop-filter:blur(10px) saturate(140%);
+    border-bottom:1px solid var(--navy-line);
+  }
+  .topbar .name{font-weight:800;letter-spacing:-.01em;font-size:16px;}
+  .topbar .name span{color:var(--muted);font-weight:500;font-size:13px;margin-left:10px;}
+  .btn-print{
+    display:inline-flex;align-items:center;gap:8px;
+    border:1px solid var(--navy-line-strong);
+    background:transparent;color:var(--navy);
+    padding:9px 16px;border-radius:var(--radius-pill);
+    font-size:13px;font-weight:600;cursor:pointer;
+    font-family:inherit;
+    transition:transform .18s cubic-bezier(.16,1,.3,1), background .18s ease, color .18s ease;
+  }
+  .btn-print:hover{background:var(--navy);color:var(--on-navy);}
+  .btn-print:active{transform:scale(.97);}
+
+  /* ============ Page sections ============ */
+  .page{
+    padding:88px 0 96px;
+    border-bottom:1px solid var(--navy-line);
+  }
+  .page:last-of-type{border-bottom:none;}
+  .page.alt{background:var(--paper-alt);}
+  .page-index{
+    font-family:ui-monospace,'SF Mono',monospace;
+    font-size:12px;color:var(--muted);letter-spacing:.06em;
+    margin:0 0 10px;
+  }
+
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);}
+  .reveal.in{opacity:1;transform:none;}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+  }
+
+  h1,h2,h3{margin:0;letter-spacing:-.02em;font-weight:800;}
+  .section-head{max-width:640px;margin-bottom:40px;}
+  .section-head h2{font-size:clamp(24px,3vw,32px);}
+  .section-head p{color:var(--muted);font-size:15.5px;margin:10px 0 0;max-width:56ch;}
+
+  /* ============ HERO (Page 1) ============ */
+  .hero{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center;}
+  .hero h1{font-size:clamp(38px,5.4vw,60px);line-height:1.06;}
+  .hero .role{
+    display:inline-block;margin-bottom:18px;
+    font-size:13px;font-weight:700;color:var(--navy);
+    background:var(--navy-soft);
+    padding:7px 14px;border-radius:var(--radius-pill);
+    letter-spacing:.01em;
+  }
+  .hero .sub{font-size:17px;color:var(--muted);max-width:44ch;margin:20px 0 30px;line-height:1.65;}
+  .hero .cta-row{display:flex;gap:12px;flex-wrap:wrap;}
+  .btn{
+    display:inline-flex;align-items:center;gap:8px;
+    padding:13px 22px;border-radius:var(--radius-pill);
+    font-weight:700;font-size:14.5px;text-decoration:none;
+    transition:transform .18s cubic-bezier(.16,1,.3,1);
+    white-space:nowrap;
+  }
+  .btn:active{transform:scale(.97);}
+  .btn-primary{background:var(--navy);color:var(--on-navy);}
+  .btn-ghost{border:1px solid var(--navy-line-strong);color:var(--navy);}
+
+  .portrait-wrap{position:relative;justify-self:end;width:min(320px,100%);}
+  .portrait{
+    width:100%;height:auto;aspect-ratio:778/1000;object-fit:cover;
+    border-radius:var(--radius-card);
+    border:1px solid var(--navy-line);
+    box-shadow:var(--shadow);
+  }
+  .portrait-tag{
+    position:absolute;left:-14px;bottom:-14px;
+    background:var(--navy);color:var(--on-navy);
+    padding:10px 16px;border-radius:12px;
+    font-size:12.5px;font-weight:700;line-height:1.3;
+    box-shadow:var(--shadow);
+    max-width:210px;
+  }
+
+  .stat-strip{
+    margin-top:72px;
+    display:grid;grid-template-columns:repeat(4,1fr);
+    border-top:1px solid var(--navy-line);
+    border-left:1px solid var(--navy-line);
+  }
+  .stat{
+    padding:22px 20px;border-right:1px solid var(--navy-line);border-bottom:1px solid var(--navy-line);
+  }
+  .stat i{font-size:20px;color:var(--navy);}
+  .stat .t{display:block;margin-top:12px;font-weight:700;font-size:14.5px;line-height:1.4;}
+
+  /* ============ About / Career (Page 2) ============ */
+  .about-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start;}
+  .about-grid p{font-size:15.5px;color:var(--ink);margin:0 0 16px;max-width:52ch;}
+  .about-grid p:last-child{margin-bottom:0;}
+  .basic-facts{margin-top:28px;display:flex;flex-direction:column;gap:10px;}
+  .basic-facts div{display:flex;gap:14px;font-size:13.5px;}
+  .basic-facts b{color:var(--navy);min-width:64px;font-weight:700;}
+  .basic-facts span{color:var(--muted);}
+
+  .timeline{position:relative;padding-left:26px;}
+  .timeline::before{content:"";position:absolute;left:5px;top:6px;bottom:6px;width:1px;background:var(--navy-line-strong);}
+  .t-item{position:relative;padding-bottom:26px;}
+  .t-item:last-child{padding-bottom:0;}
+  .t-item::before{content:"";position:absolute;left:-26px;top:5px;width:9px;height:9px;border-radius:50%;background:var(--paper);border:2px solid var(--navy);}
+  .t-item .date{font-family:ui-monospace,monospace;font-size:12px;color:var(--muted);letter-spacing:.02em;}
+  .t-item .role{font-weight:700;font-size:15px;margin-top:4px;}
+  .t-item .desc{font-size:13.5px;color:var(--muted);margin-top:3px;max-width:44ch;}
+
+  .loop{margin-top:64px;}
+  .loop-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--navy-line);border-left:1px solid var(--navy-line);}
+  .loop-cell{padding:24px 22px;border-right:1px solid var(--navy-line);border-bottom:1px solid var(--navy-line);position:relative;}
+  .loop-cell .num{font-family:ui-monospace,monospace;font-size:12px;color:var(--muted);}
+  .loop-cell h4{font-size:15px;margin:10px 0 6px;font-weight:800;}
+  .loop-cell p{font-size:13px;color:var(--muted);margin:0;line-height:1.55;}
+  .loop-cell .arrow{position:absolute;right:-11px;top:50%;transform:translateY(-50%);color:var(--navy);background:var(--paper);border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:13px;z-index:2;border:1px solid var(--navy-line);}
+  .loop-cell:last-child .arrow{display:none;}
+
+  /* ============ Domain grid (Page 3) ============ */
+  .domain-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--navy-line);border:1px solid var(--navy-line);border-radius:var(--radius-card);overflow:hidden;}
+  .domain-card{background:var(--paper);padding:24px 26px;}
+  .page.alt .domain-card{background:var(--paper-alt);}
+  .domain-card .dom{font-size:12px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.06em;}
+  .domain-card .prob{font-size:14.5px;font-weight:700;margin-top:10px;line-height:1.5;}
+  .domain-card .out{font-size:13.5px;color:var(--muted);margin-top:8px;line-height:1.55;}
+
+  /* ============ Project blocks ============ */
+  .project{margin-top:88px;}
+  .project:first-child{margin-top:0;}
+  .project-eyebrow{display:flex;align-items:center;gap:10px;font-size:12.5px;font-weight:700;color:var(--muted);margin-bottom:14px;}
+  .project-eyebrow .badge{background:var(--navy);color:var(--on-navy);padding:3px 10px;border-radius:var(--radius-pill);font-size:11px;}
+  .project h3{font-size:clamp(21px,2.6vw,27px);line-height:1.3;max-width:26ch;}
+  .project .lede{font-size:15px;color:var(--muted);margin:14px 0 0;max-width:64ch;line-height:1.65;}
+
+  .media-frame{
+    margin-top:28px;border-radius:var(--radius-card);overflow:hidden;
+    border:1px solid var(--navy-line);box-shadow:var(--shadow);background:var(--paper-alt);
+  }
+  .media-frame img{width:100%;height:auto;}
+  .media-frame.compact{max-width:560px;margin-left:auto;margin-right:auto;}
+  .caption{font-size:12.5px;color:var(--muted);margin-top:10px;max-width:62ch;line-height:1.6;}
+  .quote-block{
+    margin-top:24px;border-left:2px solid var(--navy);padding:4px 0 4px 20px;
+    font-size:14.5px;font-style:normal;color:var(--ink);max-width:60ch;line-height:1.7;
+  }
+  .quote-block .attr{display:block;margin-top:10px;font-size:12.5px;color:var(--muted);font-weight:600;}
+
+  .fact-grid{margin-top:28px;display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--navy-line);border:1px solid var(--navy-line);border-radius:var(--radius-card);overflow:hidden;}
+  .fact{background:var(--paper);padding:20px 22px;}
+  .page.alt .fact{background:var(--paper-alt);}
+  .fact .k{font-size:11.5px;font-weight:700;color:var(--navy);text-transform:uppercase;letter-spacing:.05em;}
+  .fact .v{font-size:14px;margin-top:8px;line-height:1.55;}
+  .fact .v.mono{font-family:ui-monospace,monospace;font-size:12.5px;color:var(--muted);}
+
+  .limit-note{
+    margin-top:22px;border:1px dashed var(--navy-line-strong);border-radius:12px;
+    padding:14px 18px;font-size:13px;color:var(--muted);display:flex;gap:10px;align-items:flex-start;max-width:62ch;
+  }
+  .limit-note i{color:var(--navy);font-size:16px;margin-top:1px;flex:none;}
+
+  .case-row{margin-top:30px;display:grid;grid-template-columns:2fr 3fr 2.4fr;gap:1px;background:var(--navy-line);border:1px solid var(--navy-line);border-radius:var(--radius-card);overflow:hidden;}
+  .case{background:var(--paper);padding:22px;}
+  .page.alt .case{background:var(--paper-alt);}
+  .case i{font-size:20px;color:var(--navy);}
+  .case h5{font-size:14.5px;font-weight:800;margin:12px 0 8px;}
+  .case p{font-size:12.8px;color:var(--muted);margin:0 0 6px;line-height:1.55;}
+  .case p b{color:var(--ink);font-weight:600;}
+
+  .phone-row{margin-top:28px;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .phone-shot{border-radius:16px;overflow:hidden;border:1px solid var(--navy-line);box-shadow:var(--shadow);aspect-ratio:390/844;}
+  .phone-shot img{width:100%;height:100%;object-fit:cover;object-position:top;}
+
+  .link-row{margin-top:22px;display:flex;gap:20px;flex-wrap:wrap;}
+  .link-row a{font-size:13.5px;font-weight:700;color:var(--navy);display:inline-flex;align-items:center;gap:6px;text-decoration:none;border-bottom:1px solid var(--navy-line-strong);padding-bottom:2px;}
+  .link-row a:hover{border-color:var(--navy);}
+
+  .bullets{margin:26px 0 0;padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:12px 28px;}
+  .bullets li{font-size:13.8px;color:var(--ink);display:flex;gap:10px;line-height:1.5;}
+  .bullets li i{color:var(--navy);font-size:15px;margin-top:2px;flex:none;}
+
+  .more-row{
+    margin-top:20px;border:1px solid var(--navy-line);border-radius:var(--radius-card);
+    padding:20px 24px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;
+  }
+  .more-row .l h5{font-size:15px;font-weight:800;margin:0 0 6px;}
+  .more-row .l p{font-size:13px;color:var(--muted);margin:0;max-width:56ch;}
+  .more-row i{font-size:20px;color:var(--navy);flex:none;}
+
+  /* ============ Closing ============ */
+  .closing{text-align:center;padding-top:8px;}
+  .closing .tag{font-size:clamp(22px,3.4vw,34px);font-weight:800;letter-spacing:-.02em;}
+  .closing .tag i{color:var(--navy-line-strong);margin:0 10px;font-size:.7em;vertical-align:middle;}
+  .closing .contact{margin-top:22px;font-size:14.5px;color:var(--muted);}
+  .closing .contact a{color:var(--navy);font-weight:700;text-decoration:none;border-bottom:1px solid var(--navy-line-strong);}
+  .closing .meta{margin-top:44px;font-size:12px;color:var(--muted);opacity:.85;}
+
+  /* ============ Responsive ============ */
+  @media (max-width:900px){
+    .hero{grid-template-columns:1fr;}
+    .portrait-wrap{justify-self:start;width:200px;order:-1;}
+    .stat-strip{grid-template-columns:repeat(2,1fr);}
+    .about-grid{grid-template-columns:1fr;gap:40px;}
+    .loop-grid{grid-template-columns:1fr 1fr;}
+    .loop-cell .arrow{display:none;}
+    .domain-grid{grid-template-columns:1fr;}
+    .fact-grid{grid-template-columns:1fr;}
+    .case-row{grid-template-columns:1fr;}
+    .phone-row{grid-template-columns:1fr 1fr 1fr;gap:10px;}
+    .bullets{grid-template-columns:1fr;}
+  }
+  @media (max-width:560px){
+    .wrap{padding:0 18px;}
+    .page{padding:64px 0 72px;}
+    .phone-row{grid-template-columns:1fr 1fr;}
+    .phone-row .phone-shot:last-child{display:none;}
+  }
+
+  /* ============ Print ============ */
+  @media print{
+    @page{ size:A4; margin:11mm 13mm; }
+    :root{
+      --paper:#ffffff;--paper-alt:#ffffff;--ink:#14181f;--navy:#16233f;
+      --navy-soft:rgba(22,35,63,.06);--navy-line:rgba(22,35,63,.22);--navy-line-strong:rgba(22,35,63,.35);
+      --muted:#4a5261;--on-navy:#ffffff;--shadow:none;
+    }
+    html,body{background:#fff;}
+    -webkit-print-color-adjust:exact;print-color-adjust:exact;
+    .topbar{display:none;}
+    .reveal{opacity:1 !important;transform:none !important;}
+    body{font-size:9.3pt;line-height:1.42;}
+    .page{page-break-after:auto;padding:0 0 14px;border:none;}
+    .wrap{padding:0;max-width:100%;}
+    .page-index{margin:0 0 6px;font-size:8.5pt;}
+    .hero{gap:24px;}
+    .hero h1{font-size:25pt;}
+    .hero .role{padding:5px 12px;font-size:10pt;margin-bottom:10px;}
+    .hero .sub{font-size:10pt;margin:10px 0 14px;line-height:1.5;}
+    .cta-row{display:none;}
+    .portrait-wrap{width:150px;}
+    .portrait-tag{font-size:9.5pt;padding:7px 11px;max-width:150px;left:-8px;bottom:-8px;}
+    .stat-strip{margin-top:20px;background:none;border:none;}
+    .stat{padding:10px 12px;break-inside:avoid;border:1px solid var(--navy-line);}
+    .stat i{font-size:15pt;}
+    .stat .t{margin-top:8px;font-size:10pt;}
+    .section-head{margin-bottom:14px;}
+    .section-head h2{font-size:16pt;}
+    .about-grid{gap:28px;}
+    .about-grid p{font-size:9.3pt;margin:0 0 10px;}
+    .basic-facts{margin-top:16px;gap:6px;}
+    .timeline{padding-left:20px;}
+    .t-item{padding-bottom:14px;break-inside:avoid;}
+    .t-item .role{font-size:10.5pt;}
+    .loop{margin-top:24px;}
+    .loop-cell{padding:14px 14px;break-inside:avoid;}
+    .loop-cell h4{font-size:10.5pt;margin:6px 0 4px;}
+    .loop-cell p{font-size:8.8pt;}
+    .domain-grid{margin-top:16px;background:none;border:none;gap:0;}
+    .domain-card{padding:12px 15px;break-inside:avoid;border:1px solid var(--navy-line);}
+    .domain-card .prob{font-size:9.8pt;margin-top:5px;}
+    .domain-card .out{font-size:9pt;margin-top:4px;}
+    .project{margin-top:20px;}
+    .project h3{font-size:14.5pt;}
+    .project .lede{font-size:9.3pt;margin-top:8px;}
+    .project-eyebrow{margin-bottom:8px;}
+    .media-frame{margin-top:14px;break-inside:avoid;}
+    .media-frame img{max-height:130px;object-fit:cover;width:100%;}
+    .media-frame.compact{max-width:280px;}
+    .caption{font-size:8.3pt;margin-top:6px;}
+    .quote-block{margin-top:12px;font-size:9pt;padding:2px 0 2px 14px;}
+    .quote-block .attr{margin-top:6px;font-size:8.3pt;}
+    .fact-grid{margin-top:14px;background:none;border:none;gap:0;}
+    .fact{padding:10px 13px;break-inside:avoid;border:1px solid var(--navy-line);}
+    .fact .v{margin-top:5px;font-size:8.8pt;}
+    .limit-note{margin-top:12px;padding:8px 12px;font-size:8.6pt;break-inside:avoid;}
+    .case-row{margin-top:14px;background:none;border:none;gap:0;grid-template-columns:1fr 1fr 1fr;}
+    .case{padding:12px;break-inside:avoid;border:1px solid var(--navy-line);}
+    .case h5{margin:6px 0 4px;font-size:10pt;}
+    .phone-row{margin-top:14px;gap:8px;}
+    .phone-shot{aspect-ratio:auto;height:100px;break-inside:avoid;}
+    .link-row{margin-top:10px;}
+    .bullets{margin-top:14px;gap:6px 20px;}
+    .bullets li{font-size:9pt;}
+    .more-row{margin-top:12px;padding:12px 16px;break-inside:avoid;}
+    .closing{margin-top:26px !important;break-inside:avoid;}
+    .closing .tag{font-size:15pt;}
+    .closing .contact{margin-top:12px;font-size:9.5pt;}
+    .closing .meta{margin-top:20px;}
+    .case p, .fact .v, .caption{font-size:8.6pt;}
+    a{text-decoration:none;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="name">피성환<span>AI-Native Product Builder</span></div>
+  <button class="btn-print" onclick="window.print()"><i class="ph ph-printer"></i>PDF로 저장</button>
+</div>
+
+<!-- ============ PAGE 1 : COVER ============ -->
+<section class="page" id="cover">
+  <div class="wrap">
+    <p class="page-index mono">01 / 05 · COVER</p>
+    <div class="hero">
+      <div class="reveal">
+        <span class="role">AI-Native Product Builder · Product Strategy</span>
+        <h1>피성환</h1>
+        <p class="sub">새로운 도메인의 문제를 빠르게 학습하고, AI 에이전트로 조사·기획·구현·검증까지 끝까지 수행합니다.</p>
+        <div class="cta-row">
+          <a class="btn btn-primary" href="#work"><i class="ph-bold ph-briefcase"></i>프로젝트 보기</a>
+          <a class="btn btn-ghost" href="#about"><i class="ph-bold ph-user"></i>커리어 여정 보기</a>
+        </div>
+      </div>
+      <div class="portrait-wrap reveal">
+        <img class="portrait" src="../shared-assets/증명사진(피성환).JPG" alt="피성환 증명사진" loading="eager" width="778" height="1000">
+        <div class="portrait-tag">공직 5년 6개월 실행력 + AI-native 구현력</div>
+      </div>
+    </div>
+
+    <div class="stat-strip reveal">
+      <div class="stat">
+        <i class="ph ph-trophy"></i>
+        <span class="t">조코딩 AX 인재전쟁<br>예선 상위 10%</span>
+      </div>
+      <div class="stat">
+        <i class="ph ph-seal-check"></i>
+        <span class="t">APEX Expert AI<br>역량 평가 결과</span>
+      </div>
+      <div class="stat">
+        <i class="ph ph-device-mobile"></i>
+        <span class="t">Apps in Toss<br>미니앱 2건 실제 출시</span>
+      </div>
+      <div class="stat">
+        <i class="ph ph-check-square-offset"></i>
+        <span class="t">636 tests · 인사ON +<br>PDF-to-Bot MCP 확장</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PAGE 2 : ABOUT & CAREER ============ -->
+<section class="page alt" id="about">
+  <div class="wrap">
+    <p class="page-index mono">02 / 05 · ABOUT</p>
+    <div class="section-head reveal">
+      <h2>새로운 문제를 학습해 실행 결과로 옮깁니다</h2>
+    </div>
+
+    <div class="about-grid">
+      <div class="reveal">
+        <p>지방자치단체 공무원으로 5년 6개월간 사업기획, 예산·계약, 채용·급여, 공사·용역 감독과 유관기관 협의를 담당했습니다. 복잡한 규정과 요구사항을 실행 가능한 업무로 구조화하고, 여러 이해관계자를 조율하며, 판단의 근거를 문서로 남기는 태도를 갖췄습니다.</p>
+        <p>2026년 4월 퇴직한 뒤 이 실무 역량에 AI 에이전트를 결합했습니다. 새로운 도메인의 자료를 빠르게 조사하고, 문제와 판단 기준을 정리해 제품·분석도구·자동화 시스템으로 구현하는 방식이 제 강점과 맞다는 것을 확인했습니다.</p>
+        <p>출발점보다 중요한 것은 얼마나 빠르게 배우고, 실제 문제에 적용하고, 검증 가능한 결과로 전환하는가입니다. 도메인이 달라져도 조사, 구조화, 구현, 검증의 흐름은 반복할 수 있다고 생각합니다.</p>
+
+        <div class="basic-facts">
+          <div><b>학력</b><span>한국외국어대학교 전자물리학과 중퇴 (고졸)</span></div>
+          <div><b>병역</b><span>육군 병장 만기전역 (2018.02 - 2019.10)</span></div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="timeline">
+          <div class="t-item">
+            <div class="date">2026.04 - 현재</div>
+            <div class="role">AI-Native Product Builder</div>
+            <div class="desc">AI 에이전트 기반 제품·분석도구·자동화 시스템 조사·기획·구현·검증</div>
+          </div>
+          <div class="t-item">
+            <div class="date">2020.10 - 2026.04</div>
+            <div class="role">인천광역시 중구청 주무관</div>
+            <div class="desc">사업기획 · 예산·계약 · 채용·급여 · 공사·용역 감독 · 유관기관 협의</div>
+          </div>
+          <div class="t-item">
+            <div class="date">2018.02 - 2019.10</div>
+            <div class="role">육군 병장 만기전역</div>
+          </div>
+          <div class="t-item">
+            <div class="date">2017.02 - 2017.11</div>
+            <div class="role">㈜코반케미칼 사원</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="loop reveal">
+      <div class="loop-grid">
+        <div class="loop-cell">
+          <span class="num">STEP 1</span>
+          <h4>새로운 도메인 학습</h4>
+          <p>AI로 자료 조사·근거 분류</p>
+          <span class="arrow"><i class="ph-bold ph-arrow-right"></i></span>
+        </div>
+        <div class="loop-cell">
+          <span class="num">STEP 2</span>
+          <h4>업무와 문제 구조화</h4>
+          <p>사용자·리스크·의사결정 기준 정의</p>
+          <span class="arrow"><i class="ph-bold ph-arrow-right"></i></span>
+        </div>
+        <div class="loop-cell">
+          <span class="num">STEP 3</span>
+          <h4>실행 가능한 구현</h4>
+          <p>제품·프로토타입·에이전트·분석 파이프라인</p>
+          <span class="arrow"><i class="ph-bold ph-arrow-right"></i></span>
+        </div>
+        <div class="loop-cell">
+          <span class="num">STEP 4</span>
+          <h4>결과 검증과 개선</h4>
+          <p>테스트·평가·적대 검증·한계 공개</p>
+          <span class="arrow"><i class="ph-bold ph-arrow-clockwise"></i></span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PAGE 3 : DOMAIN TRACK RECORD + PROJECT 01 ============ -->
+<section class="page" id="work">
+  <div class="wrap">
+    <p class="page-index mono">03 / 05 · TRACK RECORD</p>
+    <div class="section-head reveal">
+      <h2>서로 다른 6개 도메인, 같은 실행 구조</h2>
+      <p>산업 지식을 이미 안다고 가정하지 않습니다. 사실, 가정, 모르는 것을 분리하고 결과를 다시 검증할 구조까지 설계합니다.</p>
+    </div>
+
+    <div class="domain-grid reveal">
+      <div class="domain-card">
+        <div class="dom">인사 · 규정</div>
+        <div class="prob">개정 시점과 조건에 따라 달라지는 규정 검토</div>
+        <div class="out">Temporal RAG 기반 인사ON + PDF-to-Bot MCP 확장</div>
+      </div>
+      <div class="domain-card">
+        <div class="dom">소비자 금융</div>
+        <div class="prob">해외 ETF 적립 경험의 직관성 부족</div>
+        <div class="out">기간·주기별 ETF 모으기 백테스트 + 모바일 웹 MVP</div>
+      </div>
+      <div class="domain-card">
+        <div class="dom">글로벌 뷰티 마케팅</div>
+        <div class="prob">신제품과 진정성 있게 맞는 인플루언서 선정</div>
+        <div class="out">피부·제품·콘텐츠 성향 기반 랭킹 시스템</div>
+      </div>
+      <div class="domain-card">
+        <div class="dom">세무</div>
+        <div class="prob">세법 개정 뒤 판례·FAQ·해석례가 흔들릴 가능성</div>
+        <div class="out">검토 대상을 찾는 선제탐지 Tax Agent</div>
+      </div>
+      <div class="domain-card">
+        <div class="dom">소비자 앱</div>
+        <div class="prob">운세·날씨·할 일마다 다른 앱을 켜야 하는 불편</div>
+        <div class="out">여러 목적을 흡수한 Apps in Toss 앱</div>
+      </div>
+      <div class="domain-card">
+        <div class="dom">디자인</div>
+        <div class="prob">AI가 도메인 판단 없이 만드는 획일적 화면(AI slop)</div>
+        <div class="out">29개 스타일 비교로 판단 기준을 만든 Fieldbook</div>
+      </div>
+    </div>
+
+    <div class="project reveal">
+      <div class="project-eyebrow"><span class="badge">01</span>사내 데이터 챗봇 선행 검증</div>
+      <h3>인사ON → PDF-to-Bot MCP</h3>
+      <p class="lede">사내 규정 챗봇은 실제 데이터의 기밀성 때문에 검증이 어렵습니다. 공개된 공무원 인사 법령을 대체 corpus로 사용해 검색·근거·안전 구조를 먼저 검증하고, 검증한 계층을 임의의 PDF에 적용 가능한 MCP로 확장했습니다.</p>
+
+      <div class="media-frame">
+        <img src="../shared-assets/Chatbot/chat_bot_insaon/report/assets/screenshot-leave-allowance.jpg" alt="인사ON 육아휴직 복직자의 정근수당 지급률 질의응답 실행 화면" loading="lazy" width="1280" height="720">
+      </div>
+      <p class="caption">공개 재현용 corpus에서 휴직기간·복직일·지급 반기를 함께 판단해 근거 조문과 함께 답변하는 실제 실행 화면</p>
+
+      <div class="quote-block">
+        "2025년 5월 말부터 육아휴직을 사용하고 2026년 4월 1일 복직했습니다. 2026년 상반기 정근수당은 100% 지급되나요, 50% 지급되나요?"
+        <span class="attr">답변 : 100%, 실제 근무 6개월. 제6조·제14조 근거 반환</span>
+      </div>
+
+      <div class="fact-grid">
+        <div class="fact"><div class="k">구현</div><div class="v mono">조건추출 → temporal filter → hybrid retrieval → reranker → citation validation</div></div>
+        <div class="fact"><div class="k">검증</div><div class="v">636 tests, B0→H3 ablation, distractor corpus, 합성 회귀셋 70건</div></div>
+        <div class="fact"><div class="k">핵심 판단</div><div class="v">조건이 부족하면 재질문하고, 근거가 부족하면 답변을 중단</div></div>
+        <div class="fact"><div class="k">다음 확장</div><div class="v">PDF 추출·청킹·검색·출처 반환 계층을 범용화한 PDF-to-Bot MCP, Claude Code 연동 및 MCP Inspector 검증 완료</div></div>
+      </div>
+
+      <div class="limit-note">
+        <i class="ph ph-warning-circle"></i>
+        한계 공개 : 법률 정답성 및 실사용자 효과는 미측정 상태이며, 로컬 추론 p50 62.9초입니다.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PAGE 4 : PROJECT 02 + 03 ============ -->
+<section class="page alt">
+  <div class="wrap">
+    <p class="page-index mono">04 / 05 · FEATURED WORK</p>
+
+    <div class="project reveal">
+      <div class="project-eyebrow"><span class="badge">02</span>AX 인재전쟁 · 예선 상위 10%</div>
+      <h3>세 기업의 서로 다른 문제를 각각의 시스템으로 해결</h3>
+      <p class="lede">조코딩 AX 인재전쟁에서 카카오페이증권, 메디테라피, 삼일PwC의 공개 문제를 각각 Codex 플러그인으로 해결했습니다. 하나의 아이디어를 기업명만 바꿔 제출하지 않고, 금융·뷰티·세무에 서로 다른 문제와 시스템을 만들었습니다.</p>
+
+      <div class="media-frame compact">
+        <img src="assets/generated/raw/ax_triptych.png" alt="카카오페이증권, 메디테라피, 삼일PwC 세 기업 문제를 표현한 편집형 일러스트" loading="lazy" width="1536" height="1024">
+      </div>
+
+      <div class="case-row">
+        <div class="case">
+          <i class="ph-bold ph-chart-line-up"></i>
+          <h5>카카오페이증권</h5>
+          <p><b>문제</b> 해외 ETF 모으기 경험의 직관성 부족</p>
+          <p><b>구현</b> 적립 조건별 과거 결과를 비교하는 백테스트 모바일 웹 MVP</p>
+        </div>
+        <div class="case">
+          <i class="ph-bold ph-sparkle"></i>
+          <h5>메디테라피</h5>
+          <p><b>문제</b> 팔로워 수만으로 신제품과 맞는 후보 판단이 어려움</p>
+          <p><b>구현</b> 피부 타입·제품 선호·콘텐츠 성향 기반 시딩 랭킹 시스템</p>
+        </div>
+        <div class="case">
+          <i class="ph-bold ph-scales"></i>
+          <h5>삼일PwC</h5>
+          <p><b>문제</b> 세법 개정 후 기존 판례·해석례의 의미가 흔들림</p>
+          <p><b>구현</b> 고객 안내 전 검토 대상을 찾는 선제탐지 Tax Agent</p>
+        </div>
+      </div>
+
+      <div class="quote-block">
+        AI가 모르는 것을 단정하지 않습니다. 정보가 부족하면 확인 필요, 데이터가 부족하면 needs_more_data, 전문가 검토가 필요하면 REVIEW_WORTHY로 넘깁니다.
+      </div>
+
+      <div class="limit-note">
+        <i class="ph ph-seal-check"></i>
+        같은 플랫폼의 별도 APEX 평가에서는 개발 비전공자로서 Claude 이론 테스트와 Codex·Hono 실기 과제를 수행해 Expert AI 역량 결과를 받았습니다.
+      </div>
+    </div>
+
+    <div class="project reveal">
+      <div class="project-eyebrow"><span class="badge">03</span>Apps in Toss 미니앱</div>
+      <h3>여러 앱의 사용 목적을 흡수하는 사주 다이어리</h3>
+      <p class="lede">운세·날씨·할 일·D-day·메모·일기를 확인할 때마다 다른 앱을 찾아 켜야 하는 불편에서 출발했습니다. 각 사용 목적을 한 앱 안으로 흡수해 하루 중 여러 이유로 다시 찾는 제품을 만들었습니다.</p>
+
+      <div class="phone-row">
+        <div class="phone-shot"><img src="../shared-assets/Toss_MiniApp/Saju_Diary/docs/images/01-home.png" alt="사주 다이어리 홈 화면" loading="lazy" width="780" height="1688"></div>
+        <div class="phone-shot"><img src="../shared-assets/Toss_MiniApp/Saju_Diary/docs/images/02-fortune.png" alt="사주 다이어리 오늘의 운세 상세 화면" loading="lazy" width="780" height="1688"></div>
+        <div class="phone-shot"><img src="../shared-assets/Toss_MiniApp/Saju_Diary/docs/images/03-fortune-time.png" alt="사주 다이어리 시간대별 기운과 운세 흐름 화면" loading="lazy" width="780" height="1688"></div>
+      </div>
+      <p class="caption">홈 화면 · 오늘의 운세 상세 · 아침, 낮, 저녁, 밤의 시간대별 기운</p>
+
+      <div class="fact-grid">
+        <div class="fact"><div class="k">AU 전략</div><div class="v">운세로 첫 방문을 만들고, 날씨·할 일로 일상 효용을 넓히며, 메모·일기로 재방문 이유를 축적</div></div>
+        <div class="fact"><div class="k">핵심 판단</div><div class="v">생년월일과 일기는 민감정보이므로 서버 없이 기기 로컬에 저장</div></div>
+        <div class="fact"><div class="k">검증</div><div class="v">Phase 0-14 개선 사이클, 30개 테스트 파일, 604 tests</div></div>
+        <div class="fact"><div class="k">제외한 기능</div><div class="v">서버가 필요한 푸시 알림은 제외하고 일진 변화·기록·공유로 재방문 설계</div></div>
+      </div>
+
+      <div class="link-row">
+        <a href="../../../../Toss_MiniApp/Saju_Diary/"><i class="ph-bold ph-folder"></i>프로젝트 자세히 보기</a>
+        <a href="https://minion.toss.im/jHGd3tmC"><i class="ph-bold ph-arrow-up-right"></i>실제 앱 (모바일 환경 전용)</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PAGE 5 : PROJECT 04 + MORE + CLOSING ============ -->
+<section class="page">
+  <div class="wrap">
+    <p class="page-index mono">05 / 05 · MORE & CONTACT</p>
+
+    <div class="project reveal" style="margin-top:0;">
+      <div class="project-eyebrow"><span class="badge">04</span>디자인 판단 시스템</div>
+      <h3>Design Fieldbook, AI slop을 줄이는 판단 기준</h3>
+      <p class="lede">AI는 화면을 빠르게 만들지만 도메인 지식과 평가 기준이 없으면 익숙한 카드와 장식으로 수렴하는 AI slop을 만들기 쉽습니다. 결과를 구분하고 비판할 수 있는 디자인 지식부터 체계화했습니다.</p>
+
+      <div class="media-frame">
+        <img src="../shared-assets/Design_Study/docs/images/01-home.png" alt="Design Fieldbook 홈 화면" loading="lazy" width="2880" height="1800">
+      </div>
+
+      <ul class="bullets">
+        <li><i class="ph-bold ph-check"></i>디자인 스타일 29개, 레이아웃 14개, UI 패턴 18개</li>
+        <li><i class="ph-bold ph-check"></i>예시 이미지 없이 모두 실제 DOM과 CSS로 구현</li>
+        <li><i class="ph-bold ph-check"></i>Bad / Good 비교로 스타일별 적용 조건 정리</li>
+        <li><i class="ph-bold ph-check"></i>접근성 · 타이포그래피 · 컬러 감사 도구 포함</li>
+        <li><i class="ph-bold ph-check"></i>29개 스타일 × 필터 6개, 174개 조합 전수 검증</li>
+      </ul>
+
+      <div class="link-row">
+        <a href="../../../../Design_Study/"><i class="ph-bold ph-folder"></i>프로젝트 자세히 보기</a>
+        <a href="https://design-study-three.vercel.app/"><i class="ph-bold ph-arrow-up-right"></i>배포 사이트</a>
+      </div>
+    </div>
+
+    <div class="project reveal">
+      <div class="project-eyebrow"><span class="badge">05</span>More Work</div>
+      <h3>오늘의 여름노래</h3>
+      <div class="more-row">
+        <div class="l">
+          <h5>오늘의 여름노래</h5>
+          <p>200곡 큐레이션 · 추천 · 공식 링크 검증 파이프라인을 갖춘 Apps in Toss 앱</p>
+        </div>
+        <i class="ph-bold ph-musical-note"></i>
+      </div>
+    </div>
+
+    <div class="closing reveal" style="margin-top:96px;">
+      <div class="tag">Problem <i class="ph-bold ph-arrow-right"></i> Judgment <i class="ph-bold ph-arrow-right"></i> Build <i class="ph-bold ph-arrow-right"></i> Validate</div>
+      <div class="contact">함께 검토하고 싶은 문제가 있다면 편하게 연락 주세요.<br><a href="mailto:psungs1226@gmail.com">psungs1226@gmail.com</a></div>
+      <div class="meta">이 페이지는 README.md의 내용을 바탕으로 AI 에이전트와 함께 조사, 설계, 구현, 검증한 결과물입니다.</div>
+    </div>
+  </div>
+</section>
+
+<script>
+  (function(){
+    var els = document.querySelectorAll('.reveal');
+    if(!('IntersectionObserver' in window)){
+      els.forEach(function(el){ el.classList.add('in'); });
+      return;
+    }
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          entry.target.classList.add('in');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    els.forEach(function(el){ io.observe(el); });
+  })();
+</script>
+
+</body>
+</html>
