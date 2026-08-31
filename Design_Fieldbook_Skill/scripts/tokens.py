@@ -6,6 +6,7 @@
 
     python3 tokens.py '#1F4D3D' 절제 --density 고밀도
     python3 tokens.py '#4C9AFF' 절제 --dark --semantic
+    python3 tokens.py '#C6B9A8' 절제 --no-accent    # 채도 있는 액센트 없이 중립 4단으로
 
 왜 필요한가 — 지금까지 게이트에 걸린 것들 중 상당수는 "판단"이 아니라 **토큰 값 하나를
 손으로 잘못 고른 것**이었다. `--outline`을 배경색과 같은 계열로 잡아 구분선이 1.00:1이
@@ -36,13 +37,38 @@ import sys
 
 # 밴드 지표는 HSL 채도가 아니라 크로마 (max-min)/255다 — HSL S는 최대 채널이 255이기만
 # 하면 아무리 밝아도 1.00이라, 산성 라임과 평범한 다크 UI 블루가 구별되지 않는다.
-TONE_CHROMA_MAX = {"절제": 0.78, "중립": 0.90, "임팩트": 1.01}
+# 밴드 경계는 수상작 팔레트 37종 실측에서 다시 잡았다. 예전 절제 상한 0.78은 사실상
+# 아무것도 막지 못했다 — 그 기준이면 게이밍 라임(#DAFF47, 크로마 0.72)도 '절제'로
+# 통과한다. 실측에서 절제로 읽히는 팔레트(Ceragres·Measured·Zorge 9·Duyu Care)는 전부
+# 크로마 0.17 이하였다. 임팩트대(0.45~0.82)는 실측과 이미 맞아 그대로 둔다.
+# 실측 표본은 전부 **마케팅/포트폴리오** 사이트다 — 그 밴드를 앱·문서에 그대로 씌우면
+# 안 된다. 그 장르의 액센트는 장식이 아니라 기능색(링크·포커스·주요 액션)이라 채도가
+# 높아야 눈에 띈다. 이 스킬의 문서 프로브(#0A5FB4)와 대시보드 프로브(#4C9AFF)가 둘 다
+# 크로마 0.67~0.70인데 그게 그 장르에서는 올바른 선택이다. 그래서 장르로 나눈다.
+TONE_CHROMA_MAX = {
+    "마케팅": {"절제": 0.30, "중립": 0.65, "임팩트": 1.01},
+    "앱":     {"절제": 0.78, "중립": 0.90, "임팩트": 1.01},
+    "문서":   {"절제": 0.78, "중립": 0.90, "임팩트": 1.01},
+}
 TONE_CHROMA_MIN = {"절제": 0.00, "중립": 0.20, "임팩트": 0.45}
+
+# 라이트 테마 중립의 색조 농도(HSL 채도). 예전에는 톤과 무관하게 배경 0.05였는데,
+# 수상작 라이트 배경 34종의 채도 중앙값은 **0.28**(사분위 0.19~0.40)이었다 — 34종 중
+# 33종이 우리보다 따뜻했다. "시드 색조를 옅게 섞는다"고 적어놓고 실제로는 회색을 냈던
+# 것이고, 원인은 베이지 앵커링 FAIL을 피하려던 것이었다(그 검사는 WARN으로 낮췄다).
+# 다크 테마는 손대지 않는다 — 수상작 다크 배경 33종의 채도 중앙값은 0.00이었다.
+# 실측 사분위에 그대로 대응시킨다: 절제=하위 사분위(0.19) · 중립=중앙값(0.28) ·
+# 임팩트=상위 사분위(0.40). L 0.93에서 이 채도들은 RGB 웜값 7·10·14로 나오는데,
+# 수상작 라이트 배경의 웜값 분포(6~31, 중앙 ~11)와 겹친다.
+TONE_NEUTRAL_S = {"절제": 0.19, "중립": 0.28, "임팩트": 0.40}
+# 앱·문서는 밝은 면 위에 표·폼·코드가 얹히므로 색조를 마케팅만큼 태우지 않는다 —
+# 실측 하위 사분위(0.19)로 고정한다.
+NEUTRAL_S_UTILITY = 0.19
 
 # 시맨틱 4색의 색조 — 관용적 의미(성공=초록, 경고=황, 오류=적, 정보=청)는 브랜드보다
 # 우선한다. 색조만 고정하고 명도·크로마는 테마에 맞춰 계산한다.
 SEMANTIC_HUES = {"ok": 140, "warn": 42, "err": 8, "info": 210}
-ANCHOR_RGB = (0xEF, 0xE6, 0xDD)   # references 레시피의 베이지 — 근접하면 앵커링
+ANCHOR_RGB = (0xEF, 0xE6, 0xDD)   # references 레시피의 베이지 — 이 색 '그대로'만 막는다(계열은 허용)
 
 
 def hex_to_rgb(h):
@@ -129,12 +155,41 @@ def fit_fill(hue, sat, refs, ratio, ceiling, prefer_light):
     채도를 먼저 고정하고 명도를 고르면, 고른 명도에서 크로마가 다시 상한을 넘을 수 있다
     (다크 경로에서 실제로 그랬다). 채도를 낮춰가며 재-선택하는 루프가 필요하다.
     """
-    while sat > 0.02:
+    # 무채 시드(S=0, 예: `#8A8A8A`)도 유효한 입력이다 — 무채 4단 체계의 자연스러운 시드다.
+    # 예전 루프는 `while sat > 0.02`라 S=0을 한 번도 시도하지 못하고 "fill이 안 나온다"로
+    # 종료했다. 0을 마지막에 반드시 한 번 시도한다.
+    while True:
         got = pick_l(hue, sat, refs, ratio, prefer_light)
         if got and chroma(got[1]) <= ceiling:
             return sat, got[1]
-        sat -= 0.02
-    return None, None
+        if sat <= 0.0:
+            return None, None
+        sat = max(0.0, sat - 0.02)
+
+
+def fit_fill_dark(hue, sat, bg, ratio, ceiling, floor, seed_l, seed_c):
+    """다크 테마의 액센트 fill — **시드에 가장 가까운 밝은 칩**을 찾는다.
+
+    두 번 헛짚고 얻은 규칙이다. ① `prefer_light=True`만 주면 흰색(L=1.0, 크로마 0)이 나온다 —
+    명도가 1에 가까울수록 크로마가 0으로 수렴하는데 대비 조건은 통과하기 때문이다.
+    ② 크로마를 최대화하면 이번엔 시드보다 진해진다(라임 시드 0.72 → 0.95).
+    수상작 다크 팔레트의 액센트는 **디자이너가 고른 그 색 그대로**다(#DAFF47 L 0.64 C 0.72 ·
+    #CFEC5B 0.64/0.57 · #FE5B42 0.63/0.74 · #665BFF 0.68/0.64). 그러니 목표는 시드를 지키는
+    것이고, 기준(대비·크로마 상한)에 걸릴 때만 **최소한으로** 옮긴다.
+    """
+    best, best_score = (None, None), None
+    for light in [x / 200 for x in range(170, 50, -1)]:      # L 0.85 → 0.25
+        s = fit_chroma(hue, sat, light, ceiling)
+        rgb = tuple(round(c) for c in hsl_to_rgb(hue, s, light))
+        c = chroma(rgb)
+        if c < floor or c > ceiling:
+            continue
+        if contrast(rgb, tuple(round(x) for x in bg)) < ratio * 1.02:
+            continue
+        score = abs(light - seed_l) + abs(c - seed_c)
+        if best_score is None or score < best_score:
+            best, best_score = (s, rgb), score
+    return best
 
 
 def pick_l(hue, sat, refs, ratio, prefer_light):
@@ -231,13 +286,17 @@ def main():
         sys.exit(2)
 
     seed_hex, tone = args[0], args[1]
-    if tone not in TONE_CHROMA_MAX:
-        print(f"톤은 {'/'.join(TONE_CHROMA_MAX)} 중 하나여야 한다.")
+    if tone not in TONE_CHROMA_MIN:
+        print(f"톤은 {'/'.join(TONE_CHROMA_MIN)} 중 하나여야 한다.")
         sys.exit(2)
     joined = " ".join(flags)
     density = "고밀도" if "고밀도" in joined else "저밀도"
     dark = "--dark" in flags
     want_semantic = "--semantic" in flags
+    # 수상작 팔레트 중 절제로 읽히는 것들(Ceragres·Measured·Zorge 9·Duyu Care)은 채도 있는
+    # 액센트가 **아예 없고** 중립 4단으로 위계를 만든다. 그동안 이 스킬은 항상 액센트를
+    # 하나 만들어냈다 — 그것도 정당한 선택지로 연다.
+    no_accent = "--no-accent" in flags
     # 모션 성격은 톤이 아니라 장르에서 나온다(motion.md §2.1 Productive vs Expressive) —
     # 작업 흐름 안이면 productive(빠르고 미묘), 감정적 순간이면 expressive(느리고 뚜렷).
     genre = "앱" if "--앱" in flags else ("문서" if "--문서" in flags else "마케팅")
@@ -249,11 +308,15 @@ def main():
         sys.exit(2)
 
     hue, sat, _l = rgb_to_hsl(seed)
-    c_max = TONE_CHROMA_MAX[tone]
+    c_max = TONE_CHROMA_MAX[genre][tone]
+    if no_accent:
+        c_max = 0.10          # 액센트를 '진한 중립'으로 만든다(실측 절제 팔레트 0.04~0.17대)
+        if tone != "절제":
+            notes.append("--no-accent는 절제 톤의 선택지다 — 다른 톤으로 선언했다면 톤 판정을 다시 본다.")
     # 고밀도 차감은 라이트에만 — 다크에서 액센트를 더 죽이면 어두운 면 위에서 안 보인다
     if density == "고밀도" and not dark:
         c_max = max(0.15, c_max - 0.15)
-    c_min = TONE_CHROMA_MIN[tone]
+    c_min = 0.0 if no_accent else TONE_CHROMA_MIN[tone]
 
     notes = []
     if dark:
@@ -267,22 +330,36 @@ def main():
         surface = hsl_to_rgb(hue, 0.09, 0.115)
         if delta(bg, surface) < 6:
             surface = hsl_to_rgb(hue, 0.09, 0.14)
-        acc_s, fill = fit_fill(hue, min(sat, 0.95), [bg], 4.5, c_max, prefer_light=False)
+        # 다크에서는 조건을 만족하는 **가장 밝은** 값을 고른다. 예전에는 가장 어두운 값을
+        # 골랐는데, 그러면 라임·민트·옐로처럼 본래 밝은 색조가 전부 올리브로 내려앉았다
+        # (실측: 시드 #DAFF47 L=0.64 → 우리 #6E8904 L=0.28). 수상작 다크 팔레트의 액센트는
+        # 전부 밝은 칩이고(Razed #DAFF47 · Orgnzm #CFEC5B · Motiondeep #FE5B42) 그 위에
+        # 어두운 글자를 얹는다 — `--on-acc-2`도 이미 어두운 쪽으로 계산하고 있었다.
+        seed_l, seed_c = _l, chroma(seed)
+        acc_s, fill = fit_fill_dark(hue, min(sat, 0.95), bg, 4.5, c_max, c_min, seed_l, seed_c)
+        if fill is None:      # 크로마 하한을 못 지키면 하한 없이 다시 — 색조는 지킨다
+            acc_s, fill = fit_fill_dark(hue, min(sat, 0.95), bg, 4.5, c_max, 0.0, seed_l, seed_c)
         if fill is None:
             print(f"\n  이 시드(H={hue:.0f}°)로는 다크 배경에서 대비 4.5:1과 크로마 상한 {c_max:.2f}를 "
                   f"동시에 만족하는 액센트가 안 나온다 — 톤을 다시 판정하거나 시드 색조를 바꾼다.\n")
             sys.exit(1)
-        hi = hsl_to_rgb(hue, acc_s, min(rgb_to_hsl(fill)[2] + 0.10, 0.85))
+        # fill이 이제 가장 밝은 값이므로 hover 단계는 위가 아니라 **아래로** 한 단 내린다
+        hi = hsl_to_rgb(hue, acc_s, max(rgb_to_hsl(fill)[2] - 0.08, 0.22))
+        if contrast(hi, bg) < 4.5:
+            hi = hsl_to_rgb(hue, acc_s, min(rgb_to_hsl(fill)[2] + 0.06, 0.92))
         cont = hsl_to_rgb(hue, min(acc_s, 0.55), 0.20)
         cont2 = hsl_to_rgb(hue, min(acc_s, 0.50), 0.16)
         _, on_cont = pick_l(hue, min(acc_s, 0.60), [cont], 7.0, prefer_light=False)
         ink = hsl_to_rgb(hue, 0.06, 0.92)
         _, ink2 = pick_l(hue, 0.06, [bg, surface], 7.0, prefer_light=False)
         _, ink3 = pick_l(hue, 0.05, [bg, surface], 4.5, prefer_light=False)
+        # 탐색은 float, 검증은 **반올림된 emit 값**으로 재고 있었다 — 경계에서 12.0이
+        # 11.98로 떨어져 near-neutral 시드가 NG로 튕겼다. 같은 정수값으로 재고 여유 0.5를 둔다.
         outline = None
-        for i in range(400):
-            cand = hsl_to_rgb(hue, 0.08, 0.10 + i / 800)
-            if delta(cand, bg) >= 12 and delta(cand, surface) >= 12:
+        for i in range(500):
+            cand = tuple(round(c) for c in hsl_to_rgb(hue, 0.08, 0.10 + i / 800))
+            if delta(cand, tuple(round(x) for x in bg)) >= 12.5 and \
+               delta(cand, tuple(round(x) for x in surface)) >= 12.5:
                 outline = cand
                 break
         on_dark, on_dark3 = ink, ink3
@@ -300,14 +377,25 @@ def main():
         cont = hsl_to_rgb(hue, min(acc_s, 0.35), 0.86)
         cont2 = hsl_to_rgb(hue, min(acc_s, 0.35), 0.92)
         _, on_cont = pick_l(hue, min(acc_s, 0.40), [cont], 7.0, prefer_light=True)
-        bg = hsl_to_rgb(hue, 0.05, 0.93)
+        n_s = TONE_NEUTRAL_S[tone] if genre == "마케팅" else NEUTRAL_S_UTILITY
+        if chroma(seed) < 0.02:
+            n_s = 0.0      # 무채 시드(#8A8A8A 등)는 색조가 없다 — 회색을 회색으로 낸다
+        bg = hsl_to_rgb(hue, n_s, 0.93)
         surface = white
         if delta(bg, surface) < 10:
-            bg = hsl_to_rgb(hue, 0.05, 0.91)
-        ink = hsl_to_rgb(hue, 0.08, 0.11)
-        _, ink2 = pick_l(hue, 0.06, [bg, surface], 7.0, prefer_light=True)
-        _, ink3 = pick_l(hue, 0.05, [bg, surface], 4.5, prefer_light=True)
-        _, outline = pick_l(hue, 0.05, [bg, surface], 3.0, prefer_light=True)
+            bg = hsl_to_rgb(hue, n_s, 0.91)
+        ink = hsl_to_rgb(hue, 0.08, 0.11)       # 잉크는 실측과 이미 일치(S 0.07 · L 0.10)
+        # 중간 중립은 실측에서 배경보다 더 진한 색조를 갖는다(수상작 중간 중립 S 중앙값 0.36).
+        # 대비를 못 맞추면 채도를 단계적으로 낮춰 받는다 — 색조보다 가독성이 먼저다.
+        def neutral(target_s, ratio):
+            for factor in (1.0, 0.7, 0.45, 0.25):
+                got = pick_l(hue, target_s * factor, [bg, surface], ratio, prefer_light=True)[1]
+                if got is not None:
+                    return got
+            return None
+        ink2 = neutral(n_s * 0.5, 7.0)
+        ink3 = neutral(n_s * 0.7, 4.5)
+        outline = neutral(n_s * 1.1, 3.0)
         _, on_dark = pick_l(hue, 0.04, [ink], 12.0, prefer_light=False)
         _, on_dark3 = pick_l(hue, 0.04, [ink], 4.5, prefer_light=False)
         on_acc2 = dim_on_fill(hue, fill, toward_light=True)
@@ -372,7 +460,7 @@ def main():
     else:
         line_ok = contrast(outline, bg) >= 3.0 and contrast(outline, surface) >= 3.0
         line_desc = f"구분선 대비 (배경 {contrast(outline, bg):.2f}:1 / 표면 {contrast(outline, surface):.2f}:1, 기준 3)"
-    anchor_ok = dark or abs(sum(bg) / 3 - sum(ANCHOR_RGB) / 3) > 15 or abs((bg[0] - bg[2]) - (ANCHOR_RGB[0] - ANCHOR_RGB[2])) > 15
+    anchor_ok = dark or any(abs(a - b) > 4 for a, b in zip(bg, ANCHOR_RGB))
     acc_c = chroma(fill)
 
     print(f"\n=== 토큰 스타터 · 시드 {rgb_to_hex(seed)} · 톤 '{tone}' · {density} · {'다크' if dark else '라이트'} ===\n")
@@ -388,8 +476,8 @@ def main():
     print(f"    {'OK ' if d_bs >= d_bs_floor else 'NG '} {'배경 vs 표면 델타':<26} {d_bs:5.1f}    (기준 {d_bs_floor})")
     print(f"    {'OK ' if d_band >= 12 else 'NG '} {'밴드 vs 배경 델타':<26} {d_band:5.1f}    (기준 12)")
     print(f"    {'OK ' if line_ok else 'NG '} {line_desc}")
-    print(f"    {'OK ' if anchor_ok else 'NG '} {'배경이 레시피 베이지와 다름':<24} ")
-    print(f"    {'OK ' if acc_c <= c_max + .01 else 'NG '} {'액센트 크로마 밴드':<26} {acc_c:5.2f}    (상한 {c_max:.2f})")
+    print(f"    {'OK ' if anchor_ok else 'NG '} {'배경이 레시피 예시색 자체는 아님':<24} ")
+    print(f"    {'OK ' if acc_c <= c_max + .01 else 'NG '} {'액센트 크로마 밴드':<26} {acc_c:5.2f}    (상한 {c_max:.2f}{' · 무채색 체계' if no_accent else ''})")
     print()
 
     if bad or d_bs < d_bs_floor or d_band < 12 or not anchor_ok or not line_ok or acc_c > c_max + .01:
@@ -433,6 +521,7 @@ def main():
     print(f"""/* plan
    판돈: ? | 어조: ? | 밀도: {density}
    톤: {tone}
+   액센트: {"없음(중립 4단)" if no_accent else "있음"}
    스타일: ?
    레이아웃: ?
    모션: ?          (signature motion 1개 또는 `없음` — 비워 두지 않는다)

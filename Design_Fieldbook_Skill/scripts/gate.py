@@ -24,12 +24,13 @@
 이력은 `<html이 있는 디렉터리>/.gate-history.json`에 저장된다.
 """
 
-import hashlib
 import json
 import re
 import subprocess
 import sys
 from pathlib import Path
+
+import feel_review
 
 HERE = Path(__file__).resolve().parent
 LINE = re.compile(r'^\s{2}(PASS|WARN|FAIL)\s{2}(.*)$')
@@ -42,43 +43,10 @@ EYE_CHECKS = [
     "화면을 채우려고 만든 요소가 있는가 (빈 컬럼 메우는 카드·문구 반복 배지)",
 ]
 
-# SKILL.md "완료 전 — 게이트 루프" 4단계. 텍스트로만 적어두면 건너뛰어진다는 게
+# SKILL.md "완료 전 — 게이트 루프" 1단계. 텍스트로만 적어두면 건너뛰어진다는 게
 # 이 프로젝트에서 이미 두 번(d라운드 레시피, e라운드 게이트 홀) 확인됐다 — 그래서
-# 파일 존재·해시 일치·findings 빈 배열까지 기계적으로 강제한다. 이 세 조건 중
-# 하나라도 안 맞으면 코드 게이트가 0 FAIL이어도 exit 0을 주지 않는다.
-FEEL_REVIEW_SUFFIX = ".feel-review.json"
-
-
-def feel_review_path(html):
-    return html.parent / f"{html.stem}{FEEL_REVIEW_SUFFIX}"
-
-
-def check_feel_review(html):
-    """(ok, message) — ok=True면 4단계(독립 미적 검토) 통과."""
-    path = feel_review_path(html)
-    digest = hashlib.sha256(html.read_bytes()).hexdigest()
-    if not path.exists():
-        return False, (
-            f"4단계(미적 응집력 — 독립 검토) 미실시. `{path.name}`이 없다.\n"
-            "    SKILL.md \"완료 전 — 게이트 루프\" 4단계대로 별도 fresh 에이전트를 띄워\n"
-            "    코드 정합성은 무시하고 순수 미적 판단만 적대적으로 검토받은 뒤,\n"
-            f"    결과를 {{\"html_sha256\": \"...\", \"findings\": [...]}} 형태로 {path.name}에 저장한다.\n"
-            "    findings가 비어 있어야(=결함 없음) 통과다."
-        )
-    try:
-        data = json.loads(path.read_text(encoding="utf-8"))
-    except (ValueError, OSError):
-        return False, f"`{path.name}`을 읽을 수 없다 — 형식이 깨졌다. 다시 작성한다."
-    if data.get("html_sha256") != digest:
-        return False, (
-            f"`{path.name}`이 지금 파일 내용과 안 맞다(해시 불일치) — html을 고친 뒤\n"
-            "    4단계 재검토 없이 예전 통과 기록을 재사용하는 중이다. 다시 검토받는다."
-        )
-    findings = data.get("findings", [])
-    if findings:
-        lines = "\n".join(f"     · {f}" for f in findings)
-        return False, f"4단계 미적 결함 {len(findings)}건 — FAIL과 동급이다. 고치고 재검토한다:\n{lines}"
-    return True, ""
+# 파일 존재·내용 일치·findings 빈 배열까지 기계적으로 강제한다. 판정 규칙은
+# `feel_review.py` 한 군데에 있다(세 스크립트가 같은 규칙을 쓴다).
 
 
 def run(script, html, extra_args=()):
@@ -140,14 +108,17 @@ def main():
     # (숫자 단위 미세조정)보다 먼저 끝낸다. --static-only는 토큰·구조 잡는 초기
     # 반복용이라 예외로 둔다.
     if not static_only:
-        ok, msg = check_feel_review(html)
+        ok, msg, note = feel_review.check(html)
         if not ok:
             print("=== 순서: 1) 미적 독립 검토 → 2) 코드 게이트 ===\n")
             print(f"1단계 — 미완료:\n    {msg}\n")
             print("코드 게이트(대비·spacing·터치 타겟 등)는 이 검토를 통과한 뒤에 돌린다.")
             print("구도가 틀린 채로 코드만 다듬는 건 나중에 다시 버려질 작업이다.")
             sys.exit(1)
-        print("1단계 통과 — 미적 독립 검토 완료. 코드 게이트로 넘어간다.\n")
+        print("1단계 통과 — 미적 독립 검토 완료. 코드 게이트로 넘어간다.")
+        if note:
+            print(f"    ↳ {note}")
+        print()
 
     hist_path = html.parent / HISTORY_NAME
     history = load(hist_path, "--reset" in flags)

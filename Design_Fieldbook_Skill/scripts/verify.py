@@ -37,44 +37,12 @@ e라운드 회고로 추가된 검사들 — 그 라운드 산출물은 16 PASS 
 - 타입 스케일·액센트 색 수·스타일 커밋 강도·반응형은 재는 검사 자체가 없었다
 """
 
-import hashlib
 import json
 import re
 import sys
 from pathlib import Path
 
-FEEL_REVIEW_SUFFIX = ".feel-review.json"
-
-
-def feel_review_path(html):
-    return html.parent / f"{html.stem}{FEEL_REVIEW_SUFFIX}"
-
-
-def check_feel_review(html):
-    """(ok, message) — gate.py의 동명 함수와 동일한 규칙. verify.py 단독 호출로
-    SKILL.md 1단계(미적 독립 검토)를 건너뛰는 걸 막으려고 여기에도 둔다."""
-    path = feel_review_path(html)
-    digest = hashlib.sha256(html.read_bytes()).hexdigest()
-    if not path.exists():
-        return False, (
-            f"`{path.name}`이 없다. SKILL.md \"완료 전 — 게이트 루프\" 1단계대로 별도 fresh\n"
-            "    에이전트를 띄워 코드 정합성은 무시하고 순수 미적 판단만 적대적으로 검토받은 뒤,\n"
-            f"    결과를 {{\"html_sha256\": \"...\", \"findings\": [...]}} 형태로 {path.name}에 저장한다."
-        )
-    try:
-        data = json.loads(path.read_text(encoding="utf-8"))
-    except (ValueError, OSError):
-        return False, f"`{path.name}`을 읽을 수 없다 — 형식이 깨졌다. 다시 작성한다."
-    if data.get("html_sha256") != digest:
-        return False, (
-            f"`{path.name}`이 지금 파일 내용과 안 맞다(해시 불일치) — html을 고친 뒤\n"
-            "    1단계 재검토 없이 예전 통과 기록을 재사용하는 중이다. 다시 검토받는다."
-        )
-    findings = data.get("findings", [])
-    if findings:
-        lines = "\n".join(f"     · {f}" for f in findings)
-        return False, f"미적 결함 {len(findings)}건 — FAIL과 동급이다. 고치고 재검토한다:\n{lines}"
-    return True, ""
+import feel_review
 
 PLACEHOLDER_NAMES = ["Jane Doe", "John Smith", "Acme", "홍길동", "김철수", "OOO"]
 GENERIC_CTA_TEXTS = {"더 알아보기", "자세히 보기", "더보기", "learn more", "see more", "read more"}
@@ -96,7 +64,7 @@ SYSTEM_FONT_NAMES = {
 # "복사하지 마라"는 산문 경고만으로는 구체적 숫자의 앵커링 효과를 못 이긴다는 게
 # c/d/e 라운드에서 반복 확인됐다 — 그래서 기계적으로 근접도를 잡는다.
 KNOWN_ANCHOR_BG_HEXES = ["EFE6DD"]
-ANCHOR_BAND = 15
+ANCHOR_BAND = 4      # 채널당 허용 오차 — 이 안이면 "예시색 그대로 복사"로 본다
 
 FAILS = []
 WARNS = []
@@ -485,26 +453,30 @@ def check_accent_fill(src, vars_):
 
 
 def check_bg_anchoring(vars_):
-    # 단순 RGB 유클리드 거리는 "밝은 무채색"을 전부 서로 가깝게 보고 오탐을 낸다
-    # (예: F5F5F5 같은 흔한 쿨그레이도 EFE6DD와 거리가 가까움). 밝기(avg)와
-    # 웜/쿨 색감(warmth = R-B)을 따로 봐서 "그 베이지와 같은 밝기 + 같은 웜톤"일
-    # 때만 잡는다 — 쿨그레이·블루그레이·순백은 걸리지 않는다.
+    """레시피 예시색을 **그대로 복사**한 경우만 잡는다(WARN).
+
+    예전에는 예시 베이지(#EFE6DD)와 밝기·웜톤이 ±15 안이면 FAIL이었다. 수상작 팔레트
+    37종을 이 검사에 통과시켜 보니 **27종(73%)이 탈락**했다 — Ceragres·Measured·/zeroz·
+    Noho·Aardvark·Tuscan·Melius·Noomo … 에디토리얼/럭셔리 라이트 배경 계열이 통째로다.
+    한 번의 베끼기를 막으려고 이 장르의 표준 배경군 전체를 금지하고 있었고, 그 회피
+    때문에 `tokens.py`가 배경 채도를 S=0.05까지 눌러 결과물이 항상 회색이었다.
+    (실측: 수상작 라이트 배경 34종의 HSL 채도 중앙값 0.28 · 사분위 0.19~0.40)
+
+    그래서 밴드를 '거의 같은 색'(채널당 4 이내)으로 좁히고 FAIL이 아니라 WARN으로 낮췄다.
+    """
     bg_keys = [k for k in vars_ if re.search(r'^--(bg|page|paper)(\b|-)', k, re.I) and 'bg-2' not in k]
     if not bg_keys:
         return
     bg_rgb = hex_to_rgb(resolve_var(vars_[bg_keys[0]], vars_))
     if not bg_rgb:
         return
-    bg_avg = sum(bg_rgb) / 3
-    bg_warmth = bg_rgb[0] - bg_rgb[2]
     for anchor_hex in KNOWN_ANCHOR_BG_HEXES:
         anchor_rgb = hex_to_rgb('#' + anchor_hex)
-        anchor_avg = sum(anchor_rgb) / 3
-        anchor_warmth = anchor_rgb[0] - anchor_rgb[2]
-        if abs(bg_avg - anchor_avg) <= ANCHOR_BAND and abs(bg_warmth - anchor_warmth) <= ANCHOR_BAND:
-            fail(f"배경({bg_keys[0]}={vars_[bg_keys[0]]})이 레시피 예시색(#{anchor_hex})과 밝기·웜톤이 거의 같음 — 과거 라운드에서 반복된 베이지 앵커링이다. 브랜드에 맞는 다른 배경색을 새로 정한다")
+        if all(abs(a - b) <= ANCHOR_BAND for a, b in zip(bg_rgb, anchor_rgb)):
+            warn(f"배경({bg_keys[0]}={vars_[bg_keys[0]]})이 레퍼런스 예시색 #{anchor_hex}와 사실상 같은 색이다 — "
+                 f"예시를 그대로 옮긴 것인지 확인한다. 같은 계열(웜 오프화이트) 자체는 문제가 아니다")
             return
-    ok("배경색이 알려진 레시피 예시색과 밝기·웜톤이 충분히 다름")
+    ok("배경색이 레퍼런스 예시색을 그대로 복사하지 않음")
 
 
 def check_text_wrap_pretty(src):
@@ -977,7 +949,9 @@ def check_spacing_variety(src, vars_):
     # 무력해진다 — 토큰을 쓰는 쪽이 더 좋은 설계인데 게이트가 그걸 벌주면 안 되므로
     # var()를 값으로 치환한 뒤 센다.
     values = set()
-    for m in re.finditer(r'(?:margin|padding|gap|padding-block|padding-inline)(?:-\w+)?\s*:\s*([^;]+);', src, re.I):
+    # 값에서 `{`·`}`를 빼야 한다 — 세미콜론 없이 끝나는 마지막 선언(`margin:0 0 var(--sp-3)}`)에서
+    # 규칙 경계를 넘어 다음 블록의 `font-size:29px`까지 삼켜 홀수 spacing 오탐이 났다.
+    for m in re.finditer(r'(?:margin|padding|gap|padding-block|padding-inline)(?:-\w+)?\s*:\s*([^;{}]+)[;}]', src, re.I):
         value = m.group(1)
         for name in re.findall(r'var\((--[\w-]+)\)', value):
             if name in vars_:
@@ -1043,6 +1017,168 @@ def check_table_header(src, vars_):
         fail("표 헤더가 본문과 구별 안 됨(`references/ui-patterns.md` 표 헤더 규칙): " + " · ".join(problems))
     else:
         ok("표 헤더가 본문 대비 크고 굵고 가운데 정렬됨")
+
+
+def _table_rows(block):
+    """<table> 원문 → [(section, [class...])] 순서대로. section은 'head'|'body'."""
+    rows, section = [], 'body'
+    for m in re.finditer(r'<(/?)(thead|tbody|tfoot|tr)\b([^>]*)>', block, re.I):
+        closing, tag, attrs = m.group(1), m.group(2).lower(), m.group(3)
+        if tag == 'thead':
+            section = 'body' if closing else 'head'
+        elif tag in ('tbody', 'tfoot'):
+            if not closing:
+                section = 'body'
+        elif tag == 'tr' and not closing:
+            cm = re.search(r'class\s*=\s*["\']([^"\']*)["\']', attrs, re.I)
+            rows.append((section, cm.group(1).split() if cm else []))
+    return rows
+
+
+def _row_backgrounds(src, vars_, rows):
+    """([행 배경], 본문 기본 배경) — 클래스 규칙이 태그 규칙을 이긴다."""
+    tag_bg, class_bg = {}, {}
+    for sel, block, media in parse_rules(src):
+        if media:
+            continue
+        bg = color_in_value(decls(block).get('background') or decls(block).get('background-color'), vars_)
+        if not bg:
+            continue
+        low = sel.lower()
+        classes = re.findall(r'\.([\w-]+)', low)
+        # 행/셀을 칠하는 규칙만 본다 — 카드·섹션 배경은 무관하다
+        if not re.search(r'\b(tr|td|th|thead|tbody)\b', low) and not classes:
+            continue
+        target = 'head' if re.search(r'\bthead\b', low) or re.search(r'\bth\b(?!ead)', low) else 'body'
+        if classes:
+            for c in classes:
+                class_bg[c] = (bg, target)
+        elif re.search(r'\b(tr|td|th|thead|tbody)\b', low):
+            tag_bg.setdefault(target, bg)
+
+    out = []
+    for section, classes in rows:
+        picked = None
+        for c in classes:
+            if c in class_bg:
+                picked = class_bg[c][0]
+        if picked is None:
+            picked = tag_bg.get(section)
+        out.append(picked)
+    # 기준선은 '가장 많은 색'이 아니라 **태그 규칙이 주는 본문 행 배경**이다 — 틴트 행이
+    # 수적으로 더 많으면 최빈값이 틴트가 돼버려 번짐을 영영 못 잡는다.
+    return out, tag_bg.get('body')
+
+
+def check_table_rules(src, vars_):
+    """`references/ui-patterns.md` "표(Table) 강제 규칙" — 첫 열 정렬 · 행 구분선 · 행 틴트 번짐.
+
+    세 가지 모두 실제 산출물에서 지시를 명시적으로 준 뒤에도 반복해서 어긋났다:
+    "구분선 넣어라" → 헤더 밑줄 하나만, "구분 행만 칠해라" → 그 아래 행까지 같은 색,
+    첫 열은 헤더만 가운데. 전부 소스만 봐도 판정 가능하므로 정적으로 잡는다.
+    """
+    tables = re.findall(r'<table\b.*?</table>', src, re.I | re.S)
+    if not tables:
+        return
+
+    rules = [(sel, decls(block)) for sel, block, media in parse_rules(src) if not media]
+
+    # ── 1. 첫 열 가운데 정렬 ──────────────────────────────────────────────
+    # `th`만 center로 잡고 `td`는 안 잡으면 헤더만 가운데, 값은 왼쪽이 된다 — 실제로 그 모양이
+    # 나왔다. 헤더 쪽과 본문 쪽을 따로 해석해서 **둘 다** center일 때만 통과시킨다.
+    align = {}
+    for sel, d in rules:
+        value = d.get('text-align')
+        if not value:
+            continue
+        value, low = value.strip().lower(), sel.lower()
+        first = bool(re.search(r':(first-child|first-of-type|nth-child\(\s*1\s*\)|nth-of-type\(\s*1\s*\))', low))
+        if re.search(r'\bth\b', low):
+            align['th_first' if first else 'th_all'] = value
+        elif re.search(r'\btd\b', low):
+            align['td_first' if first else 'td_all'] = value
+        elif re.search(r'\b(table|tr|tbody|thead)\b\s*$', low):
+            align['table'] = value
+    head = align.get('th_first') or align.get('th_all') or align.get('table')
+    body = align.get('td_first') or align.get('td_all') or align.get('table')
+    missing = [n for n, v in (('헤더 셀(th)', head), ('본문 셀(td)', body)) if v is None]
+    wrong = [f"{n}={v}" for n, v in (('th', head), ('td', body)) if v is not None and v != 'center']
+    if missing or wrong:
+        detail = []
+        if missing:
+            detail.append("정렬 선언이 없어 기본 left로 렌더될 곳: " + ", ".join(missing))
+        if wrong:
+            detail.append("center가 아닌 선언: " + ", ".join(wrong))
+        fail("표 첫 열이 가운데 정렬이 아니다 — `th:first-child, td:first-child { text-align: center }`를 명시한다"
+             f"(`references/ui-patterns.md` 표 강제 규칙). {' / '.join(detail)}")
+    else:
+        ok("표 첫 열이 헤더·본문 셀 모두 가운데 정렬")
+
+    # ── 2. 행 구분선 ─────────────────────────────────────────────────────
+    body_line, head_only_line = False, False
+    for sel, d in rules:
+        low = sel.lower()
+        if not re.search(r'\b(tr|td|th|tbody)\b', low):
+            continue
+        for prop, value in d.items():
+            if not re.match(r'^border(-(top|bottom))?$', prop):
+                continue
+            if 'none' in value.lower() or (px_of(value) or 0) <= 0:
+                continue
+            if re.search(r'\bthead\b', low) or re.search(r'\bth\b(?!ead)', low):
+                head_only_line = True
+            else:
+                body_line = True
+    if body_line:
+        ok("표 데이터 행 경계에 구분선 선언 있음")
+    elif head_only_line:
+        fail("표에 헤더 밑줄만 있고 데이터 행 사이 구분선이 없다 — `tbody td { border-bottom: 1px solid var(--line) }`처럼 "
+             "**모든 행 경계**에 선을 긋는다. padding은 구분선의 대체재가 아니다(`references/ui-patterns.md` 표 강제 규칙)")
+    else:
+        fail("표에 행 구분선이 하나도 없다 — `tbody td`에 `border-bottom`을 긋고 헤더 아래는 더 굵게/진하게 닫는다"
+             "(`references/ui-patterns.md` 표 강제 규칙). 선 색 대비는 3:1 또는 RGB 델타 18 이상")
+
+    # ── 3. 행 틴트가 인접 행으로 번짐 ────────────────────────────────────
+    for sel, d in rules:
+        if not (d.get('background') or d.get('background-color')):
+            continue
+        if re.search(r'\b(tr|td|th)\b[^,]*[+~]', sel, re.I) or re.search(r'[+~]\s*(tr|td|th)\b', sel, re.I):
+            fail(f"행 틴트를 형제 결합자로 확장하고 있다(`{sel}`) — 강조는 그 한 행의 `th`/`td`에만 건다"
+                 "(`references/ui-patterns.md` 표 강제 규칙: 행 틴트는 정확히 한 행)")
+
+    zebra = [sel for sel, d in rules
+             if (d.get('background') or d.get('background-color'))
+             and re.search(r'\b(tr|td)\b[^,]*:nth-(child|of-type)\(\s*(odd|even|2n)', sel, re.I)]
+
+    bleeding, tinted_classes = [], set()
+    for block in tables:
+        rows = _table_rows(block)
+        if len(rows) < 2:
+            continue
+        bgs, default = _row_backgrounds(src, vars_, rows)
+        # 행 절반 이상을 덮는 색은 강조가 아니라 그 표의 표면색이다 — 틴트로 세지 않는다
+        def is_tint(bg):
+            return bg is not None and bg != default and bgs.count(bg) <= len(rows) / 2
+        for i in range(len(rows) - 1):
+            a, b = bgs[i], bgs[i + 1]
+            if a != b or not is_tint(a):
+                continue
+            kind = "헤더와 첫 데이터 행" if rows[i][0] == 'head' else f"표의 {i + 1}·{i + 2}번째 `<tr>`"
+            bleeding.append(f"{kind}이 같은 배경(rgb{a[:3]})")
+        for (sec, classes), bg in zip(rows, bgs):
+            if sec == 'body' and is_tint(bg):
+                tinted_classes.update(classes)
+
+    if bleeding:
+        fail("표 행 틴트가 인접 행까지 번졌다 — " + " · ".join(bleeding[:4])
+             + ". 강조/구분 행 배경은 **그 한 행의 `th`/`td`에만** 건다. 헤더와 첫 행이 같은 색이면 두 행이 한 덩어리로 "
+               "읽혀 헤더 경계와 구분 행 신호가 동시에 사라진다(`references/ui-patterns.md` 표 강제 규칙)")
+    elif tables:
+        ok("표 행 틴트가 인접 행으로 번지지 않음")
+
+    if zebra and tinted_classes:
+        warn(f"구분 행 틴트({', '.join(sorted(tinted_classes)[:3])})와 줄무늬(`{zebra[0]}`)를 한 표에서 같이 쓴다 — "
+             "줄무늬가 같은 계열이면 어느 행이 구분 행인지 판별 불가능해진다. 하나만 남긴다")
 
 
 def check_text_contrast(src, vars_):
@@ -1224,7 +1360,7 @@ def check_accent_hue_count(src, vars_):
     memphis/neobrutal은 다색이 스타일 정의라 예외다(styles.md '예외는 색의 개수다').
     그 경우 소스에 `/* style: memphis */` 처럼 스타일을 명시하면 통과시킨다.
     """
-    if re.search(r'/\*\s*style\s*:\s*(memphis|neobrutal|acid|y2k|vaporwave)', src, re.I):
+    if re.search(r'/\*\s*style\s*:\s*(memphis|neobrutal|acid|y2k|vaporwave|bauhaus|triadic)', src, re.I):
         ok("다색이 정의인 스타일로 선언됨 — 액센트 개수 검사 면제")
         return
 
@@ -1253,9 +1389,17 @@ def check_accent_hue_count(src, vars_):
 
     if len(clusters) >= 3:
         names = ["+".join(k for _h, k in c) for c in clusters]
-        fail(f"채도 있는 액센트 계열이 색상환에서 {len(clusters)}갈래({' / '.join(names)}) — 액센트 1개 원칙 위반이다. 계열 하나를 브랜드 액센트로 남기고 나머지는 시맨틱 역할(--ok/--warn/--err/--info)을 부여하거나 중립 명도 차로 대체한다(color.md '액센트 컬러', '콘텐츠 내부 강조')")
+        fail(f"채도 있는 액센트 계열이 색상환에서 {len(clusters)}갈래({' / '.join(names)}) — 3갈래부터는 위반이다. "
+             f"계열 하나(또는 의도한 짝 하나)를 남기고 나머지는 시맨틱 역할(--ok/--warn/--err/--info)이나 중립 명도 차로 대체한다"
+             f"(color.md '액센트 컬러'). 삼색이 스타일의 정의라면 `/* style: bauhaus */`처럼 선언한다")
+    elif len(clusters) == 2:
+        # 수상작 팔레트 37종 중 9종(24%)이 의도적 2갈래 짝이었다(MilleDollars 오렌지+블루,
+        # Aardvark 레드+블루, Grilled Pixels 레드+인디고). 짝은 허용하고 3갈래부터 막는다.
+        ok(f"액센트 색상 계열 2갈래(짝) — 허용 범위. 둘 중 어느 쪽이 주인지 면적으로 구별되는지는 육안으로 본다")
     elif clusters:
         ok(f"액센트 색상 계열 {len(clusters)}갈래 — 액센트 1개 원칙 범위")
+    else:
+        ok("채도 있는 액센트 토큰이 없음 — 중립 명도 차로 위계를 만드는 무채색 체계로 본다(절제 톤의 정당한 선택지)")
 
 
 # 장르마다 "좋은 설계"의 정의가 다르다. 다크 대시보드에 걸어보고 알았다 —
@@ -1272,11 +1416,19 @@ GENRE_RULES = {
 # 평범한 다크 UI 액센트 블루(#4C9AFF)가 둘 다 S=1.00으로 나와 구별이 안 됐다.
 # 크로마로 재면 0.94 vs 0.70으로 갈린다.
 TONE_BANDS = {
-    # 톤: (크로마 하한, 크로마 상한, 면적 하한%, 면적 상한%)
-    "절제": (0.0, 0.78, 5, 10),
-    "중립": (0.20, 0.90, 6, 12),
+    # 톤: (크로마 하한, 크로마 상한, 면적 하한%, 면적 상한%) — **마케팅 장르 기준**
+    # 크로마 상한은 수상작 팔레트 37종 실측으로 재보정했다(tokens.py TONE_CHROMA_MAX
+    # 주석) — 예전 절제 상한 0.78은 게이밍 라임(#DAFF47, 0.72)도 통과시켰다.
+    "절제": (0.0, 0.30, 5, 10),
+    "중립": (0.20, 0.65, 6, 12),
     "임팩트": (0.45, 1.01, 8, 18),
 }
+
+# 앱·문서는 실측 표본(마케팅/포트폴리오 수상작)의 밴드를 쓰지 않는다. 그 장르의 액센트는
+# 장식이 아니라 기능색(링크·포커스·주요 액션)이라 채도가 높아야 눈에 띈다 — 문서 프로브의
+# 표준 링크 블루(#0A5FB4, 크로마 0.67)와 대시보드 프로브의 UI 블루(#4C9AFF, 0.70)가 그
+# 장르에서는 올바른 선택이다. 같은 이유로 이미 고밀도 크로마 차감을 폐지한 전례가 있다.
+UTILITY_CHROMA_MAX = {"절제": 0.78, "중립": 0.90, "임팩트": 1.01}
 
 
 def chroma_of(rgb):
@@ -1315,6 +1467,9 @@ def check_plan_declaration(src, vars_):
     ok(f"plan 블록 있음 — 톤 '{tone}' 선언")
 
     s_min, s_max, _a_min, _a_max = TONE_BANDS[tone]
+    genre = plan.get("장르")
+    if genre in ("앱", "문서"):
+        s_max = UTILITY_CHROMA_MAX[tone]
     # 고밀도 크로마 차감은 폐지했다 — "밀도가 높으면 색이 먼저 보인다"는 우려는 채도가 아니라
     # **면적**의 문제이고, 면적은 render_audit이 실측한다. 크로마까지 깎으면 이중 계산이라
     # 문서 사이트의 표준 링크 블루(#0A5FB4, 크로마 0.67)마저 FAIL이 났다.
@@ -1340,7 +1495,8 @@ def check_plan_declaration(src, vars_):
         fail(f"선언한 톤 '{tone}'의 크로마 밴드({s_min}–{s_max})를 액센트가 벗어난다: {', '.join(offenders[:4])} "
              f"— 계획과 구현이 어긋났다. 톤 판정을 바꾸든 색을 바꾸든 둘을 일치시킨다(SKILL.md 'TPO 판정')")
     else:
-        ok(f"액센트 크로마가 선언한 톤 '{tone}'의 밴드({s_min}–{s_max}) 안")
+        scope = f"'{tone}'·{genre}" if genre in ("앱", "문서") else f"'{tone}'"
+        ok(f"액센트 크로마가 선언한 톤 {scope}의 밴드({s_min}–{s_max}) 안")
 
 
 def page_luminance(src, vars_):
@@ -1881,7 +2037,9 @@ def main():
         sys.exit(2)
 
     if "--static-only" not in flags:
-        feel_ok, feel_msg = check_feel_review(path)
+        feel_ok, feel_msg, feel_note = feel_review.check(path)
+        if feel_ok and feel_note:
+            print(f"\n1단계 기록 재사용 — {feel_note}\n")
         if not feel_ok:
             print("\n=== verify.py: 1단계(미적 독립 검토) 미통과로 실행 차단 ===\n")
             print(f"    {feel_msg}\n")
@@ -1908,6 +2066,7 @@ def main():
     check_spacing_variety(src, vars_)
     check_type_scale(src, vars_)
     check_table_header(src, vars_)
+    check_table_rules(src, vars_)
     check_text_wrap_pretty(src)
     check_measure_consistency(src)
     check_headline_wrap(src)

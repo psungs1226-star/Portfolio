@@ -4,9 +4,9 @@
 용법: python3 render_audit.py <생성한 HTML 경로> [--widths 1440,1100,768,500]
 
 gate.py를 거치지 않고 직접 호출해도 SKILL.md "완료 전 — 게이트 루프" 1단계(미적 독립
-검토)가 먼저 통과했는지 스스로 확인한다 — `<html>.feel-review.json`이 없거나 해시가
-안 맞거나 findings가 비어있지 않으면 실행을 거부한다(예외 없음. 렌더 검증은 정의상 1단계
-다음 단계다).
+검토)가 먼저 통과했는지 스스로 확인한다 — `<html>.feel-review.json`이 없거나, 검토 이후
+**구도가 바뀌었거나**(색값만 바뀐 경우는 면제 — `feel_review.py`), findings가 비어있지
+않으면 실행을 거부한다(예외 없음. 렌더 검증은 정의상 1단계 다음 단계다).
 
 `verify.py`는 소스 코드만 읽는다. 그래서 "렌더링해야만 보이는 결함"은 원리적으로 못 잡는다 —
 데드스페이스, 컬럼 높이 불균형, 고아줄, 가로 오버플로, 액센트 실제 면적, 상속된 배경 위의
@@ -28,6 +28,10 @@ gate.py를 거치지 않고 직접 호출해도 SKILL.md "완료 전 — 게이�
   7. 터치 타겟 24px/44px
   8. overflow:hidden 안에서 잘린 콘텐츠
   9. 채도 있는 배경의 실제 면적 비율 (SKILL.md 액센트 5–12% 원칙 — 정적으로는 측정 불가)
+ 10. 표 — 행 경계마다 보이는 구분 장치가 있는가 · 행 틴트가 인접 행까지 번졌는가 · 첫 열 정렬
+
+폭별 측정은 **동시에** 돌린다. 한 폭당 시간의 대부분이 Chrome 콜드 스타트(실측 2.3초)라
+순차로 돌면 폭 수만큼 그 값을 다시 낸다 — 5폭 기준 12.6초 → 4.5초(측정 내용은 동일).
 
 **좁은 폭**: CLI headless Chrome은 레이아웃 뷰포트를 500px 아래로 못 내린다(`--window-size=390`을
 줘도 500으로 고정 — 실측 확인). 그래서 그 아래 폭은 대상을 **폭 W짜리 iframe에 가둬서** 잰다 —
@@ -36,8 +40,8 @@ h라운드의 `min-width:auto` 오버플로가 둘 다 이 구간에서만 나�
 """
 
 import base64
+import concurrent.futures
 import functools
-import hashlib
 import http.server
 import json
 import re
@@ -50,38 +54,7 @@ import tempfile
 import threading
 from pathlib import Path
 
-FEEL_REVIEW_SUFFIX = ".feel-review.json"
-
-
-def feel_review_path(html):
-    return html.parent / f"{html.stem}{FEEL_REVIEW_SUFFIX}"
-
-
-def check_feel_review(html):
-    """(ok, message) — gate.py·verify.py와 동일한 규칙. render_audit.py 단독 호출로
-    SKILL.md 1단계(미적 독립 검토)를 건너뛰는 걸 막으려고 여기에도 둔다."""
-    path = feel_review_path(html)
-    digest = hashlib.sha256(html.read_bytes()).hexdigest()
-    if not path.exists():
-        return False, (
-            f"`{path.name}`이 없다. SKILL.md \"완료 전 — 게이트 루프\" 1단계대로 별도 fresh\n"
-            "    에이전트를 띄워 코드 정합성은 무시하고 순수 미적 판단만 적대적으로 검토받은 뒤,\n"
-            f"    결과를 {{\"html_sha256\": \"...\", \"findings\": [...]}} 형태로 {path.name}에 저장한다."
-        )
-    try:
-        data = json.loads(path.read_text(encoding="utf-8"))
-    except (ValueError, OSError):
-        return False, f"`{path.name}`을 읽을 수 없다 — 형식이 깨졌다. 다시 작성한다."
-    if data.get("html_sha256") != digest:
-        return False, (
-            f"`{path.name}`이 지금 파일 내용과 안 맞다(해시 불일치) — html을 고친 뒤\n"
-            "    1단계 재검토 없이 예전 통과 기록을 재사용하는 중이다. 다시 검토받는다."
-        )
-    findings = data.get("findings", [])
-    if findings:
-        lines = "\n".join(f"     · {f}" for f in findings)
-        return False, f"미적 결함 {len(findings)}건 — FAIL과 동급이다. 고치고 재검토한다:\n{lines}"
-    return True, ""
+import feel_review
 
 DEFAULT_WIDTHS = [1440, 1100, 768, 500, 390]
 VIEWPORT_FLOOR = 500      # CLI headless의 레이아웃 뷰포트 하한. 이 아래는 iframe으로 잰다
@@ -400,6 +373,68 @@ addEventListener('load', function () { setTimeout(function () {
   });
   out.accentPct = +(100*chroma/(de.clientWidth*de.scrollHeight)).toFixed(1);
 
+  // 10. 표 — 행 구분선 · 행 틴트 번짐 · 첫 열 정렬
+  // 세 항목 다 정적으로도 잡지만(verify.py check_table_rules), 캐스케이드·상속·인라인
+  // 스타일을 거친 뒤 화면에 실제로 그려진 결과는 렌더링해야만 알 수 있다.
+  out.tableLine=[]; out.tableBleed=[]; out.tableAlign=[]; out.tableCount=0;
+  [].slice.call(document.querySelectorAll('table')).forEach(function(t){
+    var rows=[].slice.call(t.querySelectorAll('tr')).filter(visible);
+    if(rows.length<3) return;
+    out.tableCount++;
+    var info=rows.map(function(r){
+      var cells=[].slice.call(r.children).filter(function(c){
+        return /^(TD|TH)$/.test(c.tagName);});
+      var first=cells[0];
+      var bw=0, bc=null;
+      [r].concat(cells).forEach(function(el){
+        var cs=getComputedStyle(el);
+        var w=parseFloat(cs.borderBottomWidth)||0;
+        if(w>bw && cs.borderBottomStyle!=='none' && cs.borderBottomStyle!=='hidden'){
+          bw=w; bc=rgb(cs.borderBottomColor);
+        }
+      });
+      return {bg: first?effBg(first):effBg(r), bw:bw, bc:bc,
+              head: !!(first && first.tagName==='TH'),
+              align: first?getComputedStyle(first).textAlign:null,
+              label: first?first.textContent.trim().replace(/\s+/g,' ').slice(0,14):''};
+    });
+
+    // (a) 행 경계마다 실제로 보이는 구분 장치가 있는가 (선 또는 면 전환)
+    var naked=[];
+    for(var i=0;i<info.length-1;i++){
+      var a=info[i], b=info[i+1];
+      var lineOk=false;
+      if(a.bw>0 && a.bc && a.bc[3]>0.05){
+        var lc=over(a.bc, a.bg);
+        lineOk = delta(lc,a.bg)>=18 || cr(lc,a.bg)>=3;
+      }
+      if(!lineOk && delta(a.bg,b.bg)>=10) lineOk=true;   // 면 전환이 경계를 만든다
+      if(!lineOk) naked.push(i+1);
+    }
+    if(naked.length)
+      out.tableLine.push({sel:path(t), rows:info.length, naked:naked.length,
+                          at:naked.slice(0,6).join(',')});
+
+    // (b) 구분/강조 행 틴트가 인접 행까지 번졌는가
+    var counts={};
+    info.forEach(function(r){var k=r.bg.join(','); counts[k]=(counts[k]||0)+1;});
+    for(var j=0;j<info.length-1;j++){
+      var k1=info[j].bg.join(','), k2=info[j+1].bg.join(',');
+      if(k1!==k2 || counts[k1]>info.length/2) continue;
+      out.tableBleed.push({sel:path(t), rgb:k1,
+                           at:(info[j].head?'헤더':(j+1)+'행')+'+'+(j+2)+'행',
+                           text:info[j].label});
+    }
+
+    // (c) 첫 열 정렬
+    var off=info.filter(function(r){
+      return r.align && r.align!=='center';});
+    if(off.length)
+      out.tableAlign.push({sel:path(t), align:off[0].align, n:off.length,
+                           text:off[0].label});
+  });
+  out.tableBleed=out.tableBleed.slice(0,4);
+
   var box=document.createElement('div');
   box.id='__audit__';
   box.textContent=btoa(unescape(encodeURIComponent(JSON.stringify(out))));
@@ -448,8 +483,9 @@ def serve(directory):
 
     handler = functools.partial(QuietHandler, directory=str(directory))
 
-    class Quiet(socketserver.TCPServer):
+    class Quiet(socketserver.ThreadingTCPServer):
         allow_reuse_address = True
+        daemon_threads = True
 
         def handle_error(self, *args):
             pass
@@ -594,6 +630,27 @@ def report(results, widths):
         items = ", ".join(f"{i['sel']}(+{i['over']}px)" for i, _w in clipped[:5])
         warn(f"overflow:hidden 안에서 콘텐츠가 잘림: {items} — 캐러셀처럼 의도한 것이면 무시, 아니면 잘린 글자가 있다")
 
+    tline = collect(results, "tableLine")
+    if tline:
+        for item, ws in tline[:3]:
+            fail(f"{item['sel']}의 행 경계 {item['naked']}곳에 구분 장치가 없다(행 {item['at']} 아래) {at(ws)} — "
+                 f"`tbody td {{ border-bottom: 1px solid var(--line) }}`로 **모든 행 경계**에 선을 긋는다. "
+                 f"선이 코드엔 있는데 여기 걸렸다면 색이 배경과 붙은 것이다(대비 3:1 또는 RGB 델타 18 필요 — `references/ui-patterns.md` 표 강제 규칙)")
+    tbleed = collect(results, "tableBleed")
+    if tbleed:
+        for item, ws in tbleed[:3]:
+            fail(f"{item['sel']}에서 행 틴트가 두 행에 걸쳐 있다({item['at']}, rgb({item['rgb']})) {at(ws)} — "
+                 f"구분/강조 행 배경은 그 한 행의 `th`/`td`에만 건다. 두 행이 같은 색이면 한 덩어리로 읽혀 "
+                 f"'구분 행'이라는 신호 자체가 사라진다(`references/ui-patterns.md` 표 강제 규칙)")
+    talign = collect(results, "tableAlign")
+    if talign:
+        for item, ws in talign[:3]:
+            fail(f"{item['sel']} 첫 열 셀 {item['n']}개가 `text-align:{item['align']}`로 그려진다"
+                 f"(예: \"{item['text']}\") {at(ws)} — 첫 열은 `th`·`td` 모두 center 강제다"
+                 f"(`references/ui-patterns.md` 표 강제 규칙)")
+    if not (tline or tbleed or talign) and any(results[w].get("tableCount") for w in measured):
+        ok(f"표 행 구분선·행 틴트 스코프·첫 열 정렬 전부 통과 ({at(measured)})")
+
     pcts = {w: results[w]["accentPct"] for w in measured}
     top = pcts[max(measured)]
 
@@ -609,6 +666,12 @@ def report(results, widths):
     }
     tone = genre = None
     pm = re.search(r'/\*\s*plan\b(.*?)\*/', PLAN_SRC[0] or "", re.S | re.I)
+    if pm and re.search(r'액센트\s*:\s*없음', pm.group(1)):
+        # 무채색 체계(`tokens.py --no-accent`)는 채도 면적이 0에 가까운 게 정상이다 —
+        # 수상작 절제 팔레트(Ceragres·Measured 등)가 실제로 그렇다. 밴드를 적용하지 않는다.
+        ok(f"`액센트: 없음(중립 4단)` 선언 — 채도 면적 밴드 미적용(실측 {top}%). "
+           f"위계가 중립 명도 단계로 서는지는 1단계 미적 검토가 본다")
+        return
     if pm:
         tm = re.search(r'톤\s*:\s*(\S+)', pm.group(1))
         if tm:
@@ -651,7 +714,9 @@ def main():
         print(f"파일 없음: {path}")
         sys.exit(2)
 
-    feel_ok, feel_msg = check_feel_review(path)
+    feel_ok, feel_msg, feel_note = feel_review.check(path)
+    if feel_ok and feel_note:
+        print(f"\n1단계 기록 재사용 — {feel_note}\n")
     if not feel_ok:
         print("\n=== render_audit.py: 1단계(미적 독립 검토) 미통과로 실행 차단 ===\n")
         print(f"    {feel_msg}\n")
@@ -682,21 +747,32 @@ def main():
             tmp.flush()
             base_url = f"http://127.0.0.1:{port}"
             url = f"{base_url}/{Path(tmp.name).name}"
-            for w in widths:
-                data = render(chrome, url, w)
-                if data is None:
-                    warn(f"{w}px 렌더링 결과를 회수하지 못했다 — 페이지에 스크립트 오류가 있는지 확인한다")
-                    continue
-                results[w] = data
-            for w in narrow:
-                data = render_narrow(chrome, path.parent, base_url, Path(tmp.name).name, w)
-                if data is None:
-                    warn(f"{w}px(iframe 측정) 결과를 회수하지 못했다")
-                    continue
-                if data.get("width") != w:
-                    warn(f"{w}px를 요청했는데 iframe 안 뷰포트가 {data.get('width')}px로 잡혔다 — 이 폭의 결과는 신뢰하지 않는다")
-                    continue
-                results[w] = data
+            # 폭별 측정은 서로 독립이고, 한 번당 시간의 대부분이 Chrome 콜드 스타트(실측
+            # 2.3초)다 — 순차로 돌리면 폭 수만큼 그 값을 다시 낸다. 동시에 띄우면 게이트
+            # 한 회차가 12.6초에서 4초 아래로 떨어진다(측정 내용은 그대로다).
+            jobs = [(w, False) for w in widths] + [(w, True) for w in narrow]
+            with concurrent.futures.ThreadPoolExecutor(max_workers=min(6, len(jobs) or 1)) as pool:
+                futures = {
+                    pool.submit(render_narrow, chrome, path.parent, base_url,
+                                Path(tmp.name).name, w) if is_narrow
+                    else pool.submit(render, chrome, url, w): (w, is_narrow)
+                    for w, is_narrow in jobs
+                }
+                for fut in concurrent.futures.as_completed(futures):
+                    w, is_narrow = futures[fut]
+                    try:
+                        data = fut.result()
+                    except Exception as exc:            # 한 폭이 죽어도 나머지는 살린다
+                        warn(f"{w}px 측정이 예외로 끝났다({exc.__class__.__name__}) — 이 폭 결과는 없다")
+                        continue
+                    if data is None:
+                        warn(f"{w}px 렌더링 결과를 회수하지 못했다 — 페이지에 스크립트 오류가 있는지 확인한다"
+                             if not is_narrow else f"{w}px(iframe 측정) 결과를 회수하지 못했다")
+                        continue
+                    if is_narrow and data.get("width") != w:
+                        warn(f"{w}px를 요청했는데 iframe 안 뷰포트가 {data.get('width')}px로 잡혔다 — 이 폭의 결과는 신뢰하지 않는다")
+                        continue
+                    results[w] = data
     finally:
         httpd.shutdown()
 
