@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ko" class="theme-light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>피성환 Portfolio README Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/html-to-image@1.11.11/dist/html-to-image.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root { interpolate-size: allow-keywords; }
+    html.theme-light {
+      --bg: #eef2f0; --surface: #ffffff; --surface-hover: #f5f8f7;
+      --border: rgba(21, 48, 42, .13); --text: #17201e; --text-secondary: #5e716c;
+      --accent: #2f7064; --accent-secondary: #b9d6ce;
+      --positive: #1e7a58; --negative: #b34747; --warning: #ad731e;
+    }
+    html.theme-dark {
+      --bg: #0e1715; --surface: #17231f; --surface-hover: #20302b;
+      --border: rgba(255,255,255,.12); --text: #eef6f2; --text-secondary: #9eb2aa;
+      --accent: #8bc7b8; --accent-secondary: #31584e;
+      --positive: #7dd5ab; --negative: #ff9b9b; --warning: #f3c06b;
+    }
+    body {
+      min-height: 100vh; font-family: 'Noto Sans KR', 'Inter', -apple-system, sans-serif;
+      background: var(--bg); color: var(--text); line-height: 1.6;
+      -webkit-font-smoothing: antialiased; letter-spacing: -.015em;
+      transition: background .3s, color .3s; word-break: keep-all; overflow-wrap: break-word;
+    }
+    h1,h2,h3,h4 { color: var(--text); letter-spacing: -.035em; line-height: 1.1; text-wrap: balance; }
+    h1 { font-size: clamp(2.35rem, 5vw, 4.5rem); font-weight: 800; }
+    h2 { font-size: clamp(1.45rem, 2.8vw, 2.25rem); font-weight: 750; }
+    h3 { font-size: clamp(1.1rem, 2vw, 1.35rem); font-weight: 700; }
+    p, li, span, td, th { color: var(--text); }
+    a { color: var(--accent); }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 18px; padding: 28px; transition: box-shadow .2s ease, transform .2s ease; }
+    .card:hover { box-shadow: 0 16px 34px rgba(25,55,47,.10); transform: translateY(-2px); }
+    .animate { animation: fadeInUp .6s ease-out both; }
+    .delay-1 { animation-delay: .1s; } .delay-2 { animation-delay: .2s; } .delay-3 { animation-delay: .3s; }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+    .skip-link { position: absolute; left: -9999px; top: auto; width: 1px; height: 1px; overflow: hidden; }
+    .skip-link:focus { position: fixed; left: 16px; top: 16px; width: auto; height: auto; z-index: 10000; padding: 9px 14px; background: var(--accent); color: white; border-radius: 8px; }
+    .viz-menu { position: fixed; top: 16px; right: 16px; z-index: 9999; }
+    .viz-menu-toggle { width: 44px; height: 44px; border-radius: 12px; background: var(--surface); border: 1px solid var(--border); color: var(--text); cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .viz-menu-dropdown { position: absolute; top: 52px; right: 0; min-width: 190px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 8px; opacity: 0; visibility: hidden; transform: translateY(-8px); transition: all .2s; box-shadow: 0 14px 30px rgba(0,0,0,.12); }
+    .viz-menu-dropdown.open { opacity: 1; visibility: visible; transform: translateY(0); }
+    .viz-menu-dropdown button { width: 100%; padding: 10px 14px; border: 0; border-radius: 8px; background: transparent; color: var(--text); font: inherit; cursor: pointer; text-align: left; display: flex; align-items: center; gap: 10px; }
+    .viz-menu-dropdown button:hover { background: var(--surface-hover); }
+    .viz-menu-dropdown span { color: var(--text); }
+    main { max-width: 1120px; margin: 0 auto; padding: 76px 28px 100px; }
+    .preview-note { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; padding: 7px 11px; border: 1px solid var(--border); border-radius: 999px; color: var(--accent); font-size: .78rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+    .preview-note::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: var(--warning); }
+    .hero { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(260px, .75fr); gap: 44px; align-items: end; padding-bottom: 48px; border-bottom: 2px solid var(--text); }
+    .hero p { margin-top: 20px; max-width: 62ch; color: var(--text-secondary); font-size: 1.12rem; }
+    .hero-side { border-left: 3px solid var(--accent); padding-left: 22px; }
+    .hero-side .label { color: var(--text-secondary); font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 700; }
+    .hero-side strong { display: block; margin-top: 10px; font-size: 1.25rem; }
+    .hero-side p { margin-top: 8px; font-size: .92rem; }
+    .section { margin-top: 58px; }
+    .section-kicker { color: var(--accent); font-size: .78rem; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; margin-bottom: 12px; }
+    .case { display: grid; grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); gap: 28px; margin-top: 22px; background: #1c211f; color: #f3f7f5; border: 0; overflow: hidden; }
+    .case h2, .case h3, .case p, .case li, .case span { color: #f3f7f5; }
+    .case-copy { display: flex; flex-direction: column; justify-content: space-between; gap: 24px; }
+    .case-copy .eyebrow { color: #afd8cb; font-size: .8rem; font-weight: 700; letter-spacing: .12em; }
+    .case-copy h2 { margin-top: 12px; font-size: clamp(1.7rem, 3vw, 2.7rem); }
+    .case-copy .lead { margin-top: 16px; color: #c6d2ce; font-size: 1.05rem; }
+    .case-copy .core { border-left: 3px solid #e8c65e; padding-left: 16px; color: #f5df86; font-weight: 650; }
+    .case-visual { min-height: 320px; display: flex; align-items: center; justify-content: center; background: #f3f5f2; border-radius: 12px; overflow: hidden; }
+    .case-visual img { width: 100%; height: 100%; max-height: 480px; object-fit: cover; object-position: top center; display: block; }
+    .metrics { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-top: 22px; }
+    .metric { padding: 20px; border-top: 3px solid var(--accent); background: var(--surface); border-radius: 12px; border-left: 1px solid var(--border); border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+    .metric small { display: block; color: var(--text-secondary); font-size: .78rem; line-height: 1.35; }
+    .metric strong { display: block; margin-top: 8px; font-size: clamp(1.45rem, 3vw, 2.2rem); letter-spacing: -.06em; }
+    .metric em { display: block; margin-top: 4px; color: var(--text-secondary); font-size: .75rem; font-style: normal; }
+    .evidence { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(250px, .9fr); gap: 18px; }
+    .evidence .card { border-radius: 14px; }
+    .evidence h3 { margin-bottom: 18px; }
+    .evidence ul { padding-left: 20px; }
+    .evidence li + li { margin-top: 10px; }
+    .evidence li::marker { color: var(--accent); }
+    .status { background: var(--surface-hover); }
+    .status strong { display: block; color: var(--positive); font-size: 1.2rem; margin-bottom: 10px; }
+    .status p { color: var(--text-secondary); font-size: .93rem; }
+    .order { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 22px; }
+    .order-item { display: flex; align-items: baseline; gap: 14px; padding: 16px 18px; border-bottom: 1px solid var(--border); }
+    .order-item:first-child { background: var(--accent-secondary); border-radius: 12px; border-bottom: 0; }
+    .order-no { color: var(--accent); font-family: 'Inter', sans-serif; font-size: .82rem; font-weight: 800; letter-spacing: .08em; }
+    .order-item strong { font-size: 1.04rem; }
+    .order-item span:last-child { color: var(--text-secondary); font-size: .88rem; }
+    .decision { margin-top: 52px; padding: 24px 28px; background: var(--accent-secondary); border-radius: 16px; border: 1px solid var(--border); }
+    .decision strong { color: var(--text); font-size: 1.1rem; }
+    .decision p { margin-top: 8px; color: var(--text-secondary); }
+    .links { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-top: 22px; font-size: .9rem; }
+    .links a { color: var(--accent); font-weight: 700; text-decoration: none; }
+    .links a:hover { text-decoration: underline; }
+    @media (max-width: 760px) {
+      main { padding: 66px 16px 72px; }
+      .hero, .case, .evidence { grid-template-columns: 1fr; gap: 24px; }
+      .hero { padding-bottom: 34px; }
+      .hero-side { border-left: 0; border-top: 3px solid var(--accent); padding: 16px 0 0; }
+      .metrics { grid-template-columns: repeat(2, 1fr); }
+      .order { grid-template-columns: 1fr; }
+      .case-visual { min-height: 220px; }
+    }
+    @media (max-width: 420px) { .metrics { grid-template-columns: 1fr; } .card { padding: 22px; } }
+    @media print { .viz-menu { display: none; } body { background: #fff; } main { padding: 20px 0; } .card { break-inside: avoid; box-shadow: none; } .case { color: #f3f7f5 !important; } }
+    @media (max-width: 375px) { body { overflow-x: hidden; } }
+  </style>
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to content</a>
+  <div class="viz-menu">
+    <button class="viz-menu-toggle" onclick="toggleMenu()" aria-label="Menu">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3" y1="5" x2="17" y2="5"/><line x1="3" y1="10" x2="17" y2="10"/><line x1="3" y1="15" x2="17" y2="15"/></svg>
+    </button>
+    <div class="viz-menu-dropdown" id="vizMenuDropdown">
+      <button onclick="cycleTheme()"><span id="themeIcon">☀️</span><span id="themeLabel">Light</span></button>
+      <button onclick="downloadImage()"><span>📥</span><span>Download PNG</span></button>
+      <button onclick="window.print()"><span>🖨️</span><span>Print / PDF</span></button>
+    </div>
+  </div>
+  <main id="main-content" role="main">
+    <header class="hero animate">
+      <div>
+        <div class="preview-note">README preview · commit pending</div>
+        <h1>피성환</h1>
+        <p>AI-Native Product Builder · Product Strategy<br>새로운 문제를 조사하고, 제품 판단과 실행 결과로 전환합니다.</p>
+      </div>
+      <div class="hero-side">
+        <div class="label">Featured work order</div>
+        <strong>01번에 Groupby BD 케이스 추가</strong>
+        <p>기존 Featured Work를 02~06번으로 한 칸씩 이동한 README 초안</p>
+      </div>
+    </header>
+
+    <section class="section animate delay-1" aria-labelledby="groupby-case">
+      <div class="section-kicker">Featured Work · 01</div>
+      <article class="case card">
+        <div class="case-copy">
+          <div>
+            <div class="eyebrow">GROUPBY · NEW BUSINESS CASE</div>
+            <h2 id="groupby-case">채용 플랫폼 신사업<br>AI 실무능력시험</h2>
+            <p class="lead">서류 전형이 놓치는 실무 역량 문제를 정의하고, 사용자 유입·매출 경로·손익·BD 실행까지 연결한 케이스</p>
+          </div>
+          <p class="core">문제의 크기와 손익을 먼저 계산한 뒤, 실제로 판매를 시작할 수 있는 실물까지 설계</p>
+        </div>
+        <div class="case-visual"><img src="Groupby_BD/portfolio_v2/03_케이스_문서_top.png" alt="그룹바이 채용 플랫폼 신사업 케이스 요약 문서"></div>
+      </article>
+      <div class="metrics">
+        <div class="metric animate delay-1"><small>비개발 공고 비중</small><strong>약 72%</strong><em>그룹바이 공고 1,000건 집계</em></div>
+        <div class="metric animate delay-2"><small>AI 역량 고려 기업</small><strong>69.2%</strong><em>공개 조사 기반</em></div>
+        <div class="metric animate delay-2"><small>회차 매출 범위</small><strong>510~725만원</strong><em>가정: 성사 3건·구매 5곳</em></div>
+        <div class="metric animate delay-3"><small>BD 실행 대상</small><strong>20곳</strong><em>타겟 기업 리스트</em></div>
+      </div>
+    </section>
+
+    <section class="section animate delay-2" aria-labelledby="evidence-title">
+      <div class="evidence">
+        <article class="card">
+          <div class="section-kicker">What is added</div>
+          <h2 id="evidence-title">문제 → 제안 → 실행</h2>
+          <ul>
+            <li><strong>문제 정의</strong> — 비개발 직군의 실무 검증 공백과 기업의 AI 역량 확인 수요를 공개자료로 계산</li>
+            <li><strong>제품 제안</strong> — 실제 스타트업 문제를 다루는 정기 온라인 시험, 경력자 중심·신입 응시 가능</li>
+            <li><strong>사업 구조</strong> — 응시료가 아니라 성사 수수료와 우선 컨택권을 매출 경로로 설계</li>
+            <li><strong>실행 실물</strong> — 세일즈 1페이저·콜드메일 3종·가격표·파이프라인·2주 실행 캘린더</li>
+          </ul>
+        </article>
+        <article class="card status">
+          <div class="section-kicker">Validation status</div>
+          <strong>검증 설계 완료 · 실제 운영 미실행</strong>
+          <p>공개자료와 가정에 기반한 제안입니다. 자체 출제 문제의 실무 수준, 응시자·채용 활용, 출제 기업 모집을 단계별 판정 기준으로 남겼습니다.</p>
+          <div class="links"><a href="Groupby_BD/AI실무능력시험_제안덱.pdf">제안덱 PDF ↗</a><a href="Groupby_BD/portfolio_v2/03_케이스_문서.pdf">케이스 문서 ↗</a><a href="Groupby_BD/portfolio_v2/02_BD실물/01_세일즈_1페이저.pdf">세일즈 1페이저 ↗</a></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="section animate delay-3" aria-labelledby="order-title">
+      <div class="section-kicker">README order after change</div>
+      <h2 id="order-title">Featured Work 순서</h2>
+      <div class="order">
+        <div class="order-item"><span class="order-no">01</span><strong>Groupby BD</strong><span>채용 플랫폼 신사업 케이스</span></div>
+        <div class="order-item"><span class="order-no">02</span><strong>인사ON → PDF-to-Bot MCP</strong><span>규정 챗봇 구조 검증</span></div>
+        <div class="order-item"><span class="order-no">03</span><strong>AX 인재전쟁</strong><span>기업별 AI 시스템 3건</span></div>
+        <div class="order-item"><span class="order-no">04</span><strong>사주 다이어리</strong><span>Apps in Toss 출시 앱</span></div>
+        <div class="order-item"><span class="order-no">05</span><strong>Design Fieldbook</strong><span>디자인 판단 시스템</span></div>
+        <div class="order-item"><span class="order-no">06</span><strong>Design Fieldbook Skill</strong><span>AI 작업 절차 스킬</span></div>
+      </div>
+    </section>
+
+    <aside class="decision animate delay-3">
+      <strong>커밋 전 확인용 초안</strong>
+      <p>현재 README와 공개용 산출물은 작업 트리에만 준비되어 있습니다. 이 화면을 확인한 뒤 README 진행과 커밋·푸시 여부를 결정하면 됩니다.</p>
+    </aside>
+  </main>
+  <script>
+    function toggleMenu() {
+      var dropdown = document.getElementById('vizMenuDropdown');
+      if (dropdown) dropdown.classList.toggle('open');
+    }
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('.viz-menu')) {
+        var dropdown = document.getElementById('vizMenuDropdown');
+        if (dropdown) dropdown.classList.remove('open');
+      }
+    });
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') {
+        var dropdown = document.getElementById('vizMenuDropdown');
+        if (dropdown) dropdown.classList.remove('open');
+      }
+    });
+    var currentTheme = localStorage.getItem('viz-theme') || 'light';
+    function applyTheme(theme) {
+      document.documentElement.className = 'theme-' + theme;
+      document.getElementById('themeIcon').textContent = theme === 'dark' ? '☀️' : '🌙';
+      document.getElementById('themeLabel').textContent = theme === 'dark' ? 'Dark' : 'Light';
+      localStorage.setItem('viz-theme', theme);
+      currentTheme = theme;
+      if (typeof onThemeChange === 'function') onThemeChange();
+    }
+    function cycleTheme() { applyTheme(currentTheme === 'dark' ? 'light' : 'dark'); }
+    function onThemeChange() {}
+    applyTheme(currentTheme);
+    async function downloadImage() {
+      var menu = document.querySelector('.viz-menu');
+      if (menu) menu.style.display = 'none';
+      try {
+        var url = await htmlToImage.toPng(document.body, { quality: 1, pixelRatio: 2, filter: function(n) { return !n.classList || !n.classList.contains('viz-menu'); } });
+        var a = document.createElement('a'); a.href = url; a.download = 'portfolio-readme-preview.png'; a.click();
+      } catch (e) { console.error('Download failed:', e); }
+      if (menu) menu.style.display = '';
+    }
+  </script>
+</body>
+</html>

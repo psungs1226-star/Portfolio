@@ -19,3 +19,6 @@ portfolio-readme-images/
 # Raw agent logs are retained locally when a submission requires them,
 # but are not part of the public portfolio surface.
 **/logs/
+
+# 채용 진단 작업물 — 비공개
+_diagnosis/

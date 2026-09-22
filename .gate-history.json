@@ -1,0 +1,12 @@
+{
+ "resume.html": {
+  "round": 16,
+  "open": {},
+  "resolved": [
+   "렌더|텍스트 대비 #",
+   "정적|#identity에 justify-content",
+   "정적|섹션 배경 밴드가 페이지 배경과 델타 # 미만",
+   "정적|액센트 토큰이 background/background-color로 쓰인 곳이 없음"
+  ]
+ }
+}
